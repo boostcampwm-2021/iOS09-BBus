@@ -13,8 +13,9 @@
 
 ## 플로우 차트
 
-<img src="https://i.imgur.com/1oD1tXG.png" width=350>
-<img src="https://i.imgur.com/7EfFrsx.png" width=350>
+|1|2|
+|:-:|:-:|
+|<img src="https://i.imgur.com/1oD1tXG.png" width=350>|<img src="https://i.imgur.com/7EfFrsx.png" width=350>|
 
 ## 아키텍쳐!
 
