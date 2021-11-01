@@ -41,12 +41,23 @@
 		4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5238272FCF3200EC0531 /* StationViewController.swift */; };
 		4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */; };
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
+		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
 		87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556B2728116400A9B5E3 /* AppDelegate.swift */; };
 		87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556D2728116400A9B5E3 /* SceneDelegate.swift */; };
 		87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556F2728116400A9B5E3 /* HomeViewController.swift */; };
 		87A555752728116600A9B5E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87A555742728116600A9B5E3 /* Assets.xcassets */; };
 		87A555782728116600A9B5E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A555762728116600A9B5E3 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4ACA5246272FD52D00EC0531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87A555602728116400A9B5E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87A555672728116400A9B5E3;
+			remoteInfo = BBus;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -83,6 +94,8 @@
 		4ACA5238272FCF3200EC0531 /* StationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationViewController.swift; sourceTree = "<group>"; };
 		4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewController.swift; sourceTree = "<group>"; };
+		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
 		87A555682728116400A9B5E3 /* BBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A5556B2728116400A9B5E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87A5556D2728116400A9B5E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +106,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4ACA523F272FD52D00EC0531 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A555652728116400A9B5E3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,10 +431,19 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4ACA5243272FD52D00EC0531 /* BBusTests */ = {
+			isa = PBXGroup;
+			children = (
+				4ACA5244272FD52D00EC0531 /* BBusTests.swift */,
+			);
+			path = BBusTests;
+			sourceTree = "<group>";
+		};
 		87A5555F2728116400A9B5E3 = {
 			isa = PBXGroup;
 			children = (
 				87A5556A2728116400A9B5E3 /* BBus */,
+				4ACA5243272FD52D00EC0531 /* BBusTests */,
 				87A555692728116400A9B5E3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -423,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				87A555682728116400A9B5E3 /* BBus.app */,
+				4ACA5242272FD52D00EC0531 /* BBusTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,6 +479,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4ACA5241272FD52D00EC0531 /* BBusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4ACA5248272FD52D00EC0531 /* Build configuration list for PBXNativeTarget "BBusTests" */;
+			buildPhases = (
+				4ACA523E272FD52D00EC0531 /* Sources */,
+				4ACA523F272FD52D00EC0531 /* Frameworks */,
+				4ACA5240272FD52D00EC0531 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4ACA5247272FD52D00EC0531 /* PBXTargetDependency */,
+			);
+			name = BBusTests;
+			productName = BBusTests;
+			productReference = 4ACA5242272FD52D00EC0531 /* BBusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		87A555672728116400A9B5E3 /* BBus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87A5557C2728116600A9B5E3 /* Build configuration list for PBXNativeTarget "BBus" */;
@@ -473,9 +521,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					4ACA5241272FD52D00EC0531 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 87A555672728116400A9B5E3;
+					};
 					87A555672728116400A9B5E3 = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -495,11 +547,19 @@
 			projectRoot = "";
 			targets = (
 				87A555672728116400A9B5E3 /* BBus */,
+				4ACA5241272FD52D00EC0531 /* BBusTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4ACA5240272FD52D00EC0531 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A555662728116400A9B5E3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -512,6 +572,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4ACA523E272FD52D00EC0531 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A555642728116400A9B5E3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -558,6 +626,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4ACA5247272FD52D00EC0531 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87A555672728116400A9B5E3 /* BBus */;
+			targetProxy = 4ACA5246272FD52D00EC0531 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		87A555762728116600A9B5E3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -570,6 +646,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4ACA5249272FD52D00EC0531 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NJ72J269P7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boostcamp.ios-009.BBus.BBusTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BBus.app/BBus";
+			};
+			name = Debug;
+		};
+		4ACA524A272FD52D00EC0531 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NJ72J269P7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boostcamp.ios-009.BBus.BBusTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BBus.app/BBus";
+			};
+			name = Release;
+		};
 		87A5557A2728116600A9B5E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -700,7 +822,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,7 +850,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -745,6 +867,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4ACA5248272FD52D00EC0531 /* Build configuration list for PBXNativeTarget "BBusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4ACA5249272FD52D00EC0531 /* Debug */,
+				4ACA524A272FD52D00EC0531 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		87A555632728116400A9B5E3 /* Build configuration list for PBXProject "BBus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
