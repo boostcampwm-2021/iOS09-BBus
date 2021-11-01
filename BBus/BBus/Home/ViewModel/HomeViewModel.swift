@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import Combine
+
+class HomeViewModel {
+
+    private let useCase: HomeUseCase
+
+    init(useCase: HomeUseCase) {
+        self.useCase = useCase
+    }
+}
