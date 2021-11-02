@@ -13,8 +13,13 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
     private lazy var searchButton: UIButton = {
         let button = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width: self.view.frame.width, height: 30)))
-        button.backgroundColor = .gray
+        button.backgroundColor = UIColor(named: "bbusLightGray")
+        button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
+        button.layer.borderWidth = 0.3
+        button.layer.cornerRadius = 3
         button.setTitle("버스 또는 정류장 검색", for: .normal)
+        button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
     }()
     private lazy var homeView = HomeView()
@@ -39,7 +44,7 @@ class HomeViewController: UIViewController {
     }
 
     private func configureLayout() {
-        self.view.backgroundColor = UIColor.lightGray
+        self.view.backgroundColor = UIColor.systemBackground
 
         self.navigationItem.titleView = self.searchButton
         self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
