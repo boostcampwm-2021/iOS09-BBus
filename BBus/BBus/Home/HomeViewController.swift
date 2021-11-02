@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
     private lazy var searchButton: UIButton = {
-        let button = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width: self.view.frame.width, height: 30)))
+        let button = UIButton()
         button.backgroundColor = UIColor(named: "bbusLightGray")
         button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
         button.layer.borderWidth = 0.3
@@ -46,9 +46,10 @@ class HomeViewController: UIViewController {
     private func configureLayout() {
         self.view.backgroundColor = UIColor.systemBackground
 
-        self.navigationItem.titleView = self.searchButton
+        self.searchButton.translatesAutoresizingMaskIntoConstraints = false
+        self.searchButton.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
-
+        self.navigationItem.titleView = self.searchButton
 
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.homeView)
@@ -61,11 +62,9 @@ class HomeViewController: UIViewController {
     }
 
     private func addButtonAction() {
-        self.homeView.refreshButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-    }
-
-    @objc func buttonAction(_ sender: UIButton) {
-        coordinator?.pushToSearchBus()
+        self.searchButton.addAction(UIAction.init(handler: { _ in
+            self.coordinator?.pushToSearchBus()
+        }), for: .touchUpInside)
     }
 }
 
