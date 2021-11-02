@@ -9,7 +9,7 @@ import UIKit
 
 class HomeView: UIView {
 
-    private lazy var favoriteTableView: UITableView = UITableView()
+    private lazy var favoriteTableView: UITableView = UITableView(frame: CGRect(), style: .grouped)
     lazy var refreshButton: UIButton = UIButton()
 
     convenience init() {

@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = UIColor.systemBackground
 
         self.searchButton.translatesAutoresizingMaskIntoConstraints = false
-        self.searchButton.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        self.searchButton.widthAnchor.constraint(equalToConstant: self.view.frame.width - 20).isActive = true
         self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
         self.navigationItem.titleView = self.searchButton
 
@@ -100,5 +100,13 @@ extension HomeViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         70
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        13
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
 }

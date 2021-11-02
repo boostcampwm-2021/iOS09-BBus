@@ -25,30 +25,34 @@ class BusCellTrailingView: UIView {
         let label = UILabel()
         label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
         label.layer.borderWidth = 2
-        label.layer.cornerRadius = 2
+        label.layer.cornerRadius = 3
         label.font = UIFont.systemFont(ofSize: 11)
         label.textColor = UIColor(named: "bbusGray")
         label.attributedText = NSAttributedString()
         let fullText = "2번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed"), range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed") as Any, range: range)
         label.attributedText = attributedString
+        label.sizeToFit()
+        label.textAlignment = .center
         return label
     }()
     private lazy var secondBusTimeRightLabel: UILabel = {
         let label = UILabel()
         label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
         label.layer.borderWidth = 2
-        label.layer.cornerRadius = 2
+        label.layer.cornerRadius = 3
         label.font = UIFont.systemFont(ofSize: 11)
         label.textColor = UIColor(named: "bbusGray")
         label.attributedText = NSAttributedString()
         let fullText = "6번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed"), range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed") as Any, range: range)
         label.attributedText = attributedString
+        label.sizeToFit()
+        label.textAlignment = .center
         return label
     }()
     private lazy var alarmButton: UIButton = {
@@ -78,14 +82,18 @@ class BusCellTrailingView: UIView {
         self.firstBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.firstBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.firstBusTimeLabel.centerYAnchor),
-            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: 4)
+            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: 4),
+            self.firstBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.width + 10),
+            self.firstBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.height + 5)
         ])
 
         self.addSubview(self.secondBusTimeRightLabel)
         self.secondBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.secondBusTimeLabel.centerYAnchor),
-            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: 4)
+            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: 4),
+            self.secondBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.width + 10),
+            self.secondBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.height + 5)
         ])
 
         self.addSubview(self.alarmButton)
