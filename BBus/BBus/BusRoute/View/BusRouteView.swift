@@ -31,14 +31,6 @@ class BusRouteView: UIView {
         tableView.backgroundColor = UIColor.cyan
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
         return tableView
-        
-        func () {
-            
-            header.title.text = ""
-            viewModel.$title.sink {
-                header.title.text = 
-            }
-        }
     }()
 
     convenience init() {
