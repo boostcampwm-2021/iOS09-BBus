@@ -92,4 +92,16 @@ class BusRouteView: UIView {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
     }
+
+    func addBusTag() {
+        for i in 1...10 {
+            let busTag = BusTagView()
+            self.busRouteTableView.addSubview(busTag)
+
+            busTag.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                busTag.topAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: CGFloat(130+(i*130)))
+            ])
+        }
+    }
 }

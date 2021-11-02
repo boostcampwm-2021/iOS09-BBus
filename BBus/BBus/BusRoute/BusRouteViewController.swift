@@ -18,6 +18,7 @@ class BusRouteViewController: UIViewController {
         self.configureStatusBarBackgroundColor(to: UIColor.systemBlue)
         self.configureNavigationBarBackgroundColor(to: UIColor.systemBlue)
         self.configureTableView()
+        self.busRouteView.addBusTag()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
