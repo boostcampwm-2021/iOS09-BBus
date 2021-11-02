@@ -19,8 +19,8 @@ class BusRouteView: UIView {
     
     private lazy var busRouteScrollContentsView: UIView = UIView()
     
-    private lazy var busHeaderView: UIView = {
-        let view = UIView()
+    private lazy var busHeaderView: BusRouteHeaderView = {
+        let view = BusRouteHeaderView()
         view.backgroundColor = UIColor.systemBlue
         return view
     }()
