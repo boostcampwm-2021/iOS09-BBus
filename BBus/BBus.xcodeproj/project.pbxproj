@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */; };
+		4A992C49273124AF0006FB8C /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteTableViewCell.swift */; };
+		4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
 		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
@@ -65,6 +68,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeaderView.swift; sourceTree = "<group>"; };
+		4A992C48273124AF0006FB8C /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
+		4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCellTrailingView.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -223,6 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				4ACA51E8272FCDAE00EC0531 /* HomeView.swift */,
+				4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */,
+				4A992C48273124AF0006FB8C /* FavoriteTableViewCell.swift */,
+				4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -627,6 +636,8 @@
 				4ACA51F3272FCDF900EC0531 /* SearchBusViewModel.swift in Sources */,
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
 				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
+				4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */,
+				4A992C49273124AF0006FB8C /* FavoriteTableViewCell.swift in Sources */,
 				87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */,
 				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
 				4ACA5201272FCE3100EC0531 /* SearchStationView.swift in Sources */,
@@ -634,6 +645,7 @@
 				4ACA51FB272FCE1D00EC0531 /* SearchStationModel.swift in Sources */,
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
+				4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */,
 				4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */,
 				4ACA5235272FCF2100EC0531 /* SearchStationViewController.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,

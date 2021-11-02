@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
         self.configureLayout()
         self.homeView.configureLayout()
         self.addButtonAction()
+        self.homeView.configureDelegate(self)
     }
 
     private func configureLayout() {
@@ -68,3 +69,36 @@ class HomeViewController: UIViewController {
     }
 }
 
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        5
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteTableViewCell.identifier, for: indexPath)
+                as? FavoriteTableViewCell else { return UITableViewCell() }
+
+        return cell
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        10
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FavoriteHeaderView.identifier)
+                as? FavoriteHeaderView else { return UIView() }
+
+        return header
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        90
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        90
+    }
+}

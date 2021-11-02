@@ -1,0 +1,97 @@
+//
+//  BusCellTrailingView.swift
+//  BBus
+//
+//  Created by 김태훈 on 2021/11/02.
+//
+
+import UIKit
+
+class BusCellTrailingView: UIView {
+
+    private lazy var firstBusTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "1분 29초"
+        return label
+    }()
+    private lazy var secondBusTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "9분 51초"
+        return label
+    }()
+    private lazy var firstBusTimeRightLabel: UILabel = {
+        let label = UILabel()
+        label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
+        label.layer.borderWidth = 0.2
+        label.layer.cornerRadius = 2
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.attributedText = NSAttributedString()
+        let fullText = "2번째전 여유"
+        let range = (fullText as NSString).range(of: "여유")
+        let attributedString = NSMutableAttributedString(string: fullText)
+        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed"), range: range)
+        label.attributedText = attributedString
+        return label
+    }()
+    private lazy var secondBusTimeRightLabel: UILabel = {
+        let label = UILabel()
+        label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
+        label.layer.borderWidth = 0.2
+        label.layer.cornerRadius = 2
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.attributedText = NSAttributedString()
+        let fullText = "6번째전 여유"
+        let range = (fullText as NSString).range(of: "여유")
+        let attributedString = NSMutableAttributedString(string: fullText)
+        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed"), range: range)
+        label.attributedText = attributedString
+        return label
+    }()
+    private lazy var alarmButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "alarm"), for: .normal)
+        button.tintColor = UIColor(named: "bbusGray")
+        return button
+    }()
+
+    func configureLayout() {
+        self.addSubview(self.firstBusTimeLabel)
+        self.firstBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.firstBusTimeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            self.firstBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        ])
+
+        self.addSubview(self.secondBusTimeLabel)
+        self.secondBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.secondBusTimeLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        ])
+
+        self.addSubview(self.firstBusTimeRightLabel)
+        self.firstBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.firstBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.firstBusTimeLabel.centerYAnchor),
+            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: 4)
+        ])
+
+        self.addSubview(self.secondBusTimeRightLabel)
+        self.secondBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.secondBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.secondBusTimeLabel.centerYAnchor),
+            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: 4)
+        ])
+
+        self.addSubview(self.alarmButton)
+        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.alarmButton.widthAnchor.constraint(equalToConstant: 50),
+            self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
+            self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20)
+        ])
+    }
+}

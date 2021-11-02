@@ -15,6 +15,7 @@ class HomeView: UIView {
     convenience init() {
         self.init(frame: CGRect())
         self.backgroundColor = .red
+        self.configureReusableCell()
     }
 
     func configureLayout() {
@@ -37,5 +38,15 @@ class HomeView: UIView {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
         ])
+    }
+
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+        self.favoriteTableView.delegate = delegate
+        self.favoriteTableView.dataSource = delegate
+    }
+
+    private func configureReusableCell() {
+        self.favoriteTableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: FavoriteTableViewCell.identifier)
+        self.favoriteTableView.register(FavoriteHeaderView.self, forHeaderFooterViewReuseIdentifier: FavoriteHeaderView.identifier)
     }
 }
