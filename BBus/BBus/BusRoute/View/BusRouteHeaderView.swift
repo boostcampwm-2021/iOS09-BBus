@@ -69,7 +69,7 @@ class BusRouteHeaderView: UIView {
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -10)
         ])
         
         self.addSubview(self.busTypeLabel)

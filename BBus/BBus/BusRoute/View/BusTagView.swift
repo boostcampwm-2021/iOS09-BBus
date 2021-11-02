@@ -24,7 +24,7 @@ class BusTagView: UIView {
 
     private lazy var busTagImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: Image.maxSizeTag)
+        imageView.image = UIImage(named: Image.minSizeTag)
         imageView.contentMode = .scaleToFill
         return imageView
     }()
@@ -73,7 +73,7 @@ class BusTagView: UIView {
         self.busTagImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
-            self.busTagImageView.heightAnchor.constraint(equalToConstant: 35),
+            self.busTagImageView.heightAnchor.constraint(equalToConstant: 20),
             self.busTagImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.busTagImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.busTagImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -92,7 +92,7 @@ class BusTagView: UIView {
         self.busTagImageView.addSubview(self.busTagFrameView)
         self.busTagFrameView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busTagFrameView.centerXAnchor.constraint(equalTo: self.busTagImageView.centerXAnchor),
+            self.busTagFrameView.centerXAnchor.constraint(equalTo: self.busTagImageView.centerXAnchor, constant: -2),
             self.busTagFrameView.centerYAnchor.constraint(equalTo: self.busTagImageView.centerYAnchor)
         ])
 
@@ -100,9 +100,7 @@ class BusTagView: UIView {
         self.busStatusStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busStatusStackView.topAnchor.constraint(equalTo: self.busTagFrameView.topAnchor),
-//            self.busStatusStackView.leadingAnchor.constraint(equalTo: self.busTagFrameView.leadingAnchor),
-//            self.busStatusStackView.trailingAnchor.constraint(equalTo: self.busTagFrameView.trailingAnchor),
-            self.busStatusStackView.centerXAnchor.constraint(equalTo: self.busTagFrameView.centerXAnchor, constant: -4)
+            self.busStatusStackView.centerXAnchor.constraint(equalTo: self.busTagFrameView.centerXAnchor)
         ])
 
         self.busTagFrameView.addSubview(self.lowFloorLabel)
@@ -118,6 +116,6 @@ class BusTagView: UIView {
     private func configureMockTagData() {
         self.busNumberLabel.text = "6302"
         self.busCongestionLabel.text = "여유"
-        self.lowFloorLabel.text = "저상"
+        self.lowFloorLabel.text = ""
     }
 }

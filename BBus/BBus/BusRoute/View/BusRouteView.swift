@@ -30,6 +30,7 @@ class BusRouteView: UIView {
         tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
         tableView.backgroundColor = UIColor.cyan
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
+        tableView.separatorColor = UIColor.systemGray6
         return tableView
     }()
 
@@ -61,7 +62,7 @@ class BusRouteView: UIView {
         self.busRouteScrollContentsView.addSubview(self.busHeaderView)
         self.busHeaderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busHeaderView.heightAnchor.constraint(equalToConstant: 250),
+            self.busHeaderView.heightAnchor.constraint(equalToConstant: 150),
             self.busHeaderView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
             self.busHeaderView.trailingAnchor.constraint(equalTo: self.busRouteScrollContentsView.trailingAnchor),
             self.busHeaderView.topAnchor.constraint(equalTo: self.busRouteScrollContentsView.topAnchor)
