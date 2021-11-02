@@ -25,11 +25,20 @@ class BusRouteView: UIView {
         return view
     }()
     
-    private lazy var busRouteTableView: UITableView = {
+    lazy var busRouteTableView: UITableView = {
         let tableView = UITableView()
-//        tableView.register(<#T##nib: UINib?##UINib?#>, forCellReuseIdentifier: <#T##String#>)
+        tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
         tableView.backgroundColor = UIColor.cyan
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
         return tableView
+        
+        func () {
+            
+            header.title.text = ""
+            viewModel.$title.sink {
+                header.title.text = 
+            }
+        }
     }()
 
     convenience init() {
@@ -69,7 +78,7 @@ class BusRouteView: UIView {
         self.busRouteScrollContentsView.addSubview(self.busRouteTableView)
         self.busRouteTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busRouteTableView.heightAnchor.constraint(equalToConstant: 1000),
+            self.busRouteTableView.heightAnchor.constraint(equalToConstant: 1600),
             self.busRouteTableView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
             self.busRouteTableView.trailingAnchor.constraint(equalTo: self.busRouteScrollContentsView.trailingAnchor),
             self.busRouteTableView.topAnchor.constraint(equalTo: self.busHeaderView.bottomAnchor),
