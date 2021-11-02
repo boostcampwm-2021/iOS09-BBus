@@ -24,9 +24,10 @@ class BusCellTrailingView: UIView {
     private lazy var firstBusTimeRightLabel: UILabel = {
         let label = UILabel()
         label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
-        label.layer.borderWidth = 0.2
+        label.layer.borderWidth = 2
         label.layer.cornerRadius = 2
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.textColor = UIColor(named: "bbusGray")
         label.attributedText = NSAttributedString()
         let fullText = "2번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
@@ -38,9 +39,10 @@ class BusCellTrailingView: UIView {
     private lazy var secondBusTimeRightLabel: UILabel = {
         let label = UILabel()
         label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
-        label.layer.borderWidth = 0.2
+        label.layer.borderWidth = 2
         label.layer.cornerRadius = 2
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.textColor = UIColor(named: "bbusGray")
         label.attributedText = NSAttributedString()
         let fullText = "6번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
@@ -51,7 +53,8 @@ class BusCellTrailingView: UIView {
     }()
     private lazy var alarmButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "alarm"), for: .normal)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        button.setImage(UIImage(systemName: "alarm", withConfiguration: largeConfig), for: .normal)
         button.tintColor = UIColor(named: "bbusGray")
         return button
     }()
@@ -60,14 +63,14 @@ class BusCellTrailingView: UIView {
         self.addSubview(self.firstBusTimeLabel)
         self.firstBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.firstBusTimeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            self.firstBusTimeLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -3),
             self.firstBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
         self.addSubview(self.secondBusTimeLabel)
         self.secondBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.secondBusTimeLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: 3),
             self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
@@ -88,10 +91,10 @@ class BusCellTrailingView: UIView {
         self.addSubview(self.alarmButton)
         self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.alarmButton.widthAnchor.constraint(equalToConstant: 50),
+            self.alarmButton.widthAnchor.constraint(equalToConstant: 20),
             self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
             self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20)
+            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
     }
 }

@@ -19,6 +19,7 @@ class HomeView: UIView {
     }
 
     func configureLayout() {
+        self.favoriteTableView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteTableView)
         self.favoriteTableView.backgroundColor = UIColor.systemGray6
         self.favoriteTableView.translatesAutoresizingMaskIntoConstraints = false

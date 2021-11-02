@@ -14,7 +14,7 @@ class FavoriteTableViewCell: UITableViewCell {
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "272"
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = UIColor(named: "bbusTypeBlue")
         return label
     }()
@@ -46,7 +46,7 @@ class FavoriteTableViewCell: UITableViewCell {
             self.trailingView.topAnchor.constraint(equalTo: self.topAnchor),
             self.trailingView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.trailingView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.trailingView.widthAnchor.constraint(equalToConstant: self.frame.width / 2)
+            self.trailingView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
         ])
     }
 }

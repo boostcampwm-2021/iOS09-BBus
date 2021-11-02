@@ -14,13 +14,13 @@ class FavoriteHeaderView: UITableViewHeaderFooterView {
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "여의도환승센터(4번승강장)"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
     private lazy var directionLabel: UILabel = {
         let label = UILabel()
         label.text = "여의도 공원 방면"
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(named: "bbusGray")
         return label
     }()
