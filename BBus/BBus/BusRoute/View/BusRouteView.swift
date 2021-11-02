@@ -100,6 +100,7 @@ class BusRouteView: UIView {
 
             busTag.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
+                busTag.leadingAnchor.constraint(equalTo: self.busRouteTableView.leadingAnchor, constant: 5),
                 busTag.topAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: CGFloat(130+(i*130)))
             ])
         }

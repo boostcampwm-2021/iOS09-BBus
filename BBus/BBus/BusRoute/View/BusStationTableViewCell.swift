@@ -54,7 +54,7 @@ class BusStationTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             self.centerPointImageView.heightAnchor.constraint(equalToConstant: 15),
             self.centerPointImageView.widthAnchor.constraint(equalTo: self.centerPointImageView.heightAnchor),
-            self.centerPointImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 75),
+            self.centerPointImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 80),
             self.centerPointImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
