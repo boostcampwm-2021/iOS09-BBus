@@ -38,9 +38,4 @@ class HomeView: UIView {
             self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
         ])
     }
-
-    func showAlwaysButton() {
-        self.refreshButton.layer.zPosition = CGFloat.greatestFiniteMagnitude
-    }
-
 }

@@ -11,6 +11,12 @@ class HomeViewController: UIViewController {
 
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
+    private lazy var searchButton: UIButton = {
+        let button = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width: self.view.frame.width, height: 30)))
+        button.backgroundColor = .gray
+        button.setTitle("버스 또는 정류장 검색", for: .normal)
+        return button
+    }()
     private lazy var homeView = HomeView()
 
     init(viewModel: HomeViewModel) {
@@ -29,12 +35,16 @@ class HomeViewController: UIViewController {
 
         self.configureLayout()
         self.homeView.configureLayout()
-        self.homeView.showAlwaysButton()
         self.addButtonAction()
     }
 
     private func configureLayout() {
         self.view.backgroundColor = UIColor.lightGray
+
+        self.navigationItem.titleView = self.searchButton
+        self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
+
+
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.homeView)
         NSLayoutConstraint.activate([
