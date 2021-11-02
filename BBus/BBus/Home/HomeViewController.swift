@@ -9,6 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
 
@@ -24,13 +25,16 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Home"
 
         self.configureLayout()
         self.homeView.configureLayout()
+        self.homeView.showAlwaysButton()
+        self.addButtonAction()
     }
 
     private func configureLayout() {
-        self.view.backgroundColor = UIColor.yellow
+        self.view.backgroundColor = UIColor.lightGray
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.homeView)
         NSLayoutConstraint.activate([
@@ -41,5 +45,12 @@ class HomeViewController: UIViewController {
         ])
     }
 
+    private func addButtonAction() {
+        self.homeView.refreshButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
+
+    @objc func buttonAction(_ sender: UIButton) {
+        coordinator?.pushToSearchBus()
+    }
 }
 
