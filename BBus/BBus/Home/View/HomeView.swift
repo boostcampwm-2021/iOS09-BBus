@@ -17,7 +17,14 @@ class HomeView: UIView {
         view.backgroundColor = UIColor.systemBackground
         return view
     }()
-    lazy var refreshButton: UIButton = UIButton()
+    lazy var refreshButton: UIButton = {
+        let button = UIButton()
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        button.setImage(UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig), for: .normal)
+        button.layer.cornerRadius = 25
+        button.tintColor = UIColor.white
+        return button
+    }()
 
     convenience init() {
         self.init(frame: CGRect())
