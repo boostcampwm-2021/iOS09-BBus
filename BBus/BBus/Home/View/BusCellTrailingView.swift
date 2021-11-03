@@ -15,12 +15,13 @@ class BusCellTrailingView: UIView {
 
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
-            self.alarmButton.addAction(UIAction(handler: { _ in
+            let action = UIAction(handler: {_ in
                 self.alarmButtonDelegate?.shouldGoToAlarmSettingScene()
-            }), for: .touchUpInside)
+            })
+            self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
+            self.alarmButton.addAction(action, for: .touchUpInside)
         }
     }
-
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)

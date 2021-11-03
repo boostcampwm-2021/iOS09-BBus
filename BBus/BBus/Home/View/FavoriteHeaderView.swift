@@ -17,6 +17,7 @@ class FavoriteHeaderView: UICollectionReusableView {
     
     private var delegate: FavoriteHeaderViewDelegate? {
         didSet {
+            self.gestureRecognizers?.forEach() { self.removeGestureRecognizer($0) }
             let tapGesture = UITapGestureRecognizer()
             tapGesture.addTarget(self, action: #selector(headerViewTapped(_:)))
             self.addGestureRecognizer(tapGesture)
