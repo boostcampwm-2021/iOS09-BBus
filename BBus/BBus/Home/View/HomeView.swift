@@ -12,11 +12,9 @@ class HomeView: UIView {
     private lazy var favoriteCollectionView: UICollectionView = {
         UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
     }()
-    private lazy var navigationView = HomeNavigationView()
-    private lazy var navigationBottomBorderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.gray
-        view.isHidden = true
+    private lazy var navigationView: HomeNavigationView = {
+        let view = HomeNavigationView()
+        view.backgroundColor = UIColor.systemBackground
         return view
     }()
     lazy var refreshButton: UIButton = UIButton()
@@ -26,30 +24,12 @@ class HomeView: UIView {
     }
 
     func configureLayout() {
-        self.navigationView.clipsToBounds = true
-        self.addSubview(self.navigationView)
-        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
-//            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
-            self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
-        self.navigationBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.navigationBottomBorderView)
-        NSLayoutConstraint.activate([
-            self.navigationBottomBorderView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.navigationBottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.navigationBottomBorderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.navigationBottomBorderView.heightAnchor.constraint(equalToConstant: 0.2)
-        ])
-        
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteCollectionView)
         self.favoriteCollectionView.backgroundColor = UIColor.systemGray6
         self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.favoriteCollectionView.topAnchor.constraint(equalTo: self.navigationView.bottomAnchor),
+            self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
@@ -63,6 +43,15 @@ class HomeView: UIView {
             self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
             self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        ])
+        
+        self.addSubview(self.navigationView)
+        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
+            self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
 
@@ -86,23 +75,9 @@ class HomeView: UIView {
         self.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
     }
     
-    private var direction: Bool = false
-    
     func configureNavigationViewVisable(_ direction: Bool) {
-        if self.direction != direction {
-            UIView.animate(withDuration: TimeInterval(0.5), animations: {
-//                self.navigationView.frame.size = CGSize(width: self.navigationView.frame.width, height: 0)
-//                self.navigationView.layoutIfNeeded()
-                self.navigationView.transform = CGAffineTransform(translationX: 0, y: -50)
-                self.navigationView.alpha = 0
-            }, completion: { _ in
-                self.navigationView.isHidden = true
-            })
-        }
-        self.direction = direction
-        
-//        UIView.transition(with: self.navigationView, duration: 0.4, options: .transitionCrossDissolve, animations: {
-//            self.navigationView.isHidden = direction
-//        }, completion: nil)
+        UIView.animate(withDuration: TimeInterval(0.4), animations: {
+            self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -49 )
+        })
     }
 }

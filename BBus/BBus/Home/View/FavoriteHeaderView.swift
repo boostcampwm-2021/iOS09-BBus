@@ -60,7 +60,7 @@ class FavoriteHeaderView: UICollectionReusableView {
         self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor)
+            self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -35)
         ])
 
         self.addSubview(self.directionLabel)

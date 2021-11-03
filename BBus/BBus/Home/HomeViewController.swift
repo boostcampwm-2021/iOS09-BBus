@@ -32,6 +32,23 @@ class HomeViewController: UIViewController {
         self.homeView.configureLayout()
         self.homeView.configureReusableCell()
         self.homeView.configureDelegate(self)
+        
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = UIColor.white //컬러 설정 부분
+        self.view.addSubview(statusbarView)
+
+        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+        statusbarView.heightAnchor
+            .constraint(equalToConstant: statusBarHeight).isActive = true
+        statusbarView.widthAnchor
+            .constraint(equalTo: self.view.widthAnchor, multiplier: 1.0).isActive = true
+        statusbarView.topAnchor
+            .constraint(equalTo: self.view.topAnchor).isActive = true
+        statusbarView.centerXAnchor
+            .constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
 
     private func configureLayout() {
@@ -57,6 +74,7 @@ extension HomeViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView.contentOffset.y > 30 else { return }
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             self.homeView.configureNavigationViewVisable(true)
         }
@@ -97,7 +115,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(width: self.view.frame.width, height: 70)
+        if section == 0 {
+            return CGSize(width: self.view.frame.width, height: 120)
+        }
+        else {
+            return CGSize(width: self.view.frame.width, height: 70)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 0, bottom: 10, right: 0)
     }
 }
 
