@@ -9,11 +9,42 @@ import UIKit
 
 class SearchBusView: UIView {
 
-    private lazy var searchResultScrollView = SearchResultScrollView()
+        
     var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
-    
+    private lazy var searchResultScrollView = SearchResultScrollView()
+    private lazy var navigationView: SearchBusNavigationView = {
+        let view = SearchBusNavigationView()
+        view.backgroundColor = UIColor.systemBackground
+        return view
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.configureLayout()
+        self.searchResultScrollView.configureLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.configureLayout()
+        self.searchResultScrollView.configureLayout()
+    }
+
+    convenience init() {
+        self.init(frame: CGRect())
+    }
+
     // MARK: - Configuration
-    func configureLayout() {
+    private func configureLayout() {
+        self.addSubview(self.navigationView)
+        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navigationView.heightAnchor.constraint(equalToConstant: 100),
+            self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+
         self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.searchResultScrollView)
         NSLayoutConstraint.activate([
@@ -23,7 +54,6 @@ class SearchBusView: UIView {
             self.searchResultScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
-        self.searchResultScrollView.configureLayout()
     }
 
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {

@@ -15,8 +15,8 @@ class SearchBusViewController: UIViewController {
         textField.backgroundColor = UIColor.gray
         return textField
     }()
-    private lazy var searchBusView = SearchBusView()
     weak var coordinator: SearchBusCoordinator?
+    private lazy var searchBusView = SearchBusView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,17 @@ class SearchBusViewController: UIViewController {
         self.configureUI()
         self.searchBusView.configureLayout()
         self.searchBusView.configureDelegate(self)
+    }
+
+    private func configureLayout() {
+        self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.searchBusView)
+        NSLayoutConstraint.activate([
+            self.searchBusView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.searchBusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.searchBusView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.searchBusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
     }
 
     override func viewWillDisappear(_ animated: Bool) {

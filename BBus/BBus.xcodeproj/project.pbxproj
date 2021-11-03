@@ -15,6 +15,7 @@
 		4A04682827327BEC008D87CE /* AlarmSettingPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682727327BEC008D87CE /* AlarmSettingPushable.swift */; };
 		4A17CED72733A754007B1646 /* SearchResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED62733A754007B1646 /* SearchResultHeaderView.swift */; };
 		4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */; };
+		4A04682A2732B7B3008D87CE /* SearchBusNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchBusNavigationView.swift */; };
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
 		4A1A22DD2732801700476861 /* StationCoodinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DC2732801700476861 /* StationCoodinator.swift */; };
 		4A1A22DF2732806300476861 /* StationPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DE2732806300476861 /* StationPushable.swift */; };
@@ -90,6 +91,7 @@
 		4A04682727327BEC008D87CE /* AlarmSettingPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPushable.swift; sourceTree = "<group>"; };
 		4A17CED62733A754007B1646 /* SearchResultHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultHeaderView.swift; sourceTree = "<group>"; };
 		4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultScrollView.swift; sourceTree = "<group>"; };
+		4A0468292732B7B3008D87CE /* SearchBusNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusNavigationView.swift; sourceTree = "<group>"; };
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
 		4A1A22DC2732801700476861 /* StationCoodinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCoodinator.swift; sourceTree = "<group>"; };
 		4A1A22DE2732806300476861 /* StationPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPushable.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */,
 				4A17CED62733A754007B1646 /* SearchResultHeaderView.swift */,
 				4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */,
+				4A0468292732B7B3008D87CE /* SearchBusNavigationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				4ACA5235272FCF2100EC0531 /* SearchStationViewController.swift in Sources */,
 				4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
+				4A04682A2732B7B3008D87CE /* SearchBusNavigationView.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
 				4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
