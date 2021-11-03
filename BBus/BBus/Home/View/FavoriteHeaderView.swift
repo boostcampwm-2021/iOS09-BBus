@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteHeaderView: UITableViewHeaderFooterView {
+class FavoriteHeaderView: UICollectionReusableView {
 
     static let identifier = "FavoriteHeaderView"
 
@@ -25,20 +25,14 @@ class FavoriteHeaderView: UITableViewHeaderFooterView {
         return label
     }()
 
-
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        self.configureLayout()
-    }
-
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.configureLayout()
     }
 
+    
+
     private func configureLayout() {
-        self.backgroundView = UIView()
-        self.backgroundView?.backgroundColor = UIColor.systemBackground
 
         self.addSubview(self.stationTitleLabel)
         self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false

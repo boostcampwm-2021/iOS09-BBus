@@ -9,7 +9,10 @@ import UIKit
 
 class HomeView: UIView {
 
-    private lazy var favoriteTableView: UITableView = UITableView(frame: CGRect(), style: .grouped)
+    private lazy var favoriteCollectionView: UICollectionView = {
+        UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
+    }()
+
     lazy var refreshButton: UIButton = UIButton()
 
     convenience init() {
@@ -19,15 +22,15 @@ class HomeView: UIView {
     }
 
     func configureLayout() {
-        self.favoriteTableView.contentInsetAdjustmentBehavior = .never
-        self.addSubview(self.favoriteTableView)
-        self.favoriteTableView.backgroundColor = UIColor.systemGray6
-        self.favoriteTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
+        self.addSubview(self.favoriteCollectionView)
+        self.favoriteCollectionView.backgroundColor = UIColor.systemGray6
+        self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.favoriteTableView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.favoriteTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.favoriteTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.favoriteTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
         self.addSubview(self.refreshButton)
@@ -41,13 +44,22 @@ class HomeView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
-        self.favoriteTableView.delegate = delegate
-        self.favoriteTableView.dataSource = delegate
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
+        self.favoriteCollectionView.delegate = delegate
+        self.favoriteCollectionView.dataSource = delegate
+    }
+
+    private func collectionViewLayout() -> UICollectionViewLayout {
+        print(self.frame)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        layout.itemSize = CGSize(width: self.frame.width, height: 70)
+        return layout
     }
 
     private func configureReusableCell() {
-        self.favoriteTableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: FavoriteTableViewCell.identifier)
-        self.favoriteTableView.register(FavoriteHeaderView.self, forHeaderFooterViewReuseIdentifier: FavoriteHeaderView.identifier)
+        self.favoriteCollectionView.register(FavoriteHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteHeaderView.identifier)
+        self.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
     }
 }

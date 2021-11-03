@@ -7,9 +7,9 @@
 
 import UIKit
 
-class FavoriteTableViewCell: UITableViewCell {
+class FavoriteCollectionViewCell: UICollectionViewCell {
 
-    static let identifier = "FavoriteTableViewCell"
+    static let identifier = "FavoriteCollectionViewCell"
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
@@ -20,14 +20,14 @@ class FavoriteTableViewCell: UITableViewCell {
     }()
     private lazy var trailingView = BusCellTrailingView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         self.trailingView.configureLayout()
         self.configureLayout()
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.trailingView.configureLayout()
         self.configureLayout()
     }
