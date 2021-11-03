@@ -31,7 +31,6 @@ class HomeViewController: UIViewController {
         self.homeView.configureLayout()
         self.homeView.configureReusableCell()
         self.homeView.configureDelegate(self)
-//        self.addButtonAction()
     }
 
     private func configureLayout() {
@@ -46,12 +45,6 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-
-//    private func addButtonAction() {
-//        self.searchButton.addAction(UIAction.init(handler: { _ in
-//            self.coordinator?.pushToSearchBus()
-//        }), for: .touchUpInside)
-//    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {
@@ -87,3 +80,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         CGSize(width: self.view.frame.width, height: 70)
     }
 }
+
+extension HomeViewController: HomeSearchButtonDelegate {
+    func shouldGoToSearchBusScene() {
+        self.coordinator?.pushToSearchBus()
+    }
+}
+

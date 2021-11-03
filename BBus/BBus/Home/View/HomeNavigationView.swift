@@ -7,7 +7,19 @@
 
 import UIKit
 
+protocol HomeSearchButtonDelegate {
+    func shouldGoToSearchBusScene()
+}
+
 class HomeNavigationView: UIView {
+
+    private var searchButtonDelegate: HomeSearchButtonDelegate? {
+        didSet {
+            self.searchButton.addAction(UIAction(handler: { _ in
+                self.searchButtonDelegate?.shouldGoToSearchBusScene()
+            }), for: .touchUpInside)
+        }
+    }
     private lazy var searchButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "bbusLightGray")
@@ -55,6 +67,10 @@ class HomeNavigationView: UIView {
             self.searchButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
         ])
         self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
+    }
+
+    func configureButtonDelegate(_ delegate: HomeSearchButtonDelegate) {
+        self.searchButtonDelegate = delegate
     }
 
 }
