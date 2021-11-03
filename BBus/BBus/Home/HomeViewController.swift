@@ -40,8 +40,9 @@ class HomeViewController: UIViewController {
 
         self.configureLayout()
         self.homeView.configureLayout()
-        self.addButtonAction()
+        self.homeView.configureReusableCell()
         self.homeView.configureDelegate(self)
+        self.addButtonAction()
     }
 
     private func configureLayout() {
@@ -74,6 +75,10 @@ extension HomeViewController: UICollectionViewDelegate {
 }
 
 extension HomeViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         5
     }
@@ -85,4 +90,10 @@ extension HomeViewController: UICollectionViewDataSource {
         return cell
     }
 
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: self.view.frame.width, height: 70)
+    }
 }

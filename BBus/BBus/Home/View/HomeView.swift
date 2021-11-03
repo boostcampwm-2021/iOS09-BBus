@@ -18,7 +18,6 @@ class HomeView: UIView {
     convenience init() {
         self.init(frame: CGRect())
         self.backgroundColor = .red
-        self.configureReusableCell()
     }
 
     func configureLayout() {
@@ -44,7 +43,7 @@ class HomeView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout) {
         self.favoriteCollectionView.delegate = delegate
         self.favoriteCollectionView.dataSource = delegate
     }
@@ -54,11 +53,10 @@ class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-        layout.itemSize = CGSize(width: self.frame.width, height: 70)
         return layout
     }
 
-    private func configureReusableCell() {
+    func configureReusableCell() {
         self.favoriteCollectionView.register(FavoriteHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteHeaderView.identifier)
         self.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
     }
