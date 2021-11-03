@@ -45,6 +45,7 @@
 		4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */; };
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
+		873578832732545D00CC8ECC /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873578822732545D00CC8ECC /* CustomNavigationBar.swift */; };
 		87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */; };
 		87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8C27311BF100F461A7 /* BusTagView.swift */; };
 		873D6396273039E100E79069 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D6395273039E100E79069 /* Coordinator.swift */; };
@@ -108,6 +109,7 @@
 		4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewController.swift; sourceTree = "<group>"; };
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
+		873578822732545D00CC8ECC /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusPushable.swift; sourceTree = "<group>"; };
 		87359B8C27311BF100F461A7 /* BusTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusTagView.swift; sourceTree = "<group>"; };
 		873D6395273039E100E79069 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */,
 				04147315273254C600BACE2C /* BusRouteLineView.swift */,
 				87359B8C27311BF100F461A7 /* BusTagView.swift */,
+				873578822732545D00CC8ECC /* CustomNavigationBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
 				4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */,
+				873578832732545D00CC8ECC /* CustomNavigationBar.swift in Sources */,
 				4ACA5235272FCF2100EC0531 /* SearchStationViewController.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,

@@ -8,7 +8,12 @@
 import UIKit
 
 class BusRouteView: UIView {
-    
+
+    enum Color {
+        static let white = UIColor.white
+        static let blue = UIColor.systemBlue
+    }
+
     private lazy var colorBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.systemBlue
@@ -21,7 +26,7 @@ class BusRouteView: UIView {
     
     private lazy var busHeaderView: BusRouteHeaderView = {
         let view = BusRouteHeaderView()
-        view.backgroundColor = UIColor.systemBlue
+        view.backgroundColor = Color.blue
         return view
     }()
     
@@ -32,6 +37,11 @@ class BusRouteView: UIView {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
         tableView.separatorColor = UIColor.systemGray6
         return tableView
+    }()
+
+    lazy var customNavigationBar: CustomNavigationBar = {
+        let navigationBar = CustomNavigationBar()
+        return navigationBar
     }()
 
     convenience init() {
@@ -62,7 +72,7 @@ class BusRouteView: UIView {
         self.busRouteScrollContentsView.addSubview(self.busHeaderView)
         self.busHeaderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busHeaderView.heightAnchor.constraint(equalToConstant: 150),
+            self.busHeaderView.heightAnchor.constraint(equalToConstant: 170),
             self.busHeaderView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
             self.busHeaderView.trailingAnchor.constraint(equalTo: self.busRouteScrollContentsView.trailingAnchor),
             self.busHeaderView.topAnchor.constraint(equalTo: self.busRouteScrollContentsView.topAnchor)
@@ -87,11 +97,23 @@ class BusRouteView: UIView {
             self.busRouteScrollContentsView.bottomAnchor.constraint(equalTo: self.busRouteScrollView.contentLayoutGuide.bottomAnchor),
             self.busRouteScrollContentsView.widthAnchor.constraint(equalTo: self.busRouteScrollView.frameLayoutGuide.widthAnchor)
         ])
+
+        self.addSubview(self.customNavigationBar)
+        self.customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.customNavigationBar.topAnchor.constraint(equalTo: self.topAnchor),
+            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
     }
     
     func configureBusColor(to color: UIColor) {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
+    }
+
+    func configureDelegate(_ delegate: BackButtonDelegate) {
+        self.customNavigationBar.configureDelegate(delegate)
     }
 
     func addBusTag() {

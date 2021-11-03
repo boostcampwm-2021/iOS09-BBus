@@ -15,26 +15,15 @@ class BusRouteViewController: UIViewController {
         super.viewDidLoad()
 
         self.configureLayout()
+        self.configureDelegate()
         self.configureStatusBarBackgroundColor(to: UIColor.systemBlue)
-        self.configureNavigationBarBackgroundColor(to: UIColor.systemBlue)
         self.configureTableView()
         self.busRouteView.addBusTag()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.configureStatusBarBackgroundColor(to: UIColor.white)
-        self.configureNavigationBarBackgroundColor(to: UIColor.white)
-    }
-    
+
     private func configureTableView() {
         self.busRouteView.busRouteTableView.delegate = self
         self.busRouteView.busRouteTableView.dataSource = self
-    }
-    
-    private func configureNavigationBarBackgroundColor(to color: UIColor) {
-        self.navigationController?.navigationBar.backgroundColor = color
     }
     
     private func configureStatusBarBackgroundColor(to color: UIColor) {
@@ -67,11 +56,15 @@ class BusRouteViewController: UIViewController {
         self.busRouteView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.busRouteView)
         NSLayoutConstraint.activate([
-            self.busRouteView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.busRouteView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.busRouteView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.busRouteView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
+    }
+
+    private func configureDelegate() {
+        self.busRouteView.configureDelegate(self)
     }
 }
 
@@ -102,5 +95,12 @@ extension BusRouteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return BusStationTableViewCell.cellHeight
+    }
+}
+
+
+extension BusRouteViewController: BackButtonDelegate {
+    func touchedBackButton() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
