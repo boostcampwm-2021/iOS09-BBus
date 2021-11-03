@@ -68,6 +68,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                         as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
 
+        cell.configureDelegate(self)
         return cell
     }
 
@@ -92,3 +93,10 @@ extension HomeViewController: HomeSearchButtonDelegate {
     }
 }
 
+extension HomeViewController: AlarmButtonDelegate {
+    func shouldGoToAlarmSettingScene() {
+        // TODO: Model binding Logic needed
+
+        self.coordinator?.pushToAlarmSetting()
+    }
+}

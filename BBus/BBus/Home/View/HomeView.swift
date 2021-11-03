@@ -68,7 +68,7 @@ class HomeView: UIView {
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & HomeSearchButtonDelegate) {
         self.favoriteCollectionView.delegate = delegate
         self.favoriteCollectionView.dataSource = delegate
-        self.navigationView.configureButtonDelegate(delegate)
+        self.navigationView.configureDelegate(delegate)
     }
 
     private func collectionViewLayout() -> UICollectionViewLayout {

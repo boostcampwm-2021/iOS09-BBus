@@ -52,6 +52,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         ])
     }
 
+    func configureDelegate(_ delegate: AlarmButtonDelegate) {
+        self.trailingView.configureDelegate(delegate)
+    }
+
     private func configureUI() {
         self.backgroundColor = UIColor.systemBackground
     }

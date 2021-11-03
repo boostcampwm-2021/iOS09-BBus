@@ -69,7 +69,7 @@ class HomeNavigationView: UIView {
         self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
     }
 
-    func configureButtonDelegate(_ delegate: HomeSearchButtonDelegate) {
+    func configureDelegate(_ delegate: HomeSearchButtonDelegate) {
         self.searchButtonDelegate = delegate
     }
 

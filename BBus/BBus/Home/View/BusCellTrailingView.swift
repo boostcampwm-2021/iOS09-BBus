@@ -7,7 +7,19 @@
 
 import UIKit
 
+protocol AlarmButtonDelegate {
+    func shouldGoToAlarmSettingScene()
+}
+
 class BusCellTrailingView: UIView {
+
+    private var alarmButtonDelegate: AlarmButtonDelegate? {
+        didSet {
+            self.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene()
+            }), for: .touchUpInside)
+        }
+    }
 
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
@@ -104,5 +116,9 @@ class BusCellTrailingView: UIView {
             self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
+    }
+
+    func configureDelegate(_ delegate: AlarmButtonDelegate) {
+        self.alarmButtonDelegate = delegate
     }
 }
