@@ -8,11 +8,17 @@
 import UIKit
 
 class HomeView: UIView {
-
+    
     private lazy var favoriteCollectionView: UICollectionView = {
         UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
     }()
-
+    private lazy var navigationView = HomeNavigationView()
+    private lazy var navigationBottomBorderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.gray
+        view.isHidden = true
+        return view
+    }()
     lazy var refreshButton: UIButton = UIButton()
 
     convenience init() {
@@ -20,12 +26,29 @@ class HomeView: UIView {
     }
 
     func configureLayout() {
+        self.addSubview(self.navigationView)
+        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
+            self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+        self.navigationBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.navigationBottomBorderView)
+        NSLayoutConstraint.activate([
+            self.navigationBottomBorderView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navigationBottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.navigationBottomBorderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.navigationBottomBorderView.heightAnchor.constraint(equalToConstant: 0.2)
+        ])
+        
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteCollectionView)
         self.favoriteCollectionView.backgroundColor = UIColor.systemGray6
         self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.favoriteCollectionView.topAnchor.constraint(equalTo: self.navigationView.bottomAnchor),
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)

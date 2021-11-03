@@ -11,17 +11,6 @@ class HomeViewController: UIViewController {
 
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor(named: "bbusLightGray")
-        button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
-        button.layer.borderWidth = 0.3
-        button.layer.cornerRadius = 3
-        button.setTitle("버스 또는 정류장 검색", for: .normal)
-        button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        return button
-    }()
     private lazy var homeView = HomeView()
 
     init(viewModel: HomeViewModel) {
@@ -42,16 +31,11 @@ class HomeViewController: UIViewController {
         self.homeView.configureLayout()
         self.homeView.configureReusableCell()
         self.homeView.configureDelegate(self)
-        self.addButtonAction()
+//        self.addButtonAction()
     }
 
     private func configureLayout() {
         self.view.backgroundColor = UIColor.systemBackground
-
-        self.searchButton.translatesAutoresizingMaskIntoConstraints = false
-        self.searchButton.widthAnchor.constraint(equalToConstant: self.view.frame.width - 20).isActive = true
-        self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
-        self.navigationItem.titleView = self.searchButton
 
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.homeView)
@@ -63,11 +47,11 @@ class HomeViewController: UIViewController {
         ])
     }
 
-    private func addButtonAction() {
-        self.searchButton.addAction(UIAction.init(handler: { _ in
-            self.coordinator?.pushToSearchBus()
-        }), for: .touchUpInside)
-    }
+//    private func addButtonAction() {
+//        self.searchButton.addAction(UIAction.init(handler: { _ in
+//            self.coordinator?.pushToSearchBus()
+//        }), for: .touchUpInside)
+//    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {
