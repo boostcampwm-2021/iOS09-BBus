@@ -135,10 +135,10 @@ class SearchBusNavigationView: UIView {
 //            self.stationTabButton.configuration = buttonPaddingConfiguration
 //        }
 //        else {
-        self.busTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
-        self.stationTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
-        self.busTabButton.imageView?.sizeToFit()
-        self.stationTabButton.imageView?.sizeToFit()
+        self.busTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        self.stationTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        self.busTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
+        self.stationTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
 //        }
     }
 }
