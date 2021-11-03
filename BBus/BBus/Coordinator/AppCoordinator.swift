@@ -17,7 +17,6 @@ class AppCoordinator: NSObject, Coordinator {
         self.window = window
 
         let navigationController = UINavigationController()
-        navigationController.isNavigationBarHidden = true
         self.presenter = navigationController
 
         self.childCoordinators = []

@@ -48,6 +48,11 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: Model binding Logic needed
+
+        self.coordinator?.pushToBusRoute()
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
