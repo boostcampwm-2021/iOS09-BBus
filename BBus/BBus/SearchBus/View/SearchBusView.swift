@@ -16,12 +16,12 @@ class SearchBusView: UIView {
     }()
     private lazy var busResultTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .blue
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return tableView
     }()
     private lazy var stationResultTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .gray
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return tableView
     }()
     
@@ -67,5 +67,16 @@ class SearchBusView: UIView {
             self.stationResultTableView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5)
         ])
     }
+    
+    func configureReusableCell() {
+        self.busResultTableView.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+        self.stationResultTableView.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+    }
 
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+        self.busResultTableView.delegate = delegate
+        self.busResultTableView.dataSource = delegate
+        self.stationResultTableView.delegate = delegate
+        self.stationResultTableView.dataSource = delegate
+    }
 }

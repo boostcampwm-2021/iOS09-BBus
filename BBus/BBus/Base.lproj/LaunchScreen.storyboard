@@ -16,31 +16,8 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Nu-tS-itb">
-                                <rect key="frame" x="60" y="148" width="240" height="189"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="O8J-Kf-uFd"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="fqk-pv-VNE"/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XGZ-pg-Vej">
-                                <rect key="frame" x="60" y="148" width="462" height="189"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="top" secondItem="O8J-Kf-uFd" secondAttribute="top" id="2yq-lK-b6Z"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="leading" secondItem="O8J-Kf-uFd" secondAttribute="leading" id="Gg4-z4-TdT"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="trailing" secondItem="fqk-pv-VNE" secondAttribute="trailing" constant="222" id="J8D-0V-dQQ"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="leading" secondItem="fqk-pv-VNE" secondAttribute="leading" id="JMl-Kk-agS"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="width" secondItem="O8J-Kf-uFd" secondAttribute="width" multiplier="2" id="Zx2-9C-5hF"/>
-                            <constraint firstItem="fqk-pv-VNE" firstAttribute="bottom" secondItem="XGZ-pg-Vej" secondAttribute="bottom" id="bel-2b-1GG"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="top" secondItem="fqk-pv-VNE" secondAttribute="top" id="qbW-f5-th5"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="height" secondItem="O8J-Kf-uFd" secondAttribute="height" id="u8L-EG-rQJ"/>
-                            <constraint firstItem="XGZ-pg-Vej" firstAttribute="bottom" secondItem="O8J-Kf-uFd" secondAttribute="bottom" id="z1w-2t-po8"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>

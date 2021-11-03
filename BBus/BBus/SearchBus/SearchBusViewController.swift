@@ -24,7 +24,9 @@ class SearchBusViewController: UIViewController {
         self.title = "SearchBus"
         self.navigationItem.titleView = self.searchTextField
         self.configureLayout()
+        self.searchBusView.configureReusableCell()
         self.searchBusView.configureLayout()
+        self.searchBusView.configureDelegate(self)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,3 +47,39 @@ class SearchBusViewController: UIViewController {
         ])
     }
 }
+
+extension SearchBusViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UITableViewHeaderFooterView()
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(named: "bbusGray")
+        view.backgroundView = backgroundView
+        return view
+    }
+}
+
+extension SearchBusViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        10
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return (section % 2 == 0) ? "경기" : "부산"
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier) as? SearchResultTableViewCell else { return UITableViewCell() }
+        cell.configureUI(title: "15", detailInfo: "가평군 일반버스")
+        cell.configureLayout()
+        return cell
+    }
+}
+

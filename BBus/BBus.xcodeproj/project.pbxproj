@@ -16,6 +16,7 @@
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
 		4A1A22DD2732801700476861 /* StationCoodinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DC2732801700476861 /* StationCoodinator.swift */; };
 		4A1A22DF2732806300476861 /* StationPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DE2732806300476861 /* StationPushable.swift */; };
+		4A1A22E12732CE7900476861 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultTableViewCell.swift */; };
 		4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */; };
 		4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */; };
 		4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */; };
@@ -88,6 +89,7 @@
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
 		4A1A22DC2732801700476861 /* StationCoodinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCoodinator.swift; sourceTree = "<group>"; };
 		4A1A22DE2732806300476861 /* StationPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPushable.swift; sourceTree = "<group>"; };
+		4A1A22E02732CE7900476861 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeaderView.swift; sourceTree = "<group>"; };
 		4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCellTrailingView.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA51F4272FCE0200EC0531 /* SearchBusView.swift */,
+				4A1A22E02732CE7900476861 /* SearchResultTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
+				4A1A22E12732CE7900476861 /* SearchResultTableViewCell.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
