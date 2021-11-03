@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04147316273254C600BACE2C /* BusRouteLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04147315273254C600BACE2C /* BusRouteLineView.swift */; };
 		0414731A27326BD400BACE2C /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0414731927326BD400BACE2C /* BusRouteCoordinator.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -71,7 +70,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04147315273254C600BACE2C /* BusRouteLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteLineView.swift; sourceTree = "<group>"; };
 		0414731927326BD400BACE2C /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -334,7 +332,6 @@
 				4ACA520C272FCE6500EC0531 /* BusRouteView.swift */,
 				0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */,
 				0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */,
-				04147315273254C600BACE2C /* BusRouteLineView.swift */,
 				87359B8C27311BF100F461A7 /* BusTagView.swift */,
 				873578822732545D00CC8ECC /* CustomNavigationBar.swift */,
 			);
@@ -649,7 +646,6 @@
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
 				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
 				87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */,
-				04147316273254C600BACE2C /* BusRouteLineView.swift in Sources */,
 				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
 				4ACA5201272FCE3100EC0531 /* SearchStationView.swift in Sources */,
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,

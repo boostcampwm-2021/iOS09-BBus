@@ -26,6 +26,9 @@ class BusRouteViewController: UIViewController {
         static let navigationBack = UIImage.init(systemName: "chevron.left")
         static let headerArrow = UIImage.init(systemName: "arrow.left.and.right")
         static let stationCenterCircle = UIImage(named: "StationCenterCircle")
+        static let stationCenterGetOn = UIImage(named: "GetOn")
+        static let stationCenterGetOff = UIImage(named: "GetOff")
+        static let stationCenterUturn = UIImage(named: "Uturn")
         static let tagMaxSize = UIImage(named: "BusTagMaxSize")
         static let tagMinSize = UIImage(named: "BusTagMinSize")
         static let blueBusIcon = UIImage(named: "busIcon")
@@ -121,6 +124,13 @@ extension BusRouteViewController: UITableViewDataSource {
         }
         else if indexPath.item == 19 {
             cell.configureLineColor(before: BusRouteViewController.Color.redLine, after: BusRouteViewController.Color.clear)
+        }
+        
+        if indexPath.item == 10 {
+            cell.configureCenterImage(type: .uturn)
+        }
+        else {
+            cell.configureCenterImage(type: .circle)
         }
         
         return cell
