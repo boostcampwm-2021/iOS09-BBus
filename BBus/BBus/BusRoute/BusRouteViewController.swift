@@ -42,7 +42,6 @@ class BusRouteViewController: UIViewController {
         self.configureBackgroundColor()
         self.configureLayout()
         self.configureDelegate()
-        self.configureTableView()
         self.busRouteView.addBusTag()
         
         guard let navigationController = self.navigationController else { return }
@@ -51,15 +50,10 @@ class BusRouteViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         if self.isMovingFromParent {
             self.coordinator?.terminate()
         }
-    }
-
-    private func configureTableView() {
-        self.busRouteView.busRouteTableView.delegate = self
-        self.busRouteView.busRouteTableView.dataSource = self
     }
 
     private func configureLayout() {
@@ -122,6 +116,24 @@ extension BusRouteViewController: UITableViewDataSource {
 extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return BusStationTableViewCell.cellHeight
+    }
+}
+
+extension BusRouteViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.busRouteView.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y >= 70 && scrollView.contentOffset.y < 127 {
+            UIView.animate(withDuration: 0.05) {
+                scrollView.contentOffset.y = 127
+            }
+        } else if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < 70 {
+            UIView.animate(withDuration: 0.05) {
+                scrollView.contentOffset.y = 0
+            }
+        }
     }
 }
 

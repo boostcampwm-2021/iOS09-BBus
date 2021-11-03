@@ -13,7 +13,7 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
-    lazy var customNavigationBarBackButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = BusRouteViewController.Color.white
         button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
@@ -22,7 +22,7 @@ class CustomNavigationBar: UIView {
         return button
     }()
 
-    lazy var customNavigationBarBackButtonTitle: UILabel = {
+    private lazy var backButtonTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -30,7 +30,7 @@ class CustomNavigationBar: UIView {
         return label
     }()
 
-    lazy var customNavigationBarTitle: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -42,36 +42,34 @@ class CustomNavigationBar: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = BusRouteViewController.Color.blueBus
         self.configureLayout()
-        self.configureMockNavigationData()
     }
 
     func configureLayout() {
-        self.addSubview(self.customNavigationBarBackButton)
-        self.customNavigationBarBackButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.backButton)
+        self.backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.customNavigationBarBackButton.widthAnchor.constraint(equalToConstant: 18),
-            self.customNavigationBarBackButton.heightAnchor.constraint(equalToConstant: 27),
-            self.customNavigationBarBackButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            self.customNavigationBarBackButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-            self.customNavigationBarBackButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            self.backButton.widthAnchor.constraint(equalToConstant: 18),
+            self.backButton.heightAnchor.constraint(equalToConstant: 27),
+            self.backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            self.backButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
         ])
 
-        self.addSubview(self.customNavigationBarBackButtonTitle)
-        self.customNavigationBarBackButtonTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.backButtonTitleLabel)
+        self.backButtonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.customNavigationBarBackButtonTitle.centerYAnchor.constraint(equalTo: self.customNavigationBarBackButton.centerYAnchor),
-            self.customNavigationBarBackButtonTitle.leadingAnchor.constraint(equalTo: self.customNavigationBarBackButton.trailingAnchor, constant: 12)
+            self.backButtonTitleLabel.centerYAnchor.constraint(equalTo: self.backButton.centerYAnchor),
+            self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor, constant: 12)
         ])
 
-        self.addSubview(self.customNavigationBarTitle)
-        self.customNavigationBarTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.titleLabel)
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.customNavigationBarTitle.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.customNavigationBarTitle.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.customNavigationBarTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.customNavigationBarTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
 
@@ -83,7 +81,28 @@ class CustomNavigationBar: UIView {
         self.delegate?.touchedBackButton()
     }
 
-    func configureMockNavigationData() {
-        self.customNavigationBarBackButtonTitle.text = "641"
+    // MARK: - Configure NavigationBar
+    func configureTintColor(color: UIColor) {
+        self.backButton.tintColor = color
+        self.backButtonTitleLabel.textColor = color
+        self.titleLabel.textColor = color
+    }
+
+    func configureBackgroundColor(color: UIColor) {
+        self.backgroundColor = color
+    }
+
+    func configureAlpha(alpha: CGFloat) {
+        self.backButtonTitleLabel.alpha = alpha
+        self.titleLabel.alpha = alpha
+        self.backgroundColor = self.backgroundColor?.withAlphaComponent(alpha)
+    }
+
+    func configureBackButtonTitle(_ title: String) {
+        self.backButtonTitleLabel.text = title
+    }
+
+    func configureTitle(_ title: NSAttributedString) {
+        self.titleLabel.attributedText = title
     }
 }

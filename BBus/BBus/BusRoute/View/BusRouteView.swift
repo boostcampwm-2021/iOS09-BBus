@@ -21,7 +21,7 @@ class BusRouteView: UIView {
     
     private lazy var busHeaderView = BusRouteHeaderView()
     
-    lazy var busRouteTableView: UITableView = {
+    private lazy var busRouteTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
@@ -31,6 +31,11 @@ class BusRouteView: UIView {
 
     lazy var customNavigationBar: CustomNavigationBar = {
         let navigationBar = CustomNavigationBar()
+        navigationBar.configureTintColor(color: BusRouteViewController.Color.white)
+        navigationBar.configureBackgroundColor(color: BusRouteViewController.Color.blueBus)
+
+        navigationBar.configureBackButtonTitle("272")
+        navigationBar.configureAlpha(alpha: 0)
         return navigationBar
     }()
 
@@ -102,8 +107,11 @@ class BusRouteView: UIView {
         self.busHeaderView.backgroundColor = color
     }
 
-    func configureDelegate(_ delegate: BackButtonDelegate) {
+    func configureDelegate(_ delegate: BackButtonDelegate & UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate) {
         self.customNavigationBar.configureDelegate(delegate)
+        self.busRouteTableView.delegate = delegate
+        self.busRouteTableView.dataSource = delegate
+        self.busRouteScrollView.delegate = delegate
     }
 
     func addBusTag() {
