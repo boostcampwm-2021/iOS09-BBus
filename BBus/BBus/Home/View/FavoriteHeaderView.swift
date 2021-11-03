@@ -7,9 +7,25 @@
 
 import UIKit
 
+protocol FavoriteHeaderViewDelegate {
+    func shouldGoToStationScene()
+}
+
 class FavoriteHeaderView: UICollectionReusableView {
 
     static let identifier = "FavoriteHeaderView"
+    
+    private var delegate: FavoriteHeaderViewDelegate? {
+        didSet {
+            let tapGesture = UITapGestureRecognizer()
+            tapGesture.addTarget(self, action: #selector(headerViewTapped(_:)))
+            self.addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc private func headerViewTapped(_ sender: UICollectionReusableView) {
+        delegate?.shouldGoToStationScene()
+    }
 
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
@@ -56,5 +72,9 @@ class FavoriteHeaderView: UICollectionReusableView {
 
     private func configureUI() {
         self.backgroundColor = UIColor.systemBackground
+    }
+    
+    func configureDelegate(_ delegate: FavoriteHeaderViewDelegate) {
+        self.delegate = delegate
     }
 }

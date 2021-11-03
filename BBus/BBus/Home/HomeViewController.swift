@@ -53,6 +53,8 @@ extension HomeViewController: UICollectionViewDelegate {
 
         self.coordinator?.pushToBusRoute()
     }
+    
+    
 }
 
 extension HomeViewController: UICollectionViewDataSource {
@@ -73,7 +75,9 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteHeaderView.identifier, for: indexPath)
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteHeaderView.identifier, for: indexPath) as? FavoriteHeaderView else { return UICollectionReusableView() }
+        header.configureDelegate(self)
+        return header
     }
 }
 
@@ -98,5 +102,13 @@ extension HomeViewController: AlarmButtonDelegate {
         // TODO: Model binding Logic needed
 
         self.coordinator?.pushToAlarmSetting()
+    }
+}
+
+extension HomeViewController: FavoriteHeaderViewDelegate {
+    func shouldGoToStationScene() {
+        // TODO: Model binding Logic needed
+        
+        self.coordinator?.pushToStation()
     }
 }
