@@ -76,16 +76,16 @@ class SearchBusNavigationView: UIView {
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.backButton)
         NSLayoutConstraint.activate([
-            self.backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            self.backButton.topAnchor.constraint(equalTo: self.topAnchor),
             self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.backButton.heightAnchor.constraint(equalToConstant: 50),
+            self.backButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
             self.backButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.15)
         ])
 
         self.searchTextField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.searchTextField)
         NSLayoutConstraint.activate([
-            self.searchTextField.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 7),
+            self.searchTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 7),
             self.searchTextField.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor),
             self.searchTextField.heightAnchor.constraint(equalTo: self.backButton.heightAnchor, constant: -14),
             self.searchTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8)

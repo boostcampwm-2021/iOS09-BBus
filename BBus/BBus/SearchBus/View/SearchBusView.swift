@@ -39,7 +39,7 @@ class SearchBusView: UIView {
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.navigationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.navigationView.heightAnchor.constraint(equalToConstant: 100),
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
