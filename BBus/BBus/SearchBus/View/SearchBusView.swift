@@ -24,6 +24,7 @@ class SearchBusView: UIView {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return tableView
     }()
+    var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
     
     func configureLayout() {
         self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false

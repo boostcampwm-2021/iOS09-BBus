@@ -60,6 +60,15 @@ extension SearchBusViewController: UITableViewDelegate {
         view.backgroundView = backgroundView
         return view
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.searchBusView.page {
+            self.coordinator?.pushToBusRoute()
+        }
+        else {
+            self.coordinator?.pushToStation()
+        }
+    }
 }
 
 extension SearchBusViewController: UITableViewDataSource {
@@ -77,7 +86,13 @@ extension SearchBusViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier) as? SearchResultTableViewCell else { return UITableViewCell() }
-        cell.configureUI(title: "15", detailInfo: "가평군 일반버스")
+        if tableView.frame.origin.x == 0 {
+            cell.configureUI(title: "15", detailInfo: "가평군 일반버스")
+        }
+        else {
+            cell.configureUI(title: "홍대입구", detailInfo: "14911 | 공항철도.홍대입구역 방면")
+        }
+        
         cell.configureLayout()
         return cell
     }
