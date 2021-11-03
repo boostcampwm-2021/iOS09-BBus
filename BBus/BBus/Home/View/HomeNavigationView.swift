@@ -33,7 +33,7 @@ class HomeNavigationView: UIView {
     }()
     
     convenience init() {
-        self.init(frame: CGRect())
+        self.init(frame: CGRect(origin: CGPoint(), size: CGSize(width: 0, height: 50)))
     }
     
     override init(frame: CGRect) {

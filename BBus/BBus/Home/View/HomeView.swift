@@ -26,11 +26,12 @@ class HomeView: UIView {
     }
 
     func configureLayout() {
+        self.navigationView.clipsToBounds = true
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
+//            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
@@ -83,5 +84,25 @@ class HomeView: UIView {
     func configureReusableCell() {
         self.favoriteCollectionView.register(FavoriteHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteHeaderView.identifier)
         self.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+    }
+    
+    private var direction: Bool = false
+    
+    func configureNavigationViewVisable(_ direction: Bool) {
+        if self.direction != direction {
+            UIView.animate(withDuration: TimeInterval(0.5), animations: {
+//                self.navigationView.frame.size = CGSize(width: self.navigationView.frame.width, height: 0)
+//                self.navigationView.layoutIfNeeded()
+                self.navigationView.transform = CGAffineTransform(translationX: 0, y: -50)
+                self.navigationView.alpha = 0
+            }, completion: { _ in
+                self.navigationView.isHidden = true
+            })
+        }
+        self.direction = direction
+        
+//        UIView.transition(with: self.navigationView, duration: 0.4, options: .transitionCrossDissolve, animations: {
+//            self.navigationView.isHidden = direction
+//        }, completion: nil)
     }
 }

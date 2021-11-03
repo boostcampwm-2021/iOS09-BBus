@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
+    private var lastContentOffset: CGFloat = 0
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -48,13 +49,22 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Model binding Logic needed
 
         self.coordinator?.pushToBusRoute()
     }
     
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+            self.homeView.configureNavigationViewVisable(true)
+        }
+        else if (self.lastContentOffset < scrollView.contentOffset.y) {
+            self.homeView.configureNavigationViewVisable(false)
+        }
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
