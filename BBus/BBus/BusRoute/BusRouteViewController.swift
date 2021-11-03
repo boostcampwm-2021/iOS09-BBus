@@ -20,6 +20,8 @@ class BusRouteViewController: UIViewController {
         static let redLine = UIColor.red
     }
 
+    var coordinator: BusRouteCoordinator?
+    
     enum Image {
         static let navigationBack = UIImage.init(systemName: "chevron.left")
         static let headerArrow = UIImage.init(systemName: "arrow.left.and.right")
@@ -39,6 +41,17 @@ class BusRouteViewController: UIViewController {
         self.configureStatusBarBackgroundColor(to: UIColor.systemBlue)
         self.configureTableView()
         self.busRouteView.addBusTag()
+        
+        guard let navigationController = self.navigationController else { return }
+        self.coordinator = BusRouteCoordinator(presenter: navigationController)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
+            self.coordinator?.terminate()
+        }
     }
 
     private func configureTableView() {
@@ -88,7 +101,7 @@ class BusRouteViewController: UIViewController {
     }
 }
 
-extension BusRouteViewController: UITableViewDataSource, UITableViewDelegate {
+extension BusRouteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
@@ -113,6 +126,12 @@ extension BusRouteViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.coordinator?.pushToStation()
+    }
+}
+
+extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return BusStationTableViewCell.cellHeight
     }

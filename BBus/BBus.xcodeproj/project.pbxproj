@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04147316273254C600BACE2C /* BusRouteLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04147315273254C600BACE2C /* BusRouteLineView.swift */; };
+		0414731A27326BD400BACE2C /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0414731927326BD400BACE2C /* BusRouteCoordinator.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
@@ -71,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		04147315273254C600BACE2C /* BusRouteLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteLineView.swift; sourceTree = "<group>"; };
+		0414731927326BD400BACE2C /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA5236272FCF2C00EC0531 /* BusRouteViewController.swift */,
+				0414731927326BD400BACE2C /* BusRouteCoordinator.swift */,
 				4ACA5205272FCE3C00EC0531 /* Model */,
 				4ACA5204272FCE3900EC0531 /* UseCase */,
 				4ACA5203272FCE3700EC0531 /* ViewModel */,
@@ -635,6 +638,7 @@
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
 				4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */,
+				0414731A27326BD400BACE2C /* BusRouteCoordinator.swift in Sources */,
 				4ACA521F272FCEAA00EC0531 /* AlarmSettingModel.swift in Sources */,
 				4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */,
 				4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */,
