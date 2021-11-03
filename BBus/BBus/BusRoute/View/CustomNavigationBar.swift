@@ -13,12 +13,16 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
+    private var delegate: BackButtonDelegate?
+
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = BusRouteViewController.Color.white
         button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
         button.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(touchedBackButton), for: .touchUpInside)
+        button.addAction(UIAction(handler: { _ in
+            self.delegate?.touchedBackButton()
+        }), for: .touchUpInside)
         return button
     }()
 
@@ -38,13 +42,13 @@ class CustomNavigationBar: UIView {
         return label
     }()
 
-    private var delegate: BackButtonDelegate?
-
     convenience init() {
         self.init(frame: CGRect())
+
         self.configureLayout()
     }
 
+    // MARK: - Configure
     func configureLayout() {
         self.addSubview(self.backButton)
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -75,10 +79,6 @@ class CustomNavigationBar: UIView {
 
     func configureDelegate(_ delegate: BackButtonDelegate) {
         self.delegate = delegate
-    }
-
-    @objc func touchedBackButton() {
-        self.delegate?.touchedBackButton()
     }
 
     // MARK: - Configure NavigationBar

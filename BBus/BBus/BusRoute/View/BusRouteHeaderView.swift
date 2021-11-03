@@ -9,6 +9,8 @@ import UIKit
 
 class BusRouteHeaderView: UIView {
 
+    static let headerHeight: CGFloat = 170
+
     private lazy var busTypeLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
@@ -50,7 +52,7 @@ class BusRouteHeaderView: UIView {
         return label
     }()
     
-    private lazy var busStationIndicatorStackView: UIStackView = {
+    private lazy var busStationStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.busFromStationLabel, self.busArrowImageView, self.busToStationLabel])
         stackView.axis = .horizontal
         stackView.spacing = 3
@@ -59,11 +61,11 @@ class BusRouteHeaderView: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = BusRouteViewController.Color.blueBus
+
         self.configureLayout()
-        self.configureMockHeaderData()
     }
-    
+
+    // MARK: - Configure
     func configureLayout() {
         self.addSubview(self.busNumberLabel)
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -79,18 +81,18 @@ class BusRouteHeaderView: UIView {
             self.busTypeLabel.bottomAnchor.constraint(equalTo: self.busNumberLabel.topAnchor, constant: -5)
         ])
         
-        self.addSubview(self.busStationIndicatorStackView)
-        self.busStationIndicatorStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.busStationStackView)
+        self.busStationStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busStationIndicatorStackView.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
-            self.busStationIndicatorStackView.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: 7)
+            self.busStationStackView.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
+            self.busStationStackView.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: 7)
         ])
     }
-    
-    func configureMockHeaderData() {
-        self.busTypeLabel.text = "서울 간선버스"
-        self.busNumberLabel.text = "272"
-        self.busFromStationLabel.text = "면목동"
-        self.busToStationLabel.text = "남가좌동"
+
+    func configure(busType: String, busNumber: String, fromStation: String, toStation: String) {
+        self.busTypeLabel.text = busType
+        self.busNumberLabel.text = busNumber
+        self.busFromStationLabel.text = fromStation
+        self.busToStationLabel.text = toStation
     }
 }

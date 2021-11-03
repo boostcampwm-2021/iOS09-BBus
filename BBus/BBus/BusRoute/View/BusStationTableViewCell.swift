@@ -9,8 +9,8 @@ import UIKit
 
 class BusStationTableViewCell: UITableViewCell {
     
-    enum CenterImageType {
-        case circle, uturn, getOn, getOff
+    enum BusRootCenterImageType {
+        case wayPoint, uturn
     }
 
     static let reusableID = "BusStationTableViewCell"
@@ -50,6 +50,14 @@ class BusStationTableViewCell: UITableViewCell {
         self.selectionStyle = .none
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.stationTitleLabel.text = ""
+        self.stationDescriptionLabel.text = ""
+    }
+
+    // MARK: - Configure
     private func configureLayout() {
         self.addSubview(self.stationTitleLabel)
         self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -88,17 +96,10 @@ class BusStationTableViewCell: UITableViewCell {
         self.addSubview(centerImageView)
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        self.stationTitleLabel.text = ""
-        self.stationDescriptionLabel.text = ""
-    }
     
-    func configureCenterImage(type: CenterImageType) {
+    func configureCenterImage(type: BusRootCenterImageType) {
         switch type {
-        case .circle:
+        case .wayPoint:
             self.centerImageView.image = BusRouteViewController.Image.stationCenterCircle
             NSLayoutConstraint.activate([
                 self.centerImageView.heightAnchor.constraint(equalToConstant: 15),
@@ -114,10 +115,6 @@ class BusStationTableViewCell: UITableViewCell {
                 self.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 self.centerImageView.trailingAnchor.constraint(equalTo: self.beforeLineView.centerXAnchor, constant: 13)
             ])
-        case .getOn:
-            return
-        case .getOff:
-            return
         }
     }
     
@@ -125,9 +122,12 @@ class BusStationTableViewCell: UITableViewCell {
         self.beforeLineView.backgroundColor = before
         self.afterLineView.backgroundColor = after
     }
-    
-    func configureMockData() {
-        self.stationTitleLabel.text = "면목동"
-        self.stationDescriptionLabel.text = "19283 | 04:00-23:50"
+
+    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
+        self.beforeLineView.backgroundColor = beforeColor
+        self.afterLineView.backgroundColor = afterColor
+        self.stationTitleLabel.text = title
+        self.stationDescriptionLabel.text = description
+        self.configureCenterImage(type: type)
     }
 }

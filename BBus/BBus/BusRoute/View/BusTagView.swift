@@ -9,16 +9,20 @@ import UIKit
 
 class BusTagView: UIView {
 
+    enum TagSizeType {
+        case min, max
+    }
+
+    private lazy var busTagFrameView = UIView()
+
     private lazy var busIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = BusRouteViewController.Image.blueBusIcon
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     private lazy var busTagImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = BusRouteViewController.Image.tagMinSize
         imageView.contentMode = .scaleToFill
         return imageView
     }()
@@ -54,20 +58,17 @@ class BusTagView: UIView {
         return label
     }()
 
-    private lazy var busTagFrameView = UIView()
-
     convenience init() {
         self.init(frame: CGRect())
+
         self.configureLayout()
-        self.configureMockTagData()
     }
 
+    // MARK: - Configure
     private func configureLayout() {
         self.addSubview(self.busTagImageView)
         self.busTagImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
-            self.busTagImageView.heightAnchor.constraint(equalToConstant: 20),
             self.busTagImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.busTagImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.busTagImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -111,5 +112,34 @@ class BusTagView: UIView {
         self.busNumberLabel.text = "6302"
         self.busCongestionLabel.text = "여유"
         self.lowFloorLabel.text = ""
+    }
+
+    func configureBusImage(busIcon: UIImage?) {
+        self.busIconImageView.image = busIcon
+    }
+
+    func configureTagImage(isLowFloor: Bool) {
+        if isLowFloor {
+            self.busTagImageView.image = BusRouteViewController.Image.tagMaxSize
+            NSLayoutConstraint.activate([
+                self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
+                self.busTagImageView.heightAnchor.constraint(equalToConstant: 35)
+            ])
+        }
+        else {
+            self.busTagImageView.image = BusRouteViewController.Image.tagMinSize
+            NSLayoutConstraint.activate([
+                self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
+                self.busTagImageView.heightAnchor.constraint(equalToConstant: 20)
+            ])
+        }
+    }
+
+    func configure(busIcon: UIImage?, busNumber: String, busCongestion: String, isLowFloor: Bool) {
+        self.busIconImageView.image = busIcon
+        self.configureTagImage(isLowFloor: isLowFloor)
+        self.busNumberLabel.text = busNumber
+        self.busCongestionLabel.text = busCongestion
+        self.lowFloorLabel.text = isLowFloor ? "저상" : ""
     }
 }
