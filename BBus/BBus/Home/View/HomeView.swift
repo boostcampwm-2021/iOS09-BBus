@@ -17,7 +17,6 @@ class HomeView: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = .red
     }
 
     func configureLayout() {
@@ -49,10 +48,11 @@ class HomeView: UIView {
     }
 
     private func collectionViewLayout() -> UICollectionViewLayout {
-        print(self.frame)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 1, left: 0, bottom: 10, right: 0)
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
         return layout
     }
 

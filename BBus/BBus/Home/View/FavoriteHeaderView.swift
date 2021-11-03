@@ -28,9 +28,14 @@ class FavoriteHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.configureLayout()
+        self.configureUI()
     }
 
-    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.configureLayout()
+        self.configureUI()
+    }
 
     private func configureLayout() {
 
@@ -47,5 +52,9 @@ class FavoriteHeaderView: UICollectionReusableView {
             self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: 5)
         ])
+    }
+
+    private func configureUI() {
+        self.backgroundColor = UIColor.systemBackground
     }
 }

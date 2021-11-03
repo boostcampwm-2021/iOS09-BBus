@@ -24,12 +24,14 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
         self.trailingView.configureLayout()
         self.configureLayout()
+        self.configureUI()
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.trailingView.configureLayout()
         self.configureLayout()
+        self.configureUI()
     }
 
     private func configureLayout() {
@@ -48,5 +50,9 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             self.trailingView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.trailingView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
         ])
+    }
+
+    private func configureUI() {
+        self.backgroundColor = UIColor.systemBackground
     }
 }
