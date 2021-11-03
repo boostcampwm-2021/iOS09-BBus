@@ -9,14 +9,9 @@ import UIKit
 
 class BusRouteView: UIView {
 
-    enum Color {
-        static let white = UIColor.white
-        static let blue = UIColor.systemBlue
-    }
-
     private lazy var colorBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.systemBlue
+        view.backgroundColor = BusRouteViewController.Color.blueBus
         return view
     }()
 
@@ -24,18 +19,13 @@ class BusRouteView: UIView {
     
     private lazy var busRouteScrollContentsView: UIView = UIView()
     
-    private lazy var busHeaderView: BusRouteHeaderView = {
-        let view = BusRouteHeaderView()
-        view.backgroundColor = Color.blue
-        return view
-    }()
+    private lazy var busHeaderView = BusRouteHeaderView()
     
     lazy var busRouteTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
-        tableView.backgroundColor = UIColor.cyan
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
-        tableView.separatorColor = UIColor.systemGray6
+        tableView.separatorColor = BusRouteViewController.Color.tableViewSeperator
         return tableView
     }()
 
@@ -46,7 +36,7 @@ class BusRouteView: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = UIColor.systemBackground
+        self.backgroundColor = BusRouteViewController.Color.white
         self.configureLayout()
     }
 

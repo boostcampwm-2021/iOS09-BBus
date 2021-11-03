@@ -9,29 +9,23 @@ import UIKit
 
 class BusTagView: UIView {
 
-    enum Image {
-        static let maxSizeTag = "BusTagMaxSize"
-        static let minSizeTag = "BusTagMinSize"
-        static let busIcon = "busIcon"
-    }
-
     private lazy var busIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: Image.busIcon)
+        imageView.image = BusRouteViewController.Image.blueBusIcon
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     private lazy var busTagImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: Image.minSizeTag)
+        imageView.image = BusRouteViewController.Image.tagMinSize
         imageView.contentMode = .scaleToFill
         return imageView
     }()
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.darkGray
+        label.textColor = BusRouteViewController.Color.tagBusNumber
         label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -39,7 +33,7 @@ class BusTagView: UIView {
 
     private lazy var busCongestionLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.red
+        label.textColor = BusRouteViewController.Color.tagBusCongestion
         label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -54,7 +48,7 @@ class BusTagView: UIView {
 
     private lazy var lowFloorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.darkGray
+        label.textColor = BusRouteViewController.Color.tagBusNumber
         label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
         label.textAlignment = .center
         return label

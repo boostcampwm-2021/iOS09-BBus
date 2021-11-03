@@ -23,7 +23,7 @@ class BusStationTableViewCell: UITableViewCell {
     private lazy var stationDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.systemGray
+        label.textColor = BusRouteViewController.Color.tableViewCellSubTitle
         return label
     }()
 

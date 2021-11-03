@@ -11,7 +11,7 @@ class BusRouteHeaderView: UIView {
 
     private lazy var busTypeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
         return label
@@ -19,7 +19,7 @@ class BusRouteHeaderView: UIView {
     
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textAlignment = .center
         return label
@@ -27,7 +27,7 @@ class BusRouteHeaderView: UIView {
     
     private lazy var busFromStationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
         return label
@@ -35,16 +35,16 @@ class BusRouteHeaderView: UIView {
     
     private lazy var busArrowImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage.init(systemName: "arrow.left.and.right")
+        imageView.image = BusRouteViewController.Image.headerArrow
         imageView.frame = CGRect(origin: .zero, size: CGSize(width: 15, height: 15))
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = UIColor.white
+        imageView.tintColor = BusRouteViewController.Color.white
         return imageView
     }()
     
     private lazy var busToStationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
         return label
@@ -59,7 +59,7 @@ class BusRouteHeaderView: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = UIColor.systemBackground
+        self.backgroundColor = BusRouteViewController.Color.blueBus
         self.configureLayout()
         self.configureMockHeaderData()
     }

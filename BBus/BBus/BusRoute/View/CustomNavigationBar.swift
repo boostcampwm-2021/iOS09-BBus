@@ -13,16 +13,10 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
-    enum Color {
-        static let white = UIColor.white
-        static let blue = UIColor.systemBlue
-        static let gray = UIColor.systemGray
-    }
-
     lazy var customNavigationBarBackButton: UIButton = {
         let button = UIButton()
-        button.tintColor = Color.white
-        button.setBackgroundImage(UIImage.init(systemName: "chevron.left"), for: .normal)
+        button.tintColor = BusRouteViewController.Color.white
+        button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
         button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(touchedBackButton), for: .touchUpInside)
         return button
@@ -30,7 +24,7 @@ class CustomNavigationBar: UIView {
 
     lazy var customNavigationBarBackButtonTitle: UILabel = {
         let label = UILabel()
-        label.textColor = Color.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .left
         return label
@@ -38,7 +32,7 @@ class CustomNavigationBar: UIView {
 
     lazy var customNavigationBarTitle: UILabel = {
         let label = UILabel()
-        label.textColor = Color.white
+        label.textColor = BusRouteViewController.Color.white
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -48,7 +42,7 @@ class CustomNavigationBar: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-        self.backgroundColor = Color.blue
+        self.backgroundColor = BusRouteViewController.Color.blueBus
         self.configureLayout()
         self.configureMockNavigationData()
     }

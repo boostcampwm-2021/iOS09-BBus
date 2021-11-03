@@ -8,7 +8,27 @@
 import UIKit
 
 class BusRouteViewController: UIViewController {
+    enum Color {
+        static let white = UIColor.white
+        static let clear = UIColor.clear
+        static let blueBus = UIColor.systemBlue
+        static let tableViewSeperator = UIColor.systemGray6
+        static let tableViewCellSubTitle = UIColor.systemGray
+        static let tagBusNumber = UIColor.darkGray
+        static let tagBusCongestion = UIColor.red
+        static let greenLine = UIColor.green
+        static let redLine = UIColor.red
+    }
 
+    enum Image {
+        static let navigationBack = UIImage.init(systemName: "chevron.left")
+        static let headerArrow = UIImage.init(systemName: "arrow.left.and.right")
+        static let stationCenterCircle = UIImage(named: "StationCenterCircle")
+        static let tagMaxSize = UIImage(named: "BusTagMaxSize")
+        static let tagMinSize = UIImage(named: "BusTagMinSize")
+        static let blueBusIcon = UIImage(named: "busIcon")
+    }
+    
     private lazy var busRouteView = BusRouteView()
 
     override func viewDidLoad() {
@@ -77,17 +97,17 @@ extension BusRouteViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusStationTableViewCell.reusableID, for: indexPath) as? BusStationTableViewCell else { return UITableViewCell() }
         cell.configureMockData()
         if indexPath.item % 2 == 0 {
-            cell.configureLineColor(before: UIColor.green, after: UIColor.red)
+            cell.configureLineColor(before: BusRouteViewController.Color.greenLine, after: BusRouteViewController.Color.redLine)
         }
         else {
-            cell.configureLineColor(before: UIColor.red, after: UIColor.green)
+            cell.configureLineColor(before: BusRouteViewController.Color.redLine, after: BusRouteViewController.Color.greenLine)
         }
         
         if indexPath.item == 0 {
-            cell.configureLineColor(before: UIColor.clear, after: UIColor.red)
+            cell.configureLineColor(before: BusRouteViewController.Color.clear, after: BusRouteViewController.Color.redLine)
         }
         else if indexPath.item == 19 {
-            cell.configureLineColor(before: UIColor.red, after: UIColor.clear)
+            cell.configureLineColor(before: BusRouteViewController.Color.redLine, after: BusRouteViewController.Color.clear)
         }
         
         return cell

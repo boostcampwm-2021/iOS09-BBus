@@ -15,7 +15,7 @@ class BusRouteLineView: UIView {
 
     private lazy var centerPointImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "StationCenterCircle")
+        imageView.image = BusRouteViewController.Image.stationCenterCircle
         return imageView
     }()
     
