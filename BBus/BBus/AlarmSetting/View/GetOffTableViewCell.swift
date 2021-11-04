@@ -29,6 +29,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
     private var alarmButtonDelegate: GetOffAlarmButtonDelegate? {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButton.isSelected.toggle()
                 self.alarmButtonDelegate?.shouldGoToMovingStatusScene()
             }), for: .touchUpInside)
         }

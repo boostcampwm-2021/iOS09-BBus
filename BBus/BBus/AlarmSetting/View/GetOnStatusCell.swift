@@ -124,6 +124,7 @@ class GetOnStatusCell: UITableViewCell {
     private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButton.isSelected.toggle()
                 self.alarmButtonDelegate?.toggleGetOnAlarmSetting()
             }), for: .touchUpInside)
         }
