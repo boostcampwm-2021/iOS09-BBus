@@ -16,7 +16,6 @@ class SearchBusViewController: UIViewController {
         super.viewDidLoad()
         self.configureLayout()
         self.configureUI()
-        self.searchBusView.configureLayout()
         self.searchBusView.configureDelegate(self)
         self.configureDelegate()
     }
