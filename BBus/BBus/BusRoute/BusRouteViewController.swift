@@ -44,9 +44,6 @@ class BusRouteViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
-        
-        guard let navigationController = self.navigationController else { return }
-        self.coordinator = BusRouteCoordinator(presenter: navigationController)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
