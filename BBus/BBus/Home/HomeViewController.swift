@@ -7,11 +7,35 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+enum MyColor {
+    static let gray = UIColor.gray
+    static let white = UIColor.white
+    static let clear = UIColor.clear
+    static let blueBus = UIColor.systemBlue
+    static let systemGray6 = UIColor.systemGray6
+    static let bbusLightGray = UIColor(named: "bbusLightGray")
+    static let bbusGray = UIColor(named: "bbusGray")
+    static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
+    static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
+}
 
+enum MyImage {
+    static let refresh: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        return UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig)
+    }()
+    static let alarm: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        return UIImage(systemName: "alarm", withConfiguration: largeConfig)
+    }()
+}
+
+class HomeViewController: UIViewController {
+    
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
+    private var lastContentOffset: CGFloat = 0
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -29,14 +53,31 @@ class HomeViewController: UIViewController {
 
         self.configureLayout()
         self.homeView.configureLayout()
-        self.homeView.showAlwaysButton()
-        self.addButtonAction()
+        self.homeView.configureDelegate(self)
+        
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = UIColor.white //컬러 설정 부분
+        self.view.addSubview(statusbarView)
+        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+        statusbarView.heightAnchor
+            .constraint(equalToConstant: statusBarHeight).isActive = true
+        statusbarView.widthAnchor
+            .constraint(equalTo: self.view.widthAnchor, multiplier: 1.0).isActive = true
+        statusbarView.topAnchor
+            .constraint(equalTo: self.view.topAnchor).isActive = true
+        statusbarView.centerXAnchor
+            .constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
 
+    // MARK: - Configuration
     private func configureLayout() {
-        self.view.backgroundColor = UIColor.lightGray
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.backgroundColor = UIColor.systemBackground
+
         self.view.addSubview(self.homeView)
+        self.homeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -44,13 +85,93 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
+}
 
-    private func addButtonAction() {
-        self.homeView.refreshButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+// MARK: - Delegate : UICollectionView
+extension HomeViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: Model binding Logic needed
+
+        self.coordinator?.pushToBusRoute()
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let minimumScrollOffset = HomeNavigationView.height - 20
 
-    @objc func buttonAction(_ sender: UIButton) {
-        coordinator?.pushToSearchBus()
+        guard scrollView.contentOffset.y > minimumScrollOffset else { return }
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+            self.homeView.configureNavigationViewVisable(true)
+        }
+        else if (self.lastContentOffset < scrollView.contentOffset.y) {
+            self.homeView.configureNavigationViewVisable(false)
+        }
+        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
 
+// MARK: - DataSource : UICollectionView
+extension HomeViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
+                        as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
+
+        cell.configureDelegate(self)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteHeaderView.identifier, for: indexPath) as? FavoriteHeaderView else { return UICollectionReusableView() }
+        header.configureDelegate(self)
+        return header
+    }
+}
+
+// MARK: - DelegateFlowLayout : UICollectionView
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: FavoriteCollectionViewCell.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height + HomeNavigationView.height)
+        }
+        else {
+            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height)
+        }
+    }
+}
+
+// MARK: - HomeSearchButtonDelegate : UICollectionView
+extension HomeViewController: HomeSearchButtonDelegate {
+    func shouldGoToSearchBusScene() {
+        self.coordinator?.pushToSearchBus()
+    }
+}
+
+// MARK: - AlarmButtonDelegate : UICollectionView
+extension HomeViewController: AlarmButtonDelegate {
+    func shouldGoToAlarmSettingScene() {
+        // TODO: Model binding Logic needed
+
+        self.coordinator?.pushToAlarmSetting()
+    }
+}
+
+// MARK: - FavoriteHeaderViewDelegate : UICollectionView
+extension HomeViewController: FavoriteHeaderViewDelegate {
+    func shouldGoToStationScene() {
+        // TODO: Model binding Logic needed
+        
+        self.coordinator?.pushToStation()
+    }
+}

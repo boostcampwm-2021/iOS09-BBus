@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A04682227327843008D87CE /* BusRoutePushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682127327843008D87CE /* BusRoutePushable.swift */; };
+		4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682327327876008D87CE /* BusRouteCoordinator.swift */; };
+		4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */; };
+		4A04682827327BEC008D87CE /* AlarmSettingPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682727327BEC008D87CE /* AlarmSettingPushable.swift */; };
+		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
+		4A1A22DD2732801700476861 /* StationCoodinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DC2732801700476861 /* StationCoodinator.swift */; };
+		4A1A22DF2732806300476861 /* StationPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DE2732806300476861 /* StationPushable.swift */; };
+		4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */; };
+		4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */; };
+		4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
 		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
@@ -65,6 +75,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A04682127327843008D87CE /* BusRoutePushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRoutePushable.swift; sourceTree = "<group>"; };
+		4A04682327327876008D87CE /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
+		4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingCoordinator.swift; sourceTree = "<group>"; };
+		4A04682727327BEC008D87CE /* AlarmSettingPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPushable.swift; sourceTree = "<group>"; };
+		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
+		4A1A22DC2732801700476861 /* StationCoodinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCoodinator.swift; sourceTree = "<group>"; };
+		4A1A22DE2732806300476861 /* StationPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPushable.swift; sourceTree = "<group>"; };
+		4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeaderView.swift; sourceTree = "<group>"; };
+		4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCellTrailingView.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -175,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA5236272FCF2C00EC0531 /* BusRouteViewController.swift */,
+				4A04682327327876008D87CE /* BusRouteCoordinator.swift */,
 				4ACA5205272FCE3C00EC0531 /* Model */,
 				4ACA5204272FCE3900EC0531 /* UseCase */,
 				4ACA5203272FCE3700EC0531 /* ViewModel */,
@@ -187,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA5238272FCF3200EC0531 /* StationViewController.swift */,
+				4A1A22DC2732801700476861 /* StationCoodinator.swift */,
 				4ACA5211272FCE7100EC0531 /* Model */,
 				4ACA5210272FCE6E00EC0531 /* UseCase */,
 				4ACA520F272FCE6B00EC0531 /* ViewModel */,
@@ -199,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */,
+				4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */,
 				4ACA521D272FCEA000EC0531 /* Model */,
 				4ACA521C272FCE9E00EC0531 /* UseCase */,
 				4ACA521B272FCE9A00EC0531 /* ViewModel */,
@@ -223,6 +246,10 @@
 			isa = PBXGroup;
 			children = (
 				4ACA51E8272FCDAE00EC0531 /* HomeView.swift */,
+				4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */,
+				4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */,
+				4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */,
+				4A1A22DA27326FD100476861 /* HomeNavigationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -456,7 +483,10 @@
 			children = (
 				873D6395273039E100E79069 /* Coordinator.swift */,
 				873D639727303A6800E79069 /* AppCoordinator.swift */,
+				4A04682127327843008D87CE /* BusRoutePushable.swift */,
 				87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */,
+				4A04682727327BEC008D87CE /* AlarmSettingPushable.swift */,
+				4A1A22DE2732806300476861 /* StationPushable.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -619,14 +649,19 @@
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
 				4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */,
 				4ACA521F272FCEAA00EC0531 /* AlarmSettingModel.swift in Sources */,
+				4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */,
 				4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */,
 				4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */,
+				4A1A22DD2732801700476861 /* StationCoodinator.swift in Sources */,
 				4ACA5237272FCF2C00EC0531 /* BusRouteViewController.swift in Sources */,
 				873D639827303A6800E79069 /* AppCoordinator.swift in Sources */,
 				4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */,
 				4ACA51F3272FCDF900EC0531 /* SearchBusViewModel.swift in Sources */,
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
 				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
+				4A1A22DF2732806300476861 /* StationPushable.swift in Sources */,
+				4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */,
+				4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */,
 				87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */,
 				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
 				4ACA5201272FCE3100EC0531 /* SearchStationView.swift in Sources */,
@@ -634,15 +669,20 @@
 				4ACA51FB272FCE1D00EC0531 /* SearchStationModel.swift in Sources */,
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
+				4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */,
 				4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */,
+				4A04682827327BEC008D87CE /* AlarmSettingPushable.swift in Sources */,
 				4ACA5235272FCF2100EC0531 /* SearchStationViewController.swift in Sources */,
+				4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
+				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchBusViewController.swift in Sources */,
 				4ACA51FF272FCE2700EC0531 /* SearchStationViewModel.swift in Sources */,
 				87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */,
+				4A04682227327843008D87CE /* BusRoutePushable.swift in Sources */,
 				4ACA522B272FCED600EC0531 /* MovingStatusModel.swift in Sources */,
 				4ACA51FD272FCE2200EC0531 /* SearchStationUseCase.swift in Sources */,
 				87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */,
