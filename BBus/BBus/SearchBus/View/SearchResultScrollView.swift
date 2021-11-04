@@ -35,6 +35,11 @@ class SearchResultScrollView: UIScrollView {
         view.backgroundColor = UIColor(named: "bbusTypeRed")
         return view
     }()
+    private lazy var collectionViewSeperateView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.darkGray
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -98,6 +103,17 @@ class SearchResultScrollView: UIScrollView {
             self.rightFakeIndicatorView.topAnchor.constraint(equalTo: self.topAnchor),
             self.rightFakeIndicatorView.heightAnchor.constraint(equalToConstant: SearchResultScrollView.indicatorHeight),
             self.rightFakeIndicatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.25)
+        ])
+        
+        let seperatorHeight: CGFloat = 0.3
+        
+        contentView.addSubview(self.collectionViewSeperateView)
+        self.collectionViewSeperateView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.collectionViewSeperateView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.collectionViewSeperateView.topAnchor.constraint(equalTo: self.rightFakeIndicatorView.bottomAnchor),
+            self.collectionViewSeperateView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            self.collectionViewSeperateView.heightAnchor.constraint(equalToConstant: seperatorHeight)
         ])
     }
     

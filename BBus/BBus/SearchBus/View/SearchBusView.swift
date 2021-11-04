@@ -14,7 +14,7 @@ enum SearchType {
 class SearchBusView: UIView {
 
     var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
-    private lazy var searchResultScrollView = SearchResultScrollView()
+    private(set) lazy var searchResultScrollView = SearchResultScrollView()
     private lazy var navigationView: SearchBusNavigationView = {
         let view = SearchBusNavigationView()
         view.backgroundColor = UIColor.systemBackground
@@ -89,17 +89,34 @@ class SearchBusView: UIView {
 }
 
 extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
+
     func shouldBusTabSelect() {
+        guard self.currentSearchType == SearchType.station else { return }
+        self.searchResultScrollView.subviews.last?.alpha = 1
         self.currentSearchType = SearchType.bus
+        self.scrollViewWillBeginDragging(self.searchResultScrollView)
+        UIView.animate(withDuration: TimeInterval(0.3), animations: {
+            self.searchResultScrollView.contentOffset.x -= self.searchResultScrollView.frame.width
+        }, completion: {_ in
+            self.scrollViewDidEndDecelerating(self.searchResultScrollView)
+        })
     }
 
     func shouldStationTabSelect() {
+        guard self.currentSearchType == SearchType.bus else { return }
+        self.searchResultScrollView.subviews.last?.alpha = 1
         self.currentSearchType = SearchType.station
+        self.scrollViewWillBeginDragging(self.searchResultScrollView)
+        UIView.animate(withDuration: TimeInterval(0.3), animations: {
+            self.searchResultScrollView.contentOffset.x += self.searchResultScrollView.frame.width
+        }, completion: { _ in
+            self.scrollViewDidEndDecelerating(self.searchResultScrollView)
+        })
     }
 }
 
 extension SearchBusView: UIScrollViewDelegate {
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
     }

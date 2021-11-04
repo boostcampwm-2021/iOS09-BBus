@@ -84,11 +84,6 @@ class SearchBusNavigationView: UIView {
         }), for: .touchUpInside)
         return button
     }()
-    private lazy var secondSeparateView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.darkGray
-        return view
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -149,15 +144,6 @@ class SearchBusNavigationView: UIView {
             self.stationTabButton.heightAnchor.constraint(equalTo: self.backButton.heightAnchor),
             self.stationTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
 
-        ])
-
-        self.secondSeparateView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.secondSeparateView)
-        NSLayoutConstraint.activate([
-            self.secondSeparateView.topAnchor.constraint(equalTo: self.busTabButton.bottomAnchor),
-            self.secondSeparateView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.secondSeparateView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.secondSeparateView.heightAnchor.constraint(equalToConstant: 0.3)
         ])
 
 //        if #available(iOS 15.0, *) {
