@@ -66,6 +66,7 @@
 		87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556F2728116400A9B5E3 /* HomeViewController.swift */; };
 		87A555752728116600A9B5E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87A555742728116600A9B5E3 /* Assets.xcassets */; };
 		87A555782728116600A9B5E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A555762728116600A9B5E3 /* LaunchScreen.storyboard */; };
+		87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,7 @@
 		87A555742728116600A9B5E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87A555772728116600A9B5E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87A555792728116600A9B5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnStatusCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */,
+				87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -662,7 +665,6 @@
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
 				4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */,
-				0414731A27326BD400BACE2C /* BusRouteCoordinator.swift in Sources */,
 				4ACA521F272FCEAA00EC0531 /* AlarmSettingModel.swift in Sources */,
 				4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */,
 				4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */,
@@ -692,6 +694,7 @@
 				4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */,
 				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
+				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,

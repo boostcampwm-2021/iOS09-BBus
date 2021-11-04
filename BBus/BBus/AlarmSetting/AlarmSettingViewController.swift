@@ -13,6 +13,7 @@ class AlarmSettingViewController: UIViewController {
         static let white = UIColor.white
         static let black = UIColor.black
         static let clear = UIColor.clear
+        static let red = UIColor.red
         static let lightGray = UIColor.lightGray
         static let darkGray = UIColor.darkGray
         static let blueBus = UIColor.systemBlue
@@ -25,6 +26,14 @@ class AlarmSettingViewController: UIViewController {
         static let tableBackground = UIColor.systemGray5
     }
 
+    enum Image {
+        static let clockIcon = UIImage(systemName: "clock")
+        static let locationIcon = UIImage(named: "locationIcon")
+        static let busIcon = UIImage(named: "grayBusIcon")
+        static let alarmIcon = UIImage(systemName: "alarm")
+    }
+
+    weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
     private lazy var customNavigationBar = CustomNavigationBar()
 
@@ -38,6 +47,14 @@ class AlarmSettingViewController: UIViewController {
         self.configureColor()
         self.configureMOCKDATA()
         // Do any additional setup after loading the view.
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            self.coordinator?.terminate()
+        }
     }
 
     private func configureTableView() {
@@ -81,17 +98,28 @@ class AlarmSettingViewController: UIViewController {
 
 extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
+
+        cell.configure(busColor: Color.blueBus)
+        cell.configure(order: String(indexPath.row+1),
+                       remainingTime: "2분 18초",
+                       remainingStationCount: "2번째",
+                       busCongestionStatus: "여유",
+                       arrivalTime: "오후 04시 11분 도착 예정",
+                       currentLocation: "낙성대입구",
+                       busNumber: "서울74사3082")
+
+        return cell
     }
 }
 
 extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return GetOnStatusCell.cellHeight
     }
 }
 

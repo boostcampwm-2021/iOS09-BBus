@@ -14,9 +14,15 @@ class AlarmSettingView: UIView {
     private lazy var alarmScrollViewContentsView: UIView = UIView()
 
     lazy var alarmTableView: UITableView = {
+        let tableViewLeftInset: CGFloat = 90
+        let tableViewTopBottomRightInset: CGFloat = 0
+
         let tableView = UITableView()
-//        tableView.register(<#T##nib: UINib?##UINib?#>, forCellReuseIdentifier: <#T##String#>)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
+        tableView.register(GetOnStatusCell.self, forCellReuseIdentifier: GetOnStatusCell.reusableID)
+        tableView.separatorInset = UIEdgeInsets(top: tableViewTopBottomRightInset,
+                                                left: tableViewLeftInset,
+                                                bottom: tableViewTopBottomRightInset,
+                                                right: tableViewTopBottomRightInset)
         tableView.separatorColor = AlarmSettingViewController.Color.tableViewSeperator
         tableView.backgroundColor = AlarmSettingViewController.Color.tableBackground
         return tableView
@@ -76,7 +82,8 @@ class AlarmSettingView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: BackButtonDelegate) {
-//        self.customNavigationBar.configureDelegate(delegate)
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+        self.alarmTableView.delegate = delegate
+        self.alarmTableView.dataSource = delegate
     }
 }
