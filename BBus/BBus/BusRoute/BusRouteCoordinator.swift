@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteCoordinator: NSObject, Coordinator, StationPushable {
+class BusRouteCoordinator: StationPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
