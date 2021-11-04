@@ -9,33 +9,32 @@ import UIKit
 
 class BusStationTableViewCell: UITableViewCell {
     
-    enum BusRootCenterImageType {
-        case waypoint, uturn
-    }
-
-    static let reusableID = "BusStationTableViewCell"
-    static let cellHeight: CGFloat = 80
+    var titleLeadingOffset: CGFloat { return 0 }
+    var lineTrailingOffset: CGFloat { return 0 }
+    var stationTitleLabelFontSize: CGFloat { return 0 }
+    var stationDescriptionLabelFontSize: CGFloat { return 0 }
+    var stackViewSpacing: CGFloat { return 0 }
+    var labelStackViewRightMargin: CGFloat { return 0 }
     
-    var titleLeadingOffset: CGFloat { return 107 }
-    var lineTrailingOffset: CGFloat { return -20 }
-    
-    private lazy var beforeCongestionLineView = UIView()
+    lazy var beforeCongestionLineView = UIView()
     private lazy var afterCongestionLineView = UIView()
-    private lazy var centerImageView = UIImageView()
+    lazy var centerImageView = UIImageView()
     private lazy var stationTitleLabel: UILabel = {
-        let stationTitleLabelFontSize: CGFloat = 17
-        
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: stationTitleLabelFontSize, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: self.stationTitleLabelFontSize, weight: .semibold)
         return label
     }()
     private lazy var stationDescriptionLabel: UILabel = {
-        let stationDescriptionLabelFontSize: CGFloat = 14
-        
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: stationDescriptionLabelFontSize)
+        label.font = UIFont.systemFont(ofSize: self.stationDescriptionLabelFontSize)
         label.textColor = BusRouteViewController.Color.tableViewCellSubTitle
         return label
+    }()
+    private lazy var labelStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.stationTitleLabel, self.stationDescriptionLabel])
+        stackView.axis = .vertical
+        stackView.spacing = self.stackViewSpacing
+        return stackView
     }()
 
     required init?(coder: NSCoder) {
@@ -60,27 +59,16 @@ class BusStationTableViewCell: UITableViewCell {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
-        let stationTitleLabelTopMargin: CGFloat = 18
-        let stationTitleLabelRightMargin: CGFloat = -20
-        let stationDescriptionLabelTopMargin: CGFloat = 5
+    func configureLayout() {
         let congestionLineViewHeightMultiplier: CGFloat = 0.5
         let congestionLineViewWidth: CGFloat = 3
         
-        self.addSubview(self.stationTitleLabel)
-        self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.labelStackView)
+        self.labelStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.stationTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: stationTitleLabelTopMargin),
-            self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.titleLeadingOffset),
-            self.stationTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: stationTitleLabelRightMargin)
-        ])
-        
-        self.addSubview(self.stationDescriptionLabel)
-        self.stationDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.stationDescriptionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: stationDescriptionLabelTopMargin),
-            self.stationDescriptionLabel.leadingAnchor.constraint(equalTo: self.stationTitleLabel.leadingAnchor),
-            self.stationDescriptionLabel.trailingAnchor.constraint(equalTo: self.stationTitleLabel.trailingAnchor)
+            self.labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.titleLeadingOffset),
+            self.labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: self.labelStackViewRightMargin),
+            self.labelStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
         self.addSubview(self.beforeCongestionLineView)
@@ -89,7 +77,7 @@ class BusStationTableViewCell: UITableViewCell {
             self.beforeCongestionLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: congestionLineViewHeightMultiplier),
             self.beforeCongestionLineView.widthAnchor.constraint(equalToConstant: congestionLineViewWidth),
             self.beforeCongestionLineView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.beforeCongestionLineView.centerXAnchor.constraint(equalTo: self.stationTitleLabel.leadingAnchor, constant: self.lineTrailingOffset)
+            self.beforeCongestionLineView.centerXAnchor.constraint(equalTo: self.labelStackView.leadingAnchor, constant: self.lineTrailingOffset)
         ])
         
         self.addSubview(self.afterCongestionLineView)
@@ -104,39 +92,11 @@ class BusStationTableViewCell: UITableViewCell {
         self.addSubview(self.centerImageView)
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    private func configureCenterImage(type: BusRootCenterImageType) {
-        let circleImageHeight: CGFloat = 15
-        let circleImageWidth: CGFloat = 32
-        let uturnImageHeight: CGFloat = 24
-        let uturnImageWidth: CGFloat = 52
-        let uturmImageXaxisMargin: CGFloat = 13
-        
-        switch type {
-        case .waypoint:
-            self.centerImageView.image = BusRouteViewController.Image.stationCenterCircle
-            NSLayoutConstraint.activate([
-                self.centerImageView.heightAnchor.constraint(equalToConstant: circleImageHeight),
-                self.centerImageView.widthAnchor.constraint(equalToConstant: circleImageWidth),
-                self.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                self.centerImageView.centerXAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor)
-            ])
-        case .uturn:
-            self.centerImageView.image = BusRouteViewController.Image.stationCenterUturn
-            NSLayoutConstraint.activate([
-                self.centerImageView.heightAnchor.constraint(equalToConstant: uturnImageHeight),
-                self.centerImageView.widthAnchor.constraint(equalToConstant: uturnImageWidth),
-                self.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                self.centerImageView.trailingAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor, constant: uturmImageXaxisMargin)
-            ])
-        }
-    }
 
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
+    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String) {
         self.beforeCongestionLineView.backgroundColor = beforeColor
         self.afterCongestionLineView.backgroundColor = afterColor
         self.stationTitleLabel.text = title
         self.stationDescriptionLabel.text = description
-        self.configureCenterImage(type: type)
     }
 }

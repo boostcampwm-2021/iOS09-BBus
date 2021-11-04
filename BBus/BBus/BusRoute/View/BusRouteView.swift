@@ -18,7 +18,7 @@ class BusRouteView: UIView {
         let tableViewTopBottomRightInset: CGFloat = 0
         
         let tableView = UITableView()
-        tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
+        tableView.register(BusRouteTableViewCell.self, forCellReuseIdentifier: BusRouteTableViewCell.reusableID)
         tableView.separatorInset = UIEdgeInsets(top: tableViewTopBottomRightInset,
                                                 left: tableViewLeftInset,
                                                 bottom: tableViewTopBottomRightInset,
@@ -98,7 +98,7 @@ class BusRouteView: UIView {
 
     func configureTableViewHeight(count: Int) {
         NSLayoutConstraint.activate([
-            self.busRouteTableView.heightAnchor.constraint(equalToConstant: CGFloat(count)*BusStationTableViewCell.cellHeight)
+            self.busRouteTableView.heightAnchor.constraint(equalToConstant: CGFloat(count)*BusRouteTableViewCell.cellHeight)
         ])
     }
 
@@ -121,7 +121,7 @@ class BusRouteView: UIView {
         busTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.busRouteTableView.leadingAnchor, constant: 5),
-            busTag.centerYAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: (BusStationTableViewCell.cellHeight/2) + location*BusStationTableViewCell.cellHeight)
+            busTag.centerYAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: (BusRouteTableViewCell.cellHeight/2) + location*BusRouteTableViewCell.cellHeight)
         ])
     }
 }
