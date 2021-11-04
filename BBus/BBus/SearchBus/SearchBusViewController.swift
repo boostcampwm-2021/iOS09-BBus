@@ -111,3 +111,22 @@ extension SearchBusViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: self.view.frame.width, height: SearchResultHeaderView.height)
     }
 }
+
+extension SearchBusViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        (scrollView as? SearchResultScrollView)?.configureIndicator(true)
+        
+        guard let indicator = scrollView.subviews.last?.subviews.first else { return }
+        
+        let twice: CGFloat = 2
+        let indicatorWidthPadding: CGFloat = 5
+        
+        scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: -indicatorWidthPadding, bottom: scrollView.frame.height - (SearchResultScrollView.indicatorHeight * twice), right: -indicatorWidthPadding)
+        indicator.layer.cornerRadius = 0
+        indicator.backgroundColor = UIColor(named: "bbusTypeRed")
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        (scrollView as? SearchResultScrollView)?.configureIndicator(false)
+    }
+}
