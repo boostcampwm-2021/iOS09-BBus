@@ -1,13 +1,13 @@
 //
-//  BusCoordinator.swift
+//  AlarmSettingCoordinator.swift
 //  BBus
 //
-//  Created by 최수정 on 2021/11/03.
+//  Created by 김태훈 on 2021/11/03.
 //
 
 import UIKit
 
-class BusRouteCoordinator: NSObject, Coordinator {
+class AlarmSettingCoordinator: NSObject, Coordinator {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
@@ -18,7 +18,7 @@ class BusRouteCoordinator: NSObject, Coordinator {
     }
 
     func start() {
-        let viewController = BusRouteViewController()
+        let viewController = AlarmSettingViewController()
         viewController.coordinator = self
         presenter.pushViewController(viewController, animated: true)
     }

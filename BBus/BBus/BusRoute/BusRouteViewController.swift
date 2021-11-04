@@ -35,7 +35,7 @@ class BusRouteViewController: UIViewController {
 
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
-    var coordinator: BusRouteCoordinator?
+    weak var coordinator: BusRouteCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()

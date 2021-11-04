@@ -1,13 +1,13 @@
 //
-//  BusCoordinator.swift
+//  StationCoodinator.swift
 //  BBus
 //
-//  Created by 최수정 on 2021/11/03.
+//  Created by 이지수 on 2021/11/03.
 //
 
 import UIKit
 
-class BusRouteCoordinator: NSObject, Coordinator {
+class StationCoordinator: NSObject, Coordinator {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
@@ -18,7 +18,7 @@ class BusRouteCoordinator: NSObject, Coordinator {
     }
 
     func start() {
-        let viewController = BusRouteViewController()
+        let viewController = StationViewController()
         viewController.coordinator = self
         presenter.pushViewController(viewController, animated: true)
     }
