@@ -34,7 +34,8 @@ class AlarmSettingViewController: UIViewController {
         static let clockIcon = UIImage(systemName: "clock")
         static let locationIcon = UIImage(named: "locationIcon")
         static let busIcon = UIImage(named: "grayBusIcon")
-        static let alarmIcon = UIImage(systemName: "alarm")?.withAlignmentRectInsets(UIEdgeInsets(top: -12.5, left: -12.5, bottom: -12.5, right: -12.5))
+        static let alarmOffIcon = UIImage(named: "alarmOff")
+        static let alarmOnIcon = UIImage(named: "alarmOn")
     }
 
     weak var coordinator: AlarmSettingCoordinator?
