@@ -55,14 +55,6 @@ class BusRouteViewController: UIViewController {
         self.configureDelegate()
         self.configureMOCKDATA()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        if self.isMovingFromParent {
-            self.coordinator?.terminate()
-        }
-    }
 
     // MARK: - Configure
     private func configureLayout() {
@@ -187,6 +179,6 @@ extension BusRouteViewController: UIScrollViewDelegate {
 // MARK: - Delegate : BackButton
 extension BusRouteViewController: BackButtonDelegate {
     func touchedBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        self.coordinator?.terminate()
     }
 }
