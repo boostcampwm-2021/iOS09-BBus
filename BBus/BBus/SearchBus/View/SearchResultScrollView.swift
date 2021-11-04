@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchResultScrollView: UIScrollView {
-    
+
     static let indicatorHeight: CGFloat = 3
 
     private lazy var busResultCollectionView: UICollectionView = {
@@ -35,27 +35,27 @@ class SearchResultScrollView: UIScrollView {
         view.backgroundColor = UIColor(named: "bbusTypeRed")
         return view
     }()
-    private lazy var collectionViewSeperateView: UIView = {
+    private lazy var collectionViewSeparateView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.darkGray
         return view
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureUI()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.configureUI()
     }
-    
+
     func configureLayout() {
         let twice: CGFloat = 2
         let half: CGFloat = 0.5
         let quater: CGFloat = 0.25
-        
+
         let contentView = UIView()
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +68,7 @@ class SearchResultScrollView: UIScrollView {
             contentView.widthAnchor.constraint(equalTo: self.frameLayoutGuide.widthAnchor, multiplier: twice),
             contentView.heightAnchor.constraint(equalTo: self.frameLayoutGuide.heightAnchor)
         ])
-        
+
         contentView.addSubview(self.busResultCollectionView)
         self.busResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -77,7 +77,7 @@ class SearchResultScrollView: UIScrollView {
             self.busResultCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             self.busResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
-        
+
         contentView.addSubview(self.stationResultCollectionView)
         self.stationResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -86,7 +86,7 @@ class SearchResultScrollView: UIScrollView {
             self.stationResultCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             self.stationResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
-        
+
         contentView.addSubview(self.leftFakeIndicatorView)
         self.leftFakeIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -95,7 +95,7 @@ class SearchResultScrollView: UIScrollView {
             self.leftFakeIndicatorView.heightAnchor.constraint(equalToConstant: SearchResultScrollView.indicatorHeight),
             self.leftFakeIndicatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: quater)
         ])
-        
+
         contentView.addSubview(self.rightFakeIndicatorView)
         self.rightFakeIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -104,34 +104,34 @@ class SearchResultScrollView: UIScrollView {
             self.rightFakeIndicatorView.heightAnchor.constraint(equalToConstant: SearchResultScrollView.indicatorHeight),
             self.rightFakeIndicatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.25)
         ])
-        
-        let seperatorHeight: CGFloat = 0.3
-        
-        contentView.addSubview(self.collectionViewSeperateView)
-        self.collectionViewSeperateView.translatesAutoresizingMaskIntoConstraints = false
+
+        let separatorHeight: CGFloat = 0.3
+
+        contentView.addSubview(self.collectionViewSeparateView)
+        self.collectionViewSeparateView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.collectionViewSeperateView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            self.collectionViewSeperateView.topAnchor.constraint(equalTo: self.rightFakeIndicatorView.bottomAnchor),
-            self.collectionViewSeperateView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            self.collectionViewSeperateView.heightAnchor.constraint(equalToConstant: seperatorHeight)
+            self.collectionViewSeparateView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.collectionViewSeparateView.topAnchor.constraint(equalTo: self.rightFakeIndicatorView.bottomAnchor),
+            self.collectionViewSeparateView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            self.collectionViewSeparateView.heightAnchor.constraint(equalToConstant: separatorHeight)
         ])
     }
-    
+
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
         self.busResultCollectionView.delegate = delegate
         self.busResultCollectionView.dataSource = delegate
         self.stationResultCollectionView.delegate = delegate
         self.stationResultCollectionView.dataSource = delegate
     }
-    
+
     func configureIndicator(_ moving: Bool) {
         self.leftFakeIndicatorView.isHidden = moving
         self.rightFakeIndicatorView.isHidden = moving
     }
-    
+
     private func collectionViewLayout() -> UICollectionViewLayout {
         let cellInterval: CGFloat = 1
-        
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: cellInterval,
@@ -141,19 +141,19 @@ class SearchResultScrollView: UIScrollView {
         layout.minimumInteritemSpacing = cellInterval
         layout.minimumLineSpacing = cellInterval
         layout.sectionHeadersPinToVisibleBounds = true
-        
+
         return layout
     }
-    
+
     private func configureUI() {
         let twice: CGFloat = 2
-        
+
         self.showsVerticalScrollIndicator = false
         self.isPagingEnabled = true
         self.isDirectionalLockEnabled = true
         self.contentSize = CGSize(width: self.frame.width * twice, height: self.frame.height)
     }
-    
+
     func configure(searchType: SearchType) {
         self.subviews.last?.alpha = 1
         self.delegate?.scrollViewWillBeginDragging?(self)

@@ -100,23 +100,32 @@ class SearchBusNavigationView: UIView {
     }
 
     private func configureLayout() {
+        let half: CGFloat = 0.5
+        let twice: CGFloat = 2
+        let backButtonWidthRatio: CGFloat = 0.15
+
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.backButton)
         NSLayoutConstraint.activate([
             self.backButton.topAnchor.constraint(equalTo: self.topAnchor),
             self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.backButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
-            self.backButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.15)
+            self.backButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: half),
+            self.backButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: backButtonWidthRatio)
         ])
+
+        let textFieldTopMargin: CGFloat = 7
+        let textFieldWidthRatio: CGFloat = 0.8
 
         self.searchTextField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.searchTextField)
         NSLayoutConstraint.activate([
-            self.searchTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 7),
+            self.searchTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldTopMargin),
             self.searchTextField.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor),
-            self.searchTextField.heightAnchor.constraint(equalTo: self.backButton.heightAnchor, constant: -14),
-            self.searchTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8)
+            self.searchTextField.heightAnchor.constraint(equalTo: self.backButton.heightAnchor, constant: -textFieldTopMargin * twice),
+            self.searchTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: textFieldWidthRatio)
         ])
+
+        let separatorHeight: CGFloat = 0.3
 
         self.firstSeparateView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.firstSeparateView)
@@ -124,7 +133,7 @@ class SearchBusNavigationView: UIView {
             self.firstSeparateView.topAnchor.constraint(equalTo: self.backButton.bottomAnchor),
             self.firstSeparateView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.firstSeparateView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.firstSeparateView.heightAnchor.constraint(equalToConstant: 0.3)
+            self.firstSeparateView.heightAnchor.constraint(equalToConstant: separatorHeight)
         ])
 
         self.busTabButton.translatesAutoresizingMaskIntoConstraints = false
@@ -133,7 +142,7 @@ class SearchBusNavigationView: UIView {
             self.busTabButton.topAnchor.constraint(equalTo: self.firstSeparateView.bottomAnchor),
             self.busTabButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.busTabButton.heightAnchor.constraint(equalTo: self.backButton.heightAnchor),
-            self.busTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
+            self.busTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half)
         ])
 
         self.stationTabButton.translatesAutoresizingMaskIntoConstraints = false
@@ -142,9 +151,11 @@ class SearchBusNavigationView: UIView {
             self.stationTabButton.topAnchor.constraint(equalTo: self.firstSeparateView.bottomAnchor),
             self.stationTabButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.stationTabButton.heightAnchor.constraint(equalTo: self.backButton.heightAnchor),
-            self.stationTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
+            self.stationTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half),
 
         ])
+
+        let buttonContentInterval: CGFloat = 10
 
 //        if #available(iOS 15.0, *) {
 //            var buttonPaddingConfiguration = UIButton.Configuration.plain()
@@ -153,10 +164,10 @@ class SearchBusNavigationView: UIView {
 //            self.stationTabButton.configuration = buttonPaddingConfiguration
 //        }
 //        else {
-        self.busTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
-        self.stationTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
-        self.busTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
-        self.stationTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
+        self.busTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: buttonContentInterval)
+        self.stationTabButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: buttonContentInterval)
+        self.busTabButton.titleEdgeInsets = .init(top: 0, left: buttonContentInterval, bottom: 0, right: 0)
+        self.stationTabButton.titleEdgeInsets = .init(top: 0, left: buttonContentInterval, bottom: 0, right: 0)
 //        }
     }
 

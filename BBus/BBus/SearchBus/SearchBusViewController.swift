@@ -36,7 +36,7 @@ class SearchBusViewController: UIViewController {
     private func configureDelegate() {
         self.searchBusView.configureBackButtonDelegate(self)
     }
-    
+
     private func configureLayout() {
         self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.searchBusView)
@@ -47,7 +47,7 @@ class SearchBusViewController: UIViewController {
             self.searchBusView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-    
+
     private func configureUI() {
         self.view.backgroundColor = UIColor.white
     }
@@ -61,9 +61,9 @@ extension SearchBusViewController: SearchBusBackButtonDelegate {
 
 // MARK: - Delegate : UICollectionView
 extension SearchBusViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.searchBusView.page {
+        if self.searchBusView.currentSearchType == SearchType.bus {
             self.coordinator?.pushToBusRoute()
         }
         else {
@@ -74,22 +74,22 @@ extension SearchBusViewController: UICollectionViewDelegate {
 
 // MARK: - DataSource : UICollectionView
 extension SearchBusViewController: UICollectionViewDataSource {
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 10
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier, for: indexPath) as? SearchResultHeaderView else { return UICollectionReusableView() }
         header.configureLayout()
         header.configure(title: (indexPath.section % 2 == 0) ? "경기" : "부산")
         return header
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         if collectionView.frame.origin.x == 0 {
@@ -115,7 +115,7 @@ extension SearchBusViewController: UICollectionViewDataSource {
 
 // MARK: - DelegateFlowLayout : UICollectionView
 extension SearchBusViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: SearchResultCollectionViewCell.height)
     }

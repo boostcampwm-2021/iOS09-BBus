@@ -13,14 +13,13 @@ enum SearchType {
 
 class SearchBusView: UIView {
 
-    var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
-    private(set) lazy var searchResultScrollView = SearchResultScrollView()
+    private lazy var searchResultScrollView = SearchResultScrollView()
     private lazy var navigationView: SearchBusNavigationView = {
         let view = SearchBusNavigationView()
         view.backgroundColor = UIColor.systemBackground
         return view
     }()
-    private var currentSearchType: SearchType = .bus {
+    private(set) var currentSearchType: SearchType = .bus {
         didSet {
             self.navigationView.configure(searchType: self.currentSearchType)
             DispatchQueue.main.async {
@@ -49,15 +48,17 @@ class SearchBusView: UIView {
 
     // MARK: - Configuration
     private func configureLayout() {
+        let navigationViewHeight: CGFloat = 100
+
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            self.navigationView.heightAnchor.constraint(equalToConstant: 100),
+            self.navigationView.heightAnchor.constraint(equalToConstant: navigationViewHeight),
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-    
+
         self.addSubview(self.searchResultScrollView)
         self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -105,9 +106,10 @@ extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
 }
 
 extension SearchBusView: UIScrollViewDelegate {
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
+        // TODO: Bug Fix
+//        self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
