@@ -22,7 +22,10 @@ class SearchBusView: UIView {
     }()
     private var currentSearchType: SearchType = .bus {
         didSet {
-            self.navigationView.configure(searchType: currentSearchType)
+            self.navigationView.configure(searchType: self.currentSearchType)
+            DispatchQueue.main.async {
+                self.searchResultScrollView.configure(searchType: self.currentSearchType)
+            }
         }
     }
 
@@ -92,26 +95,12 @@ extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
 
     func shouldBusTabSelect() {
         guard self.currentSearchType == SearchType.station else { return }
-        self.searchResultScrollView.subviews.last?.alpha = 1
         self.currentSearchType = SearchType.bus
-        self.scrollViewWillBeginDragging(self.searchResultScrollView)
-        UIView.animate(withDuration: TimeInterval(0.3), animations: {
-            self.searchResultScrollView.contentOffset.x -= self.searchResultScrollView.frame.width
-        }, completion: {_ in
-            self.scrollViewDidEndDecelerating(self.searchResultScrollView)
-        })
     }
 
     func shouldStationTabSelect() {
         guard self.currentSearchType == SearchType.bus else { return }
-        self.searchResultScrollView.subviews.last?.alpha = 1
         self.currentSearchType = SearchType.station
-        self.scrollViewWillBeginDragging(self.searchResultScrollView)
-        UIView.animate(withDuration: TimeInterval(0.3), animations: {
-            self.searchResultScrollView.contentOffset.x += self.searchResultScrollView.frame.width
-        }, completion: { _ in
-            self.scrollViewDidEndDecelerating(self.searchResultScrollView)
-        })
     }
 }
 

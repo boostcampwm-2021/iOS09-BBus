@@ -153,4 +153,19 @@ class SearchResultScrollView: UIScrollView {
         self.isDirectionalLockEnabled = true
         self.contentSize = CGSize(width: self.frame.width * twice, height: self.frame.height)
     }
+    
+    func configure(searchType: SearchType) {
+        self.subviews.last?.alpha = 1
+        self.delegate?.scrollViewWillBeginDragging?(self)
+        UIView.animate(withDuration: TimeInterval(0.3), animations: {
+            switch searchType {
+            case .bus:
+                self.setContentOffset(CGPoint.zero, animated: false)
+            case .station:
+                self.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: false)
+            }
+        }, completion: {_ in
+            self.delegate?.scrollViewDidEndDecelerating?(self)
+        })
+    }
 }
