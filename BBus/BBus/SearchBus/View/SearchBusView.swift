@@ -90,15 +90,19 @@ class SearchBusView: UIView {
 
 extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
     func shouldBusTabSelect() {
-        self.currentSearchType = .bus
+        self.currentSearchType = SearchType.bus
     }
 
     func shouldStationTabSelect() {
-        self.currentSearchType = .station
+        self.currentSearchType = SearchType.station
     }
 }
 
 extension SearchBusView: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
+    }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard let scrollView = (scrollView as? SearchResultScrollView),
