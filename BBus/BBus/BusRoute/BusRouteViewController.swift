@@ -36,6 +36,16 @@ class BusRouteViewController: UIViewController {
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
     weak var coordinator: BusRouteCoordinator?
+    private lazy var refreshButton: UIButton = {
+        let radius: CGFloat = 25
+
+        let button = UIButton()
+        button.setImage(MyImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.darkGray
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +66,9 @@ class BusRouteViewController: UIViewController {
 
     // MARK: - Configure
     private func configureLayout() {
+        let refreshButtonWidthAnchor: CGFloat = 50
+        let refreshTrailingBottomInterval: CGFloat = -16
+
         self.view.addSubview(self.busRouteView)
         self.busRouteView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -74,6 +87,15 @@ class BusRouteViewController: UIViewController {
         ])
 
         self.busRouteView.configureTableViewHeight(count: 20)
+
+        self.view.addSubview(self.refreshButton)
+        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+        ])
     }
 
     private func configureDelegate() {
