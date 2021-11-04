@@ -25,6 +25,11 @@ class AlarmSettingViewController: UIViewController {
         static let redLine = UIColor.red
         static let tableBackground = UIColor.systemGray5
     }
+    
+    enum Image {
+        static let waypoint = UIImage(named: "StationCenterCircle")
+        static let getOn = UIImage(named: "GetOn")
+    }
 
     enum Image {
         static let clockIcon = UIImage(systemName: "clock")
@@ -102,16 +107,14 @@ extension AlarmSettingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
 
-        cell.configure(busColor: Color.blueBus)
-        cell.configure(order: String(indexPath.row+1),
-                       remainingTime: "2분 18초",
-                       remainingStationCount: "2번째",
-                       busCongestionStatus: "여유",
-                       arrivalTime: "오후 04시 11분 도착 예정",
-                       currentLocation: "낙성대입구",
-                       busNumber: "서울74사3082")
+        cell.configure(beforeColor: indexPath.item == 0 ? .clear : AlarmSettingViewController.Color.lightGray,
+                       afterColor: indexPath.item == 9 ? .clear : AlarmSettingViewController.Color.lightGray,
+                       title: "신촌오거리.현대백화점",
+                       description: "14062 | 2분 소요",
+                       type: indexPath.item == 0 ? .getOn : .waypoint)
+        cell.configureDelegate(self)
 
         return cell
     }
@@ -119,12 +122,18 @@ extension AlarmSettingViewController: UITableViewDataSource {
 
 extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return GetOnStatusCell.cellHeight
+        return GetOffTableViewCell.cellHeight
     }
 }
 
 extension AlarmSettingViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
+    func shouldGoToMovingStatusScene() {
+        self.coordinator?.pushToMovingStatus()
     }
 }

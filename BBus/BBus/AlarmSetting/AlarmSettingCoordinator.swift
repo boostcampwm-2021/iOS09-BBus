@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmSettingCoordinator: NSObject, Coordinator {
+class AlarmSettingCoordinator: MovingStatusPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
