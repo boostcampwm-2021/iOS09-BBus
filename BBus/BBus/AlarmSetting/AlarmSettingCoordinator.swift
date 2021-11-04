@@ -20,10 +20,11 @@ class AlarmSettingCoordinator: MovingStatusPushable {
     func start() {
         let viewController = AlarmSettingViewController()
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.presenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

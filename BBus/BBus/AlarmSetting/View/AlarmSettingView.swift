@@ -8,8 +8,11 @@
 import UIKit
 
 class AlarmSettingView: UIView {
+    
+    static let tableViewSectionCount = 2
+    static let tableViewHeaderHeight: CGFloat = 35
 
-    lazy var alarmTableView: UITableView = {
+    private lazy var alarmTableView: UITableView = {
         let tableViewLeftInset: CGFloat = 90
         let tableViewTopBottomRightInset: CGFloat = 0
 
@@ -29,7 +32,8 @@ class AlarmSettingView: UIView {
         self.configureLayout()
     }
 
-    func configureLayout() {
+    // MARK: - Configure
+    private func configureLayout() {
         self.addSubview(self.alarmTableView)
         self.alarmTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -40,8 +44,7 @@ class AlarmSettingView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: BackButtonDelegate & UITableViewDelegate & UITableViewDataSource) {
-//        self.customNavigationBar.configureDelegate(delegate)
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
         self.alarmTableView.delegate = delegate
         self.alarmTableView.dataSource = delegate
     }

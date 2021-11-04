@@ -54,29 +54,14 @@ class AlarmSettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Color.white
-        self.navigationController?.isNavigationBarHidden = true
+        
         self.configureLayout()
-        self.configureDelegate()
-        self.configureTableView()
         self.configureColor()
+        self.configureDelegate()
         self.configureMOCKDATA()
-        // Do any additional setup after loading the view.
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        if self.isMovingFromParent {
-            self.coordinator?.terminate()
-        }
-    }
-
-    private func configureTableView() {
-        self.alarmSettingView.alarmTableView.delegate = self
-        self.alarmSettingView.alarmTableView.dataSource = self
-    }
-
+    
+    // MARK: - Configure
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
         let refreshTrailingBottomInterval: CGFloat = -16
@@ -114,6 +99,7 @@ class AlarmSettingViewController: UIViewController {
     }
 
     private func configureColor() {
+        self.view.backgroundColor = Color.white
         self.customNavigationBar.configureTintColor(color: Color.black)
         self.customNavigationBar.configureAlpha(alpha: 1)
     }
@@ -123,9 +109,10 @@ class AlarmSettingViewController: UIViewController {
     }
 }
 
+// MARK: - DataSource: UITableView
 extension AlarmSettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return AlarmSettingView.tableViewSectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,8 +155,20 @@ extension AlarmSettingViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "승차알람"
+        case 1:
+            return "하차알람"
+        default:
+            return nil
+        }
+    }
 }
 
+// MARK: - Delegate : UITableView
 extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
@@ -188,34 +187,26 @@ extension AlarmSettingViewController: UITableViewDelegate {
         header.contentView.backgroundColor = Color.white
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "승차알람"
-        case 1:
-            return "하차알람"
-        default:
-            return nil
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
+        return AlarmSettingView.tableViewHeaderHeight
     }
 }
 
+// MARK: - Delegate : BackButton
 extension AlarmSettingViewController: BackButtonDelegate {
     func touchedBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        self.coordinator?.terminate()
     }
 }
 
+// MARK: - Delegate: GetOffAlarmButton
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
     func shouldGoToMovingStatusScene() {
         self.coordinator?.pushToMovingStatus()
     }
 }
 
+// MARK: - Delegate: GetOnAlarmButton
 extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
     func toggleGetOnAlarmSetting() {
         print("toggle Alarm")
