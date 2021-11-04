@@ -34,19 +34,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
         }
     }
     
-    private lazy var alarmButton: UIButton = {
-        let borderWidth: CGFloat = 0.5
-        let radius: CGFloat = 20
-
-        let button = UIButton()
-        button.setImage(AlarmSettingViewController.Image.alarmIcon, for: .normal)
-        button.tintColor = AlarmSettingViewController.Color.alarmTint
-        button.clipsToBounds = true
-        button.layer.cornerRadius = radius
-        button.layer.borderWidth = borderWidth
-        button.layer.borderColor = AlarmSettingViewController.Color.alarmTint?.cgColor
-        return button
-    }()
+    private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
