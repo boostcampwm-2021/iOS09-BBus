@@ -30,7 +30,7 @@ class BusStationTableViewCell: UITableViewCell {
         label.textColor = BusRouteViewController.Color.tableViewCellSubTitle
         return label
     }()
-    private lazy var labelStackView: UIStackView = {
+    lazy var labelStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.stationTitleLabel, self.stationDescriptionLabel])
         stackView.axis = .vertical
         stackView.spacing = self.stackViewSpacing

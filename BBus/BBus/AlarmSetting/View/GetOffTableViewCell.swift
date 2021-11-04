@@ -40,6 +40,11 @@ class GetOffTableViewCell: BusStationTableViewCell {
         button.tintColor = MyColor.bbusGray
         return button
     }()
+    private lazy var separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
+        return view
+    }()
     
     // MARK: - Configure
     override func configureLayout() {
@@ -49,6 +54,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
         let alarmButtomRightMargin: CGFloat = -25
         let circleImageHeight: CGFloat = 15
         let circleImageWidth: CGFloat = 32
+        let separatorHeight: CGFloat = 1
         
         self.contentView.addSubview(self.alarmButton)
         self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +70,15 @@ class GetOffTableViewCell: BusStationTableViewCell {
             super.centerImageView.widthAnchor.constraint(equalToConstant: circleImageWidth),
             super.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             super.centerImageView.centerXAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor)
+        ])
+        
+        self.addSubview(self.separatorView)
+        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorView.leadingAnchor.constraint(equalTo: super.labelStackView.leadingAnchor),
+            self.separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.separatorView.heightAnchor.constraint(equalToConstant: separatorHeight),
+            self.separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

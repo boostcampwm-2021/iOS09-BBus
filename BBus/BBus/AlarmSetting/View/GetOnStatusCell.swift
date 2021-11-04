@@ -124,6 +124,11 @@ class GetOnStatusCell: UITableViewCell {
         button.layer.borderColor = AlarmSettingViewController.Color.lightGray.cgColor
         return button
     }()
+    private lazy var separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
+        return view
+    }()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -158,6 +163,7 @@ class GetOnStatusCell: UITableViewCell {
         let alarmButtonHeightAnchor: CGFloat = 25
         let alarmButtonTrailingAnchor: CGFloat = -15
         let indicatorLabelLeadingAnchor: CGFloat = 5
+        let separatorHeight: CGFloat = 1
 
         self.addSubview(self.busColorView)
         self.busColorView.translatesAutoresizingMaskIntoConstraints = false
@@ -244,6 +250,15 @@ class GetOnStatusCell: UITableViewCell {
             self.alarmButton.heightAnchor.constraint(equalToConstant: alarmButtonHeightAnchor),
             self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmButtonTrailingAnchor)
+        ])
+        
+        self.addSubview(self.separatorView)
+        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.leadingAnchor),
+            self.separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.separatorView.heightAnchor.constraint(equalToConstant: separatorHeight),
+            self.separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 

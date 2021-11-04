@@ -9,29 +9,18 @@ import UIKit
 
 class AlarmSettingView: UIView {
 
-    private lazy var alarmScrollView: UIScrollView = UIScrollView()
-
-    private lazy var alarmScrollViewContentsView: UIView = UIView()
-
     lazy var alarmTableView: UITableView = {
         let tableViewLeftInset: CGFloat = 90
         let tableViewTopBottomRightInset: CGFloat = 0
 
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(GetOffTableViewCell.self, forCellReuseIdentifier: GetOffTableViewCell.reusableID)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
-        tableView.separatorColor = AlarmSettingViewController.Color.tableViewSeperator
+        tableView.register(GetOnStatusCell.self, forCellReuseIdentifier: GetOnStatusCell.reusableID)
+        tableView.register(AlarmSettingTableViewHeader.self, forHeaderFooterViewReuseIdentifier: AlarmSettingTableViewHeader.resuableID)
+        tableView.separatorStyle = .none
         tableView.backgroundColor = AlarmSettingViewController.Color.tableBackground
+        tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         return tableView
-    }()
-
-    lazy var reportWrongDataButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.setTitle("잘못된 정보 신고", for: .normal)
-        button.setTitleColor(AlarmSettingViewController.Color.lightGray, for: .normal)
-        return button
     }()
 
     convenience init() {
@@ -42,40 +31,13 @@ class AlarmSettingView: UIView {
     }
 
     func configureLayout() {
-        self.addSubview(self.alarmScrollView)
-        self.alarmScrollView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.alarmScrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.alarmScrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.alarmScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.alarmScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-
-        self.alarmScrollViewContentsView.addSubview(self.alarmTableView)
+        self.addSubview(self.alarmTableView)
         self.alarmTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.alarmTableView.heightAnchor.constraint(equalToConstant: 800),
-            self.alarmTableView.leadingAnchor.constraint(equalTo: self.alarmScrollViewContentsView.leadingAnchor),
-            self.alarmTableView.trailingAnchor.constraint(equalTo: self.alarmScrollViewContentsView.trailingAnchor),
-            self.alarmTableView.topAnchor.constraint(equalTo: self.alarmScrollViewContentsView.topAnchor, constant: 20),
-            self.alarmTableView.bottomAnchor.constraint(equalTo: self.alarmScrollViewContentsView.bottomAnchor, constant: -100)
-        ])
-
-        self.alarmScrollViewContentsView.addSubview(self.reportWrongDataButton)
-        self.reportWrongDataButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.reportWrongDataButton.centerXAnchor.constraint(equalTo: self.alarmScrollViewContentsView.centerXAnchor),
-            self.reportWrongDataButton.bottomAnchor.constraint(equalTo: self.alarmScrollViewContentsView.bottomAnchor, constant: -16)
-        ])
-
-        self.alarmScrollView.addSubview(self.alarmScrollViewContentsView)
-        self.alarmScrollViewContentsView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.alarmScrollViewContentsView.topAnchor.constraint(equalTo: self.alarmScrollView.contentLayoutGuide.topAnchor),
-            self.alarmScrollViewContentsView.leadingAnchor.constraint(equalTo: self.alarmScrollView.contentLayoutGuide.leadingAnchor),
-            self.alarmScrollViewContentsView.trailingAnchor.constraint(equalTo: self.alarmScrollView.contentLayoutGuide.trailingAnchor),
-            self.alarmScrollViewContentsView.bottomAnchor.constraint(equalTo: self.alarmScrollView.contentLayoutGuide.bottomAnchor),
-            self.alarmScrollViewContentsView.widthAnchor.constraint(equalTo: self.alarmScrollView.frameLayoutGuide.widthAnchor)
+            self.alarmTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.alarmTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.alarmTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 

@@ -99,27 +99,83 @@ class AlarmSettingViewController: UIViewController {
 }
 
 extension AlarmSettingViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return 10
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
+        switch indexPath.section {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
 
-        cell.configure(beforeColor: indexPath.item == 0 ? .clear : AlarmSettingViewController.Color.lightGray,
-                       afterColor: indexPath.item == 9 ? .clear : AlarmSettingViewController.Color.lightGray,
-                       title: "신촌오거리.현대백화점",
-                       description: "14062 | 2분 소요",
-                       type: indexPath.item == 0 ? .getOn : .waypoint)
-        cell.configureDelegate(self)
+            cell.configure(busColor: Color.blueBus)
+            cell.configure(order: String(indexPath.row+1),
+                           remainingTime: "2분 18초",
+                           remainingStationCount: "2번째",
+                           busCongestionStatus: "여유",
+                           arrivalTime: "오후 04시 11분 도착 예정",
+                           currentLocation: "낙성대입구",
+                           busNumber: "서울74사3082")
 
-        return cell
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
+
+            cell.configure(beforeColor: indexPath.item == 0 ? .clear : AlarmSettingViewController.Color.lightGray,
+                           afterColor: indexPath.item == 9 ? .clear : AlarmSettingViewController.Color.lightGray,
+                           title: "신촌오거리.현대백화점",
+                           description: "14062 | 2분 소요",
+                           type: indexPath.item == 0 ? .getOn : .waypoint)
+            cell.configureDelegate(self)
+            return cell
+        default:
+            return UITableViewCell()
+        }
     }
 }
 
 extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return GetOffTableViewCell.cellHeight
+        switch indexPath.section {
+        case 0:
+            return GetOnStatusCell.cellHeight
+        case 1:
+            return GetOffTableViewCell.cellHeight
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        
+        header.contentView.backgroundColor = Color.white
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "승차알람"
+        case 1:
+            return "하차알람"
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
     }
 }
 
