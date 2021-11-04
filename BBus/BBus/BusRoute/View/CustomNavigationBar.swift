@@ -29,16 +29,20 @@ class CustomNavigationBar: UIView {
         return button
     }()
     private lazy var backButtonTitleLabel: UILabel = {
+        let buttonTitleFontSize: CGFloat = 18
+
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: buttonTitleFontSize, weight: .semibold)
         label.textAlignment = .left
         return label
     }()
     private lazy var titleLabel: UILabel = {
+        let labelFontSize: CGFloat = 18
+
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
     }()
@@ -51,21 +55,28 @@ class CustomNavigationBar: UIView {
 
     // MARK: - Configure
     func configureLayout() {
+        let backButtonWidthAnchor: CGFloat = 18
+        let backButtonHeightAnchor: CGFloat = 27
+        let backButtonTopAnchor: CGFloat = 8
+        let backButtonLeadingAnchor: CGFloat = 12
+        let backButtonBottomAnchor: CGFloat = -8
+        let termBackButtonToBackButtonTitle: CGFloat = 12
+
         self.addSubview(self.backButton)
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.backButton.widthAnchor.constraint(equalToConstant: 18),
-            self.backButton.heightAnchor.constraint(equalToConstant: 27),
-            self.backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-            self.backButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            self.backButton.widthAnchor.constraint(equalToConstant: backButtonWidthAnchor),
+            self.backButton.heightAnchor.constraint(equalToConstant: backButtonHeightAnchor),
+            self.backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: backButtonTopAnchor),
+            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: backButtonLeadingAnchor),
+            self.backButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: backButtonBottomAnchor)
         ])
 
         self.addSubview(self.backButtonTitleLabel)
         self.backButtonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.backButtonTitleLabel.centerYAnchor.constraint(equalTo: self.backButton.centerYAnchor),
-            self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor, constant: 12)
+            self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor, constant: termBackButtonToBackButtonTitle)
         ])
 
         self.addSubview(self.titleLabel)

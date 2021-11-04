@@ -25,29 +25,37 @@ class BusTagView: UIView {
         return imageView
     }()
     private lazy var busNumberLabel: UILabel = {
+        let labelFontSize: CGFloat = 11
+
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusNumber
-        label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
     }()
     private lazy var busCongestionLabel: UILabel = {
+        let labelFontSize: CGFloat = 11
+
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusCongestion
-        label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
     }()
     private lazy var busStatusStackView: UIStackView = {
+        let stackViewSpacing: CGFloat = 2
+
         let stackView = UIStackView(arrangedSubviews: [self.busNumberLabel, self.busCongestionLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 2
+        stackView.spacing = stackViewSpacing
         return stackView
     }()
     private lazy var lowFloorLabel: UILabel = {
+        let labelFontSize: CGFloat = 11
+
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusNumber
-        label.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
     }()
@@ -60,6 +68,11 @@ class BusTagView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
+        let busIconImageViewWidthAnchor: CGFloat = 20
+        let busIconImageViewHeightAnchor: CGFloat = 20
+        let termBusTagImageViewToBusIconImageView: CGFloat = 2
+        let busTagFrameViewCenterXAnchor: CGFloat = -2
+
         self.addSubview(self.busTagImageView)
         self.busTagImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -71,17 +84,17 @@ class BusTagView: UIView {
         self.addSubview(self.busIconImageView)
         self.busIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busIconImageView.widthAnchor.constraint(equalToConstant: 20),
-            self.busIconImageView.heightAnchor.constraint(equalToConstant: 20),
+            self.busIconImageView.widthAnchor.constraint(equalToConstant: busIconImageViewWidthAnchor),
+            self.busIconImageView.heightAnchor.constraint(equalToConstant: busIconImageViewHeightAnchor),
             self.busIconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.busIconImageView.leadingAnchor.constraint(equalTo: self.busTagImageView.trailingAnchor, constant: 2),
+            self.busIconImageView.leadingAnchor.constraint(equalTo: self.busTagImageView.trailingAnchor, constant: termBusTagImageViewToBusIconImageView),
             self.busIconImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
         self.busTagImageView.addSubview(self.busTagFrameView)
         self.busTagFrameView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busTagFrameView.centerXAnchor.constraint(equalTo: self.busTagImageView.centerXAnchor, constant: -2),
+            self.busTagFrameView.centerXAnchor.constraint(equalTo: self.busTagImageView.centerXAnchor, constant: busTagFrameViewCenterXAnchor),
             self.busTagFrameView.centerYAnchor.constraint(equalTo: self.busTagImageView.centerYAnchor)
         ])
 
@@ -109,18 +122,22 @@ class BusTagView: UIView {
     }
 
     private func configureTagImage(isLowFloor: Bool) {
+        let busTagImageViewWidthAnchor: CGFloat = 70
+        let busTagImageviewHeightAnchorWithMaxSize: CGFloat = 35
+        let busTagImageViewHeightAnchorWithMinSize: CGFloat = 20
+
         if isLowFloor {
             self.busTagImageView.image = BusRouteViewController.Image.tagMaxSize
             NSLayoutConstraint.activate([
-                self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
-                self.busTagImageView.heightAnchor.constraint(equalToConstant: 35)
+                self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
+                self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageviewHeightAnchorWithMaxSize)
             ])
         }
         else {
             self.busTagImageView.image = BusRouteViewController.Image.tagMinSize
             NSLayoutConstraint.activate([
-                self.busTagImageView.widthAnchor.constraint(equalToConstant: 70),
-                self.busTagImageView.heightAnchor.constraint(equalToConstant: 20)
+                self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
+                self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageViewHeightAnchorWithMinSize)
             ])
         }
     }
