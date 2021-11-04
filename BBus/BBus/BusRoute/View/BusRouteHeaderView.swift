@@ -12,45 +12,57 @@ class BusRouteHeaderView: UIView {
     static let headerHeight: CGFloat = 170
 
     private lazy var busTypeLabel: UILabel = {
+        let typeLabelFontSize: CGFloat = 15
+        
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: typeLabelFontSize)
         label.textAlignment = .center
         return label
     }()
     private lazy var busNumberLabel: UILabel = {
+        let numberLabelFontSize: CGFloat = 22
+        
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.font = UIFont.boldSystemFont(ofSize: numberLabelFontSize)
         label.textAlignment = .center
         return label
     }()
     private lazy var busFromStationLabel: UILabel = {
+        let fromStationLabelFontSize: CGFloat = 15
+        
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: fromStationLabelFontSize)
         label.textAlignment = .center
         return label
     }()
     private lazy var busArrowImageView: UIImageView = {
+        let busArrowImageWidthHeight: CGFloat = 15
+        
         let imageView = UIImageView()
         imageView.image = BusRouteViewController.Image.headerArrow
-        imageView.frame = CGRect(origin: .zero, size: CGSize(width: 15, height: 15))
+        imageView.frame = CGRect(origin: .zero, size: CGSize(width: busArrowImageWidthHeight, height: busArrowImageWidthHeight))
         imageView.contentMode = .scaleAspectFill
         imageView.tintColor = BusRouteViewController.Color.white
         return imageView
     }()
     private lazy var busToStationLabel: UILabel = {
+        let toStationLabelFontSize: CGFloat = 15
+        
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: toStationLabelFontSize)
         label.textAlignment = .center
         return label
     }()
     private lazy var busStationStackView: UIStackView = {
+        let stackViewSpacing: CGFloat = 3
+        
         let stackView = UIStackView(arrangedSubviews: [self.busFromStationLabel, self.busArrowImageView, self.busToStationLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 3
+        stackView.spacing = stackViewSpacing
         return stackView
     }()
 
@@ -62,25 +74,29 @@ class BusRouteHeaderView: UIView {
 
     // MARK: - Configure
     func configureLayout() {
+        let busNumberLabelYaxisMargin: CGFloat = 10
+        let busTypeLabelBottomMargin: CGFloat = -5
+        let stackViewTopMargin: CGFloat = 7
+        
         self.addSubview(self.busNumberLabel)
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 10)
+            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: busNumberLabelYaxisMargin)
         ])
         
         self.addSubview(self.busTypeLabel)
         self.busTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTypeLabel.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
-            self.busTypeLabel.bottomAnchor.constraint(equalTo: self.busNumberLabel.topAnchor, constant: -5)
+            self.busTypeLabel.bottomAnchor.constraint(equalTo: self.busNumberLabel.topAnchor, constant: busTypeLabelBottomMargin)
         ])
         
         self.addSubview(self.busStationStackView)
         self.busStationStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busStationStackView.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
-            self.busStationStackView.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: 7)
+            self.busStationStackView.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: stackViewTopMargin)
         ])
     }
 

@@ -14,9 +14,15 @@ class BusRouteView: UIView {
     private lazy var busHeaderView = BusRouteHeaderView()
     private lazy var colorBackgroundView = UIView()
     private lazy var busRouteTableView: UITableView = {
+        let tableViewLeftInset: CGFloat = 90
+        let tableViewTopBottomRightInset: CGFloat = 0
+        
         let tableView = UITableView()
         tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 90, bottom: 0, right: 0)
+        tableView.separatorInset = UIEdgeInsets(top: tableViewTopBottomRightInset,
+                                                left: tableViewLeftInset,
+                                                bottom: tableViewTopBottomRightInset,
+                                                right: tableViewTopBottomRightInset)
         tableView.separatorColor = BusRouteViewController.Color.tableViewSeperator
         return tableView
     }()
@@ -30,10 +36,12 @@ class BusRouteView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
+        let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
+        
         self.addSubview(self.colorBackgroundView)
         self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: colorBackgroundViewHeightMultiplier),
             self.colorBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
             self.colorBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.colorBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
