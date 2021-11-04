@@ -9,6 +9,8 @@ import UIKit
 
 class MovingStatusViewController: UIViewController {
 
+    weak var coordinator: MovingStatusCoordinator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

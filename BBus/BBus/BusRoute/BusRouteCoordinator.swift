@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteCoordinator: NSObject, Coordinator, StationPushable {
+class BusRouteCoordinator: StationPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
@@ -20,10 +20,11 @@ class BusRouteCoordinator: NSObject, Coordinator, StationPushable {
     func start() {
         let viewController = BusRouteViewController()
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.presenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

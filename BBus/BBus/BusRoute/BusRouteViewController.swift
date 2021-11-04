@@ -19,6 +19,7 @@ class BusRouteViewController: UIViewController {
         static let tagBusCongestion = UIColor.red
         static let greenLine = UIColor.green
         static let redLine = UIColor.red
+        static let yellowLine = UIColor.yellow
     }
     
     enum Image {
@@ -36,6 +37,16 @@ class BusRouteViewController: UIViewController {
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
     weak var coordinator: BusRouteCoordinator?
+    private lazy var refreshButton: UIButton = {
+        let radius: CGFloat = 25
+
+        let button = UIButton()
+        button.setImage(MyImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.darkGray
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,17 +56,12 @@ class BusRouteViewController: UIViewController {
         self.configureDelegate()
         self.configureMOCKDATA()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        if self.isMovingFromParent {
-            self.coordinator?.terminate()
-        }
-    }
 
     // MARK: - Configure
     private func configureLayout() {
+        let refreshButtonWidthAnchor: CGFloat = 50
+        let refreshTrailingBottomInterval: CGFloat = -16
+
         self.view.addSubview(self.busRouteView)
         self.busRouteView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -74,6 +80,15 @@ class BusRouteViewController: UIViewController {
         ])
 
         self.busRouteView.configureTableViewHeight(count: 20)
+
+        self.view.addSubview(self.refreshButton)
+        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+        ])
     }
 
     private func configureDelegate() {
@@ -115,13 +130,41 @@ extension BusRouteViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BusStationTableViewCell.reusableID, for: indexPath) as? BusStationTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
 
-        cell.configure(beforeColor: BusRouteViewController.Color.greenLine,
-                       afterColor: BusRouteViewController.Color.redLine,
+        let beforeColor: UIColor
+        if indexPath.item == 0 {
+            beforeColor = BusRouteViewController.Color.clear
+        }
+        else if indexPath.item % 3 == 0 {
+            beforeColor = BusRouteViewController.Color.greenLine
+        }
+        else if indexPath.item % 3 == 1 {
+            beforeColor = BusRouteViewController.Color.redLine
+        }
+        else {
+            beforeColor = BusRouteViewController.Color.yellowLine
+        }
+        
+        let afterColor: UIColor
+        if indexPath.item == 19 {
+            afterColor = BusRouteViewController.Color.clear
+        }
+        else if indexPath.item % 3 == 0 {
+            afterColor = BusRouteViewController.Color.redLine
+        }
+        else if indexPath.item % 3 == 1 {
+            afterColor = BusRouteViewController.Color.yellowLine
+        }
+        else {
+            afterColor = BusRouteViewController.Color.greenLine
+        }
+        
+        cell.configure(beforeColor: beforeColor,
+                       afterColor: afterColor,
                        title: "면복동",
                        description: "19283 | 04:00-23:50",
-                       type: .waypoint)
+                       type: indexPath.item != 10 ? .waypoint : .uturn)
 
         return cell
     }
@@ -134,7 +177,7 @@ extension BusRouteViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return BusStationTableViewCell.cellHeight
+        return BusRouteTableViewCell.cellHeight
     }
 }
 
@@ -165,6 +208,6 @@ extension BusRouteViewController: UIScrollViewDelegate {
 // MARK: - Delegate : BackButton
 extension BusRouteViewController: BackButtonDelegate {
     func touchedBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        self.coordinator?.terminate()
     }
 }
