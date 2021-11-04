@@ -151,7 +151,7 @@ extension BusRouteViewController: UIScrollViewDelegate {
         let animationBaselineOffset: CGFloat = 70
         let headerHeight: CGFloat = 127
         let headerTop: CGFloat = 0
-        let animationDuration: CGFloat = 0.05
+        let animationDuration: TimeInterval = 0.05
         
         if scrollView.contentOffset.y >= animationBaselineOffset && scrollView.contentOffset.y < headerHeight {
             UIView.animate(withDuration: animationDuration) {
