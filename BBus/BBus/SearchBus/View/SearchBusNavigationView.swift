@@ -11,9 +11,19 @@ protocol SearchBusBackButtonDelegate {
     func shouldNavigationPop()
 }
 
+protocol BusTabButtonDelegate {
+    func shouldBusTabSelect()
+}
+
+protocol StationTabButtonDelegate {
+    func shouldStationTabSelect()
+}
+
 class SearchBusNavigationView: UIView {
 
-    var backButtonDelegate: SearchBusBackButtonDelegate?
+    private var backButtonDelegate: SearchBusBackButtonDelegate?
+    private var busTabButtonDelegate: BusTabButtonDelegate?
+    private var stationTabButtonDelegate: StationTabButtonDelegate?
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -57,7 +67,10 @@ class SearchBusNavigationView: UIView {
         button.setTitle("버스", for: .normal)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.setImage(UIImage(systemName: "bus.fill"), for: .normal)
-        button.tintColor = UIColor(named: "bbusSearchRed")
+        button.tintColor = UIColor(named: "bbusGray")
+        button.addAction(UIAction(handler: { _ in
+            self.busTabButtonDelegate?.shouldBusTabSelect()
+        }), for: .touchUpInside)
         return button
     }()
     private lazy var stationTabButton: UIButton = {
@@ -65,7 +78,10 @@ class SearchBusNavigationView: UIView {
         button.setTitle("정거장", for: .normal)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.setImage(UIImage(systemName: "bitcoinsign.circle"), for: .normal)
-        button.tintColor = UIColor(named: "bbusSearchRed")
+        button.tintColor = UIColor(named: "bbusGray")
+        button.addAction(UIAction(handler: { _ in
+            self.stationTabButtonDelegate?.shouldStationTabSelect()
+        }), for: .touchUpInside)
         return button
     }()
     private lazy var secondSeparateView: UIView = {
@@ -162,15 +178,54 @@ class SearchBusNavigationView: UIView {
         self.searchTextField.resignFirstResponder()
     }
 
-    func configureDelegate(_ delegate: SearchBusBackButtonDelegate) {
+    func configureBackButtonDelegate(_ delegate: SearchBusBackButtonDelegate) {
         self.backButtonDelegate = delegate
+    }
+
+    func configureTabButtonDelegate(_ delegate: BusTabButtonDelegate & StationTabButtonDelegate) {
+        self.busTabButtonDelegate = delegate
+        self.stationTabButtonDelegate = delegate
+    }
+
+    func configure(searchType: SearchType) {
+        switch searchType {
+        case .bus:
+            self.busTabButton.tintColor = UIColor(named: "bbusSearchRed")
+            self.busTabButton.setTitleColor(UIColor(named: "bbusSearchRed"), for: .normal)
+            self.searchTextField.placeholder = "버스 검색"
+            self.stationTabButton.tintColor = UIColor(named: "bbusGray")
+            self.stationTabButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.showNumberKeyboard()
+        case .station:
+            self.stationTabButton.tintColor = UIColor(named: "bbusSearchRed")
+            self.stationTabButton.setTitleColor(UIColor(named: "bbusSearchRed"), for: .normal)
+            self.searchTextField.placeholder = "정류장, ID 검색"
+            self.busTabButton.tintColor = UIColor(named: "bbusGray")
+            self.busTabButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.showCharacterKeyboard()
+        }
+    }
+
+    private func showNumberKeyboard() {
+        self.searchTextField.keyboardType = .decimalPad
+        self.searchTextField.reloadInputViews()
+        if let accessoryView = self.searchTextField.inputAccessoryView as? KeyboardAccessoryView {
+            accessoryView.configureButtonUI(by: .decimalPad)
+        }
+    }
+
+    private func showCharacterKeyboard() {
+        self.searchTextField.keyboardType = .webSearch
+        self.searchTextField.reloadInputViews()
+        if let accessoryView = self.searchTextField.inputAccessoryView as? KeyboardAccessoryView {
+            accessoryView.configureButtonUI(by: .webSearch)
+        }
     }
 }
 
 extension SearchBusNavigationView: KeyboardAccessoryCharacterButtonDelegate {
     func shouldShowCharacterPad() {
-        self.searchTextField.keyboardType = .webSearch
-        self.searchTextField.reloadInputViews()
+        self.showCharacterKeyboard()
     }
 }
 
@@ -182,7 +237,6 @@ extension SearchBusNavigationView: KeyboardAccessoryDownKeyboardButtonDelegate {
 
 extension SearchBusNavigationView: KeyboardAccessoryNumberButtonDelegate {
     func shouldShowNumberPad() {
-        self.searchTextField.keyboardType = .numberPad
-        self.searchTextField.reloadInputViews()
+        self.showNumberKeyboard()
     }
 }

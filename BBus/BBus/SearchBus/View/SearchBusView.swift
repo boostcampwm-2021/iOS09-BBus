@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum SearchType {
+    case bus, station
+}
+
 class SearchBusView: UIView {
 
         
@@ -17,16 +21,23 @@ class SearchBusView: UIView {
         view.backgroundColor = UIColor.systemBackground
         return view
     }()
+    private var currentSearchType: SearchType = .bus {
+        didSet {
+            self.navigationView.configure(searchType: currentSearchType)
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureLayout()
+        self.configureTabButtonDelegate()
         self.searchResultScrollView.configureLayout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.configureLayout()
+        self.configureTabButtonDelegate()
         self.searchResultScrollView.configureLayout()
     }
 
@@ -58,5 +69,27 @@ class SearchBusView: UIView {
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBusBackButtonDelegate) {
         self.navigationView.configureDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
+    }
+
+    func configureInitialTabStatus(type: SearchType) {
+        self.currentSearchType = type
+    }
+
+    func configureBackButtonDelegate(_ delegate: SearchBusBackButtonDelegate) {
+        self.navigationView.configureBackButtonDelegate(delegate)
+    }
+
+    private func configureTabButtonDelegate() {
+        self.navigationView.configureTabButtonDelegate(self)
+    }
+}
+
+extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
+    func shouldBusTabSelect() {
+        self.currentSearchType = .bus
+    }
+
+    func shouldStationTabSelect() {
+        self.currentSearchType = .station
     }
 }

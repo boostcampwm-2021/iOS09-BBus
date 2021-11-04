@@ -30,11 +30,10 @@ class KeyboardAccessoryView: UIView {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
         button.layer.borderWidth = 1
         button.setTitle("숫자", for: .normal)
         button.backgroundColor = UIColor.clear
-        button.setTitleColor(UIColor.white, for: .focused)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.addAction(UIAction(handler: { _ in
             self.numberDelegate?.shouldShowNumberPad()
@@ -45,11 +44,10 @@ class KeyboardAccessoryView: UIView {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
         button.layer.borderWidth = 1
         button.setTitle("문자", for: .normal)
         button.backgroundColor = UIColor.clear
-        button.setTitleColor(UIColor.white, for: .focused)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.addAction(UIAction(handler: { _ in
             self.characterDelegate?.shouldShowCharacterPad()
@@ -121,5 +119,22 @@ class KeyboardAccessoryView: UIView {
         self.downKeyboardDelegate = delegate
         self.characterDelegate = delegate
         self.numberDelegate = delegate
+    }
+
+    func configureButtonUI(by type: UIKeyboardType) {
+        switch type {
+        case .decimalPad:
+            self.characterButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.characterButton.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
+            self.numberButton.setTitleColor(UIColor.white, for: .normal)
+            self.numberButton.layer.borderColor = UIColor.white.cgColor
+        case .webSearch:
+            self.numberButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.numberButton.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
+            self.characterButton.setTitleColor(UIColor.white, for: .normal)
+            self.characterButton.layer.borderColor = UIColor.white.cgColor
+        default:
+            break
+        }
     }
 }

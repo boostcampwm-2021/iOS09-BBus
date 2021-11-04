@@ -30,8 +30,13 @@ class SearchBusViewController: UIViewController {
     }
 
     // MARK: - Configuration
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.searchBusView.configureInitialTabStatus(type: .bus)
+    }
+
     private func configureDelegate() {
-        self.searchBusView.configureDelegate(self)
+        self.searchBusView.configureBackButtonDelegate(self)
     }
     
     private func configureLayout() {
