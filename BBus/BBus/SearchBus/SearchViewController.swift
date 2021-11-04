@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
     }
 
     private func configureUI() {
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = MyColor.white
     }
 }
 
@@ -100,7 +100,7 @@ extension SearchViewController: UICollectionViewDataSource {
             let range = (fullText as NSString).range(of: "|")
             let attributedString = NSMutableAttributedString(string: fullText)
             attributedString.addAttribute(.foregroundColor,
-                                          value: UIColor(named: "bbusLightGray") as Any,
+                                          value: MyColor.bbusLightGray as Any,
                                           range: range)
             cell.configureUI(title: "홍대입구", detailInfo: attributedString)
         }

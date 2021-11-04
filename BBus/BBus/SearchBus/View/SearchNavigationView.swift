@@ -29,7 +29,7 @@ class SearchNavigationView: UIView {
         let button = UIButton()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         button.setImage(UIImage(systemName: "chevron.left", withConfiguration: largeConfig), for: .normal)
-        button.tintColor = UIColor.darkText
+        button.tintColor = MyColor.black
         button.addAction(UIAction(handler: { _ in
             self.backButtonDelegate?.shouldNavigationPop()
         }), for: .touchUpInside)
@@ -37,8 +37,8 @@ class SearchNavigationView: UIView {
     }()
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = UIColor(named: "bbusLightGray")
-        textField.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
+        textField.backgroundColor = MyColor.bbusLightGray
+        textField.layer.borderColor = MyColor.bbusGray?.cgColor
         textField.layer.borderWidth = 0.3
         textField.layer.cornerRadius = 3
         textField.placeholder = "버스 검색" // 정거장일땐 정거장 검색
@@ -50,7 +50,7 @@ class SearchNavigationView: UIView {
         let accessoryView = KeyboardAccessoryView()
         accessoryView.configureDelegate(self)
         textField.inputAccessoryView = accessoryView
-        textField.tintColor = UIColor(named: "bbusSearchRed")
+        textField.tintColor = MyColor.bbusTypeRed
         let paddingView = UIView()
         paddingView.frame.size = CGSize(width: 10, height: 0)
         textField.leftView = paddingView
@@ -59,15 +59,15 @@ class SearchNavigationView: UIView {
     }()
     private lazy var firstSeparateView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.darkGray
+        view.backgroundColor = MyColor.darkGray
         return view
     }()
     private lazy var busTabButton: UIButton = {
         let button = UIButton()
         button.setTitle("버스", for: .normal)
-        button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+        button.setTitleColor(MyColor.bbusGray, for: .normal)
         button.setImage(UIImage(systemName: "bus.fill"), for: .normal)
-        button.tintColor = UIColor(named: "bbusGray")
+        button.tintColor = MyColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.busTabButtonDelegate?.shouldBusTabSelect()
         }), for: .touchUpInside)
@@ -76,9 +76,9 @@ class SearchNavigationView: UIView {
     private lazy var stationTabButton: UIButton = {
         let button = UIButton()
         button.setTitle("정거장", for: .normal)
-        button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+        button.setTitleColor(MyColor.bbusGray, for: .normal)
         button.setImage(UIImage(systemName: "bitcoinsign.circle"), for: .normal)
-        button.tintColor = UIColor(named: "bbusGray")
+        button.tintColor = MyColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.stationTabButtonDelegate?.shouldStationTabSelect()
         }), for: .touchUpInside)
@@ -187,18 +187,18 @@ class SearchNavigationView: UIView {
     func configure(searchType: SearchType) {
         switch searchType {
         case .bus:
-            self.busTabButton.tintColor = UIColor(named: "bbusSearchRed")
-            self.busTabButton.setTitleColor(UIColor(named: "bbusSearchRed"), for: .normal)
+            self.busTabButton.tintColor = MyColor.bbusSearchRed
+            self.busTabButton.setTitleColor(MyColor.bbusSearchRed, for: .normal)
             self.searchTextField.placeholder = "버스 검색"
-            self.stationTabButton.tintColor = UIColor(named: "bbusGray")
-            self.stationTabButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.stationTabButton.tintColor = MyColor.bbusGray
+            self.stationTabButton.setTitleColor(MyColor.bbusGray, for: .normal)
             self.showNumberKeyboard()
         case .station:
-            self.stationTabButton.tintColor = UIColor(named: "bbusSearchRed")
-            self.stationTabButton.setTitleColor(UIColor(named: "bbusSearchRed"), for: .normal)
+            self.stationTabButton.tintColor = MyColor.bbusSearchRed
+            self.stationTabButton.setTitleColor(MyColor.bbusSearchRed, for: .normal)
             self.searchTextField.placeholder = "정류장, ID 검색"
-            self.busTabButton.tintColor = UIColor(named: "bbusGray")
-            self.busTabButton.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+            self.busTabButton.tintColor = MyColor.bbusGray
+            self.busTabButton.setTitleColor(MyColor.bbusGray, for: .normal)
             self.showCharacterKeyboard()
         }
     }

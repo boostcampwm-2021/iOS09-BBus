@@ -13,31 +13,31 @@ class SearchResultScrollView: UIScrollView {
 
     private lazy var busResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
-        collectionView.backgroundColor = UIColor(named: "bbusLightGray")
+        collectionView.backgroundColor = MyColor.bbusLightGray
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         collectionView.register(SearchResultHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier)
         return collectionView
     }()
     private lazy var stationResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
-        collectionView.backgroundColor = UIColor(named: "bbusLightGray")
+        collectionView.backgroundColor = MyColor.bbusLightGray
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         collectionView.register(SearchResultHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier)
         return collectionView
     }()
     private lazy var leftFakeIndicatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "bbusTypeRed")
+        view.backgroundColor = MyColor.bbusTypeRed
         return view
     }()
     private lazy var rightFakeIndicatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "bbusTypeRed")
+        view.backgroundColor = MyColor.bbusTypeRed
         return view
     }()
     private lazy var collectionViewSeparateView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.darkGray
+        view.backgroundColor = MyColor.darkGray
         return view
     }()
 

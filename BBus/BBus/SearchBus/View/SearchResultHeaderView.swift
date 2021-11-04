@@ -25,7 +25,7 @@ class SearchResultHeaderView: UICollectionReusableView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.textColor = UIColor.gray
+        label.textColor = MyColor.gray
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
@@ -43,7 +43,7 @@ class SearchResultHeaderView: UICollectionReusableView {
     }
     
     private func configureUI() {
-        self.backgroundColor = UIColor(named: "bbusLightGray")
+        self.backgroundColor = MyColor.bbusLightGray
     }
     
     func configure(title: String) {
