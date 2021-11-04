@@ -25,7 +25,8 @@ class SearchBusNavigationView: UIView {
         textField.placeholder = "버스 검색" // 정거장일땐 정거장 검색
         textField.clearButtonMode = .whileEditing
         textField.becomeFirstResponder()
-        textField.keyboardType = .numberPad
+        textField.keyboardType = .decimalPad
+        textField.inputAccessoryView = BBusSearchKeyboardAccessoryView()
         textField.tintColor = UIColor(named: "bbusSearchRed")
         let paddingView = UIView()
         paddingView.frame.size = CGSize(width: 10, height: 0)
