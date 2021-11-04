@@ -13,19 +13,21 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
-    private var delegate: BackButtonDelegate?
+    private var delegate: BackButtonDelegate? {
+        didSet {
+            self.backButton.addAction(UIAction(handler: { _ in
+                self.delegate?.touchedBackButton()
+            }), for: .touchUpInside)
+        }
+    }
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = BusRouteViewController.Color.white
         button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
         button.contentMode = .scaleAspectFit
-        button.addAction(UIAction(handler: { _ in
-            self.delegate?.touchedBackButton()
-        }), for: .touchUpInside)
         return button
     }()
-
     private lazy var backButtonTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
@@ -33,7 +35,6 @@ class CustomNavigationBar: UIView {
         label.textAlignment = .left
         return label
     }()
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white

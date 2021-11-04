@@ -33,7 +33,7 @@ class BusRouteCoordinator: Coordinator, StationPushable {
     func start() {
         let viewController = BusRouteViewController()
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.presenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {

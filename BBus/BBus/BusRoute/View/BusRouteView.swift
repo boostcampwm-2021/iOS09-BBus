@@ -13,7 +13,6 @@ class BusRouteView: UIView {
     private lazy var busRouteScrollContentsView = UIView()
     private lazy var busHeaderView = BusRouteHeaderView()
     private lazy var colorBackgroundView = UIView()
-    
     private lazy var busRouteTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(BusStationTableViewCell.self, forCellReuseIdentifier: BusStationTableViewCell.reusableID)
@@ -21,7 +20,7 @@ class BusRouteView: UIView {
         tableView.separatorColor = BusRouteViewController.Color.tableViewSeperator
         return tableView
     }()
-
+    
     convenience init() {
         self.init(frame: CGRect())
 
@@ -30,7 +29,7 @@ class BusRouteView: UIView {
     }
 
     // MARK: - Configure
-    func configureLayout() {
+    private func configureLayout() {
         self.addSubview(self.colorBackgroundView)
         self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

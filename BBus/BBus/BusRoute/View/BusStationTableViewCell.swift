@@ -10,7 +10,7 @@ import UIKit
 class BusStationTableViewCell: UITableViewCell {
     
     enum BusRootCenterImageType {
-        case wayPoint, uturn
+        case waypoint, uturn
     }
 
     static let reusableID = "BusStationTableViewCell"
@@ -19,16 +19,14 @@ class BusStationTableViewCell: UITableViewCell {
     var titleLeadingOffset: CGFloat { return 107 }
     var lineTrailingOffset: CGFloat { return -20 }
     
-    private lazy var beforeLineView = UIView()
-    private lazy var afterLineView = UIView()
+    private lazy var beforeCongestionLineView = UIView()
+    private lazy var afterCongestionLineView = UIView()
     private lazy var centerImageView = UIImageView()
-    
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return label
     }()
-    
     private lazy var stationDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -63,7 +61,7 @@ class BusStationTableViewCell: UITableViewCell {
         self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
-            self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: titleLeadingOffset),
+            self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.titleLeadingOffset),
             self.stationTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
         
@@ -75,37 +73,37 @@ class BusStationTableViewCell: UITableViewCell {
             self.stationDescriptionLabel.trailingAnchor.constraint(equalTo: self.stationTitleLabel.trailingAnchor)
         ])
         
-        self.addSubview(self.beforeLineView)
-        self.beforeLineView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.beforeCongestionLineView)
+        self.beforeCongestionLineView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.beforeLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
-            self.beforeLineView.widthAnchor.constraint(equalToConstant: 3),
-            self.beforeLineView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.beforeLineView.centerXAnchor.constraint(equalTo: self.stationTitleLabel.leadingAnchor, constant: lineTrailingOffset)
+            self.beforeCongestionLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            self.beforeCongestionLineView.widthAnchor.constraint(equalToConstant: 3),
+            self.beforeCongestionLineView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.beforeCongestionLineView.centerXAnchor.constraint(equalTo: self.stationTitleLabel.leadingAnchor, constant: self.lineTrailingOffset)
         ])
         
-        self.addSubview(self.afterLineView)
-        self.afterLineView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.afterCongestionLineView)
+        self.afterCongestionLineView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.afterLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
-            self.afterLineView.widthAnchor.constraint(equalToConstant: 3),
-            self.afterLineView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.afterLineView.centerXAnchor.constraint(equalTo: self.beforeLineView.centerXAnchor)
+            self.afterCongestionLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            self.afterCongestionLineView.widthAnchor.constraint(equalToConstant: 3),
+            self.afterCongestionLineView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.afterCongestionLineView.centerXAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor)
         ])
         
-        self.addSubview(centerImageView)
+        self.addSubview(self.centerImageView)
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func configureCenterImage(type: BusRootCenterImageType) {
+    private func configureCenterImage(type: BusRootCenterImageType) {
         switch type {
-        case .wayPoint:
+        case .waypoint:
             self.centerImageView.image = BusRouteViewController.Image.stationCenterCircle
             NSLayoutConstraint.activate([
                 self.centerImageView.heightAnchor.constraint(equalToConstant: 15),
                 self.centerImageView.widthAnchor.constraint(equalToConstant: 32),
                 self.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                self.centerImageView.centerXAnchor.constraint(equalTo: self.beforeLineView.centerXAnchor)
+                self.centerImageView.centerXAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor)
             ])
         case .uturn:
             self.centerImageView.image = BusRouteViewController.Image.stationCenterUturn
@@ -113,19 +111,14 @@ class BusStationTableViewCell: UITableViewCell {
                 self.centerImageView.heightAnchor.constraint(equalToConstant: 24),
                 self.centerImageView.widthAnchor.constraint(equalToConstant: 52),
                 self.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                self.centerImageView.trailingAnchor.constraint(equalTo: self.beforeLineView.centerXAnchor, constant: 13)
+                self.centerImageView.trailingAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor, constant: 13)
             ])
         }
     }
-    
-    func configureLineColor(before: UIColor, after: UIColor) {
-        self.beforeLineView.backgroundColor = before
-        self.afterLineView.backgroundColor = after
-    }
 
     func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
-        self.beforeLineView.backgroundColor = beforeColor
-        self.afterLineView.backgroundColor = afterColor
+        self.beforeCongestionLineView.backgroundColor = beforeColor
+        self.afterCongestionLineView.backgroundColor = afterColor
         self.stationTitleLabel.text = title
         self.stationDescriptionLabel.text = description
         self.configureCenterImage(type: type)

@@ -14,19 +14,16 @@ class BusTagView: UIView {
     }
 
     private lazy var busTagFrameView = UIView()
-
     private lazy var busIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-
     private lazy var busTagImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         return imageView
     }()
-
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusNumber
@@ -34,7 +31,6 @@ class BusTagView: UIView {
         label.textAlignment = .center
         return label
     }()
-
     private lazy var busCongestionLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusCongestion
@@ -42,14 +38,12 @@ class BusTagView: UIView {
         label.textAlignment = .center
         return label
     }()
-
     private lazy var busStatusStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.busNumberLabel, self.busCongestionLabel])
         stackView.axis = .horizontal
         stackView.spacing = 2
         return stackView
     }()
-
     private lazy var lowFloorLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.tagBusNumber
@@ -114,11 +108,7 @@ class BusTagView: UIView {
         self.lowFloorLabel.text = ""
     }
 
-    func configureBusImage(busIcon: UIImage?) {
-        self.busIconImageView.image = busIcon
-    }
-
-    func configureTagImage(isLowFloor: Bool) {
+    private func configureTagImage(isLowFloor: Bool) {
         if isLowFloor {
             self.busTagImageView.image = BusRouteViewController.Image.tagMaxSize
             NSLayoutConstraint.activate([

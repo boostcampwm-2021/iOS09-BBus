@@ -22,8 +22,8 @@ class BusRouteViewController: UIViewController {
     }
     
     enum Image {
-        static let navigationBack = UIImage.init(systemName: "chevron.left")
-        static let headerArrow = UIImage.init(systemName: "arrow.left.and.right")
+        static let navigationBack = UIImage(systemName: "chevron.left")
+        static let headerArrow = UIImage(systemName: "arrow.left.and.right")
         static let stationCenterCircle = UIImage(named: "StationCenterCircle")
         static let stationCenterGetOn = UIImage(named: "GetOn")
         static let stationCenterGetOff = UIImage(named: "GetOff")
@@ -124,7 +124,7 @@ extension BusRouteViewController: UITableViewDataSource {
                        afterColor: BusRouteViewController.Color.redLine,
                        title: "면복동",
                        description: "19283 | 04:00-23:50",
-                       type: .wayPoint)
+                       type: .waypoint)
 
         return cell
     }
@@ -148,13 +148,18 @@ extension BusRouteViewController: UIScrollViewDelegate {
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.contentOffset.y >= 70 && scrollView.contentOffset.y < 127 {
-            UIView.animate(withDuration: 0.05) {
-                scrollView.contentOffset.y = 127
+        let animationBaselineOffset: CGFloat = 70
+        let headerHeight: CGFloat = 127
+        let headerTop: CGFloat = 0
+        let animationDuration: CGFloat = 0.05
+        
+        if scrollView.contentOffset.y >= animationBaselineOffset && scrollView.contentOffset.y < headerHeight {
+            UIView.animate(withDuration: animationDuration) {
+                scrollView.contentOffset.y = headerHeight
             }
-        } else if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < 70 {
-            UIView.animate(withDuration: 0.05) {
-                scrollView.contentOffset.y = 0
+        } else if scrollView.contentOffset.y > headerTop && scrollView.contentOffset.y < animationBaselineOffset {
+            UIView.animate(withDuration: animationDuration) {
+                scrollView.contentOffset.y = headerTop
             }
         }
     }

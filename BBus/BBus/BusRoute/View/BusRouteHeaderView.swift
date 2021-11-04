@@ -18,7 +18,6 @@ class BusRouteHeaderView: UIView {
         label.textAlignment = .center
         return label
     }()
-    
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
@@ -26,7 +25,6 @@ class BusRouteHeaderView: UIView {
         label.textAlignment = .center
         return label
     }()
-    
     private lazy var busFromStationLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
@@ -34,7 +32,6 @@ class BusRouteHeaderView: UIView {
         label.textAlignment = .center
         return label
     }()
-    
     private lazy var busArrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = BusRouteViewController.Image.headerArrow
@@ -43,7 +40,6 @@ class BusRouteHeaderView: UIView {
         imageView.tintColor = BusRouteViewController.Color.white
         return imageView
     }()
-    
     private lazy var busToStationLabel: UILabel = {
         let label = UILabel()
         label.textColor = BusRouteViewController.Color.white
@@ -51,7 +47,6 @@ class BusRouteHeaderView: UIView {
         label.textAlignment = .center
         return label
     }()
-    
     private lazy var busStationStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.busFromStationLabel, self.busArrowImageView, self.busToStationLabel])
         stackView.axis = .horizontal
