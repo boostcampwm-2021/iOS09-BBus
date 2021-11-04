@@ -20,10 +20,12 @@ class SearchView: UIView {
         return view
     }()
     private(set) var currentSearchType: SearchType = .bus {
-        didSet {
+        didSet(beforeType) {
             self.navigationView.configure(searchType: self.currentSearchType)
-            DispatchQueue.main.async {
-                self.searchResultScrollView.configure(searchType: self.currentSearchType)
+            if self.isScrollViewHorizontalDragging() {
+                DispatchQueue.main.async {
+                    self.searchResultScrollView.configure(searchType: self.currentSearchType)
+                }
             }
         }
     }
@@ -90,6 +92,10 @@ class SearchView: UIView {
     func hideKeyboard() {
         self.navigationView.hideKeyboard()
     }
+    
+    func isScrollViewHorizontalDragging() -> Bool {
+        return self.searchResultScrollView.contentOffset.x.remainder(dividingBy: self.searchResultScrollView.frame.width) == 0
+    }
 }
 
 extension SearchView: BusTabButtonDelegate & StationTabButtonDelegate {
@@ -109,7 +115,8 @@ extension SearchView: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // TODO: Bug Fix
-//        self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
+        guard !self.isScrollViewHorizontalDragging() else { return }
+        self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
