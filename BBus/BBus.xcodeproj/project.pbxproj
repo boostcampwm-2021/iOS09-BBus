@@ -13,6 +13,7 @@
 		04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */; };
 		04AC7D152733B8060095CD4E /* MovingStatusPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D142733B8060095CD4E /* MovingStatusPushable.swift */; };
 		04AC7D172733B8350095CD4E /* MovingStatusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D162733B8350095CD4E /* MovingStatusCoordinator.swift */; };
+		04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */; };
 		4A04682227327843008D87CE /* BusRoutePushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682127327843008D87CE /* BusRoutePushable.swift */; };
 		4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682327327876008D87CE /* BusRouteCoordinator.swift */; };
 		4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */; };
@@ -90,6 +91,7 @@
 		04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D142733B8060095CD4E /* MovingStatusPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusPushable.swift; sourceTree = "<group>"; };
 		04AC7D162733B8350095CD4E /* MovingStatusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusCoordinator.swift; sourceTree = "<group>"; };
+		04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingButton.swift; sourceTree = "<group>"; };
 		4A04682127327843008D87CE /* BusRoutePushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRoutePushable.swift; sourceTree = "<group>"; };
 		4A04682327327876008D87CE /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
 		4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingCoordinator.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 				4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */,
 				04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */,
 				87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */,
+				04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				4A1A22DF2732806300476861 /* StationPushable.swift in Sources */,
 				4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */,
 				4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */,
+				04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */,
 				04AC7D152733B8060095CD4E /* MovingStatusPushable.swift in Sources */,
 				87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */,
 				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
