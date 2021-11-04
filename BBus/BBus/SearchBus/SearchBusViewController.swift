@@ -20,11 +20,8 @@ class SearchBusViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.systemBackground
-        self.title = "SearchBus"
-        self.navigationItem.titleView = self.searchTextField
         self.configureLayout()
-        self.searchBusView.configureReusableCell()
+        self.configureUI()
         self.searchBusView.configureLayout()
         self.searchBusView.configureDelegate(self)
     }
@@ -36,6 +33,7 @@ class SearchBusViewController: UIViewController {
         }
     }
     
+    // MARK: - Configuration
     private func configureLayout() {
         self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.searchBusView)
@@ -46,22 +44,16 @@ class SearchBusViewController: UIViewController {
             self.searchBusView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
+    
+    private func configureUI() {
+        self.view.backgroundColor = UIColor.white
+    }
 }
 
-extension SearchBusViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
-    }
+// MARK: - Delegate : UICollectionView
+extension SearchBusViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UITableViewHeaderFooterView()
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(named: "bbusGray")
-        view.backgroundView = backgroundView
-        return view
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchBusView.page {
             self.coordinator?.pushToBusRoute()
         }
@@ -71,30 +63,51 @@ extension SearchBusViewController: UITableViewDelegate {
     }
 }
 
-extension SearchBusViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+// MARK: - DataSource : UICollectionView
+extension SearchBusViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 10
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        10
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return (section % 2 == 0) ? "경기" : "부산"
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier, for: indexPath) as? SearchResultHeaderView else { return UICollectionReusableView() }
+        header.configureLayout()
+        header.configure(title: (indexPath.section % 2 == 0) ? "경기" : "부산")
+        return header
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier) as? SearchResultTableViewCell else { return UITableViewCell() }
-        if tableView.frame.origin.x == 0 {
-            cell.configureUI(title: "15", detailInfo: "가평군 일반버스")
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+        if collectionView.frame.origin.x == 0 {
+            cell.configureUI(title: "15", detailInfo: NSMutableAttributedString(string: "가평군 일반버스"))
         }
         else {
-            cell.configureUI(title: "홍대입구", detailInfo: "14911 | 공항철도.홍대입구역 방면")
+            let fullText = "14911 | 공항철도.홍대입구역 방면"
+            let range = (fullText as NSString).range(of: "|")
+            let attributedString = NSMutableAttributedString(string: fullText)
+            attributedString.addAttribute(.foregroundColor,
+                                          value: UIColor(named: "bbusLightGray") as Any,
+                                          range: range)
+            cell.configureUI(title: "홍대입구", detailInfo: attributedString)
         }
-        
         cell.configureLayout()
         return cell
     }
 }
 
+// MARK: - DelegateFlowLayout : UICollectionView
+extension SearchBusViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: SearchResultCollectionViewCell.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: SearchResultHeaderView.height)
+    }
+}

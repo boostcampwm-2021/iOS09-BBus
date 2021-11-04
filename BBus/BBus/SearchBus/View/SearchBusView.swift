@@ -14,19 +14,27 @@ class SearchBusView: UIView {
         scrollView.isPagingEnabled = true
         return scrollView
     }()
-    private lazy var busResultTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        return tableView
+    private lazy var busResultCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
+        collectionView.backgroundColor = UIColor(named: "bbusLightGray")
+        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        collectionView.register(SearchResultHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier)
+        return collectionView
     }()
-    private lazy var stationResultTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        return tableView
+    private lazy var stationResultCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
+        collectionView.backgroundColor = UIColor(named: "bbusLightGray")
+        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        collectionView.register(SearchResultHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultHeaderView.identifier)
+        return collectionView
     }()
     var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
     
+    // MARK: - Configuration
     func configureLayout() {
+        let twice: CGFloat = 2
+        let half: CGFloat = 0.5
+        
         self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.searchResultScrollView)
         NSLayoutConstraint.activate([
@@ -38,7 +46,7 @@ class SearchBusView: UIView {
         
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.searchResultScrollView.contentSize = CGSize(width: self.searchResultScrollView.frame.width * 2, height: self.searchResultScrollView.frame.height)
+        self.searchResultScrollView.contentSize = CGSize(width: self.searchResultScrollView.frame.width * twice, height: self.searchResultScrollView.frame.height)
         self.searchResultScrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate([
@@ -46,38 +54,48 @@ class SearchBusView: UIView {
             contentView.bottomAnchor.constraint(equalTo: self.searchResultScrollView.contentLayoutGuide.bottomAnchor),
             contentView.trailingAnchor.constraint(equalTo: self.searchResultScrollView.contentLayoutGuide.trailingAnchor),
             contentView.leadingAnchor.constraint(equalTo: self.searchResultScrollView.contentLayoutGuide.leadingAnchor),
-            contentView.widthAnchor.constraint(equalTo: self.searchResultScrollView.frameLayoutGuide.widthAnchor, multiplier: 2),
+            contentView.widthAnchor.constraint(equalTo: self.searchResultScrollView.frameLayoutGuide.widthAnchor, multiplier: twice),
             contentView.heightAnchor.constraint(equalTo: self.searchResultScrollView.frameLayoutGuide.heightAnchor)
         ])
         
-        self.busResultTableView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(self.busResultTableView)
+        self.busResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(self.busResultCollectionView)
         NSLayoutConstraint.activate([
-            self.busResultTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            self.busResultTableView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            self.busResultTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            self.busResultTableView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5)
+            self.busResultCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            self.busResultCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            self.busResultCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            self.busResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
         
-        self.stationResultTableView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(self.stationResultTableView)
+        self.stationResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(self.stationResultCollectionView)
         NSLayoutConstraint.activate([
-            self.stationResultTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            self.stationResultTableView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            self.stationResultTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            self.stationResultTableView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5)
+            self.stationResultCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.stationResultCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            self.stationResultCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            self.stationResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
     }
-    
-    func configureReusableCell() {
-        self.busResultTableView.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
-        self.stationResultTableView.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
-    }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
-        self.busResultTableView.delegate = delegate
-        self.busResultTableView.dataSource = delegate
-        self.stationResultTableView.delegate = delegate
-        self.stationResultTableView.dataSource = delegate
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
+        self.busResultCollectionView.delegate = delegate
+        self.busResultCollectionView.dataSource = delegate
+        self.stationResultCollectionView.delegate = delegate
+        self.stationResultCollectionView.dataSource = delegate
+    }
+    
+    private func collectionViewLayout() -> UICollectionViewLayout {
+        let cellInterval: CGFloat = 1
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: cellInterval,
+                                           left: 0,
+                                           bottom: cellInterval,
+                                           right: 0)
+        layout.minimumInteritemSpacing = cellInterval
+        layout.minimumLineSpacing = cellInterval
+        layout.sectionHeadersPinToVisibleBounds = true
+        return layout
     }
 }
