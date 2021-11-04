@@ -42,6 +42,11 @@
 		4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */; };
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
+		87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */; };
+		873D6396273039E100E79069 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D6395273039E100E79069 /* Coordinator.swift */; };
+		873D639827303A6800E79069 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639727303A6800E79069 /* AppCoordinator.swift */; };
+		873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639927303B0500E79069 /* HomeCoornicator.swift */; };
+		873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639B27303B5000E79069 /* SearchBusCoordinator.swift */; };
 		87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556B2728116400A9B5E3 /* AppDelegate.swift */; };
 		87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556D2728116400A9B5E3 /* SceneDelegate.swift */; };
 		87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556F2728116400A9B5E3 /* HomeViewController.swift */; };
@@ -96,6 +101,11 @@
 		4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewController.swift; sourceTree = "<group>"; };
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
+		87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusPushable.swift; sourceTree = "<group>"; };
+		873D6395273039E100E79069 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		873D639727303A6800E79069 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		873D639927303B0500E79069 /* HomeCoornicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoornicator.swift; sourceTree = "<group>"; };
+		873D639B27303B5000E79069 /* SearchBusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusCoordinator.swift; sourceTree = "<group>"; };
 		87A555682728116400A9B5E3 /* BBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A5556B2728116400A9B5E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87A5556D2728116400A9B5E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				87A5556F2728116400A9B5E3 /* HomeViewController.swift */,
+				873D639927303B0500E79069 /* HomeCoornicator.swift */,
 				4ACA51E1272FCD7900EC0531 /* Model */,
 				4ACA51E0272FCD7100EC0531 /* UseCase */,
 				4ACA51DF272FCD6B00EC0531 /* ViewModel */,
@@ -139,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA5232272FCF0F00EC0531 /* SearchBusViewController.swift */,
+				873D639B27303B5000E79069 /* SearchBusCoordinator.swift */,
 				4ACA51ED272FCDD900EC0531 /* Model */,
 				4ACA51EC272FCDD000EC0531 /* UseCase */,
 				4ACA51EB272FCDCA00EC0531 /* ViewModel */,
@@ -439,6 +451,16 @@
 			path = BBusTests;
 			sourceTree = "<group>";
 		};
+		873D6394273039C400E79069 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				873D6395273039E100E79069 /* Coordinator.swift */,
+				873D639727303A6800E79069 /* AppCoordinator.swift */,
+				87359B8A2730F0F000F461A7 /* SearchBusPushable.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		87A5555F2728116400A9B5E3 = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +482,7 @@
 		87A5556A2728116400A9B5E3 /* BBus */ = {
 			isa = PBXGroup;
 			children = (
+				873D6394273039C400E79069 /* Coordinator */,
 				4ACA51D7272FCC4E00EC0531 /* Home */,
 				4ACA51D8272FCC5A00EC0531 /* SearchBus */,
 				4ACA51D9272FCC8600EC0531 /* SearchStation */,
@@ -590,6 +613,7 @@
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchBusUseCase.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
+				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
 				4ACA51F5272FCE0200EC0531 /* SearchBusView.swift in Sources */,
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
@@ -598,10 +622,13 @@
 				4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */,
 				4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */,
 				4ACA5237272FCF2C00EC0531 /* BusRouteViewController.swift in Sources */,
+				873D639827303A6800E79069 /* AppCoordinator.swift in Sources */,
 				4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */,
 				4ACA51F3272FCDF900EC0531 /* SearchBusViewModel.swift in Sources */,
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
 				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
+				87359B8B2730F0F000F461A7 /* SearchBusPushable.swift in Sources */,
+				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
 				4ACA5201272FCE3100EC0531 /* SearchStationView.swift in Sources */,
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,
 				4ACA51FB272FCE1D00EC0531 /* SearchStationModel.swift in Sources */,
@@ -609,6 +636,7 @@
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
 				4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */,
 				4ACA5235272FCF2100EC0531 /* SearchStationViewController.swift in Sources */,
+				873D639C27303B5000E79069 /* SearchBusCoordinator.swift in Sources */,
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
 				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,

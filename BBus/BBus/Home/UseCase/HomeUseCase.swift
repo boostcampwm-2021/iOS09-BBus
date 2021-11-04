@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct HomeUseCase {
+
+    private let homeModel: HomeModel
+
+    init() {
+        self.homeModel = HomeModel()
+    }
+}

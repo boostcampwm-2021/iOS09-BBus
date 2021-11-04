@@ -9,21 +9,18 @@ import UIKit
 
 class SearchBusViewController: UIViewController {
 
+    weak var coordinator: SearchBusCoordinator?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.title = "SearchBus"
+        self.view.backgroundColor = .red
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent {
+            self.coordinator?.terminate()
+        }
     }
-    */
-
 }

@@ -7,14 +7,40 @@
 
 import UIKit
 
-class HomeView: UIStackView {
+class HomeView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    private lazy var favoriteTableView: UITableView = UITableView()
+    lazy var refreshButton: UIButton = UIButton()
+
+    convenience init() {
+        self.init(frame: CGRect())
+        self.backgroundColor = .red
     }
-    */
+
+    func configureLayout() {
+        self.addSubview(self.favoriteTableView)
+        self.favoriteTableView.backgroundColor = UIColor.systemGray6
+        self.favoriteTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.favoriteTableView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.favoriteTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.favoriteTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.favoriteTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+
+        self.addSubview(self.refreshButton)
+        self.refreshButton.backgroundColor = UIColor.darkGray
+        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: 50),
+            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        ])
+    }
+
+    func showAlwaysButton() {
+        self.refreshButton.layer.zPosition = CGFloat.greatestFiniteMagnitude
+    }
 
 }
