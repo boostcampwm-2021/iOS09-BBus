@@ -9,12 +9,6 @@ import UIKit
 
 class SearchBusViewController: UIViewController {
 
-    private lazy var searchTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(origin: CGPoint(), size: CGSize(width: self.view.frame.width - (self.navigationItem.leftBarButtonItem?.width ?? 0), height: 30)))
-        textField.placeholder = "버스 입력"
-        textField.backgroundColor = UIColor.gray
-        return textField
-    }()
     weak var coordinator: SearchBusCoordinator?
     private lazy var searchBusView = SearchBusView()
 
@@ -24,18 +18,9 @@ class SearchBusViewController: UIViewController {
         self.configureUI()
         self.searchBusView.configureLayout()
         self.searchBusView.configureDelegate(self)
+        self.configureDelegate()
     }
 
-    private func configureLayout() {
-        self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.searchBusView)
-        NSLayoutConstraint.activate([
-            self.searchBusView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.searchBusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.searchBusView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.searchBusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -43,8 +28,12 @@ class SearchBusViewController: UIViewController {
             self.coordinator?.terminate()
         }
     }
-    
+
     // MARK: - Configuration
+    private func configureDelegate() {
+        self.searchBusView.configureDelegate(self)
+    }
+    
     private func configureLayout() {
         self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.searchBusView)
@@ -58,6 +47,12 @@ class SearchBusViewController: UIViewController {
     
     private func configureUI() {
         self.view.backgroundColor = UIColor.white
+    }
+}
+
+extension SearchBusViewController: SearchBusBackButtonDelegate {
+    func shouldNavigationPop() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -7,13 +7,22 @@
 
 import UIKit
 
+protocol SearchBusBackButtonDelegate {
+    func shouldNavigationPop()
+}
+
 class SearchBusNavigationView: UIView {
+
+    var backButtonDelegate: SearchBusBackButtonDelegate?
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         button.setImage(UIImage(systemName: "chevron.left", withConfiguration: largeConfig), for: .normal)
         button.tintColor = UIColor.darkText
+        button.addAction(UIAction(handler: { _ in
+            self.backButtonDelegate?.shouldNavigationPop()
+        }), for: .touchUpInside)
         return button
     }()
     private lazy var searchTextField: UITextField = {
@@ -148,6 +157,14 @@ class SearchBusNavigationView: UIView {
         self.stationTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
 //        }
     }
+
+    func hideKeyboard() {
+        self.searchTextField.resignFirstResponder()
+    }
+
+    func configureDelegate(_ delegate: SearchBusBackButtonDelegate) {
+        self.backButtonDelegate = delegate
+    }
 }
 
 extension SearchBusNavigationView: KeyboardAccessoryCharacterButtonDelegate {
@@ -159,7 +176,7 @@ extension SearchBusNavigationView: KeyboardAccessoryCharacterButtonDelegate {
 
 extension SearchBusNavigationView: KeyboardAccessoryDownKeyboardButtonDelegate {
     func shouldHideKeyboard() {
-        self.searchTextField.resignFirstResponder()
+        self.hideKeyboard()
     }
 }
 

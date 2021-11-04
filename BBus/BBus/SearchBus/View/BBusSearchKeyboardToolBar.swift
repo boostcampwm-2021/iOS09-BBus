@@ -37,7 +37,6 @@ class KeyboardAccessoryView: UIView {
         button.setTitleColor(UIColor.white, for: .focused)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.addAction(UIAction(handler: { _ in
-            print("good")
             self.numberDelegate?.shouldShowNumberPad()
         }), for: .touchUpInside)
         return button
@@ -53,7 +52,6 @@ class KeyboardAccessoryView: UIView {
         button.setTitleColor(UIColor.white, for: .focused)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.addAction(UIAction(handler: { _ in
-            print("good")
             self.characterDelegate?.shouldShowCharacterPad()
         }), for: .touchUpInside)
         return button

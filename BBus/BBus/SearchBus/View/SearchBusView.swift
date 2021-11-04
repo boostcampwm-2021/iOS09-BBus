@@ -44,19 +44,19 @@ class SearchBusView: UIView {
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-
-        self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
+    
         self.addSubview(self.searchResultScrollView)
+        self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchResultScrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.searchResultScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.searchResultScrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.searchResultScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBusBackButtonDelegate) {
+        self.navigationView.configureDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
     }
 }
