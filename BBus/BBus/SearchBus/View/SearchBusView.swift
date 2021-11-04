@@ -13,7 +13,6 @@ enum SearchType {
 
 class SearchBusView: UIView {
 
-        
     var page: Bool { self.searchResultScrollView.contentOffset.x == 0 }
     private lazy var searchResultScrollView = SearchResultScrollView()
     private lazy var navigationView: SearchBusNavigationView = {
@@ -69,6 +68,7 @@ class SearchBusView: UIView {
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBusBackButtonDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
+        self.searchResultScrollView.delegate = self
     }
 
     func configureInitialTabStatus(type: SearchType) {
@@ -82,6 +82,10 @@ class SearchBusView: UIView {
     private func configureTabButtonDelegate() {
         self.navigationView.configureTabButtonDelegate(self)
     }
+
+    func hideKeyboard() {
+        self.navigationView.hideKeyboard()
+    }
 }
 
 extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
@@ -91,5 +95,26 @@ extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
 
     func shouldStationTabSelect() {
         self.currentSearchType = .station
+    }
+}
+
+extension SearchBusView: UIScrollViewDelegate {
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard let scrollView = (scrollView as? SearchResultScrollView),
+              let indicator = scrollView.subviews.last?.subviews.first else { return }
+
+        let twice: CGFloat = 2
+        let indicatorWidthPadding: CGFloat = 5
+
+        scrollView.configureIndicator(true)
+        scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: -indicatorWidthPadding, bottom: scrollView.frame.height - (SearchResultScrollView.indicatorHeight * twice), right: -indicatorWidthPadding)
+        indicator.layer.cornerRadius = 0
+        indicator.backgroundColor = UIColor(named: "bbusTypeRed")
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let scrollView = (scrollView as? SearchResultScrollView) else { return }
+        scrollView.configureIndicator(false)
     }
 }

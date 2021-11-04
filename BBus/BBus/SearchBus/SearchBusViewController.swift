@@ -20,7 +20,6 @@ class SearchBusViewController: UIViewController {
         self.configureDelegate()
     }
 
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if self.isMovingFromParent {
@@ -108,6 +107,10 @@ extension SearchBusViewController: UICollectionViewDataSource {
         cell.configureLayout()
         return cell
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchBusView.hideKeyboard()
+    }
 }
 
 // MARK: - DelegateFlowLayout : UICollectionView
@@ -119,25 +122,5 @@ extension SearchBusViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width, height: SearchResultHeaderView.height)
-    }
-}
-
-extension SearchBusViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        guard let scrollView = (scrollView as? SearchResultScrollView),
-              let indicator = scrollView.subviews.last?.subviews.first else { return }
-        
-        let twice: CGFloat = 2
-        let indicatorWidthPadding: CGFloat = 5
-        
-        scrollView.configureIndicator(true)
-        scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: -indicatorWidthPadding, bottom: scrollView.frame.height - (SearchResultScrollView.indicatorHeight * twice), right: -indicatorWidthPadding)
-        indicator.layer.cornerRadius = 0
-        indicator.backgroundColor = UIColor(named: "bbusTypeRed")
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let scrollView = (scrollView as? SearchResultScrollView) else { return }
-        scrollView.configureIndicator(false)
     }
 }

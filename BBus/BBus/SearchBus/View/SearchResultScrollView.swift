@@ -101,12 +101,11 @@ class SearchResultScrollView: UIScrollView {
         ])
     }
     
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UIScrollViewDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
         self.busResultCollectionView.delegate = delegate
         self.busResultCollectionView.dataSource = delegate
         self.stationResultCollectionView.delegate = delegate
         self.stationResultCollectionView.dataSource = delegate
-        self.delegate = delegate
     }
     
     func configureIndicator(_ moving: Bool) {
