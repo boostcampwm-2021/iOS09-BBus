@@ -13,6 +13,8 @@ protocol HomeSearchButtonDelegate {
 
 class HomeNavigationView: UIView {
 
+    static let height: CGFloat = 50.0
+
     private var searchButtonDelegate: HomeSearchButtonDelegate? {
         didSet {
             self.searchButton.addAction(UIAction(handler: { _ in
@@ -31,9 +33,14 @@ class HomeNavigationView: UIView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
     }()
+    private lazy var bottomBorderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = MyColor.gray
+        return view
+    }()
     
     convenience init() {
-        self.init(frame: CGRect(origin: CGPoint(), size: CGSize(width: 0, height: 50)))
+        self.init(frame: CGRect(origin: CGPoint(), size: CGSize(width: 0, height: Self.height)))
     }
     
     override init(frame: CGRect) {
@@ -48,26 +55,28 @@ class HomeNavigationView: UIView {
     
     // MARK: - Configuration
     func configureLayout() {
-        let navigationBottomBorderView = UIView()
-        navigationBottomBorderView.backgroundColor = UIColor.gray
-        self.addSubview(navigationBottomBorderView)
-        navigationBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
+        let borderHeight: CGFloat = 0.2
+        self.addSubview(self.bottomBorderView)
+        self.bottomBorderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            navigationBottomBorderView.topAnchor.constraint(equalTo: self.bottomAnchor, constant: -1),
-            navigationBottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            navigationBottomBorderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            navigationBottomBorderView.heightAnchor.constraint(equalToConstant: 0.2)
+            self.bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.bottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.bottomBorderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.bottomBorderView.heightAnchor.constraint(equalToConstant: borderHeight)
         ])
-        
+
+        let searchButtonWidthRatio: CGFloat = 0.9
+        let searchButtonHeightRatio: CGFloat = 0.6
+        let searchButtonTitleLeftPadding: CGFloat = 10
         self.addSubview(self.searchButton)
         self.searchButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.searchButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.searchButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
-            self.searchButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
+            self.searchButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: searchButtonWidthRatio),
+            self.searchButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: searchButtonHeightRatio)
         ])
-        self.searchButton.titleLabel?.leftAnchor.constraint(equalTo: self.searchButton.leftAnchor, constant: 10).isActive = true
+        self.searchButton.titleLabel?.leadingAnchor.constraint(equalTo: self.searchButton.leadingAnchor, constant: searchButtonTitleLeftPadding).isActive = true
     }
 
     func configureDelegate(_ delegate: HomeSearchButtonDelegate) {

@@ -10,6 +10,7 @@ import UIKit
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "FavoriteCollectionViewCell"
+    static let height: CGFloat = 70
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
@@ -36,11 +37,14 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Configuration
     private func configureLayout() {
+        let leadingInterval: CGFloat = 20
+        let half: CGFloat = 0.5
+
         self.addSubview(self.busNumberLabel)
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
+            self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval)
         ])
 
         self.addSubview(self.trailingView)
@@ -49,7 +53,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             self.trailingView.topAnchor.constraint(equalTo: self.topAnchor),
             self.trailingView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.trailingView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.trailingView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5)
+            self.trailingView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half)
         ])
     }
 

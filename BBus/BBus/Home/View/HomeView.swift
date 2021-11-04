@@ -8,6 +8,8 @@
 import UIKit
 
 class HomeView: UIView {
+
+    private let refreshButtonWidth: CGFloat = 50
     
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
@@ -23,7 +25,7 @@ class HomeView: UIView {
     lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.setImage(MyImage.refresh, for: .normal)
-        button.layer.cornerRadius = 25
+        button.layer.cornerRadius = self.refreshButtonWidth / 2
         button.tintColor = UIColor.white
         return button
     }()
@@ -48,18 +50,19 @@ class HomeView: UIView {
         self.addSubview(self.refreshButton)
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         self.refreshButton.backgroundColor = UIColor.darkGray
+        let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: 50),
+            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
             self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
         
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.navigationView.heightAnchor.constraint(equalToConstant: 50),
+            self.navigationView.heightAnchor.constraint(equalToConstant: HomeNavigationView.height),
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
@@ -72,17 +75,22 @@ class HomeView: UIView {
     }
 
     func configureNavigationViewVisable(_ direction: Bool) {
-        UIView.animate(withDuration: TimeInterval(0.4), animations: {
-            self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -49 )
+        let animationDuration: TimeInterval = 0.4
+
+        UIView.animate(withDuration: animationDuration, animations: {
+            self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -HomeNavigationView.height + 1)
         })
     }
     
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
+        let bottomLineHeight: CGFloat = 1
+        let sectionInterval: CGFloat = 10
+
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 1, left: 0, bottom: 10, right: 0)
-        layout.minimumInteritemSpacing = 1
-        layout.minimumLineSpacing = 1
+        layout.sectionInset = UIEdgeInsets(top: bottomLineHeight, left: 0, bottom: sectionInterval, right: 0)
+        layout.minimumInteritemSpacing = bottomLineHeight
+        layout.minimumLineSpacing = bottomLineHeight
         return layout
     }
 }

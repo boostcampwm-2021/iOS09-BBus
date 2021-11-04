@@ -8,6 +8,7 @@
 import UIKit
 
 enum MyColor {
+    static let gray = UIColor.gray
     static let white = UIColor.white
     static let clear = UIColor.clear
     static let blueBus = UIColor.systemBlue
@@ -96,7 +97,9 @@ extension HomeViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.contentOffset.y > 30 else { return }
+        let minimumScrollOffset = HomeNavigationView.height - 20
+
+        guard scrollView.contentOffset.y > minimumScrollOffset else { return }
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             self.homeView.configureNavigationViewVisable(true)
         }
@@ -135,20 +138,16 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - DelegateFlowLayout : UICollectionView
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 70)
+        return CGSize(width: self.view.frame.width, height: FavoriteCollectionViewCell.height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return CGSize(width: self.view.frame.width, height: 120)
+            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height + HomeNavigationView.height)
         }
         else {
-            return CGSize(width: self.view.frame.width, height: 70)
+            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height)
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1, left: 0, bottom: 10, right: 0)
     }
 }
 

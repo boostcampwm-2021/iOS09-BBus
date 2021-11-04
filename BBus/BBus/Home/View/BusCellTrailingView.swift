@@ -77,45 +77,52 @@ class BusCellTrailingView: UIView {
 
     // MARK: - Configuration
     func configureLayout() {
+        let centerYInterval: CGFloat = 3
+
         self.addSubview(self.firstBusTimeLabel)
         self.firstBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.firstBusTimeLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -3),
+            self.firstBusTimeLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -centerYInterval),
             self.firstBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
         self.addSubview(self.secondBusTimeLabel)
         self.secondBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: 3),
+            self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: centerYInterval),
             self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
+        let trailingViewLabelsInterval: CGFloat = 4
+        let rightLabelWidthPadding: CGFloat = 10
+        let rightLabelHeightPadding: CGFloat = 5
         self.addSubview(self.firstBusTimeRightLabel)
         self.firstBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.firstBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.firstBusTimeLabel.centerYAnchor),
-            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: 4),
-            self.firstBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.width + 10),
-            self.firstBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.height + 5)
+            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval),
+            self.firstBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.width + rightLabelWidthPadding),
+            self.firstBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.height + rightLabelHeightPadding)
         ])
 
         self.addSubview(self.secondBusTimeRightLabel)
         self.secondBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.secondBusTimeLabel.centerYAnchor),
-            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: 4),
-            self.secondBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.width + 10),
-            self.secondBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.height + 5)
+            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval),
+            self.secondBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.width + rightLabelWidthPadding),
+            self.secondBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.height + rightLabelHeightPadding)
         ])
 
+        let alarmButtonWidth: CGFloat = 20
+        let alarmButtonTrailingInterval: CGFloat = -20
         self.addSubview(self.alarmButton)
         self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.alarmButton.widthAnchor.constraint(equalToConstant: 20),
+            self.alarmButton.widthAnchor.constraint(equalToConstant: alarmButtonWidth),
             self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
             self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmButtonTrailingInterval)
         ])
     }
 

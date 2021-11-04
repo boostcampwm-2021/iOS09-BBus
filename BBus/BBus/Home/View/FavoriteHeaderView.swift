@@ -14,6 +14,7 @@ protocol FavoriteHeaderViewDelegate {
 class FavoriteHeaderView: UICollectionReusableView {
 
     static let identifier = "FavoriteHeaderView"
+    static let height: CGFloat = 70
     
     private var delegate: FavoriteHeaderViewDelegate? {
         didSet {
@@ -56,19 +57,22 @@ class FavoriteHeaderView: UICollectionReusableView {
     
     // MARK: - Configuration
     private func configureLayout() {
+        let leadingInterval: CGFloat = 20
+        let titleBottomInterval: CGFloat = -35
+        let titleDirectionInterval: CGFloat = 5
 
         self.addSubview(self.stationTitleLabel)
         self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -35)
+            self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
+            self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: titleBottomInterval)
         ])
 
         self.addSubview(self.directionLabel)
         self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: 5)
+            self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
+            self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
         ])
     }
 
