@@ -7,16 +7,26 @@
 
 import UIKit
 
-protocol ToolBarNumberButtonDelegate {
-    func shouldShowNumPad()
+protocol KeyboardAccessoryNumberButtonDelegate {
+    func shouldShowNumberPad()
 }
 
-class BBusSearchKeyboardAccessoryView: UIView {
+protocol KeyboardAccessoryCharacterButtonDelegate {
+    func shouldShowCharacterPad()
+}
 
-    private var numberDelegate: ToolBarNumberButtonDelegate?
+protocol KeyboardAccessoryDownKeyboardButtonDelegate {
+    func shouldHideKeyboard()
+}
+
+class KeyboardAccessoryView: UIView {
+
+    private var numberDelegate: KeyboardAccessoryNumberButtonDelegate?
+    private var characterDelegate: KeyboardAccessoryCharacterButtonDelegate?
+    private var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate?
     static let height: CGFloat = 50
 
-    private lazy var numberKeyboardChangerButton: UIButton = {
+    private lazy var numberButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
@@ -28,11 +38,11 @@ class BBusSearchKeyboardAccessoryView: UIView {
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
         button.addAction(UIAction(handler: { _ in
             print("good")
-            self.numberDelegate?.shouldShowNumPad()
+            self.numberDelegate?.shouldShowNumberPad()
         }), for: .touchUpInside)
         return button
     }()
-    private lazy var charKeyboardChangerButton: UIButton = {
+    private lazy var characterButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
@@ -42,17 +52,19 @@ class BBusSearchKeyboardAccessoryView: UIView {
         button.backgroundColor = UIColor.clear
         button.setTitleColor(UIColor.white, for: .focused)
         button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
-//        button.frame.size = CGSize(width: self.frame.width * 0.15, height: 0)
         button.addAction(UIAction(handler: { _ in
             print("good")
-            self.numberDelegate?.shouldShowNumPad()
+            self.characterDelegate?.shouldShowCharacterPad()
         }), for: .touchUpInside)
         return button
     }()
-    private lazy var hideKeyboardButton: UIButton = {
+    private lazy var downKeyboardButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "keyboard.chevron.compact.down"), for: .normal)
         button.tintColor = UIColor.white
+        button.addAction(UIAction(handler: { _ in
+            self.downKeyboardDelegate?.shouldHideKeyboard()
+        }), for: .touchUpInside)
         return button
     }()
 
@@ -74,36 +86,42 @@ class BBusSearchKeyboardAccessoryView: UIView {
 
     private func configureLayout() {
 
-        self.addSubview(self.numberKeyboardChangerButton)
-        self.numberKeyboardChangerButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.numberButton)
+        self.numberButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.numberKeyboardChangerButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.17),
-            self.numberKeyboardChangerButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.numberKeyboardChangerButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.frame.height * 0.15),
-            self.numberKeyboardChangerButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.frame.height * 0.15)
+            self.numberButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.17),
+            self.numberButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            self.numberButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.frame.height * 0.15),
+            self.numberButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.frame.height * 0.15)
         ])
 
-        self.addSubview(self.charKeyboardChangerButton)
-        self.charKeyboardChangerButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.characterButton)
+        self.characterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.charKeyboardChangerButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.17),
-            self.charKeyboardChangerButton.leadingAnchor.constraint(equalTo: self.numberKeyboardChangerButton.trailingAnchor, constant: 10),
-            self.charKeyboardChangerButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.frame.height * 0.15),
-            self.charKeyboardChangerButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.frame.height * 0.15)
+            self.characterButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.17),
+            self.characterButton.leadingAnchor.constraint(equalTo: self.numberButton.trailingAnchor, constant: 10),
+            self.characterButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.frame.height * 0.15),
+            self.characterButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.frame.height * 0.15)
         ])
 
-        self.addSubview(self.hideKeyboardButton)
-        self.hideKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.downKeyboardButton)
+        self.downKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.hideKeyboardButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.15),
-            self.hideKeyboardButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            self.hideKeyboardButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            self.hideKeyboardButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+            self.downKeyboardButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.15),
+            self.downKeyboardButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            self.downKeyboardButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            self.downKeyboardButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
 
     }
 
     private func configureUI() {
         self.backgroundColor = UIColor.darkGray
+    }
+
+    func configureDelegate(_ delegate: KeyboardAccessoryCharacterButtonDelegate & KeyboardAccessoryDownKeyboardButtonDelegate & KeyboardAccessoryNumberButtonDelegate) {
+        self.downKeyboardDelegate = delegate
+        self.characterDelegate = delegate
+        self.numberDelegate = delegate
     }
 }

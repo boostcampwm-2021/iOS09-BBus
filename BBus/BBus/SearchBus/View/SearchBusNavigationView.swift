@@ -26,7 +26,11 @@ class SearchBusNavigationView: UIView {
         textField.clearButtonMode = .whileEditing
         textField.becomeFirstResponder()
         textField.keyboardType = .decimalPad
-        textField.inputAccessoryView = BBusSearchKeyboardAccessoryView()
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        let accessoryView = KeyboardAccessoryView()
+        accessoryView.configureDelegate(self)
+        textField.inputAccessoryView = accessoryView
         textField.tintColor = UIColor(named: "bbusSearchRed")
         let paddingView = UIView()
         paddingView.frame.size = CGSize(width: 10, height: 0)
@@ -143,5 +147,25 @@ class SearchBusNavigationView: UIView {
         self.busTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
         self.stationTabButton.titleEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 0)
 //        }
+    }
+}
+
+extension SearchBusNavigationView: KeyboardAccessoryCharacterButtonDelegate {
+    func shouldShowCharacterPad() {
+        self.searchTextField.keyboardType = .webSearch
+        self.searchTextField.reloadInputViews()
+    }
+}
+
+extension SearchBusNavigationView: KeyboardAccessoryDownKeyboardButtonDelegate {
+    func shouldHideKeyboard() {
+        self.searchTextField.resignFirstResponder()
+    }
+}
+
+extension SearchBusNavigationView: KeyboardAccessoryNumberButtonDelegate {
+    func shouldShowNumberPad() {
+        self.searchTextField.keyboardType = .numberPad
+        self.searchTextField.reloadInputViews()
     }
 }
