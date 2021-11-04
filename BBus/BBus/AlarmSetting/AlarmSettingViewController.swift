@@ -24,6 +24,8 @@ class AlarmSettingViewController: UIViewController {
         static let greenLine = UIColor.green
         static let redLine = UIColor.red
         static let tableBackground = UIColor.systemGray5
+        static let iconColor = UIColor(named: "alarmIconGrayColor")
+        static let alarmTint = UIColor(named: "bbusGray")
     }
     
     enum Image {
@@ -32,7 +34,7 @@ class AlarmSettingViewController: UIViewController {
         static let clockIcon = UIImage(systemName: "clock")
         static let locationIcon = UIImage(named: "locationIcon")
         static let busIcon = UIImage(named: "grayBusIcon")
-        static let alarmIcon = UIImage(systemName: "alarm")
+        static let alarmIcon = UIImage(systemName: "alarm")?.withAlignmentRectInsets(UIEdgeInsets(top: -12.5, left: -12.5, bottom: -12.5, right: -12.5))
     }
 
     weak var coordinator: AlarmSettingCoordinator?

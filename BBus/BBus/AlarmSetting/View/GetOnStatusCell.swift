@@ -10,23 +10,18 @@ import UIKit
 class GetOnStatusCell: UITableViewCell {
 
     static let reusableID = "GetOnStatusCell"
-    static let cellHeight: CGFloat = 120
+    static let cellHeight: CGFloat = 115
 
-    private lazy var busColorView: UIView = {
-        let view = UIView()
-        view.clipsToBounds = true
-        view.layer.cornerRadius = self.frame.width/2
-        view.backgroundColor = AlarmSettingViewController.Color.blueBus
-        return view
-    }()
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
+        let radius: CGFloat = 7.5
 
         let label = UILabel()
         label.textColor = AlarmSettingViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: labelFontSize)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .bold)
         label.textAlignment = .center
-        label.backgroundColor = .red
+        label.clipsToBounds = true
+        label.layer.cornerRadius = radius
         return label
     }()
     private lazy var remainingTimeLabel: UILabel = {
@@ -34,7 +29,7 @@ class GetOnStatusCell: UITableViewCell {
 
         let label = UILabel()
         label.textColor = AlarmSettingViewController.Color.black
-        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .regular)
         label.textAlignment = .left
         return label
     }()
@@ -64,12 +59,15 @@ class GetOnStatusCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.spacing = stackViewSpacing
         stackView.layer.borderWidth = borderWidth
-        stackView.layer.borderColor = AlarmSettingViewController.Color.lightGray.cgColor
+        stackView.layer.borderColor = AlarmSettingViewController.Color.tableViewSeperator.cgColor
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         return stackView
     }()
     private lazy var clockIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = AlarmSettingViewController.Image.clockIcon
+        imageView.tintColor = AlarmSettingViewController.Color.iconColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -86,42 +84,43 @@ class GetOnStatusCell: UITableViewCell {
         return imageview
     }()
     private lazy var arrivalTimeLabel: UILabel = {
-        let labelFontSize: CGFloat = 15
+        let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.darkGray
+        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
     }()
     private lazy var currentLocationLabel: UILabel = {
-        let labelFontSize: CGFloat = 15
+        let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.darkGray
+        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
     }()
     private lazy var busNumberLabel: UILabel = {
-        let labelFontSize: CGFloat = 15
+        let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.darkGray
+        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
     }()
     private lazy var alarmButton: UIButton = {
-        let borderWidth: CGFloat = 1
+        let borderWidth: CGFloat = 0.5
+        let radius: CGFloat = 20
 
         let button = UIButton()
         button.setImage(AlarmSettingViewController.Image.alarmIcon, for: .normal)
-        button.tintColor = AlarmSettingViewController.Color.darkGray
+        button.tintColor = AlarmSettingViewController.Color.alarmTint
         button.clipsToBounds = true
-        button.layer.cornerRadius = self.frame.width/2
+        button.layer.cornerRadius = radius
         button.layer.borderWidth = borderWidth
-        button.layer.borderColor = AlarmSettingViewController.Color.lightGray.cgColor
+        button.layer.borderColor = AlarmSettingViewController.Color.alarmTint?.cgColor
         return button
     }()
     private lazy var separatorView: UIView = {
@@ -156,36 +155,29 @@ class GetOnStatusCell: UITableViewCell {
         let termBusColorViewToRemainingTimeLabel: CGFloat = 15
         let busStatusTagStackViewLeadingAnchor: CGFloat = 5
         let clockIconTopAnchor: CGFloat = 5
-        let iconsVerticalTerm: CGFloat = 3
+        let iconsVerticalTerm: CGFloat = 6.5
         let iconWidthAnchor: CGFloat = 15
         let iconHeightAnchor: CGFloat = 15
-        let alarmButtonWidthAnchor: CGFloat = 25
-        let alarmButtonHeightAnchor: CGFloat = 25
+        let alarmButtonWidthAnchor: CGFloat = 40
+        let alarmButtonHeightAnchor: CGFloat = 40
         let alarmButtonTrailingAnchor: CGFloat = -15
         let indicatorLabelLeadingAnchor: CGFloat = 5
         let separatorHeight: CGFloat = 1
 
-        self.addSubview(self.busColorView)
-        self.busColorView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.busColorView.widthAnchor.constraint(equalToConstant: busColorViewWidthAnchor),
-            self.busColorView.heightAnchor.constraint(equalToConstant: busColorViewHeightAnchor),
-            self.busColorView.topAnchor.constraint(equalTo: self.topAnchor, constant: busColorViewTopAnchor),
-            self.busColorView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: busColorViewLeadingAnchor)
-        ])
-
-        self.busColorView.addSubview(self.busOrderNumberLabel)
+        self.addSubview(self.busOrderNumberLabel)
         self.busOrderNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busOrderNumberLabel.centerXAnchor.constraint(equalTo: self.busColorView.centerXAnchor),
-            self.busOrderNumberLabel.centerYAnchor.constraint(equalTo: self.busColorView.centerYAnchor)
+            self.busOrderNumberLabel.widthAnchor.constraint(equalToConstant: busColorViewWidthAnchor),
+            self.busOrderNumberLabel.heightAnchor.constraint(equalToConstant: busColorViewHeightAnchor),
+            self.busOrderNumberLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: busColorViewTopAnchor),
+            self.busOrderNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: busColorViewLeadingAnchor)
         ])
 
         self.addSubview(self.remainingTimeLabel)
         self.remainingTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.remainingTimeLabel.centerYAnchor.constraint(equalTo: self.busColorView.centerYAnchor),
-            self.remainingTimeLabel.leadingAnchor.constraint(equalTo: self.busColorView.trailingAnchor, constant: termBusColorViewToRemainingTimeLabel)
+            self.remainingTimeLabel.centerYAnchor.constraint(equalTo: self.busOrderNumberLabel.centerYAnchor),
+            self.remainingTimeLabel.leadingAnchor.constraint(equalTo: self.busOrderNumberLabel.trailingAnchor, constant: termBusColorViewToRemainingTimeLabel)
         ])
 
         self.addSubview(self.busStatusTagStackView)
@@ -263,7 +255,7 @@ class GetOnStatusCell: UITableViewCell {
     }
 
     func configure(busColor: UIColor) {
-        self.busColorView.backgroundColor = busColor
+        self.busOrderNumberLabel.backgroundColor = busColor
     }
 
     func configure(order: String, remainingTime: String, remainingStationCount: String, busCongestionStatus: String, arrivalTime: String, currentLocation: String, busNumber: String) {
