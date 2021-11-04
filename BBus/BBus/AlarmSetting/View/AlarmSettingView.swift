@@ -16,7 +16,6 @@ class AlarmSettingView: UIView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(GetOffTableViewCell.self, forCellReuseIdentifier: GetOffTableViewCell.reusableID)
         tableView.register(GetOnStatusCell.self, forCellReuseIdentifier: GetOnStatusCell.reusableID)
-        tableView.register(AlarmSettingTableViewHeader.self, forHeaderFooterViewReuseIdentifier: AlarmSettingTableViewHeader.resuableID)
         tableView.separatorStyle = .none
         tableView.backgroundColor = AlarmSettingViewController.Color.tableBackground
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
