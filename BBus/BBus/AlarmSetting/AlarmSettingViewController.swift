@@ -29,9 +29,6 @@ class AlarmSettingViewController: UIViewController {
     enum Image {
         static let waypoint = UIImage(named: "StationCenterCircle")
         static let getOn = UIImage(named: "GetOn")
-    }
-
-    enum Image {
         static let clockIcon = UIImage(systemName: "clock")
         static let locationIcon = UIImage(named: "locationIcon")
         static let busIcon = UIImage(named: "grayBusIcon")
@@ -103,7 +100,7 @@ class AlarmSettingViewController: UIViewController {
 
 extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 10
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
