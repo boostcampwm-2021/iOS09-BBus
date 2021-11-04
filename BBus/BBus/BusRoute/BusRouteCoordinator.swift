@@ -1,13 +1,13 @@
 //
-//  BusRouteCoordinator.swift
+//  BusCoordinator.swift
 //  BBus
 //
-//  Created by 김태훈 on 2021/11/03.
+//  Created by 최수정 on 2021/11/03.
 //
 
 import UIKit
 
-class BusRouteCoordinator: NSObject, Coordinator {
+class BusRouteCoordinator: NSObject, Coordinator, StationPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
