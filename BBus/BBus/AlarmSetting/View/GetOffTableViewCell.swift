@@ -35,9 +35,16 @@ class GetOffTableViewCell: BusStationTableViewCell {
     }
     
     private lazy var alarmButton: UIButton = {
+        let borderWidth: CGFloat = 0.5
+        let radius: CGFloat = 20
+
         let button = UIButton()
-        button.setImage(MyImage.alarm, for: .normal)
+        button.setImage(AlarmSettingViewController.Image.alarmIcon, for: .normal)
         button.tintColor = AlarmSettingViewController.Color.alarmTint
+        button.clipsToBounds = true
+        button.layer.cornerRadius = radius
+        button.layer.borderWidth = borderWidth
+        button.layer.borderColor = AlarmSettingViewController.Color.alarmTint?.cgColor
         return button
     }()
     private lazy var separatorView: UIView = {
@@ -45,13 +52,19 @@ class GetOffTableViewCell: BusStationTableViewCell {
         view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
         return view
     }()
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
+    }
     
     // MARK: - Configure
     override func configureLayout() {
         super.configureLayout()
         
-        let alarmButtonWidthHeight: CGFloat = 20
-        let alarmButtomRightMargin: CGFloat = -25
+        let alarmButtonWidthHeight: CGFloat = 40
+        let alarmButtomRightMargin: CGFloat = -15
         let circleImageHeight: CGFloat = 15
         let circleImageWidth: CGFloat = 32
         let separatorHeight: CGFloat = 1

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol GetOnAlarmButtonDelegate {
+    func toggleGetOnAlarmSetting()
+}
+
 class GetOnStatusCell: UITableViewCell {
 
     static let reusableID = "GetOnStatusCell"
@@ -129,6 +133,14 @@ class GetOnStatusCell: UITableViewCell {
         return view
     }()
 
+    private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
+        didSet {
+            self.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButtonDelegate?.toggleGetOnAlarmSetting()
+            }), for: .touchUpInside)
+        }
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
@@ -143,7 +155,8 @@ class GetOnStatusCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        
+        self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
     }
 
     // MARK: - Configure
@@ -266,5 +279,9 @@ class GetOnStatusCell: UITableViewCell {
         self.arrivalTimeLabel.text = arrivalTime
         self.currentLocationLabel.text = currentLocation
         self.busNumberLabel.text = busNumber
+    }
+
+    func configureDelegate(_ delegate: GetOnAlarmButtonDelegate) {
+        self.alarmButtonDelegate = delegate
     }
 }

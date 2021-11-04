@@ -124,12 +124,12 @@ extension AlarmSettingViewController: UITableViewDataSource {
             cell.configure(busColor: Color.blueBus)
             cell.configure(order: String(indexPath.row+1),
                            remainingTime: "2분 18초",
-                           remainingStationCount: "2번째",
+                           remainingStationCount: "2번째전",
                            busCongestionStatus: "여유",
                            arrivalTime: "오후 04시 11분 도착 예정",
                            currentLocation: "낙성대입구",
                            busNumber: "서울74사3082")
-
+            cell.configureDelegate(self)
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
@@ -190,5 +190,11 @@ extension AlarmSettingViewController: BackButtonDelegate {
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
     func shouldGoToMovingStatusScene() {
         self.coordinator?.pushToMovingStatus()
+    }
+}
+
+extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
+    func toggleGetOnAlarmSetting() {
+        print("toggle Alarm")
     }
 }
