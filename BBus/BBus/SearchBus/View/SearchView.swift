@@ -11,11 +11,11 @@ enum SearchType {
     case bus, station
 }
 
-class SearchBusView: UIView {
+class SearchView: UIView {
 
     private lazy var searchResultScrollView = SearchResultScrollView()
-    private lazy var navigationView: SearchBusNavigationView = {
-        let view = SearchBusNavigationView()
+    private lazy var navigationView: SearchNavigationView = {
+        let view = SearchNavigationView()
         view.backgroundColor = UIColor.systemBackground
         return view
     }()
@@ -69,7 +69,7 @@ class SearchBusView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBusBackButtonDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBackButtonDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
         self.searchResultScrollView.delegate = self
@@ -79,7 +79,7 @@ class SearchBusView: UIView {
         self.currentSearchType = type
     }
 
-    func configureBackButtonDelegate(_ delegate: SearchBusBackButtonDelegate) {
+    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
     }
 
@@ -92,7 +92,7 @@ class SearchBusView: UIView {
     }
 }
 
-extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
+extension SearchView: BusTabButtonDelegate & StationTabButtonDelegate {
 
     func shouldBusTabSelect() {
         guard self.currentSearchType == SearchType.station else { return }
@@ -105,7 +105,7 @@ extension SearchBusView: BusTabButtonDelegate & StationTabButtonDelegate {
     }
 }
 
-extension SearchBusView: UIScrollViewDelegate {
+extension SearchView: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // TODO: Bug Fix

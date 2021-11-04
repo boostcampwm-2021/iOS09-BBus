@@ -13,7 +13,7 @@ protocol SearchBusPushable: Coordinator {
 
 extension SearchBusPushable {
     func pushToSearchBus() {
-        let coordinator = SearchBusCoordinator(presenter: self.presenter)
+        let coordinator = SearchCoordinator(presenter: self.presenter)
         coordinator.delegate = self
         self.childCoordinators.append(coordinator)
         coordinator.start()

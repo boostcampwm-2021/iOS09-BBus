@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SearchBusBackButtonDelegate {
+protocol SearchBackButtonDelegate {
     func shouldNavigationPop()
 }
 
@@ -19,9 +19,9 @@ protocol StationTabButtonDelegate {
     func shouldStationTabSelect()
 }
 
-class SearchBusNavigationView: UIView {
+class SearchNavigationView: UIView {
 
-    private var backButtonDelegate: SearchBusBackButtonDelegate?
+    private var backButtonDelegate: SearchBackButtonDelegate?
     private var busTabButtonDelegate: BusTabButtonDelegate?
     private var stationTabButtonDelegate: StationTabButtonDelegate?
 
@@ -175,7 +175,7 @@ class SearchBusNavigationView: UIView {
         self.searchTextField.resignFirstResponder()
     }
 
-    func configureBackButtonDelegate(_ delegate: SearchBusBackButtonDelegate) {
+    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate) {
         self.backButtonDelegate = delegate
     }
 
@@ -220,19 +220,19 @@ class SearchBusNavigationView: UIView {
     }
 }
 
-extension SearchBusNavigationView: KeyboardAccessoryCharacterButtonDelegate {
+extension SearchNavigationView: KeyboardAccessoryCharacterButtonDelegate {
     func shouldShowCharacterPad() {
         self.showCharacterKeyboard()
     }
 }
 
-extension SearchBusNavigationView: KeyboardAccessoryDownKeyboardButtonDelegate {
+extension SearchNavigationView: KeyboardAccessoryDownKeyboardButtonDelegate {
     func shouldHideKeyboard() {
         self.hideKeyboard()
     }
 }
 
-extension SearchBusNavigationView: KeyboardAccessoryNumberButtonDelegate {
+extension SearchNavigationView: KeyboardAccessoryNumberButtonDelegate {
     func shouldShowNumberPad() {
         self.showNumberKeyboard()
     }

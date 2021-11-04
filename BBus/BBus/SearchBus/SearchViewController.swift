@@ -7,10 +7,10 @@
 
 import UIKit
 
-class SearchBusViewController: UIViewController {
+class SearchViewController: UIViewController {
 
-    weak var coordinator: SearchBusCoordinator?
-    private lazy var searchBusView = SearchBusView()
+    weak var coordinator: SearchCoordinator?
+    private lazy var searchBusView = SearchView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,14 +53,14 @@ class SearchBusViewController: UIViewController {
     }
 }
 
-extension SearchBusViewController: SearchBusBackButtonDelegate {
+extension SearchViewController: SearchBackButtonDelegate {
     func shouldNavigationPop() {
         self.navigationController?.popViewController(animated: true)
     }
 }
 
 // MARK: - Delegate : UICollectionView
-extension SearchBusViewController: UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchBusView.currentSearchType == SearchType.bus {
@@ -73,7 +73,7 @@ extension SearchBusViewController: UICollectionViewDelegate {
 }
 
 // MARK: - DataSource : UICollectionView
-extension SearchBusViewController: UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 10
@@ -114,7 +114,7 @@ extension SearchBusViewController: UICollectionViewDataSource {
 }
 
 // MARK: - DelegateFlowLayout : UICollectionView
-extension SearchBusViewController: UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: SearchResultCollectionViewCell.height)
