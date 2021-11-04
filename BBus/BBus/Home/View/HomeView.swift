@@ -49,7 +49,7 @@ class HomeView: UIView {
 
         self.addSubview(self.refreshButton)
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        self.refreshButton.backgroundColor = MyColor.
+        self.refreshButton.backgroundColor = MyColor.darkGray
         let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),

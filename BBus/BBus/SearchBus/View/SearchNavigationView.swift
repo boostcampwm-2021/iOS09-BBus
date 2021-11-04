@@ -27,8 +27,7 @@ class SearchNavigationView: UIView {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        button.setImage(UIImage(systemName: "chevron.left", withConfiguration: largeConfig), for: .normal)
+        button.setImage(MyImage.back, for: .normal)
         button.tintColor = MyColor.black
         button.addAction(UIAction(handler: { _ in
             self.backButtonDelegate?.shouldNavigationPop()
@@ -66,7 +65,7 @@ class SearchNavigationView: UIView {
         let button = UIButton()
         button.setTitle("버스", for: .normal)
         button.setTitleColor(MyColor.bbusGray, for: .normal)
-        button.setImage(UIImage(systemName: "bus.fill"), for: .normal)
+        button.setImage(MyImage.bus, for: .normal)
         button.tintColor = MyColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.busTabButtonDelegate?.shouldBusTabSelect()
@@ -77,7 +76,7 @@ class SearchNavigationView: UIView {
         let button = UIButton()
         button.setTitle("정거장", for: .normal)
         button.setTitleColor(MyColor.bbusGray, for: .normal)
-        button.setImage(UIImage(systemName: "bitcoinsign.circle"), for: .normal)
+        button.setImage(MyImage.station, for: .normal)
         button.tintColor = MyColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.stationTabButtonDelegate?.shouldStationTabSelect()

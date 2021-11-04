@@ -56,7 +56,7 @@ class KeyboardAccessoryView: UIView {
     }()
     private lazy var downKeyboardButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "keyboard.chevron.compact.down"), for: .normal)
+        button.setImage(MyImage.keyboardDown, for: .normal)
         button.tintColor = MyColor.white
         button.addAction(UIAction(handler: { _ in
             self.downKeyboardDelegate?.shouldHideKeyboard()
