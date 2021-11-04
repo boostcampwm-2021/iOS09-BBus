@@ -22,12 +22,12 @@ class HomeNavigationView: UIView {
     }
     private lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(named: "bbusLightGray")
-        button.layer.borderColor = UIColor(named: "bbusGray")?.cgColor
+        button.backgroundColor = MyColor.bbusLightGray
+        button.layer.borderColor = MyColor.bbusGray?.cgColor
         button.layer.borderWidth = 0.3
         button.layer.cornerRadius = 3
         button.setTitle("버스 또는 정류장 검색", for: .normal)
-        button.setTitleColor(UIColor(named: "bbusGray"), for: .normal)
+        button.setTitleColor(MyColor.bbusGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
     }()
@@ -46,11 +46,12 @@ class HomeNavigationView: UIView {
         self.configureLayout()
     }
     
+    // MARK: - Configuration
     func configureLayout() {
         let navigationBottomBorderView = UIView()
         navigationBottomBorderView.backgroundColor = UIColor.gray
-        navigationBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(navigationBottomBorderView)
+        navigationBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             navigationBottomBorderView.topAnchor.constraint(equalTo: self.bottomAnchor, constant: -1),
             navigationBottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -58,8 +59,8 @@ class HomeNavigationView: UIView {
             navigationBottomBorderView.heightAnchor.constraint(equalToConstant: 0.2)
         ])
         
-        self.searchButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.searchButton)
+        self.searchButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.searchButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),

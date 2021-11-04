@@ -7,8 +7,30 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+enum MyColor {
+    static let white = UIColor.white
+    static let clear = UIColor.clear
+    static let blueBus = UIColor.systemBlue
+    static let systemGray6 = UIColor.systemGray6
+    static let bbusLightGray = UIColor(named: "bbusLightGray")
+    static let bbusGray = UIColor(named: "bbusGray")
+    static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
+    static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
+}
 
+enum MyImage {
+    static let refresh: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        return UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig)
+    }()
+    static let alarm: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        return UIImage(systemName: "alarm", withConfiguration: largeConfig)
+    }()
+}
+
+class HomeViewController: UIViewController {
+    
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
@@ -30,7 +52,6 @@ class HomeViewController: UIViewController {
 
         self.configureLayout()
         self.homeView.configureLayout()
-        self.homeView.configureReusableCell()
         self.homeView.configureDelegate(self)
         
         let app = UIApplication.shared
@@ -39,7 +60,6 @@ class HomeViewController: UIViewController {
         let statusbarView = UIView()
         statusbarView.backgroundColor = UIColor.white //컬러 설정 부분
         self.view.addSubview(statusbarView)
-
         statusbarView.translatesAutoresizingMaskIntoConstraints = false
         statusbarView.heightAnchor
             .constraint(equalToConstant: statusBarHeight).isActive = true
@@ -51,11 +71,12 @@ class HomeViewController: UIViewController {
             .constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
 
+    // MARK: - Configuration
     private func configureLayout() {
         self.view.backgroundColor = UIColor.systemBackground
 
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.homeView)
+        self.homeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -65,6 +86,7 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - Delegate : UICollectionView
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -85,13 +107,14 @@ extension HomeViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - DataSource : UICollectionView
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        5
+        return 5
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        return 5
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -109,9 +132,10 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - DelegateFlowLayout : UICollectionView
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: self.view.frame.width, height: 70)
+        return CGSize(width: self.view.frame.width, height: 70)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -128,12 +152,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - HomeSearchButtonDelegate : UICollectionView
 extension HomeViewController: HomeSearchButtonDelegate {
     func shouldGoToSearchBusScene() {
         self.coordinator?.pushToSearchBus()
     }
 }
 
+// MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene() {
         // TODO: Model binding Logic needed
@@ -142,6 +168,7 @@ extension HomeViewController: AlarmButtonDelegate {
     }
 }
 
+// MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene() {
         // TODO: Model binding Logic needed

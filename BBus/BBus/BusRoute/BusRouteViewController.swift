@@ -14,7 +14,7 @@ class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.systemBackground
+        self.view.backgroundColor = MyColor.white
     }
 
     override func viewWillDisappear(_ animated: Bool) {

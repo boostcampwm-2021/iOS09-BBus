@@ -36,16 +36,16 @@ class BusCellTrailingView: UIView {
     }()
     private lazy var firstBusTimeRightLabel: UILabel = {
         let label = UILabel()
-        label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
+        label.layer.borderColor = MyColor.bbusLightGray?.cgColor
         label.layer.borderWidth = 2
         label.layer.cornerRadius = 3
         label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = UIColor(named: "bbusGray")
+        label.textColor = MyColor.bbusGray
         label.attributedText = NSAttributedString()
         let fullText = "2번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed") as Any, range: range)
+        attributedString.addAttribute(.foregroundColor, value: MyColor.bbusCongestionRed as Any, range: range)
         label.attributedText = attributedString
         label.sizeToFit()
         label.textAlignment = .center
@@ -53,16 +53,16 @@ class BusCellTrailingView: UIView {
     }()
     private lazy var secondBusTimeRightLabel: UILabel = {
         let label = UILabel()
-        label.layer.borderColor = UIColor(named: "bbusLightGray")?.cgColor
+        label.layer.borderColor = MyColor.bbusLightGray?.cgColor
         label.layer.borderWidth = 2
         label.layer.cornerRadius = 3
         label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = UIColor(named: "bbusGray")
+        label.textColor = MyColor.bbusGray
         label.attributedText = NSAttributedString()
         let fullText = "6번째전 여유"
         let range = (fullText as NSString).range(of: "여유")
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "bbusCongestionRed") as Any, range: range)
+        attributedString.addAttribute(.foregroundColor, value: MyColor.bbusCongestionRed as Any, range: range)
         label.attributedText = attributedString
         label.sizeToFit()
         label.textAlignment = .center
@@ -70,12 +70,12 @@ class BusCellTrailingView: UIView {
     }()
     private lazy var alarmButton: UIButton = {
         let button = UIButton()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        button.setImage(UIImage(systemName: "alarm", withConfiguration: largeConfig), for: .normal)
-        button.tintColor = UIColor(named: "bbusGray")
+        button.setImage(MyImage.alarm, for: .normal)
+        button.tintColor = MyColor.bbusGray
         return button
     }()
 
+    // MARK: - Configuration
     func configureLayout() {
         self.addSubview(self.firstBusTimeLabel)
         self.firstBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false

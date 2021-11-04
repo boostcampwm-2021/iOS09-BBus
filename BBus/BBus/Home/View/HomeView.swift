@@ -10,17 +10,19 @@ import UIKit
 class HomeView: UIView {
     
     private lazy var favoriteCollectionView: UICollectionView = {
-        UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
+        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
+        collectionView.register(FavoriteHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteHeaderView.identifier)
+        collectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        return collectionView
     }()
     private lazy var navigationView: HomeNavigationView = {
         let view = HomeNavigationView()
-        view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = MyColor.white
         return view
     }()
     lazy var refreshButton: UIButton = {
         let button = UIButton()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        button.setImage(UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig), for: .normal)
+        button.setImage(MyImage.refresh, for: .normal)
         button.layer.cornerRadius = 25
         button.tintColor = UIColor.white
         return button
@@ -30,11 +32,12 @@ class HomeView: UIView {
         self.init(frame: CGRect())
     }
 
+    // MARK: - Configuration
     func configureLayout() {
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteCollectionView)
-        self.favoriteCollectionView.backgroundColor = UIColor.systemGray6
         self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.favoriteCollectionView.backgroundColor = MyColor.systemGray6
         NSLayoutConstraint.activate([
             self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -43,8 +46,8 @@ class HomeView: UIView {
         ])
 
         self.addSubview(self.refreshButton)
-        self.refreshButton.backgroundColor = UIColor.darkGray
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        self.refreshButton.backgroundColor = UIColor.darkGray
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: 50),
             self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
@@ -68,6 +71,12 @@ class HomeView: UIView {
         self.navigationView.configureDelegate(delegate)
     }
 
+    func configureNavigationViewVisable(_ direction: Bool) {
+        UIView.animate(withDuration: TimeInterval(0.4), animations: {
+            self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -49 )
+        })
+    }
+    
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -75,16 +84,5 @@ class HomeView: UIView {
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 1
         return layout
-    }
-
-    func configureReusableCell() {
-        self.favoriteCollectionView.register(FavoriteHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteHeaderView.identifier)
-        self.favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
-    }
-    
-    func configureNavigationViewVisable(_ direction: Bool) {
-        UIView.animate(withDuration: TimeInterval(0.4), animations: {
-            self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -49 )
-        })
     }
 }

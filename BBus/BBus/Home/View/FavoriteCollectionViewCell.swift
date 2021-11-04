@@ -15,7 +15,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.textColor = UIColor(named: "bbusTypeBlue")
+        label.textColor = MyColor.bbusTypeBlue
         return label
     }()
     private lazy var trailingView = BusCellTrailingView()
@@ -34,6 +34,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         self.configureUI()
     }
 
+    // MARK: - Configuration
     private func configureLayout() {
         self.addSubview(self.busNumberLabel)
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +58,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        self.backgroundColor = UIColor.systemBackground
+        self.backgroundColor = MyColor.white
     }
 }
