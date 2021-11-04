@@ -19,6 +19,7 @@ class BusRouteViewController: UIViewController {
         static let tagBusCongestion = UIColor.red
         static let greenLine = UIColor.green
         static let redLine = UIColor.red
+        static let yellowLine = UIColor.yellow
     }
     
     enum Image {
@@ -131,11 +132,39 @@ extension BusRouteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusStationTableViewCell.reusableID, for: indexPath) as? BusStationTableViewCell else { return UITableViewCell() }
 
-        cell.configure(beforeColor: BusRouteViewController.Color.greenLine,
-                       afterColor: BusRouteViewController.Color.redLine,
+        let beforeColor: UIColor
+        if indexPath.item == 0 {
+            beforeColor = BusRouteViewController.Color.clear
+        }
+        else if indexPath.item % 3 == 0 {
+            beforeColor = BusRouteViewController.Color.greenLine
+        }
+        else if indexPath.item % 3 == 1 {
+            beforeColor = BusRouteViewController.Color.redLine
+        }
+        else {
+            beforeColor = BusRouteViewController.Color.yellowLine
+        }
+        
+        let afterColor: UIColor
+        if indexPath.item == 19 {
+            afterColor = BusRouteViewController.Color.clear
+        }
+        else if indexPath.item % 3 == 0 {
+            afterColor = BusRouteViewController.Color.redLine
+        }
+        else if indexPath.item % 3 == 1 {
+            afterColor = BusRouteViewController.Color.yellowLine
+        }
+        else {
+            afterColor = BusRouteViewController.Color.greenLine
+        }
+        
+        cell.configure(beforeColor: beforeColor,
+                       afterColor: afterColor,
                        title: "면복동",
                        description: "19283 | 04:00-23:50",
-                       type: .waypoint)
+                       type: indexPath.item != 10 ? .waypoint : .uturn)
 
         return cell
     }
