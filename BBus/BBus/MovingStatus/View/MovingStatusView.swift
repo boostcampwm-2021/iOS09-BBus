@@ -64,7 +64,7 @@ class MovingStatusView: UIView {
         let tableViewleftBottomRightInset: CGFloat = 0
         
         let tableView = UITableView()
-        tableView.register(GetOffTableViewCell.self, forCellReuseIdentifier: GetOffTableViewCell.reusableID)
+        tableView.register(MovingStatusTableViewCell.self, forCellReuseIdentifier: MovingStatusTableViewCell.reusableID)
         tableView.separatorStyle = .none
         tableView.backgroundColor = MovingStatusViewController.Color.white
         tableView.contentInset = UIEdgeInsets(top: tableViewContentTopInset,

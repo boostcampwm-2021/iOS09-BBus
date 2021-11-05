@@ -14,12 +14,17 @@ class MovingStatusViewController: UIViewController {
         static let white = UIColor.white
         static let black = UIColor.label
         static let border = UIColor.lightGray
+        static let congestionLine = UIColor.systemGray
+        static let clear = UIColor.clear
     }
     
     enum Image {
         static let booDuck = UIImage(named: "BooDuck")
         static let unfold = UIImage(systemName: "chevron.up")
         static let fold = UIImage(systemName: "chevron.down")
+        static let getOn = UIImage(named: "GetOn")
+        static let getOff = UIImage(named: "GetOff")
+        static let waypoint = UIImage(named: "StationCenterCircle")
     }
 
     weak var coordinator: MovingStatusCoordinator?
@@ -57,13 +62,16 @@ extension MovingStatusViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovingStatusTableViewCell.reusableID, for: indexPath) as? MovingStatusTableViewCell else { return UITableViewCell() }
 
-        cell.configure(beforeColor: indexPath.item == 0 ? .clear : AlarmSettingViewController.Color.lightGray,
-                       afterColor: indexPath.item == 9 ? .clear : AlarmSettingViewController.Color.lightGray,
-                       title: "신촌오거리.현대백화점",
-                       description: "",
-                       type: indexPath.item == 0 ? .getOn : .waypoint)
+        switch indexPath.item {
+        case 0:
+            cell.configure(type: .getOn)
+        case 9:
+            cell.configure(type: .getOff)
+        default:
+            cell.configure(type: .waypoint)
+        }
         
         return cell
     }
