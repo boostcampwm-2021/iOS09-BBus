@@ -7,9 +7,49 @@
 
 import UIKit
 
+protocol BottomIndicatorButtonDelegate {
+    func shouldUnfoldMovingStatusView()
+}
+
+protocol FoldButtonDelegate {
+    func shouldFoldMovingStatusView()
+}
+
+protocol EndAlarmButtonDelegate {
+    func shouldEndAlarm()
+}
+
 class MovingStatusView: UIView {
     
-    private lazy var bottomIndicatorView = UIView()
+    static let bottomIndicatorHeight: CGFloat = 80
+    
+    private var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
+        didSet {
+            self.bottomIndicatorButton.addAction(UIAction(handler: { _ in
+                self.bottomIndicatorButtondelegate?.shouldUnfoldMovingStatusView()
+            }), for: .touchUpInside)
+        }
+    }
+    private var foldButtonDelegate: FoldButtonDelegate? {
+        didSet {
+            self.foldButton.addAction(UIAction(handler: { _ in
+                self.foldButtonDelegate?.shouldFoldMovingStatusView()
+            }), for: .touchUpInside)
+        }
+    }
+    private var endAlarmButtonDelegate: EndAlarmButtonDelegate? {
+        didSet {
+            self.endAlarmButton.addAction(UIAction(handler: { _ in
+                self.endAlarmButtonDelegate?.shouldEndAlarm()
+            }), for: .touchUpInside)
+        }
+    }
+    
+    private lazy var bottomIndicatorButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = MovingStatusViewController.Color.blueBus
+        return button
+    }()
     private lazy var bottomIndicatorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = MovingStatusViewController.Image.booDuck
@@ -24,11 +64,11 @@ class MovingStatusView: UIView {
         label.text = "현위치 탐색중, 19분 소요예정"
         return label
     }()
-    private lazy var unfoldButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = MovingStatusViewController.Color.white
-        button.setImage(MovingStatusViewController.Image.unfold, for: .normal)
-        return button
+    private lazy var unfoldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = MovingStatusViewController.Color.white
+        imageView.image = MovingStatusViewController.Image.unfold
+        return imageView
     }()
     private lazy var headerView = UIView()
     private lazy var headerBottomBorderView: UIView = {
@@ -53,11 +93,12 @@ class MovingStatusView: UIView {
         label.text = "현위치 탐색중, 19분 소요예정"
         return label
     }()
-    private lazy var foldButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = MovingStatusViewController.Color.black
-        button.setImage(MovingStatusViewController.Image.fold, for: .normal)
-        return button
+    private lazy var foldButton = UIButton()
+    private lazy var foldImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = MovingStatusViewController.Color.black
+        imageView.image = MovingStatusViewController.Image.fold
+        return imageView
     }()
     private lazy var stationsTableView: UITableView = {
         let tableViewContentTopInset: CGFloat = 10
@@ -73,64 +114,54 @@ class MovingStatusView: UIView {
                                               right: tableViewleftBottomRightInset)
         return tableView
     }()
-    private lazy var endAlarmView = UIView()
-    private lazy var endAlarmLabel: UILabel = {
-        let labelFontSize: CGFloat = 18
-        
-        let label = UILabel()
-        label.textColor = MovingStatusViewController.Color.white
-        label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
-        label.text = "알람 종료"
-        return label
+    private lazy var endAlarmButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = MovingStatusViewController.Color.blueBus
+        button.tintColor = MovingStatusViewController.Color.white
+        button.setTitle("알람 종료", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        button.contentVerticalAlignment = .top
+        button.titleEdgeInsets = UIEdgeInsets(top: 10,
+                                              left: 0,
+                                              bottom: 0,
+                                              right: 0)
+        return button
     }()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
         self.configureLayout()
-        self.bottomIndicatorView.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.bottomIndicatorButton.backgroundColor = MovingStatusViewController.Color.blueBus
         self.headerView.backgroundColor = MovingStatusViewController.Color.white
-        self.endAlarmView.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.endAlarmButton.backgroundColor = MovingStatusViewController.Color.blueBus
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
-        self.bottomIndicatorView.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.bottomIndicatorButton.backgroundColor = MovingStatusViewController.Color.blueBus
         self.headerView.backgroundColor = MovingStatusViewController.Color.white
-        self.endAlarmView.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.endAlarmButton.backgroundColor = MovingStatusViewController.Color.blueBus
     }
 
+    // MARK: - Configure
     private func configureLayout() {
+        self.addSubview(self.bottomIndicatorButton)
+        self.bottomIndicatorButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.bottomIndicatorButton.topAnchor.constraint(equalTo: self.topAnchor),
+            self.bottomIndicatorButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.bottomIndicatorButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.bottomIndicatorButton.heightAnchor.constraint(equalToConstant: Self.bottomIndicatorHeight)
+        ])
+        
         let bottomIndicatorImageViewSize: CGFloat = 25
         let bottomIndicatorImgaeViewTopMargin: CGFloat = 13
         let bottomIndicatorImageViewLeftMargin: CGFloat = 25
-        let bottomIndicatorLabelRightMargin: CGFloat = -20
-        let bottomIndicatorLabelLeftMargin: CGFloat = 10
-        let foldUnfoldButtonRightMargin: CGFloat = -20
-        let foldUnfoldButtonWidth: CGFloat = 30
-        let foldUnfoldButtonHeight: CGFloat = 22
-        let bottomIndicatorAndEndAlarmViewHeight: CGFloat = 80
-        let headerHeight: CGFloat = 120
-        let headerBottomBorderHeight: CGFloat = 0.5
-        let busNumberLabelTopMargin: CGFloat = 45
-        let busNumberLabelLeftMargin: CGFloat = 40
-        let busNumberLabelRightMargin: CGFloat = -40
-        let alarmStatusLabelTopMargin: CGFloat = 4
-        let alarmStatusLabelRightMargin: CGFloat = -50
-        let endAlarmLabelTopMargin: CGFloat = 13
         
-        self.addSubview(self.bottomIndicatorView)
-        self.bottomIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.bottomIndicatorView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.bottomIndicatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.bottomIndicatorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.bottomIndicatorView.heightAnchor.constraint(equalToConstant: bottomIndicatorAndEndAlarmViewHeight)
-        ])
-        
-        self.bottomIndicatorView.addSubview(self.bottomIndicatorImageView)
+        self.bottomIndicatorButton.addSubview(self.bottomIndicatorImageView)
         self.bottomIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.bottomIndicatorImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomIndicatorImgaeViewTopMargin),
@@ -139,31 +170,42 @@ class MovingStatusView: UIView {
             self.bottomIndicatorImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: bottomIndicatorImageViewLeftMargin)
         ])
         
-        self.bottomIndicatorView.addSubview(self.unfoldButton)
-        self.unfoldButton.translatesAutoresizingMaskIntoConstraints = false
+        let unfoldButtonRightMargin: CGFloat = -20
+        let unfoldButtonWidth: CGFloat = 20
+        let unfoldButtonHeight: CGFloat = 20
+        
+        self.bottomIndicatorButton.addSubview(self.unfoldImageView)
+        self.unfoldImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.unfoldButton.centerYAnchor.constraint(equalTo: self.bottomIndicatorImageView.centerYAnchor),
-            self.unfoldButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: foldUnfoldButtonRightMargin),
-            self.unfoldButton.heightAnchor.constraint(equalToConstant: foldUnfoldButtonHeight),
-            self.unfoldButton.widthAnchor.constraint(equalToConstant: foldUnfoldButtonWidth)
+            self.unfoldImageView.centerYAnchor.constraint(equalTo: self.bottomIndicatorImageView.centerYAnchor),
+            self.unfoldImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: unfoldButtonRightMargin),
+            self.unfoldImageView.heightAnchor.constraint(equalToConstant: unfoldButtonHeight),
+            self.unfoldImageView.widthAnchor.constraint(equalToConstant: unfoldButtonWidth)
         ])
         
-        self.bottomIndicatorView.addSubview(self.bottomIndicatorLabel)
+        let bottomIndicatorLabelRightMargin: CGFloat = -20
+        let bottomIndicatorLabelLeftMargin: CGFloat = 10
+        
+        self.bottomIndicatorButton.addSubview(self.bottomIndicatorLabel)
         self.bottomIndicatorLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.bottomIndicatorLabel.centerYAnchor.constraint(equalTo: self.bottomIndicatorImageView.centerYAnchor),
-            self.bottomIndicatorLabel.trailingAnchor.constraint(equalTo: self.unfoldButton.leadingAnchor, constant: bottomIndicatorLabelRightMargin),
+            self.bottomIndicatorLabel.trailingAnchor.constraint(equalTo: self.unfoldImageView.leadingAnchor, constant: bottomIndicatorLabelRightMargin),
             self.bottomIndicatorLabel.leadingAnchor.constraint(equalTo: self.bottomIndicatorImageView.trailingAnchor, constant: bottomIndicatorLabelLeftMargin)
         ])
+        
+        let headerHeight: CGFloat = 120
         
         self.addSubview(self.headerView)
         self.headerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.headerView.topAnchor.constraint(equalTo: self.bottomIndicatorView.bottomAnchor),
+            self.headerView.topAnchor.constraint(equalTo: self.bottomIndicatorButton.bottomAnchor),
             self.headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.headerView.heightAnchor.constraint(equalToConstant: headerHeight)
         ])
+        
+        let headerBottomBorderHeight: CGFloat = 0.5
         
         self.headerView.addSubview(self.headerBottomBorderView)
         self.headerBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
@@ -174,6 +216,10 @@ class MovingStatusView: UIView {
             self.headerBottomBorderView.heightAnchor.constraint(equalToConstant: headerBottomBorderHeight)
         ])
         
+        let busNumberLabelTopMargin: CGFloat = 45
+        let busNumberLabelLeftMargin: CGFloat = 40
+        let busNumberLabelRightMargin: CGFloat = -70
+        
         self.headerView.addSubview(self.busNumberLabel)
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -182,14 +228,32 @@ class MovingStatusView: UIView {
             self.busNumberLabel.leadingAnchor.constraint(equalTo: self.headerView.leadingAnchor, constant: busNumberLabelLeftMargin)
         ])
         
+        let foldImageViewMargin: CGFloat = 10
+        let foldButtonRightMargin: CGFloat = unfoldButtonRightMargin + foldImageViewMargin
+        
         self.headerView.addSubview(self.foldButton)
         self.foldButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.foldButton.centerYAnchor.constraint(equalTo: self.busNumberLabel.centerYAnchor),
-            self.foldButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: foldUnfoldButtonRightMargin),
-            self.foldButton.heightAnchor.constraint(equalToConstant: foldUnfoldButtonHeight),
-            self.foldButton.widthAnchor.constraint(equalToConstant: foldUnfoldButtonWidth)
+            self.foldButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: foldButtonRightMargin)
         ])
+        
+        let foldButtonHeight = unfoldButtonHeight
+        let foldButtonWidth = unfoldButtonWidth
+        
+        self.foldButton.addSubview(self.foldImageView)
+        self.foldImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.foldImageView.topAnchor.constraint(equalTo: self.foldButton.topAnchor, constant: foldImageViewMargin),
+            self.foldImageView.trailingAnchor.constraint(equalTo: self.foldButton.trailingAnchor, constant: -foldImageViewMargin),
+            self.foldImageView.leadingAnchor.constraint(equalTo: self.foldButton.leadingAnchor, constant: foldImageViewMargin),
+            self.foldImageView.bottomAnchor.constraint(equalTo: self.foldButton.bottomAnchor, constant: -foldImageViewMargin),
+            self.foldImageView.heightAnchor.constraint(equalToConstant: foldButtonHeight),
+            self.foldImageView.widthAnchor.constraint(equalToConstant: foldButtonWidth)
+        ])
+        
+        let alarmStatusLabelTopMargin: CGFloat = 4
+        let alarmStatusLabelRightMargin: CGFloat = -50
         
         self.headerView.addSubview(self.alarmStatusLabel)
         self.alarmStatusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -199,42 +263,39 @@ class MovingStatusView: UIView {
             self.alarmStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmStatusLabelRightMargin)
         ])
         
-        self.addSubview(self.endAlarmView)
-        self.endAlarmView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.endAlarmView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.endAlarmView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.endAlarmView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.endAlarmView.heightAnchor.constraint(equalToConstant: bottomIndicatorAndEndAlarmViewHeight)
-        ])
+        let endAlarmViewHeight: CGFloat = 80
         
-        self.endAlarmView.addSubview(self.endAlarmLabel)
-        self.endAlarmLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.endAlarmButton)
+        self.endAlarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.endAlarmLabel.topAnchor.constraint(equalTo: self.endAlarmView.topAnchor, constant: endAlarmLabelTopMargin),
-            self.endAlarmLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            self.endAlarmButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.endAlarmButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.endAlarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.endAlarmButton.heightAnchor.constraint(equalToConstant: endAlarmViewHeight)
         ])
         
         self.addSubview(self.stationsTableView)
         self.stationsTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationsTableView.topAnchor.constraint(equalTo: self.headerView.bottomAnchor),
-            self.stationsTableView.bottomAnchor.constraint(equalTo: self.endAlarmView.topAnchor),
+            self.stationsTableView.bottomAnchor.constraint(equalTo: self.endAlarmButton.topAnchor),
             self.stationsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.stationsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
     }
     
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate) {
         self.stationsTableView.delegate = delegate
         self.stationsTableView.dataSource = delegate
+        self.bottomIndicatorButtondelegate = delegate
+        self.foldButtonDelegate = delegate
+        self.endAlarmButtonDelegate = delegate
     }
     
     func addBusTag() {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
-        
         self.stationsTableView.addSubview(busTag)
         busTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

@@ -45,11 +45,9 @@ class MovingStatusViewController: UIViewController {
         self.view.addSubview(self.movingStatusView)
         self.movingStatusView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.movingStatusView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -80),
-            self.movingStatusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.movingStatusView
-                .leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.movingStatusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.movingStatusView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -MovingStatusView.bottomIndicatorHeight),
+            self.movingStatusView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+            self.movingStatusView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
         ])
     }
     
@@ -88,5 +86,29 @@ extension MovingStatusViewController: UITableViewDataSource {
 extension MovingStatusViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return GetOffTableViewCell.cellHeight
+    }
+}
+
+// MARK: - Delegate : BottomIndicatorButton
+extension MovingStatusViewController: BottomIndicatorButtonDelegate {
+    func shouldUnfoldMovingStatusView() {
+        // Coordinator에게 Unfold 요청
+        print("bottom indicator button is touched")
+    }
+}
+
+// MARK: - Delegate : BottomIndicatorButton
+extension MovingStatusViewController: FoldButtonDelegate {
+    func shouldFoldMovingStatusView() {
+        // Coordinator에게 fold 요청
+        print("fold button is touched")
+    }
+}
+
+// MARK: - Delegate : EndAlarmButton
+extension MovingStatusViewController: EndAlarmButtonDelegate {
+    func shouldEndAlarm() {
+        // alarm 종료
+        print("end the alarm")
     }
 }
