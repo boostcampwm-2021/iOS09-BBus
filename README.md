@@ -22,7 +22,55 @@
 - 추후 업로드 예정
 
 ## 폴더 구조 
-- 추후 업로드 예정
+```bash
+BBus
+├── Coordinator
+├── Home
+│   ├── HomeCoornicator.swift
+│   ├── HomeViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+├── Search
+│   ├── SearchCoordinator.swift
+│   ├── SearchViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+│   └── ViewModel
+├── BusRoute
+│   ├── BusRouteCoordinator.swift
+│   ├── BusRouteViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+│   └── ViewModel
+│   └── ViewModel
+├──  Station
+│   ├── StationCoodinator.swift
+│   ├── StationViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+│   └── ViewModel
+├── AlarmSetting
+│   ├── AlarmSettingCoordinator.swift
+│   ├── AlarmSettingViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+│   └── ViewModel
+├── MovingStatus
+│   ├── MovingStatusCoordinator.swift
+│   ├── MovingStatusViewController.swift
+│   ├── Model
+│   ├── UseCase
+│   ├── View
+│   └── ViewModel
+├── AppDelegate.swift
+├── SceneDelegate.swift
+└── Info.plist
+```
 
 ## 멤버
 
