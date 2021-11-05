@@ -25,6 +25,8 @@ class MovingStatusViewController: UIViewController {
         static let getOn = UIImage(named: "GetOn")
         static let getOff = UIImage(named: "GetOff")
         static let waypoint = UIImage(named: "StationCenterCircle")
+        static let booduckBus = UIImage(named: "BusIconWithBooDuck")
+        static let speechBubble = UIImage(named: "SpeechBubble")
     }
 
     weak var coordinator: MovingStatusCoordinator?
