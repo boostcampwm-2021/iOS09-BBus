@@ -38,6 +38,7 @@ class MovingStatusViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureBusTag()
+        print(3)
     }
     
     // MARK: - Configure
@@ -46,7 +47,7 @@ class MovingStatusViewController: UIViewController {
         self.movingStatusView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.movingStatusView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -MovingStatusView.bottomIndicatorHeight),
-            self.movingStatusView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+            self.movingStatusView.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: MovingStatusView.bottomIndicatorHeight),
             self.movingStatusView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
         ])
     }

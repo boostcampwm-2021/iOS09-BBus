@@ -18,8 +18,14 @@ class MovingStatusCoordinator: MovingStatusPushable {
     }
 
     func start() {
-        let viewController = MovingStatusViewController()
-        viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        guard let window = UIApplication.shared.windows.first,
+              let sceneDelegate = window.windowScene?.delegate as? SceneDelegate else { return }
+
+        let movingStatusViewController = MovingStatusViewController()
+        sceneDelegate.movingStatusViewController = movingStatusViewController
+
+        movingStatusViewController.view.frame = window.frame
+//        view.frame.origin = CGPoint(x: 0, y: 830)
+        window.addSubview(movingStatusViewController.view)
     }
 }
