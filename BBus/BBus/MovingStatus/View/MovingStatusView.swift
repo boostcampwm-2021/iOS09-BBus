@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol BottomIndicatorButtonDelegate {
+protocol BottomIndicatorButtonDelegate: AnyObject {
     func shouldUnfoldMovingStatusView()
 }
 
-protocol FoldButtonDelegate {
+protocol FoldButtonDelegate: AnyObject {
     func shouldFoldMovingStatusView()
 }
 
-protocol EndAlarmButtonDelegate {
+protocol EndAlarmButtonDelegate: AnyObject {
     func shouldEndAlarm()
 }
 
@@ -23,21 +23,21 @@ class MovingStatusView: UIView {
     
     static let bottomIndicatorHeight: CGFloat = 80
     
-    private var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
+    private weak var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
         didSet {
             self.bottomIndicatorButton.addAction(UIAction(handler: { _ in
                 self.bottomIndicatorButtondelegate?.shouldUnfoldMovingStatusView()
             }), for: .touchUpInside)
         }
     }
-    private var foldButtonDelegate: FoldButtonDelegate? {
+    private weak var foldButtonDelegate: FoldButtonDelegate? {
         didSet {
             self.foldButton.addAction(UIAction(handler: { _ in
                 self.foldButtonDelegate?.shouldFoldMovingStatusView()
             }), for: .touchUpInside)
         }
     }
-    private var endAlarmButtonDelegate: EndAlarmButtonDelegate? {
+    private weak var endAlarmButtonDelegate: EndAlarmButtonDelegate? {
         didSet {
             self.endAlarmButton.addAction(UIAction(handler: { _ in
                 self.endAlarmButtonDelegate?.shouldEndAlarm()

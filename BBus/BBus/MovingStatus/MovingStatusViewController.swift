@@ -38,7 +38,14 @@ class MovingStatusViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureBusTag()
-        print(3)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin = CGPoint(x: 0, y: -MovingStatusView.bottomIndicatorHeight)
+        }
     }
     
     // MARK: - Configure
@@ -46,9 +53,10 @@ class MovingStatusViewController: UIViewController {
         self.view.addSubview(self.movingStatusView)
         self.movingStatusView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.movingStatusView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -MovingStatusView.bottomIndicatorHeight),
-            self.movingStatusView.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: MovingStatusView.bottomIndicatorHeight),
-            self.movingStatusView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
+            self.movingStatusView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.movingStatusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.movingStatusView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.movingStatusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
     
@@ -95,6 +103,9 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
     func shouldUnfoldMovingStatusView() {
         // Coordinator에게 Unfold 요청
         print("bottom indicator button is touched")
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin = CGPoint(x: 0, y: -MovingStatusView.bottomIndicatorHeight)
+        }
     }
 }
 
@@ -103,6 +114,9 @@ extension MovingStatusViewController: FoldButtonDelegate {
     func shouldFoldMovingStatusView() {
         // Coordinator에게 fold 요청
         print("fold button is touched")
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin = CGPoint(x: 0, y: self.view.frame.height-MovingStatusView.bottomIndicatorHeight*2)
+        }
     }
 }
 
@@ -111,5 +125,6 @@ extension MovingStatusViewController: EndAlarmButtonDelegate {
     func shouldEndAlarm() {
         // alarm 종료
         print("end the alarm")
+        self.coordinator?.terminate()
     }
 }
