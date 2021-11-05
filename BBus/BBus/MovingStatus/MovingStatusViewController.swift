@@ -37,6 +37,7 @@ class MovingStatusViewController: UIViewController {
 
         self.configureLayout()
         self.configureDelegate()
+        self.configureBusTag()
     }
     
     // MARK: - Configure
@@ -54,6 +55,10 @@ class MovingStatusViewController: UIViewController {
     
     private func configureDelegate() {
         self.movingStatusView.configureDelegate(self)
+    }
+    
+    private func configureBusTag() {
+        self.movingStatusView.addBusTag()
     }
 }
 

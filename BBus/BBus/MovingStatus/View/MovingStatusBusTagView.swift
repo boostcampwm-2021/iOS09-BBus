@@ -21,7 +21,7 @@ class MovingStatusBusTagView: UIView {
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {
-        let labelFontSize: CGFloat = 14
+        let labelFontSize: CGFloat = 13
         let numberOfLines = 2
         
         let label = UILabel()
@@ -49,7 +49,7 @@ class MovingStatusBusTagView: UIView {
         let speechBubbleHeight: CGFloat = 45
         let movingStatusLabelTopBottomMargin: CGFloat = 3
         let movingStatusLabelLeftMargin: CGFloat = 15
-        let movingStatusLabelRightMargin: CGFloat = -10
+        let movingStatusLabelRightMargin: CGFloat = -20
         let booduckImageHeight: CGFloat = 35
         let booduckBusImageRatio = CGFloat(5) / CGFloat(6)
         let booduckBusImageLeftMargin: CGFloat = 5

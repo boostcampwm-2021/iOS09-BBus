@@ -16,7 +16,7 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
     static let reusableID = "MovingStatusTableViewCell"
     static let cellHeight: CGFloat = 80
     
-    override var titleLeadingOffset: CGFloat { return 120 }
+    override var titleLeadingOffset: CGFloat { return 135 }
     override var lineTrailingOffset: CGFloat { return -25 }
     override var stationTitleLabelFontSize: CGFloat { return 15 }
     override var labelStackViewRightMargin: CGFloat { return -30 }

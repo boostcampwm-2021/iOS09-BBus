@@ -83,14 +83,23 @@ class MovingStatusView: UIView {
         label.text = "알람 종료"
         return label
     }()
-
-    convenience init() {
-        self.init(frame: CGRect())
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         
+        self.configureLayout()
         self.bottomIndicatorView.backgroundColor = MovingStatusViewController.Color.blueBus
         self.headerView.backgroundColor = MovingStatusViewController.Color.white
         self.endAlarmView.backgroundColor = MovingStatusViewController.Color.blueBus
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         self.configureLayout()
+        self.bottomIndicatorView.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.headerView.backgroundColor = MovingStatusViewController.Color.white
+        self.endAlarmView.backgroundColor = MovingStatusViewController.Color.blueBus
     }
 
     private func configureLayout() {
@@ -219,5 +228,18 @@ class MovingStatusView: UIView {
     func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
         self.stationsTableView.delegate = delegate
         self.stationsTableView.dataSource = delegate
+    }
+    
+    func addBusTag() {
+        let busTagLeftMargin: CGFloat = 5
+        
+        let busTag = MovingStatusBusTagView()
+        
+        self.stationsTableView.addSubview(busTag)
+        busTag.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
+            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + 2*MovingStatusTableViewCell.cellHeight)
+        ])
     }
 }
