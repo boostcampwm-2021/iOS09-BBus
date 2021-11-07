@@ -15,14 +15,14 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     var busNumberFontSize: CGFloat { return 22 }
     var busNumberLeadingInterval: CGFloat { return 20 }
 
-    lazy var busNumberLabel: UILabel = {
+    private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
         label.textColor = MyColor.bbusTypeBlue
         return label
     }()
-    lazy var trailingView = BusCellTrailingView()
+    private lazy var trailingView = BusCellTrailingView()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -68,5 +68,15 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     private func configureUI() {
         self.backgroundColor = MyColor.white
+    }
+    
+    func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
+        self.busNumberLabel.text = busNumber
+        self.trailingView.configure(firstBusTime: firstBusTime,
+                                    firstBusRelativePosition: firstBusRelativePosition,
+                                    firstBusCongestion: firstBusCongestion,
+                                    secondBusTime: secondBusTime,
+                                    secondBusRelativePosition: secondBusRelativePosition,
+                                    secondBusCongestion: secondBusCongsetion)
     }
 }

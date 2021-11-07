@@ -137,8 +137,14 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                         as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
-
         cell.configureDelegate(self)
+        cell.configure(busNumber: "127",
+                       firstBusTime: "1분 29초",
+                       firstBusRelativePosition: "2번째전",
+                       firstBusCongestion: "여유",
+                       secondBusTime: "9분 51초",
+                       secondBusRelativePosition: "6번째전",
+                       secondBusCongsetion: "여유")
         return cell
     }
 

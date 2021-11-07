@@ -145,7 +145,14 @@ extension StationViewController: UICollectionViewDataSource {
         if collectionView.contentSize.height != self.stationBusInfoHeight {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
-        cell.configure(busNumber: "153", direction: "신촌기차역 방향")
+        cell.configure(busNumber: "153",
+                       direction: "신촌기차역 방향",
+                       firstBusTime: "1분 29초",
+                       firstBusRelativePosition: "2번째전",
+                       firstBusCongestion: "여유",
+                       secondBusTime: "9분 51초",
+                       secondBusRelativePosition: "6번째전",
+                       secondBusCongsetion: "여유")
         return cell
     }
 }
