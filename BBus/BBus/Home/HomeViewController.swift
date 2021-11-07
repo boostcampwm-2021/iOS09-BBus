@@ -21,6 +21,7 @@ enum MyColor {
     static let bbusTypeRed = UIColor(named: "bbusTypeRed")
     static let bbusSearchRed = UIColor(named: "bbusSearchRed")
     static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
+    static let bbusLikeYellow = UIColor(named: "bbusLikeYellow")
 }
 
 enum MyImage {
@@ -39,6 +40,8 @@ enum MyImage {
     static let bus = UIImage(systemName: "bus.fill")
     static let station = UIImage(systemName: "bitcoinsign.circle")
     static let keyboardDown = UIImage(systemName: "keyboard.chevron.compact.down")
+    static let emptyStar = UIImage(systemName: "star")
+    static let filledStar = UIImage(systemName: "star.fill")
 }
 
 class HomeViewController: UIViewController {
@@ -149,7 +152,8 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - DelegateFlowLayout : UICollectionView
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: FavoriteCollectionViewCell.height)
+        // TODO: height overriding needed
+        return CGSize(width: self.view.frame.width, height: 70)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
