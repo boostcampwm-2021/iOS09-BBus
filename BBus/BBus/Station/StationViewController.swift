@@ -35,7 +35,7 @@ class StationViewController: UIViewController {
         static let blueBusIcon = UIImage(named: "busIcon")
     }
     
-    @Published private var stationBusInfoHeight: Double = 10
+    @Published private var stationBusInfoHeight: CGFloat = 10
 
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var stationView = StationView()
