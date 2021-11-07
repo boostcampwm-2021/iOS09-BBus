@@ -40,8 +40,10 @@ enum MyImage {
     static let bus = UIImage(systemName: "bus.fill")
     static let station = UIImage(systemName: "bitcoinsign.circle")
     static let keyboardDown = UIImage(systemName: "keyboard.chevron.compact.down")
-    static let emptyStar = UIImage(systemName: "star")
-    static let filledStar = UIImage(systemName: "star.fill")
+    static let filledStar: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
+        return UIImage(systemName: "star.fill", withConfiguration: largeConfig)
+    }()
 }
 
 class HomeViewController: UIViewController {

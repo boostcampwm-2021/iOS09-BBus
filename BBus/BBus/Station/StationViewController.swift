@@ -123,7 +123,9 @@ class StationViewController: UIViewController {
 
     private func configureMOCKDATA() {
         self.customNavigationBar.configureBackButtonTitle("능곡초교")
-        self.stationView.configureHeaderView(stationId: "25780", stationName: "능곡초교", direction: "시흥시노인종합복지관 방면")
+        self.stationView.configureHeaderView(stationId: "25780",
+                                             stationName: "능곡초교",
+                                             direction: "시흥시노인종합복지관 방면")
     }
 }
 
@@ -151,14 +153,15 @@ extension StationViewController: UICollectionViewDataSource {
         if collectionView.contentSize.height != self.stationBusInfoHeight {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
-        cell.configure(busNumber: "153",
-                       direction: "신촌기차역 방향",
+        cell.configure(busNumber: "58-A",
+                       direction: "새보미아파트.고리울동굴시장 방향",
                        firstBusTime: "1분 29초",
                        firstBusRelativePosition: "2번째전",
                        firstBusCongestion: "여유",
                        secondBusTime: "9분 51초",
                        secondBusRelativePosition: "6번째전",
                        secondBusCongsetion: "여유")
+        cell.configure(delegate: self)
         return cell
     }
 }
@@ -197,5 +200,11 @@ extension StationViewController: UIScrollViewDelegate {
 extension StationViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+extension StationViewController: LikeButtonDelegate {
+    func likeStationBus() {
+        print("like button clicked")
     }
 }

@@ -19,6 +19,7 @@ class StationView: UIView {
         let layout = self.collectionViewLayout()
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.register(StationBodyCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        collectionView.backgroundColor = MyColor.bbusLightGray
         return collectionView
     }()
 
