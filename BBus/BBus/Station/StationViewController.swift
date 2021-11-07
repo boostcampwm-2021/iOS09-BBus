@@ -35,7 +35,7 @@ class StationViewController: UIViewController {
         static let blueBusIcon = UIImage(named: "busIcon")
     }
     
-    @Published private var stationBusInfoHeight: CGFloat = 10
+    @Published private var stationBusInfoHeight: CGFloat = 100
     weak var coordinator: StationCoordinator?
 
     private lazy var customNavigationBar: CustomNavigationBar = {
@@ -144,8 +144,7 @@ extension StationViewController: UICollectionViewDelegate {
 
 // MARK: - DataSource : CollectionView
 extension StationViewController: UICollectionViewDataSource {
-    
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
@@ -171,11 +170,26 @@ extension StationViewController: UICollectionViewDataSource {
         cell.configure(delegate: self)
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                           withReuseIdentifier: SimpleCollectionHeaderView.identifier,
+                                                                           for: indexPath) as? SimpleCollectionHeaderView,
+              let title = RouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
+
+        header.configureLayout()
+        header.configure(title: title)
+        return header
+    }
 }
 
 extension StationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: StationBodyCollectionViewCell.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: SimpleCollectionHeaderView.height)
     }
 }
 

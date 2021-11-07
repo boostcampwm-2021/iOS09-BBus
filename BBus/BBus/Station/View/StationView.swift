@@ -24,6 +24,9 @@ class StationView: UIView {
         let layout = self.collectionViewLayout()
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.register(StationBodyCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        collectionView.register(SimpleCollectionHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: SimpleCollectionHeaderView.identifier)
         collectionView.backgroundColor = MyColor.bbusLightGray
         return collectionView
     }()
@@ -104,10 +107,8 @@ class StationView: UIView {
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let bottomLineHeight: CGFloat = 1
-        let sectionInterval: CGFloat = 10
 
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: bottomLineHeight, left: 0, bottom: sectionInterval, right: 0)
         layout.minimumInteritemSpacing = bottomLineHeight
         layout.minimumLineSpacing = bottomLineHeight
         return layout
