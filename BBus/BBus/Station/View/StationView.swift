@@ -9,6 +9,11 @@ import UIKit
 
 class StationView: UIView {
 
+    private lazy var colorBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = MyColor.bbusGray
+        return view
+    }()
     private lazy var stationScrollView = UIScrollView()
     private lazy var stationScrollContentsView = UIView()
     private lazy var stationHeaderView = StationHeaderView()
@@ -31,6 +36,17 @@ class StationView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
+        let half: CGFloat = 0.5
+
+        self.addSubview(self.colorBackgroundView)
+        self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: half),
+            self.colorBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.colorBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.colorBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+
         self.addSubview(self.stationScrollView)
         self.stationScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

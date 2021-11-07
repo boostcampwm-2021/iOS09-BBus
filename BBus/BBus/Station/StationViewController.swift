@@ -36,10 +36,22 @@ class StationViewController: UIViewController {
     }
     
     @Published private var stationBusInfoHeight: CGFloat = 10
-
-    private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var stationView = StationView()
     weak var coordinator: StationCoordinator?
+
+    private lazy var customNavigationBar: CustomNavigationBar = {
+        let bar = CustomNavigationBar()
+        bar.configureTintColor(color: MyColor.white)
+        bar.configureAlpha(alpha: 0)
+        if let bbusGray = MyColor.bbusGray {
+            bar.configureBackgroundColor(color: bbusGray)
+        }
+        return bar
+    }()
+    private lazy var stationView: StationView = {
+        let view = StationView()
+        view.backgroundColor = MyColor.white
+        return view
+    }()
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
 
@@ -50,7 +62,6 @@ class StationViewController: UIViewController {
         button.backgroundColor = UIColor.darkGray
         return button
     }()
-    
     private var collectionHeightConstraint: NSLayoutConstraint?
     private var cancellables: Set<AnyCancellable> = []
 
@@ -58,10 +69,10 @@ class StationViewController: UIViewController {
         super.viewDidLoad()
 
         self.binding()
-        self.configureBusColor(to: MyColor.bbusGray)
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
+        self.configureUI()
     }
 
     // MARK: - Configure
@@ -102,15 +113,6 @@ class StationViewController: UIViewController {
         self.stationView.configureDelegate(self)
         self.customNavigationBar.configureDelegate(self)
     }
-
-    private func configureBusColor(to color: UIColor?) {
-        guard let color = color else { return }
-
-        self.view.backgroundColor = color
-        self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BusRouteViewController.Color.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
-    }
     
     private func binding() {
         self.$stationBusInfoHeight
@@ -127,13 +129,18 @@ class StationViewController: UIViewController {
                                              stationName: "능곡초교",
                                              direction: "시흥시노인종합복지관 방면")
     }
+
+    private func configureUI() {
+        self.view.backgroundColor = MyColor.bbusGray
+    }
 }
 
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.coordinator?.pushToBusRoute()
+    }
 }
-
 
 // MARK: - DataSource : CollectionView
 extension StationViewController: UICollectionViewDataSource {
@@ -169,10 +176,6 @@ extension StationViewController: UICollectionViewDataSource {
 extension StationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: 100)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.coordinator?.pushToBusRoute()
     }
 }
 
