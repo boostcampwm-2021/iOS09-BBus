@@ -76,7 +76,8 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         self.directionLabel.text = direction
     }
     
-    func configure(delegate: LikeButtonDelegate) {
+    func configure(delegate: LikeButtonDelegate & AlarmButtonDelegate) {
         self.likeButtonDelegate = delegate
+        super.configureDelegate(delegate)
     }
 }

@@ -170,6 +170,10 @@ extension StationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: 100)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.coordinator?.pushToBusRoute()
+    }
 }
 
 // MARK: - Delegate : UIScrollView
@@ -203,8 +207,16 @@ extension StationViewController: BackButtonDelegate {
     }
 }
 
+// MARK: - Delegate: LikeButton
 extension StationViewController: LikeButtonDelegate {
     func likeStationBus() {
         print("like button clicked")
+    }
+}
+
+// MARK: - Delegate: AlarmButton
+extension StationViewController: AlarmButtonDelegate {
+    func shouldGoToAlarmSettingScene() {
+        self.coordinator?.pushToAlarmSetting()
     }
 }
