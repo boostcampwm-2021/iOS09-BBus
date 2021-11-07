@@ -139,6 +139,5 @@ class BusCellTrailingView: UIView {
                                             range: secondRange)
         self.secondBusTimeRightLabel.attributedText = secondAttributedString
         self.secondBusTimeRightLabel.sizeToFit()
-        self.secondBusTimeRightLabel.sizeThatFits(size)
     }
 }

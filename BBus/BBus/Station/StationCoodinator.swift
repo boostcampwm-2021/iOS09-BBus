@@ -24,6 +24,7 @@ class StationCoordinator: NSObject, Coordinator {
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }
