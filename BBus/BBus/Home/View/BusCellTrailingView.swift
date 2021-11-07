@@ -32,27 +32,8 @@ class BusCellTrailingView: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
-    private lazy var firstBusTimeRightLabel: UILabel = {
-        let label = UILabel()
-        label.layer.borderColor = MyColor.bbusLightGray?.cgColor
-        label.layer.borderWidth = 2
-        label.layer.cornerRadius = 3
-        label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = MyColor.bbusGray
-        label.textAlignment = .center
-        return label
-    }()
-    private lazy var secondBusTimeRightLabel: UILabel = {
-        let label = UILabel()
-        label.layer.borderColor = MyColor.bbusLightGray?.cgColor
-        label.layer.borderWidth = 2
-        label.layer.cornerRadius = 3
-        label.font = UIFont.systemFont(ofSize: 11)
-        label.textColor = MyColor.bbusGray
-        label.sizeToFit()
-        label.textAlignment = .center
-        return label
-    }()
+    private lazy var firstBusTimeRightLabel = RemainCongestionBadgeLabel()
+    private lazy var secondBusTimeRightLabel = RemainCongestionBadgeLabel()
     private lazy var alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(MyImage.alarm, for: .normal)
@@ -79,24 +60,18 @@ class BusCellTrailingView: UIView {
         ])
 
         let trailingViewLabelsInterval: CGFloat = 4
-        let rightLabelWidthPadding: CGFloat = 10
-        let rightLabelHeightPadding: CGFloat = 5
         self.addSubview(self.firstBusTimeRightLabel)
         self.firstBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.firstBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.firstBusTimeLabel.centerYAnchor),
-            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval),
-//            self.firstBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.width + rightLabelWidthPadding),
-//            self.firstBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.firstBusTimeRightLabel.frame.height + rightLabelHeightPadding)
+            self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval)
         ])
 
         self.addSubview(self.secondBusTimeRightLabel)
         self.secondBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.secondBusTimeLabel.centerYAnchor),
-            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval),
-//            self.secondBusTimeRightLabel.widthAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.width + rightLabelWidthPadding),
-//            self.secondBusTimeRightLabel.heightAnchor.constraint(equalToConstant: self.secondBusTimeRightLabel.frame.height + rightLabelHeightPadding)
+            self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval)
         ])
 
         let alarmButtonWidth: CGFloat = 20
@@ -115,29 +90,14 @@ class BusCellTrailingView: UIView {
         self.alarmButtonDelegate = delegate
     }
     
-    func configure(firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongestion: String) {
+    func configure(firstBusTime: String, firstBusRemaining: String, firstBusCongestion: String, secondBusTime: String, secondBusRemaining: String, secondBusCongestion: String) {
         self.firstBusTimeLabel.text = firstBusTime
         self.firstBusTimeLabel.sizeToFit()
         
         self.secondBusTimeLabel.text = secondBusTime
         self.secondBusTimeLabel.sizeToFit()
         
-        let firstBusDescription = firstBusRelativePosition + " " + firstBusCongestion
-        let firstRange = (firstBusDescription as NSString).range(of: firstBusCongestion)
-        let firstAttributedString = NSMutableAttributedString(string: firstBusDescription)
-        firstAttributedString.addAttribute(.foregroundColor,
-                                           value: MyColor.bbusCongestionRed as Any,
-                                           range: firstRange)
-        self.firstBusTimeRightLabel.attributedText = firstAttributedString
-        self.firstBusTimeRightLabel.sizeToFit()
-        
-        let secondBusDescription = secondBusRelativePosition + " " + secondBusCongestion
-        let secondRange = (secondBusDescription as NSString).range(of: secondBusCongestion)
-        let secondAttributedString = NSMutableAttributedString(string: secondBusDescription)
-        secondAttributedString.addAttribute(.foregroundColor,
-                                            value: MyColor.bbusCongestionRed as Any,
-                                            range: secondRange)
-        self.secondBusTimeRightLabel.attributedText = secondAttributedString
-        self.secondBusTimeRightLabel.sizeToFit()
+        self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)
+        self.secondBusTimeRightLabel.configure(remaining: secondBusRemaining, congestion: secondBusCongestion)
     }
 }

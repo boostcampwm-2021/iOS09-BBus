@@ -28,6 +28,7 @@
 		4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */; };
 		4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEC2737885F0029915F /* StationHeaderView.swift */; };
 		4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */; };
+		4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */; };
 		4A992C4727311F1C0006FB8C /* FavoriteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */; };
 		4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */; };
 		4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */; };
@@ -108,6 +109,7 @@
 		4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A7BBFEC2737885F0029915F /* StationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationHeaderView.swift; sourceTree = "<group>"; };
 		4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationBodyCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainCongestionBadgeLabel.swift; sourceTree = "<group>"; };
 		4A992C4627311F1C0006FB8C /* FavoriteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeaderView.swift; sourceTree = "<group>"; };
 		4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCellTrailingView.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */,
 				4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */,
 				4A1A22DA27326FD100476861 /* HomeNavigationView.swift */,
+				4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */,
+				4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */,
 				04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */,
 				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,

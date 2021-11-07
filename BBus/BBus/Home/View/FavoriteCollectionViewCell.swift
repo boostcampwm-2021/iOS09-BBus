@@ -73,10 +73,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
         self.busNumberLabel.text = busNumber
         self.trailingView.configure(firstBusTime: firstBusTime,
-                                    firstBusRelativePosition: firstBusRelativePosition,
+                                    firstBusRemaining: firstBusRelativePosition,
                                     firstBusCongestion: firstBusCongestion,
                                     secondBusTime: secondBusTime,
-                                    secondBusRelativePosition: secondBusRelativePosition,
+                                    secondBusRemaining: secondBusRelativePosition,
                                     secondBusCongestion: secondBusCongsetion)
     }
 }
