@@ -192,7 +192,7 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		4ACA51D8272FCC5A00EC0531 /* SearchBus */ = {
+		4ACA51D8272FCC5A00EC0531 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				4ACA5232272FCF0F00EC0531 /* SearchViewController.swift */,
@@ -202,7 +202,7 @@
 				4ACA51EB272FCDCA00EC0531 /* ViewModel */,
 				4ACA51EA272FCDBE00EC0531 /* View */,
 			);
-			path = SearchBus;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		4ACA51DA272FCCA600EC0531 /* BusRoute */ = {
@@ -514,7 +514,7 @@
 			children = (
 				873D6394273039C400E79069 /* Coordinator */,
 				4ACA51D7272FCC4E00EC0531 /* Home */,
-				4ACA51D8272FCC5A00EC0531 /* SearchBus */,
+				4ACA51D8272FCC5A00EC0531 /* Search */,
 				4ACA51DA272FCCA600EC0531 /* BusRoute */,
 				4ACA51DB272FCCB300EC0531 /* Station */,
 				4ACA51DC272FCCC100EC0531 /* AlarmSetting */,
