@@ -9,8 +9,8 @@ import UIKit
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
-    var height: CGFloat { return 70 }
     var busNumberYAxisMargin: CGFloat { return 0 }
     var busNumberFontSize: CGFloat { return 22 }
     var busNumberLeadingInterval: CGFloat { return 20 }

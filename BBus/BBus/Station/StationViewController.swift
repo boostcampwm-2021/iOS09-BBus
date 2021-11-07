@@ -175,7 +175,7 @@ extension StationViewController: UICollectionViewDataSource {
 
 extension StationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 100)
+        return CGSize(width: self.view.frame.width, height: StationBodyCollectionViewCell.height)
     }
 }
 

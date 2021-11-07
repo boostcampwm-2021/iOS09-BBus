@@ -160,8 +160,7 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - DelegateFlowLayout : UICollectionView
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // TODO: height overriding needed
-        return CGSize(width: self.view.frame.width, height: 70)
+        return CGSize(width: self.view.frame.width, height: FavoriteCollectionViewCell.height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

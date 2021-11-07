@@ -23,9 +23,10 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
             self.likeButton.addAction(action, for: .touchUpInside)
         }
     }
-    override var height: CGFloat { return 90 }
+
+    override class var height: CGFloat { return 90 }
     override var busNumberYAxisMargin: CGFloat { return -self.busNumberFontSize/1.5 }
-    override var busNumberFontSize: CGFloat { return super.busNumberFontSize * (super.height / self.height) * 1.2 }
+    override var busNumberFontSize: CGFloat { return super.busNumberFontSize * (FavoriteCollectionViewCell.height / Self.height) * 1.2 }
     override var busNumberLeadingInterval: CGFloat { return self.likeButtonleadingInterval * 2 + self.likeButtonHeightWidth }
     private let likeButtonleadingInterval: CGFloat = 5
     private let likeButtonHeightWidth: CGFloat = 40
