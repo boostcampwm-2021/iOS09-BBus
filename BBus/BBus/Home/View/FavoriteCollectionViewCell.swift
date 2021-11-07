@@ -15,14 +15,14 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     var busNumberFontSize: CGFloat { return 22 }
     var busNumberLeadingInterval: CGFloat { return 20 }
 
-    private lazy var busNumberLabel: UILabel = {
+    lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
         label.textColor = MyColor.bbusTypeBlue
         return label
     }()
-    private lazy var trailingView = BusCellTrailingView()
+    lazy var trailingView = BusCellTrailingView()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)

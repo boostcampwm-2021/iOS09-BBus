@@ -12,7 +12,6 @@ class StationView: UIView {
     private lazy var stationScrollView = UIScrollView()
     private lazy var stationScrollContentsView = UIView()
     private lazy var stationHeaderView = BusRouteHeaderView()
-    private lazy var colorBackgroundView = UIView()
     private lazy var stationBodyCollectionView: UICollectionView = {
         let collectionViewLeftInset: CGFloat = 90
         let collectionViewTopBottomRightInset: CGFloat = 0
@@ -25,24 +24,12 @@ class StationView: UIView {
 
     convenience init() {
         self.init(frame: CGRect())
-
-        self.backgroundColor = BusRouteViewController.Color.white
+        
         self.configureLayout()
     }
 
     // MARK: - Configure
     private func configureLayout() {
-        let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
-
-        self.addSubview(self.colorBackgroundView)
-        self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: colorBackgroundViewHeightMultiplier),
-            self.colorBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.colorBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.colorBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
-
         self.addSubview(self.stationScrollView)
         self.stationScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -66,8 +53,7 @@ class StationView: UIView {
         NSLayoutConstraint.activate([
             self.stationBodyCollectionView.leadingAnchor.constraint(equalTo: self.stationScrollContentsView.leadingAnchor),
             self.stationBodyCollectionView.trailingAnchor.constraint(equalTo: self.stationScrollContentsView.trailingAnchor),
-            self.stationBodyCollectionView.topAnchor.constraint(equalTo: self.stationHeaderView.bottomAnchor),
-            self.stationBodyCollectionView.bottomAnchor.constraint(equalTo: self.stationScrollContentsView.bottomAnchor)
+            self.stationBodyCollectionView.topAnchor.constraint(equalTo: self.stationHeaderView.bottomAnchor)
         ])
 
         self.stationScrollView.addSubview(self.stationScrollContentsView)
@@ -77,7 +63,8 @@ class StationView: UIView {
             self.stationScrollContentsView.leadingAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.leadingAnchor),
             self.stationScrollContentsView.trailingAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.trailingAnchor),
             self.stationScrollContentsView.bottomAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.bottomAnchor),
-            self.stationScrollContentsView.widthAnchor.constraint(equalTo: self.stationScrollView.frameLayoutGuide.widthAnchor)
+            self.stationScrollContentsView.widthAnchor.constraint(equalTo: self.stationScrollView.frameLayoutGuide.widthAnchor),
+            self.stationScrollContentsView.heightAnchor.constraint(equalTo: self.stationBodyCollectionView.heightAnchor, constant: StationHeaderView.headerHeight)
         ])
     }
 
@@ -87,15 +74,10 @@ class StationView: UIView {
         self.stationScrollView.delegate = delegate
     }
 
-    func configureColor(to color: UIColor) {
-        self.colorBackgroundView.backgroundColor = color
-        self.stationHeaderView.backgroundColor = color
-    }
-
-    func configureTableViewHeight(count: Int) {
-        NSLayoutConstraint.activate([
-            self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(count)*BusRouteTableViewCell.cellHeight)
-        ])
+    func configureTableViewHeight(height: CGFloat) -> NSLayoutConstraint {
+        let constraint = self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: height)
+        constraint.isActive = true
+        return constraint
     }
 
     func configureHeaderView(busType: String, busNumber: String, fromStation: String, toStation: String) {

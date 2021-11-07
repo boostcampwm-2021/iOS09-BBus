@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class StationViewController: UIViewController {
 
@@ -33,6 +34,8 @@ class StationViewController: UIViewController {
         static let tagMinSize = UIImage(named: "BusTagMinSize")
         static let blueBusIcon = UIImage(named: "busIcon")
     }
+    
+    @Published private var stationBusInfoHeight: Double = 10
 
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var stationView = StationView()
@@ -47,11 +50,15 @@ class StationViewController: UIViewController {
         button.backgroundColor = UIColor.darkGray
         return button
     }()
+    
+    private var collectionHeightConstraint: NSLayoutConstraint?
+    private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureBusColor(to: Color.blueBus)
+        self.binding()
+        self.configureBusColor(to: MyColor.bbusGray)
         self.configureLayout()
         self.configureDelegate()
     }
@@ -78,7 +85,7 @@ class StationViewController: UIViewController {
             self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
 
-        self.stationView.configureTableViewHeight(count: 20)
+        self.collectionHeightConstraint = self.stationView.configureTableViewHeight(height: self.stationBusInfoHeight)
 
         self.view.addSubview(self.refreshButton)
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
@@ -91,21 +98,63 @@ class StationViewController: UIViewController {
     }
 
     private func configureDelegate() {
-//        self.stationView.configureDelegate(self)
-//        self.customNavigationBar.configureDelegate(self)
+        self.stationView.configureDelegate(self)
+        self.customNavigationBar.configureDelegate(self)
     }
 
-    private func configureBusColor(to color: UIColor) {
+    private func configureBusColor(to color: UIColor?) {
+        guard let color = color else { return }
+
         self.view.backgroundColor = color
         self.customNavigationBar.configureBackgroundColor(color: color)
         self.customNavigationBar.configureTintColor(color: BusRouteViewController.Color.white)
         self.customNavigationBar.configureAlpha(alpha: 0)
-        self.stationView.configureColor(to: color)
+    }
+    
+    private func binding() {
+        self.$stationBusInfoHeight
+            .receive(on: DispatchQueue.main, options: nil)
+            .sink() { [weak self] height in
+                self?.collectionHeightConstraint?.isActive = false
+                self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
+            }.store(in: &self.cancellables)
     }
 }
 
-// MARK: - DataSource : TableView
+// MARK: - Delegate : CollectionView
+extension StationViewController: UICollectionViewDelegate {
+    
+}
 
+
+// MARK: - DataSource : CollectionView
+extension StationViewController: UICollectionViewDataSource {
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StationBodyCollectionViewCell.identifier, for: indexPath) as? StationBodyCollectionViewCell else { return UICollectionViewCell() }
+        // height 재설정
+        if collectionView.contentSize.height != self.stationBusInfoHeight {
+            self.stationBusInfoHeight = collectionView.contentSize.height
+        }
+        cell.configure(busNumber: "153", direction: "신촌기차역 방향")
+        return cell
+    }
+}
+
+extension StationViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: 100)
+    }
+}
 
 // MARK: - Delegate : UIScrollView
 extension StationViewController: UIScrollViewDelegate {

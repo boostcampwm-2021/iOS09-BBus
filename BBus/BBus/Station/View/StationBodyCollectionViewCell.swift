@@ -50,4 +50,9 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
             self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.busNumberLeadingInterval)
         ])
     }
+    
+    func configure(busNumber: String, direction: String) {
+        super.busNumberLabel.text = busNumber
+        self.directionLabel.text = direction
+    }
 }
