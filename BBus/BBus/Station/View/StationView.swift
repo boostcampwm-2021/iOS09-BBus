@@ -11,7 +11,7 @@ class StationView: UIView {
 
     private lazy var stationScrollView = UIScrollView()
     private lazy var stationScrollContentsView = UIView()
-    private lazy var stationHeaderView = BusRouteHeaderView()
+    private lazy var stationHeaderView = StationHeaderView()
     private lazy var stationBodyCollectionView: UICollectionView = {
         let collectionViewLeftInset: CGFloat = 90
         let collectionViewTopBottomRightInset: CGFloat = 0
@@ -80,11 +80,8 @@ class StationView: UIView {
         return constraint
     }
 
-    func configureHeaderView(busType: String, busNumber: String, fromStation: String, toStation: String) {
-        self.stationHeaderView.configure(busType: busType,
-                                     busNumber: busNumber,
-                                     fromStation: fromStation,
-                                     toStation: toStation)
+    func configureHeaderView(stationId: String, stationName: String, direction: String) {
+        self.stationHeaderView.configure(stationId: stationId, stationName: stationName, direction: direction)
     }
 
     private func collectionViewLayout() -> UICollectionViewLayout {

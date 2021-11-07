@@ -47,8 +47,8 @@ class StationHeaderView: UIView {
 
     // MARK: - Configure
     func configureLayout() {
-        let stationIdLabelBottomMargin: CGFloat = -5
         let stationIdLabelYaxisMargin: CGFloat = 10
+        let stationIdLabelBottomMargin: CGFloat = -5
         let directionLabelTopMargin: CGFloat = 7
 
         self.addSubview(self.stationNameLabel)
@@ -68,8 +68,8 @@ class StationHeaderView: UIView {
         self.addSubview(self.directionLabel)
         self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.directionLabel.centerXAnchor.constraint(equalTo: self.directionLabel.centerXAnchor),
-            self.directionLabel.bottomAnchor.constraint(equalTo: self.directionLabel.topAnchor, constant: stationIdLabelBottomMargin)
+            self.directionLabel.centerXAnchor.constraint(equalTo: self.stationNameLabel.centerXAnchor),
+            self.directionLabel.topAnchor.constraint(equalTo: self.stationNameLabel.bottomAnchor, constant: directionLabelTopMargin)
         ])
     }
 

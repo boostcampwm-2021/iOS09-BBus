@@ -61,6 +61,7 @@ class StationViewController: UIViewController {
         self.configureBusColor(to: MyColor.bbusGray)
         self.configureLayout()
         self.configureDelegate()
+        self.configureMOCKDATA()
     }
 
     // MARK: - Configure
@@ -118,6 +119,11 @@ class StationViewController: UIViewController {
                 self?.collectionHeightConstraint?.isActive = false
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
+    }
+
+    private func configureMOCKDATA() {
+        self.customNavigationBar.configureBackButtonTitle("능곡초교")
+        self.stationView.configureHeaderView(stationId: "25780", stationName: "능곡초교", direction: "시흥시노인종합복지관 방면")
     }
 }
 
