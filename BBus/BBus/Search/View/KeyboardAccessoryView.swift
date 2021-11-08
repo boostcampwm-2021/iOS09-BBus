@@ -21,9 +21,27 @@ protocol KeyboardAccessoryDownKeyboardButtonDelegate {
 
 class KeyboardAccessoryView: UIView {
 
-    private var numberDelegate: KeyboardAccessoryNumberButtonDelegate?
-    private var characterDelegate: KeyboardAccessoryCharacterButtonDelegate?
-    private var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate?
+    private var numberDelegate: KeyboardAccessoryNumberButtonDelegate? {
+        didSet {
+            self.numberButton.addAction(UIAction(handler: { _ in
+                self.numberDelegate?.shouldShowNumberPad()
+            }), for: .touchUpInside)
+        }
+    }
+    private var characterDelegate: KeyboardAccessoryCharacterButtonDelegate? {
+        didSet {
+            self.characterButton.addAction(UIAction(handler: { _ in
+                self.characterDelegate?.shouldShowCharacterPad()
+            }), for: .touchUpInside)
+        }
+    }
+    private var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate? {
+        didSet {
+            self.downKeyboardButton.addAction(UIAction(handler: { _ in
+                self.downKeyboardDelegate?.shouldHideKeyboard()
+            }), for: .touchUpInside)
+        }
+    }
     static let height: CGFloat = 50
 
     private lazy var numberButton: UIButton = {
@@ -35,9 +53,6 @@ class KeyboardAccessoryView: UIView {
         button.setTitle("숫자", for: .normal)
         button.backgroundColor = MyColor.clear
         button.setTitleColor(MyColor.bbusGray, for: .normal)
-        button.addAction(UIAction(handler: { _ in
-            self.numberDelegate?.shouldShowNumberPad()
-        }), for: .touchUpInside)
         return button
     }()
     private lazy var characterButton: UIButton = {
@@ -49,18 +64,12 @@ class KeyboardAccessoryView: UIView {
         button.setTitle("문자", for: .normal)
         button.backgroundColor = MyColor.clear
         button.setTitleColor(MyColor.bbusGray, for: .normal)
-        button.addAction(UIAction(handler: { _ in
-            self.characterDelegate?.shouldShowCharacterPad()
-        }), for: .touchUpInside)
         return button
     }()
     private lazy var downKeyboardButton: UIButton = {
         let button = UIButton()
         button.setImage(MyImage.keyboardDown, for: .normal)
         button.tintColor = MyColor.white
-        button.addAction(UIAction(handler: { _ in
-            self.downKeyboardDelegate?.shouldHideKeyboard()
-        }), for: .touchUpInside)
         return button
     }()
 
