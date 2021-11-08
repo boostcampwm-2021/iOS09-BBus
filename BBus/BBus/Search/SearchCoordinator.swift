@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCoordinator: NSObject, Coordinator, BusRoutePushable, StationPushable {
+class SearchCoordinator: BusRoutePushable, StationPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
@@ -20,10 +20,11 @@ class SearchCoordinator: NSObject, Coordinator, BusRoutePushable, StationPushabl
     func start() {
         let viewController = SearchViewController()
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.presenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

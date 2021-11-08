@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StationCoordinator: NSObject, Coordinator {
+class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
     var delegate: CoordinatorFinishDelegate?
     var presenter: UINavigationController
     var childCoordinators: [Coordinator]
@@ -24,6 +24,7 @@ class StationCoordinator: NSObject, Coordinator {
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }
