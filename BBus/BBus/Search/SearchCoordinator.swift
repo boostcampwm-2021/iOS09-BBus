@@ -24,6 +24,7 @@ class SearchCoordinator: BusRoutePushable, StationPushable {
     }
 
     func terminate() {
+        self.presenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

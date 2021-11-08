@@ -20,13 +20,6 @@ class SearchViewController: UIViewController {
         self.configureDelegate()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.isMovingFromParent {
-            self.coordinator?.terminate()
-        }
-    }
-
     // MARK: - Configuration
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,7 +48,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: SearchBackButtonDelegate {
     func shouldNavigationPop() {
-        self.navigationController?.popViewController(animated: true)
+        self.coordinator?.terminate()
     }
 }
 
