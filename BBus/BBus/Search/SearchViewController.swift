@@ -38,8 +38,8 @@ class SearchViewController: UIViewController {
     }
 
     private func configureLayout() {
-        self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.searchBusView)
+        self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchBusView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.searchBusView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
