@@ -10,34 +10,34 @@ import UIKit
 class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
-    private lazy var searchBusView = SearchView()
+    private lazy var searchView = SearchView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
         self.configureUI()
-        self.searchBusView.configureDelegate(self)
         self.configureDelegate()
     }
 
     // MARK: - Configuration
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.searchBusView.configureInitialTabStatus(type: .bus)
+        self.searchView.configureInitialTabStatus(type: .bus)
     }
 
     private func configureDelegate() {
-        self.searchBusView.configureBackButtonDelegate(self)
+        self.searchView.configureBackButtonDelegate(self)
+        self.searchView.configureDelegate(self)
     }
 
     private func configureLayout() {
-        self.view.addSubview(self.searchBusView)
-        self.searchBusView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.searchView)
+        self.searchView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.searchBusView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.searchBusView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            self.searchBusView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.searchBusView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+            self.searchView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.searchView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.searchView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.searchView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 
@@ -56,7 +56,7 @@ extension SearchViewController: SearchBackButtonDelegate {
 extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.searchBusView.currentSearchType == SearchType.bus {
+        if self.searchView.currentSearchType == SearchType.bus {
             self.coordinator?.pushToBusRoute()
         }
         else {
@@ -102,7 +102,7 @@ extension SearchViewController: UICollectionViewDataSource {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.searchBusView.hideKeyboard()
+        self.searchView.hideKeyboard()
     }
 }
 
