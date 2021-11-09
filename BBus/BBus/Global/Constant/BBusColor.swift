@@ -35,7 +35,7 @@ enum BBusColor {
     static let tagBusCongestion = UIColor.red
     static let redLine = UIColor.red
     static let tableBackground = UIColor.systemGray5
-    static let iconColor = UIColor(named: "alarmIconGrayColor")
+    static let iconColor = UIColor(named: "bbusAlarmGray")
     static let alarmTint = UIColor(named: "bbusGray")
     static let bbusLightBorder = UIColor.lightGray
     static let bbusCongestionLineGray = UIColor.systemGray
