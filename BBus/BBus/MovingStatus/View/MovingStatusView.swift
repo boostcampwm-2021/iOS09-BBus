@@ -91,6 +91,7 @@ class MovingStatusView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.text = "현위치 탐색중, 19분 소요예정"
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var foldButton = UIButton()

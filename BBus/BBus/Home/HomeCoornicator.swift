@@ -7,14 +7,12 @@
 
 import UIKit
 
-class HomeCoordinator: SearchBusPushable, BusRoutePushable, AlarmSettingPushable, StationPushable {
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
-    var childCoordinators: [Coordinator]
+class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, StationPushable {
+    var delegate: CoordinatorDelegate?
+    var navigationPresenter: UINavigationController
 
     init(presenter: UINavigationController) {
-        self.presenter = presenter
-        self.childCoordinators = []
+        self.navigationPresenter = presenter
     }
 
     func start() {
@@ -22,7 +20,7 @@ class HomeCoordinator: SearchBusPushable, BusRoutePushable, AlarmSettingPushable
         let viewModel = HomeViewModel(useCase: useCase)
         let viewController = HomeViewController(viewModel: viewModel)
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: false) // present
+        navigationPresenter.pushViewController(viewController, animated: false) // present
     }
 }
 

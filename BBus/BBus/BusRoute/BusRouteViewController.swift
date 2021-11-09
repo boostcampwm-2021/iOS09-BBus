@@ -159,7 +159,13 @@ extension BusRouteViewController: UITableViewDelegate {
 // MARK: - Delegate : UIScrollView
 extension BusRouteViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
+        let baseLineContentOffset = BusRouteHeaderView.headerHeight - CustomNavigationBar.height
+        if scrollView.contentOffset.y >= baseLineContentOffset {
+            self.customNavigationBar.configureAlpha(alpha: 1)
+        }
+        else {
+            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

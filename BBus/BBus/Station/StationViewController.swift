@@ -171,7 +171,14 @@ extension StationViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Delegate : UIScrollView
 extension StationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
+//        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
+        let baseLineContentOffset = StationHeaderView.headerHeight - CustomNavigationBar.height
+        if scrollView.contentOffset.y >= baseLineContentOffset {
+            self.customNavigationBar.configureAlpha(alpha: 1)
+        }
+        else {
+            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

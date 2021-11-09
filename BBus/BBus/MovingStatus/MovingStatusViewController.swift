@@ -1,11 +1,8 @@
 //
-//  MovingStatusViewController.swift
-//  BBus
-//
-//  Created by 김태훈 on 2021/11/01.
-//
 
 import UIKit
+
+typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
 
 class MovingStatusViewController: UIViewController {
 
@@ -18,14 +15,6 @@ class MovingStatusViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureBusTag()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin = CGPoint(x: 0, y: -MovingStatusView.bottomIndicatorHeight)
-        }
     }
     
     // MARK: - Configure
@@ -88,7 +77,7 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
         // Coordinator에게 Unfold 요청
         print("bottom indicator button is touched")
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin = CGPoint(x: 0, y: -MovingStatusView.bottomIndicatorHeight)
+            self.coordinator?.unfold()
         }
     }
 }
@@ -99,7 +88,7 @@ extension MovingStatusViewController: FoldButtonDelegate {
         // Coordinator에게 fold 요청
         print("fold button is touched")
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin = CGPoint(x: 0, y: self.view.frame.height-MovingStatusView.bottomIndicatorHeight*2)
+            self.coordinator?.fold()
         }
     }
 }
@@ -109,6 +98,6 @@ extension MovingStatusViewController: EndAlarmButtonDelegate {
     func shouldEndAlarm() {
         // alarm 종료
         print("end the alarm")
-        self.coordinator?.terminate()
+        self.coordinator?.close()
     }
 }

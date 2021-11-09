@@ -17,7 +17,7 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
                 self?.likeButtonDelegate?.likeStationBus()
-                self?.likeButton.tintColor = self?.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.systemGray6 : BBusColor.bbusLikeYellow
+                self?.likeButton.tintColor = self?.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)
@@ -33,7 +33,7 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
 
     lazy var likeButton: UIButton = {
         let button = UIButton()
-        button.tintColor = BBusColor.systemGray6
+        button.tintColor = BBusColor.bbusGray6
         button.setImage(BBusImage.star, for: .normal)
         return button
     }()
