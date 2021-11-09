@@ -7,65 +7,6 @@
 
 import UIKit
 
-enum MyColor {
-    static let gray = UIColor.gray
-    static let darkGray = UIColor.darkGray
-    static let white = UIColor.white
-    static let black = UIColor.black
-    static let clear = UIColor.clear
-    static let blueBus = UIColor.systemBlue
-    static let systemGray6 = UIColor.systemGray6
-    static let bbusLightGray = UIColor(named: "bbusLightGray")
-    static let bbusGray = UIColor(named: "bbusGray")
-    static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
-    static let bbusTypeRed = UIColor(named: "bbusTypeRed")
-    static let bbusSearchRed = UIColor(named: "bbusSearchRed")
-    static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
-    static let bbusLikeYellow = UIColor(named: "bbusLikeYellow")
-}
-
-enum MyImage {
-    static let refresh: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig)
-    }()
-    static let alarm: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "alarm", withConfiguration: largeConfig)
-    }()
-    static let back: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "chevron.left", withConfiguration: largeConfig)
-    }()
-    static let bus = UIImage(systemName: "bus.fill")
-    static let station = UIImage(systemName: "bitcoinsign.circle")
-    static let keyboardDown = UIImage(systemName: "keyboard.chevron.compact.down")
-    static let filledStar: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "star.fill", withConfiguration: largeConfig)
-    }()
-}
-
-enum RouteType: Int {
-    case shared = 0, airport, town, gansun, jisun, circular, wideArea, incheon, gyeonggi, closed
-
-    func toString() -> String {
-        let common = "버스"
-        switch self {
-        case .shared: return "공용" + common
-        case .airport: return "공항" + common
-        case .town: return "마을" + common
-        case .gansun: return "간선" + common
-        case .jisun: return "지선" + common
-        case .circular: return "순환" + common
-        case .wideArea: return "광역" + common
-        case .incheon: return "인천" + common
-        case .gyeonggi: return "경기" + common
-        case .closed: return "폐지" + common
-        }
-    }
-}
-
 class HomeViewController: UIViewController {
     
     weak var coordinator: HomeCoordinator?
@@ -95,7 +36,7 @@ class HomeViewController: UIViewController {
         let statusBarHeight: CGFloat = app.statusBarFrame.size.height
 
         let statusbarView = UIView()
-        statusbarView.backgroundColor = UIColor.white //컬러 설정 부분
+        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
         self.view.addSubview(statusbarView)
         statusbarView.translatesAutoresizingMaskIntoConstraints = false
         statusbarView.heightAnchor

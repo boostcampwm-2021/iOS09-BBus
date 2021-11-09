@@ -25,7 +25,7 @@ class SimpleCollectionHeaderView: UICollectionReusableView {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.textColor = MyColor.gray
+        label.textColor = BBusColor.gray
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
@@ -43,7 +43,7 @@ class SimpleCollectionHeaderView: UICollectionReusableView {
     }
     
     private func configureUI() {
-        self.backgroundColor = MyColor.bbusLightGray
+        self.backgroundColor = BBusColor.bbusLightGray
     }
     
     func configure(title: String) {

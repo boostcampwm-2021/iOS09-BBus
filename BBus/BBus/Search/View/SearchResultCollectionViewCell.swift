@@ -14,13 +14,13 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = MyColor.black
+        label.textColor = BBusColor.black
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     private lazy var detailInfoLabel: UILabel = {
         let label = UILabel()
-        label.textColor = MyColor.gray
+        label.textColor = BBusColor.gray
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
@@ -56,7 +56,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        self.backgroundColor = MyColor.white
+        self.backgroundColor = BBusColor.white
     }
     
     func configureUI(title: String, detailInfo: NSMutableAttributedString) {

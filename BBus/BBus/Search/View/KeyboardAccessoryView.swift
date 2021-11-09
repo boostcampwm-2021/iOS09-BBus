@@ -48,28 +48,28 @@ class KeyboardAccessoryView: UIView {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
-        button.layer.borderColor = MyColor.bbusGray?.cgColor
+        button.layer.borderColor = BBusColor.bbusGray?.cgColor
         button.layer.borderWidth = 1
         button.setTitle("숫자", for: .normal)
-        button.backgroundColor = MyColor.clear
-        button.setTitleColor(MyColor.bbusGray, for: .normal)
+        button.backgroundColor = BBusColor.clear
+        button.setTitleColor(BBusColor.bbusGray, for: .normal)
         return button
     }()
     private lazy var characterButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = Self.height * 0.7 / 2
         button.clipsToBounds = true
-        button.layer.borderColor = MyColor.bbusGray?.cgColor
+        button.layer.borderColor = BBusColor.bbusGray?.cgColor
         button.layer.borderWidth = 1
         button.setTitle("문자", for: .normal)
-        button.backgroundColor = MyColor.clear
-        button.setTitleColor(MyColor.bbusGray, for: .normal)
+        button.backgroundColor = BBusColor.clear
+        button.setTitleColor(BBusColor.bbusGray, for: .normal)
         return button
     }()
     private lazy var downKeyboardButton: UIButton = {
         let button = UIButton()
-        button.setImage(MyImage.keyboardDown, for: .normal)
-        button.tintColor = MyColor.white
+        button.setImage(BBusImage.keyboardDown, for: .normal)
+        button.tintColor = BBusColor.white
         return button
     }()
 
@@ -129,7 +129,7 @@ class KeyboardAccessoryView: UIView {
     }
 
     private func configureUI() {
-        self.backgroundColor = MyColor.darkGray
+        self.backgroundColor = BBusColor.darkGray
     }
 
     func configureDelegate(_ delegate: KeyboardAccessoryCharacterButtonDelegate & KeyboardAccessoryDownKeyboardButtonDelegate & KeyboardAccessoryNumberButtonDelegate) {
@@ -141,15 +141,15 @@ class KeyboardAccessoryView: UIView {
     func configureButtonUI(by type: UIKeyboardType) {
         switch type {
         case .decimalPad:
-            self.characterButton.setTitleColor(MyColor.bbusGray, for: .normal)
-            self.characterButton.layer.borderColor = MyColor.bbusGray?.cgColor
-            self.numberButton.setTitleColor(MyColor.white, for: .normal)
-            self.numberButton.layer.borderColor = MyColor.white.cgColor
+            self.characterButton.setTitleColor(BBusColor.bbusGray, for: .normal)
+            self.characterButton.layer.borderColor = BBusColor.bbusGray?.cgColor
+            self.numberButton.setTitleColor(BBusColor.white, for: .normal)
+            self.numberButton.layer.borderColor = BBusColor.white.cgColor
         case .webSearch:
-            self.numberButton.setTitleColor(MyColor.bbusGray, for: .normal)
-            self.numberButton.layer.borderColor = MyColor.bbusGray?.cgColor
-            self.characterButton.setTitleColor(MyColor.white, for: .normal)
-            self.characterButton.layer.borderColor = MyColor.white.cgColor
+            self.numberButton.setTitleColor(BBusColor.bbusGray, for: .normal)
+            self.numberButton.layer.borderColor = BBusColor.bbusGray?.cgColor
+            self.characterButton.setTitleColor(BBusColor.white, for: .normal)
+            self.characterButton.layer.borderColor = BBusColor.white.cgColor
         default:
             break
         }

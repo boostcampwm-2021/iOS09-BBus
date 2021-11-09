@@ -16,7 +16,7 @@ class SearchView: UIView {
     private lazy var searchResultScrollView = SearchResultScrollView()
     private lazy var navigationView: SearchNavigationView = {
         let view = SearchNavigationView()
-        view.backgroundColor = MyColor.white
+        view.backgroundColor = BBusColor.white
         return view
     }()
     private(set) var currentSearchType: SearchType = .bus {
@@ -129,7 +129,7 @@ extension SearchView: UIScrollViewDelegate {
         scrollView.configureIndicator(true)
         scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: -indicatorWidthPadding, bottom: scrollView.frame.height - (SearchResultScrollView.indicatorHeight * twice), right: -indicatorWidthPadding)
         indicator.layer.cornerRadius = 0
-        indicator.backgroundColor = MyColor.bbusTypeRed
+        indicator.backgroundColor = BBusColor.bbusTypeRed
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

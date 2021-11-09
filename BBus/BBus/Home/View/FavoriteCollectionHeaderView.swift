@@ -39,7 +39,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "여의도 공원 방면"
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = MyColor.bbusGray
+        label.textColor = BBusColor.bbusGray
         return label
     }()
 
@@ -77,7 +77,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     }
 
     private func configureUI() {
-        self.backgroundColor = MyColor.white
+        self.backgroundColor = BBusColor.white
     }
     
     func configureDelegate(_ delegate: FavoriteHeaderViewDelegate) {

@@ -11,7 +11,7 @@ class StationView: UIView {
 
     private lazy var colorBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = MyColor.bbusGray
+        view.backgroundColor = BBusColor.bbusGray
         return view
     }()
     private lazy var stationScrollView = UIScrollView()
@@ -27,7 +27,7 @@ class StationView: UIView {
         collectionView.register(SimpleCollectionHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SimpleCollectionHeaderView.identifier)
-        collectionView.backgroundColor = MyColor.bbusLightGray
+        collectionView.backgroundColor = BBusColor.bbusLightGray
         return collectionView
     }()
 

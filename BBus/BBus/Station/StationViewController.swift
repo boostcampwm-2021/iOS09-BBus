@@ -40,23 +40,23 @@ class StationViewController: UIViewController {
 
     private lazy var customNavigationBar: CustomNavigationBar = {
         let bar = CustomNavigationBar()
-        bar.configureTintColor(color: MyColor.white)
+        bar.configureTintColor(color: BBusColor.white)
         bar.configureAlpha(alpha: 0)
-        if let bbusGray = MyColor.bbusGray {
+        if let bbusGray = BBusColor.bbusGray {
             bar.configureBackgroundColor(color: bbusGray)
         }
         return bar
     }()
     private lazy var stationView: StationView = {
         let view = StationView()
-        view.backgroundColor = MyColor.white
+        view.backgroundColor = BBusColor.white
         return view
     }()
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
 
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray
@@ -131,7 +131,7 @@ class StationViewController: UIViewController {
     }
 
     private func configureUI() {
-        self.view.backgroundColor = MyColor.bbusGray
+        self.view.backgroundColor = BBusColor.bbusGray
     }
 }
 
@@ -175,7 +175,7 @@ extension StationViewController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
-              let title = RouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
+              let title = BBusRouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
 
         header.configureLayout()
         header.configure(title: title)

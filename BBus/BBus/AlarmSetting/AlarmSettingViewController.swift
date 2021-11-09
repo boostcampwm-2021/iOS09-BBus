@@ -45,7 +45,7 @@ class AlarmSettingViewController: UIViewController {
         let radius: CGFloat = 25
 
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray

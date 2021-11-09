@@ -38,11 +38,11 @@ class RemainCongestionBadgeLabel: UILabel {
     }
 
     private func configureUI() {
-        self.layer.borderColor = MyColor.bbusLightGray?.cgColor
+        self.layer.borderColor = BBusColor.bbusLightGray?.cgColor
         self.layer.borderWidth = 2
         self.layer.cornerRadius = 3
         self.font = UIFont.systemFont(ofSize: 11)
-        self.textColor = MyColor.bbusGray
+        self.textColor = BBusColor.bbusGray
         self.textAlignment = .center
     }
 
@@ -51,7 +51,7 @@ class RemainCongestionBadgeLabel: UILabel {
         let redRange = (description as NSString).range(of: congestion)
         let attributedString = NSMutableAttributedString(string: description)
         attributedString.addAttribute(.foregroundColor,
-                                      value: MyColor.bbusCongestionRed as Any,
+                                      value: BBusColor.bbusCongestionRed as Any,
                                       range: redRange)
         self.attributedText = attributedString
         self.sizeToFit()
