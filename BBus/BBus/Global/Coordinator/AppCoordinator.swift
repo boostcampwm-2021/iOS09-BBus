@@ -11,7 +11,7 @@ class AppCoordinator: NSObject, Coordinator {
     private let navigationWindow: UIWindow
     private let movingStatusWindow: UIWindow
     var delegate: CoordinatorDelegate?
-    var navigationPresenter: UINavigationController?
+    var navigationPresenter: UINavigationController
     var movingStatusPresenter: UIViewController?
     var childCoordinators: [Coordinator]
 
@@ -20,6 +20,7 @@ class AppCoordinator: NSObject, Coordinator {
         self.movingStatusWindow = movingStatusWindow
 
         let navigationController = UINavigationController()
+
         navigationController.isNavigationBarHidden = true
         self.navigationPresenter = navigationController
         self.childCoordinators = []
@@ -29,7 +30,8 @@ class AppCoordinator: NSObject, Coordinator {
         self.navigationWindow.rootViewController = self.navigationPresenter
 
         let coordinator = HomeCoordinator(presenter: self.navigationPresenter)
-        coordinator.finishDelegate = self
+        coordinator.delegate = self
+        coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
         coordinator.start()
         
@@ -68,8 +70,54 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
             self.fold()
         }, completion: { _ in
             self.movingStatusWindow.isHidden = true
-            self.navigationPresenter = nil
+            self.movingStatusPresenter = nil
             self.movingStatusWindow.rootViewController = nil
         })
+    }
+}
+
+extension AppCoordinator: CoordinatorCreateDelegate {
+    func pushSearch() {
+        let coordinator = SearchCoordinator(presenter: self.navigationPresenter)
+        coordinator.delegate = self
+        coordinator.navigationPresenter = self.navigationPresenter
+        self.childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+
+    func pushBusRoute() {
+        let coordinator = BusRouteCoordinator(presenter: self.navigationPresenter)
+        coordinator.delegate = self
+        coordinator.navigationPresenter = self.navigationPresenter
+        self.childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+
+    func pushAlarmSetting() {
+        let coordinator = AlarmSettingCoordinator(presenter: self.navigationPresenter)
+        coordinator.delegate = self
+        coordinator.navigationPresenter = self.navigationPresenter
+        self.childCoordinators.append(coordinator)
+        coordinator.movingStatusDelegate = self
+        coordinator.start()
+    }
+
+    func pushStation() {
+        let coordinator = StationCoordinator(presenter: self.navigationPresenter)
+        coordinator.delegate = self
+        coordinator.navigationPresenter = self.navigationPresenter
+        self.childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+}
+
+extension AppCoordinator: CoordinatorFinishDelegate {
+    func removeChildCoordinator(_ coordinator: Coordinator) {
+        for (index, child) in self.childCoordinators.enumerated() {
+            if coordinator === child {
+                self.childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
 }

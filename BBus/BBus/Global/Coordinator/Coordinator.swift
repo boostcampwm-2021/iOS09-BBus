@@ -13,15 +13,17 @@ protocol CoordinatorFinishDelegate: AnyObject {
 }
 
 protocol CoordinatorCreateDelegate {
-    func addChild(_ coordinator: Coordinator)
+    func pushSearch()
+    func pushBusRoute()
+    func pushAlarmSetting()
+    func pushStation()
 }
+
 typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)
 
-
-protocol Coordinator: AnyObject, CoordinatorFinishDelegate, CoordinatorCreateDelegate {
-    var navigationPresenter: UINavigationController? { get set }
+protocol Coordinator: AnyObject {
+    var navigationPresenter: UINavigationController { get set }
     var delegate: CoordinatorDelegate? { get set }
-    var childCoordinators: [Coordinator] { get set }
     func start()
 }
 
@@ -29,21 +31,6 @@ extension Coordinator {
     func start() { }
 
     func coordinatorDidFinish() {
-        self.finishDelegate?.removeChildCoordinator(self)
-    }
-
-    func removeChildCoordinator(_ coordinator: Coordinator) {
-        for (index, child) in self.childCoordinators.enumerated() {
-            if coordinator === child {
-                self.childCoordinators.remove(at: index)
-                break
-            }
-        }
-    }
-}
-
-extension Coordinator {
-    func addChild(_ coordinator: Coordinator) {
-        self.childCoordinators.append(coordinator)
+        self.delegate?.removeChildCoordinator(self)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeSearchButtonDelegate {
-    func shouldGoToSearchBusScene()
+    func shouldGoToSearchScene()
 }
 
 class HomeNavigationView: UIView {
@@ -18,7 +18,7 @@ class HomeNavigationView: UIView {
     private var searchButtonDelegate: HomeSearchButtonDelegate? {
         didSet {
             self.searchButton.addAction(UIAction(handler: { _ in
-                self.searchButtonDelegate?.shouldGoToSearchBusScene()
+                self.searchButtonDelegate?.shouldGoToSearchScene()
             }), for: .touchUpInside)
         }
     }

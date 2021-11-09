@@ -139,8 +139,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - HomeSearchButtonDelegate : UICollectionView
 extension HomeViewController: HomeSearchButtonDelegate {
-    func shouldGoToSearchBusScene() {
-        self.coordinator?.pushToSearchBus()
+    func shouldGoToSearchScene() {
+        self.coordinator?.pushToSearch()
     }
 }
 
