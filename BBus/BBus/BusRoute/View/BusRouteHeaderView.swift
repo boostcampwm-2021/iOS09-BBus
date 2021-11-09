@@ -15,7 +15,7 @@ class BusRouteHeaderView: UIView {
         let typeLabelFontSize: CGFloat = 15
         
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: typeLabelFontSize)
         label.textAlignment = .center
         return label
@@ -24,7 +24,7 @@ class BusRouteHeaderView: UIView {
         let numberLabelFontSize: CGFloat = 22
         
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.boldSystemFont(ofSize: numberLabelFontSize)
         label.textAlignment = .center
         return label
@@ -33,7 +33,7 @@ class BusRouteHeaderView: UIView {
         let fromStationLabelFontSize: CGFloat = 15
         
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: fromStationLabelFontSize)
         label.textAlignment = .center
         return label
@@ -45,14 +45,14 @@ class BusRouteHeaderView: UIView {
         imageView.image = BusRouteViewController.Image.headerArrow
         imageView.frame = CGRect(origin: .zero, size: CGSize(width: busArrowImageWidthHeight, height: busArrowImageWidthHeight))
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = BusRouteViewController.Color.white
+        imageView.tintColor = BBusColor.white
         return imageView
     }()
     private lazy var busToStationLabel: UILabel = {
         let toStationLabelFontSize: CGFloat = 15
         
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: toStationLabelFontSize)
         label.textAlignment = .center
         return label

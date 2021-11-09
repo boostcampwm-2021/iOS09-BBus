@@ -9,19 +9,6 @@ import UIKit
 
 class BusRouteViewController: UIViewController {
 
-    enum Color {
-        static let white = UIColor.white
-        static let clear = UIColor.clear
-        static let blueBus = UIColor.systemBlue
-        static let tableViewSeperator = UIColor.systemGray6
-        static let tableViewCellSubTitle = UIColor.systemGray
-        static let tagBusNumber = UIColor.darkGray
-        static let tagBusCongestion = UIColor.red
-        static let greenLine = UIColor.green
-        static let redLine = UIColor.red
-        static let yellowLine = UIColor.yellow
-    }
-    
     enum Image {
         static let navigationBack = UIImage(systemName: "chevron.left")
         static let headerArrow = UIImage(systemName: "arrow.left.and.right")
@@ -51,7 +38,7 @@ class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureBusColor(to: Color.blueBus)
+        self.configureBusColor(to: BBusColor.blueBus)
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
@@ -99,7 +86,7 @@ class BusRouteViewController: UIViewController {
     private func configureBusColor(to color: UIColor) {
         self.view.backgroundColor = color
         self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BusRouteViewController.Color.white)
+        self.customNavigationBar.configureTintColor(color: BBusColor.white)
         self.customNavigationBar.configureAlpha(alpha: 0)
         self.busRouteView.configureColor(to: color)
     }
@@ -134,30 +121,30 @@ extension BusRouteViewController: UITableViewDataSource {
 
         let beforeColor: UIColor
         if indexPath.item == 0 {
-            beforeColor = BusRouteViewController.Color.clear
+            beforeColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            beforeColor = BusRouteViewController.Color.greenLine
+            beforeColor = BBusColor.bbusGreenLine
         }
         else if indexPath.item % 3 == 1 {
-            beforeColor = BusRouteViewController.Color.redLine
+            beforeColor = BBusColor.bbusRedLine
         }
         else {
-            beforeColor = BusRouteViewController.Color.yellowLine
+            beforeColor = BBusColor.bbusYellowLine
         }
         
         let afterColor: UIColor
         if indexPath.item == 19 {
-            afterColor = BusRouteViewController.Color.clear
+            afterColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            afterColor = BusRouteViewController.Color.redLine
+            afterColor = BBusColor.bbusRedLine
         }
         else if indexPath.item % 3 == 1 {
-            afterColor = BusRouteViewController.Color.yellowLine
+            afterColor = BBusColor.bbusYellowLine
         }
         else {
-            afterColor = BusRouteViewController.Color.greenLine
+            afterColor = BBusColor.bbusGreenLine
         }
         
         cell.configure(beforeColor: beforeColor,

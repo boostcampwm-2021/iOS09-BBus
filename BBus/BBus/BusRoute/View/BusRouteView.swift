@@ -23,14 +23,14 @@ class BusRouteView: UIView {
                                                 left: tableViewLeftInset,
                                                 bottom: tableViewTopBottomRightInset,
                                                 right: tableViewTopBottomRightInset)
-        tableView.separatorColor = BusRouteViewController.Color.tableViewSeperator
+        tableView.separatorColor = BBusColor.tableViewSeperator
         return tableView
     }()
     
     convenience init() {
         self.init(frame: CGRect())
 
-        self.backgroundColor = BusRouteViewController.Color.white
+        self.backgroundColor = BBusColor.white
         self.configureLayout()
     }
 

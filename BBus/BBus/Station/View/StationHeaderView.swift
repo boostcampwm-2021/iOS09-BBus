@@ -15,7 +15,7 @@ class StationHeaderView: UIView {
         let typeLabelFontSize: CGFloat = 15
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: typeLabelFontSize)
         label.textAlignment = .center
         return label
@@ -24,7 +24,7 @@ class StationHeaderView: UIView {
         let numberLabelFontSize: CGFloat = 22
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.boldSystemFont(ofSize: numberLabelFontSize)
         label.textAlignment = .center
         return label
@@ -33,7 +33,7 @@ class StationHeaderView: UIView {
         let fromStationLabelFontSize: CGFloat = 15
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: fromStationLabelFontSize)
         label.textAlignment = .center
         return label

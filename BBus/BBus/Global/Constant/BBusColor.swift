@@ -17,6 +17,13 @@ enum BBusColor {
     static let clear = UIColor.clear
     static let blueBus = UIColor.systemBlue
     static let systemGray6 = UIColor.systemGray6
+    static let bbusGreenLine = UIColor.green
+    static let bbusRedLine = UIColor.red
+    static let bbusYellowLine = UIColor.yellow
+    static let tableViewSeperator = UIColor.systemGray6
+    static let tableViewCellSubTitle = UIColor.systemGray
+    static let bbusTagNumber = UIColor.darkGray
+    static let greenLine = UIColor.green
     static let bbusLightGray = UIColor(named: "bbusLightGray")
     static let bbusGray = UIColor(named: "bbusGray")
     static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
