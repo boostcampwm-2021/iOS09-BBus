@@ -44,9 +44,6 @@ enum BBusImage {
     static let tagMaxSize = UIImage(named: "BusTagMaxSize")
     static let tagMinSize = UIImage(named: "BusTagMinSize")
     static let bbusBlueIcon = UIImage(named: "busIcon")
-
-    static let waypoint = UIImage(named: "StationCenterCircle")
-    static let getOn = UIImage(named: "GetOn")
     static let clockIcon = UIImage(systemName: "clock")
     static let locationIcon = UIImage(named: "locationIcon")
     static let busIcon = UIImage(named: "grayBusIcon")
