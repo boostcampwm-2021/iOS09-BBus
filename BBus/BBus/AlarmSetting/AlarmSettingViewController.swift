@@ -175,7 +175,9 @@ extension AlarmSettingViewController: BackButtonDelegate {
 // MARK: - Delegate: GetOffAlarmButton
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
     func shouldGoToMovingStatusScene() {
-        self.coordinator?.pushToMovingStatus()
+        UIView.animate(withDuration: 0.3) {
+            self.coordinator?.openMovingStatus()
+        }
     }
 }
 

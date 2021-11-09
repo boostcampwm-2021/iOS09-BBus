@@ -10,16 +10,21 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var movingStatusWindow: UIWindow?
     var appCoordinator: AppCoordinator?
-    var movingStatusViewController: MovingStatusViewController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         usleep(700)
         self.window = UIWindow(windowScene: windowScene)
-        guard let window = self.window else { return }
-        self.appCoordinator = AppCoordinator(window: window)
+        self.movingStatusWindow = UIWindow(windowScene: windowScene)
+        
+        guard let navigationWindow = self.window,
+              let movingStatusWindow = self.movingStatusWindow else { return }
+        self.movingStatusWindow?.frame.size = CGSize(width: movingStatusWindow.frame.width, height: movingStatusWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
+        self.appCoordinator = AppCoordinator(navigationWindow: navigationWindow, movingStatusWindow: movingStatusWindow)
+        
         appCoordinator?.start()
     }
 

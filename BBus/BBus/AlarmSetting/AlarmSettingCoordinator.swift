@@ -7,24 +7,33 @@
 
 import UIKit
 
-class AlarmSettingCoordinator: MovingStatusPushable {
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
+class AlarmSettingCoordinator: Coordinator {
+    var finishDelegate: CoordinatorFinishDelegate?
+    var movingStatusDelegate: MovingStatusOpenCloseDelegate?
+    var navigationPresenter: UINavigationController?
     var childCoordinators: [Coordinator]
 
-    init(presenter: UINavigationController) {
-        self.presenter = presenter
+    init(presenter: UINavigationController?) {
+        self.navigationPresenter = presenter
         self.childCoordinators = []
     }
 
     func start() {
         let viewController = AlarmSettingViewController()
         viewController.coordinator = self
-        self.presenter.pushViewController(viewController, animated: true)
+        self.navigationPresenter?.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
-        self.presenter.popViewController(animated: true)
+        self.navigationPresenter?.popViewController(animated: true)
         self.coordinatorDidFinish()
+    }
+    
+    func openMovingStatus() {
+        self.movingStatusDelegate?.open()
+    }
+    
+    func closeMovingStatus() {
+        self.movingStatusDelegate?.close()
     }
 }

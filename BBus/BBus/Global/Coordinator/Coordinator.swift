@@ -7,24 +7,23 @@
 
 import UIKit
 
-protocol CoordinatorFinishDelegate {
+protocol CoordinatorFinishDelegate: AnyObject {
     func coordinatorDidFinish()
     func removeChildCoordinator(_ coordinator: Coordinator)
 }
 
-protocol Coordinator: AnyObject, CoordinatorFinishDelegate {
-    var delegate: CoordinatorFinishDelegate? { get set }
-    var presenter: UINavigationController { get set }
+protocol Coordinator: CoordinatorFinishDelegate {
+    var finishDelegate: CoordinatorFinishDelegate? { get set }
+    var navigationPresenter: UINavigationController? { get set }
     var childCoordinators: [Coordinator] { get set }
     func start()
 }
-
 
 extension Coordinator {
     func start() { }
 
     func coordinatorDidFinish() {
-        self.delegate?.removeChildCoordinator(self)
+        self.finishDelegate?.removeChildCoordinator(self)
     }
 
     func removeChildCoordinator(_ coordinator: Coordinator) {

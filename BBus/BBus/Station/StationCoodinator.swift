@@ -8,23 +8,23 @@
 import UIKit
 
 class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
+    var finishDelegate: CoordinatorFinishDelegate?
+    var navigationPresenter: UINavigationController?
     var childCoordinators: [Coordinator]
 
-    init(presenter: UINavigationController) {
-        self.presenter = presenter
+    init(presenter: UINavigationController?) {
+        self.navigationPresenter = presenter
         self.childCoordinators = []
     }
 
     func start() {
         let viewController = StationViewController()
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.navigationPresenter?.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
-        self.presenter.popViewController(animated: true)
+        self.navigationPresenter?.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

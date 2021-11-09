@@ -13,9 +13,10 @@ protocol AlarmSettingPushable: Coordinator {
 
 extension AlarmSettingPushable {
     func pushToAlarmSetting() {
-        let coordinator = AlarmSettingCoordinator(presenter: self.presenter)
-        coordinator.delegate = self
+        let coordinator = AlarmSettingCoordinator(presenter: self.navigationPresenter)
+        coordinator.finishDelegate = self
         self.childCoordinators.append(coordinator)
+        // TODO: set MovingStatusOpenCloseDelegate
         coordinator.start()
     }
 }

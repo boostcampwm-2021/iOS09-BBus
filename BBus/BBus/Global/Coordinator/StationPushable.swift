@@ -13,8 +13,8 @@ protocol StationPushable: Coordinator {
 
 extension StationPushable {
     func pushToStation() {
-        let coordinator = StationCoordinator(presenter: self.presenter)
-        coordinator.delegate = self
+        let coordinator = StationCoordinator(presenter: self.navigationPresenter)
+        coordinator.finishDelegate = self
         self.childCoordinators.append(coordinator)
         coordinator.start()
     }

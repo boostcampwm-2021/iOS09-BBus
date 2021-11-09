@@ -8,28 +8,68 @@
 import UIKit
 
 class AppCoordinator: NSObject, Coordinator {
-    private let window: UIWindow
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
+    private let navigationWindow: UIWindow
+    private let movingStatusWindow: UIWindow
+    var finishDelegate: CoordinatorFinishDelegate?
+    var navigationPresenter: UINavigationController?
+    var movingStatusPresenter: UIViewController?
     var childCoordinators: [Coordinator]
 
-    init(window: UIWindow) {
-        self.window = window
+    init(navigationWindow: UIWindow, movingStatusWindow: UIWindow) {
+        self.navigationWindow = navigationWindow
+        self.movingStatusWindow = movingStatusWindow
 
         let navigationController = UINavigationController()
         navigationController.isNavigationBarHidden = true
-        self.presenter = navigationController
+        self.navigationPresenter = navigationController
         self.childCoordinators = []
     }
 
     func start() {
-        self.window.rootViewController = self.presenter
+        self.navigationWindow.rootViewController = self.navigationPresenter
 
-        let coordinator = HomeCoordinator(presenter: self.presenter)
-        coordinator.delegate = self
+        let coordinator = HomeCoordinator(presenter: self.navigationPresenter)
+        coordinator.finishDelegate = self
         self.childCoordinators.append(coordinator)
         coordinator.start()
+        
+        self.navigationWindow.makeKeyAndVisible()
+        self.movingStatusWindow.makeKeyAndVisible()
+        
+        self.close()
+    }
+}
 
-        self.window.makeKeyAndVisible()
+extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
+    func fold() {
+        self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
+    }
+    
+    func unfold() {
+        self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: -MovingStatusView.bottomIndicatorHeight)
+    }
+}
+
+extension AppCoordinator: MovingStatusOpenCloseDelegate {
+    func open() {
+        let viewController = MovingStatusViewController()
+        viewController.coordinator = self
+        self.movingStatusPresenter = viewController
+        self.movingStatusWindow.rootViewController = self.movingStatusPresenter
+        
+        self.movingStatusWindow.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.unfold()
+        }
+    }
+    
+    func close() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.fold()
+        }, completion: { _ in
+            self.movingStatusWindow.isHidden = true
+            self.navigationPresenter = nil
+            self.movingStatusWindow.rootViewController = nil
+        })
     }
 }
