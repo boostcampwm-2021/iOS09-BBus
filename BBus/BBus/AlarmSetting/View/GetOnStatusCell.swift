@@ -70,20 +70,20 @@ class GetOnStatusCell: UITableViewCell {
     }()
     private lazy var clockIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = AlarmSettingViewController.Image.clockIcon
+        imageView.image = BBusImage.clockIcon
         imageView.tintColor = BBusColor.iconColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     private lazy var locationIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = AlarmSettingViewController.Image.locationIcon
+        imageview.image = BBusImage.locationIcon
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()
     private lazy var busIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = AlarmSettingViewController.Image.busIcon
+        imageview.image = BBusImage.busIcon
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()

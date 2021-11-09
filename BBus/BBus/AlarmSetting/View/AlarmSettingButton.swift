@@ -23,8 +23,8 @@ class AlarmSettingButton: UIButton {
     private func configure() {
         let borderWidth: CGFloat = 0.5
         
-        self.setImage(AlarmSettingViewController.Image.alarmOffIcon, for: .normal)
-        self.setImage(AlarmSettingViewController.Image.alarmOnIcon, for: .selected)
+        self.setImage(BBusImage.alarmOffIcon, for: .normal)
+        self.setImage(BBusImage.alarmOnIcon, for: .selected)
         self.tintColor = BBusColor.alarmTint
         self.clipsToBounds = true
         self.contentMode = .scaleAspectFill

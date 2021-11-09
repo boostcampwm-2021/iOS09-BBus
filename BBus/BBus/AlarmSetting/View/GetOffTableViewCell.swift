@@ -87,9 +87,9 @@ class GetOffTableViewCell: BusStationTableViewCell {
     private func configureCenterImage(type: BusRootCenterImageType) {
         switch type {
         case .waypoint:
-            super.centerImageView.image = AlarmSettingViewController.Image.waypoint
+            super.centerImageView.image = BBusImage.waypoint
         case .getOn:
-            self.centerImageView.image = AlarmSettingViewController.Image.getOn
+            self.centerImageView.image = BBusImage.getOn
         }
     }
     

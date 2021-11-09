@@ -27,4 +27,12 @@ enum BBusImage {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         return UIImage(systemName: "star.fill", withConfiguration: largeConfig)
     }()
+
+    static let waypoint = UIImage(named: "StationCenterCircle")
+    static let getOn = UIImage(named: "GetOn")
+    static let clockIcon = UIImage(systemName: "clock")
+    static let locationIcon = UIImage(named: "locationIcon")
+    static let busIcon = UIImage(named: "grayBusIcon")
+    static let alarmOffIcon = UIImage(named: "alarmOff")
+    static let alarmOnIcon = UIImage(named: "alarmOn")
 }

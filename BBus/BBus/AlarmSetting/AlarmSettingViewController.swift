@@ -8,16 +8,6 @@
 import UIKit
 
 class AlarmSettingViewController: UIViewController {
-    
-    enum Image {
-        static let waypoint = UIImage(named: "StationCenterCircle")
-        static let getOn = UIImage(named: "GetOn")
-        static let clockIcon = UIImage(systemName: "clock")
-        static let locationIcon = UIImage(named: "locationIcon")
-        static let busIcon = UIImage(named: "grayBusIcon")
-        static let alarmOffIcon = UIImage(named: "alarmOff")
-        static let alarmOnIcon = UIImage(named: "alarmOn")
-    }
 
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
