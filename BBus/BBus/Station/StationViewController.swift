@@ -9,31 +9,6 @@ import UIKit
 import Combine
 
 class StationViewController: UIViewController {
-
-    enum Color {
-        static let white = UIColor.white
-        static let clear = UIColor.clear
-        static let blueBus = UIColor.systemBlue
-        static let tableViewSeperator = UIColor.systemGray6
-        static let tableViewCellSubTitle = UIColor.systemGray
-        static let tagBusNumber = UIColor.darkGray
-        static let tagBusCongestion = UIColor.red
-        static let greenLine = UIColor.green
-        static let redLine = UIColor.red
-        static let yellowLine = UIColor.yellow
-    }
-
-    enum Image {
-        static let navigationBack = UIImage(systemName: "chevron.left")
-        static let headerArrow = UIImage(systemName: "arrow.left.and.right")
-        static let stationCenterCircle = UIImage(named: "StationCenterCircle")
-        static let stationCenterGetOn = UIImage(named: "GetOn")
-        static let stationCenterGetOff = UIImage(named: "GetOff")
-        static let stationCenterUturn = UIImage(named: "Uturn")
-        static let tagMaxSize = UIImage(named: "BusTagMaxSize")
-        static let tagMinSize = UIImage(named: "BusTagMinSize")
-        static let blueBusIcon = UIImage(named: "busIcon")
-    }
     
     @Published private var stationBusInfoHeight: CGFloat = 100
     weak var coordinator: StationCoordinator?
