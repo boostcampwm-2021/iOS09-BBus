@@ -31,7 +31,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
         
         switch type {
         case .waypoint:
-            super.centerImageView.image = BusRouteViewController.Image.stationCenterCircle
+            super.centerImageView.image = BBusImage.stationCenterCircle
             NSLayoutConstraint.activate([
                 super.centerImageView.heightAnchor.constraint(equalToConstant: circleImageHeight),
                 super.centerImageView.widthAnchor.constraint(equalToConstant: circleImageWidth),
@@ -39,7 +39,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 super.centerImageView.centerXAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor)
             ])
         case .uturn:
-            self.centerImageView.image = BusRouteViewController.Image.stationCenterUturn
+            self.centerImageView.image = BBusImage.stationCenterUturn
             NSLayoutConstraint.activate([
                 super.centerImageView.heightAnchor.constraint(equalToConstant: uturnImageHeight),
                 super.centerImageView.widthAnchor.constraint(equalToConstant: uturnImageWidth),

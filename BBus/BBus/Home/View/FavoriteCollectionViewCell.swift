@@ -19,7 +19,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
-        label.textColor = MyColor.bbusTypeBlue
+        label.textColor = BBusColor.bbusTypeBlue
         return label
     }()
     private lazy var trailingView = BusCellTrailingView()
@@ -67,7 +67,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        self.backgroundColor = MyColor.white
+        self.backgroundColor = BBusColor.white
     }
     
     func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {

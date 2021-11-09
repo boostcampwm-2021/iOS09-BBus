@@ -38,7 +38,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
     private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
+        view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
 
@@ -87,13 +87,13 @@ class GetOffTableViewCell: BusStationTableViewCell {
     private func configureCenterImage(type: BusRootCenterImageType) {
         switch type {
         case .waypoint:
-            super.centerImageView.image = AlarmSettingViewController.Image.waypoint
+            super.centerImageView.image = BBusImage.waypoint
         case .getOn:
-            self.centerImageView.image = AlarmSettingViewController.Image.getOn
+            self.centerImageView.image = BBusImage.getOn
         }
     }
     
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
+    func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String, type: BusRootCenterImageType) {
         super.configure(beforeColor: beforeColor,
                         afterColor: afterColor,
                         title: title,

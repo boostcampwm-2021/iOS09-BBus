@@ -24,18 +24,18 @@ class HomeNavigationView: UIView {
     }
     private lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = MyColor.bbusLightGray
-        button.layer.borderColor = MyColor.bbusGray?.cgColor
+        button.backgroundColor = BBusColor.bbusLightGray
+        button.layer.borderColor = BBusColor.bbusGray?.cgColor
         button.layer.borderWidth = 0.3
         button.layer.cornerRadius = 3
         button.setTitle("버스 또는 정류장 검색", for: .normal)
-        button.setTitleColor(MyColor.bbusGray, for: .normal)
+        button.setTitleColor(BBusColor.bbusGray, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
     }()
     private lazy var bottomBorderView: UIView = {
         let view = UIView()
-        view.backgroundColor = MyColor.gray
+        view.backgroundColor = BBusColor.gray
         return view
     }()
     

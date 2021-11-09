@@ -8,26 +8,6 @@
 import UIKit
 
 class MovingStatusViewController: UIViewController {
-    
-    enum Color {
-        static let blueBus = UIColor.systemBlue
-        static let white = UIColor.white
-        static let black = UIColor.label
-        static let border = UIColor.lightGray
-        static let congestionLine = UIColor.systemGray
-        static let clear = UIColor.clear
-    }
-    
-    enum Image {
-        static let booDuck = UIImage(named: "BooDuck")
-        static let unfold = UIImage(systemName: "chevron.up")
-        static let fold = UIImage(systemName: "chevron.down")
-        static let getOn = UIImage(named: "GetOn")
-        static let getOff = UIImage(named: "GetOff")
-        static let waypoint = UIImage(named: "StationCenterCircle")
-        static let booduckBus = UIImage(named: "BusIconWithBooDuck")
-        static let speechBubble = UIImage(named: "SpeechBubble")
-    }
 
     weak var coordinator: MovingStatusCoordinator?
     private lazy var movingStatusView = MovingStatusView()
@@ -66,6 +46,10 @@ class MovingStatusViewController: UIViewController {
     
     private func configureBusTag() {
         self.movingStatusView.addBusTag()
+    }
+    
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.white
     }
 }
 

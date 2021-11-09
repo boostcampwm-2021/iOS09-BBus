@@ -15,18 +15,21 @@ class HomeView: UIView {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
         collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
         collectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = BBusColor.bbusBackground
+        collectionView.backgroundView = backgroundView
         return collectionView
     }()
     private lazy var navigationView: HomeNavigationView = {
         let view = HomeNavigationView()
-        view.backgroundColor = MyColor.white
+        view.backgroundColor = BBusColor.white
         return view
     }()
     lazy var refreshButton: UIButton = {
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = self.refreshButtonWidth / 2
-        button.tintColor = MyColor.white
+        button.tintColor = BBusColor.white
         return button
     }()
 
@@ -39,7 +42,7 @@ class HomeView: UIView {
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteCollectionView)
         self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.favoriteCollectionView.backgroundColor = MyColor.systemGray6
+        self.favoriteCollectionView.backgroundColor = BBusColor.systemGray6
         NSLayoutConstraint.activate([
             self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -49,7 +52,7 @@ class HomeView: UIView {
 
         self.addSubview(self.refreshButton)
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        self.refreshButton.backgroundColor = MyColor.darkGray
+        self.refreshButton.backgroundColor = BBusColor.darkGray
         let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),

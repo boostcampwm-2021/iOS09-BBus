@@ -22,12 +22,13 @@ class BusStationTableViewCell: UITableViewCell {
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: self.stationTitleLabelFontSize, weight: .semibold)
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var stationDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: self.stationDescriptionLabelFontSize)
-        label.textColor = BusRouteViewController.Color.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         return label
     }()
     lazy var labelStackView: UIStackView = {
@@ -41,6 +42,7 @@ class BusStationTableViewCell: UITableViewCell {
         super.init(coder: coder)
 
         self.configureLayout()
+        self.configureColor()
         self.selectionStyle = .none
     }
 
@@ -48,6 +50,7 @@ class BusStationTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.configureLayout()
+        self.configureColor()
         self.selectionStyle = .none
     }
 
@@ -92,8 +95,12 @@ class BusStationTableViewCell: UITableViewCell {
         self.addSubview(self.centerImageView)
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    private func configureColor() {
+        self.backgroundColor = BBusColor.white
+    }
 
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String) {
+    func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String) {
         self.beforeCongestionLineView.backgroundColor = beforeColor
         self.afterCongestionLineView.backgroundColor = afterColor
         self.stationTitleLabel.text = title

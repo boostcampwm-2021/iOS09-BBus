@@ -23,8 +23,8 @@ class CustomNavigationBar: UIView {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.tintColor = BusRouteViewController.Color.white
-        button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
+        button.tintColor = BBusColor.white
+        button.setBackgroundImage(BBusImage.navigationBack, for: .normal)
         button.contentMode = .scaleAspectFit
         return button
     }()
@@ -32,7 +32,7 @@ class CustomNavigationBar: UIView {
         let buttonTitleFontSize: CGFloat = 18
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: buttonTitleFontSize, weight: .semibold)
         label.textAlignment = .left
         return label
@@ -41,7 +41,7 @@ class CustomNavigationBar: UIView {
         let labelFontSize: CGFloat = 18
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -100,7 +100,7 @@ class CustomNavigationBar: UIView {
         self.titleLabel.textColor = color
     }
 
-    func configureBackgroundColor(color: UIColor) {
+    func configureBackgroundColor(color: UIColor?) {
         self.backgroundColor = color
     }
 

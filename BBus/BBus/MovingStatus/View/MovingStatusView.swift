@@ -47,40 +47,40 @@ class MovingStatusView: UIView {
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = MovingStatusViewController.Color.blueBus
+        button.backgroundColor = BBusColor.bbusTypeBlue
         return button
     }()
     private lazy var bottomIndicatorImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = MovingStatusViewController.Image.booDuck
+        imageView.image = BBusImage.booDuck
         return imageView
     }()
     private lazy var bottomIndicatorLabel: UILabel = {
         let labelFontSize: CGFloat = 15
         
         let label = UILabel()
-        label.textColor = MovingStatusViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.text = "현위치 탐색중, 19분 소요예정"
         return label
     }()
     private lazy var unfoldImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = MovingStatusViewController.Color.white
-        imageView.image = MovingStatusViewController.Image.unfold
+        imageView.tintColor = BBusColor.white
+        imageView.image = BBusImage.unfold
         return imageView
     }()
     private lazy var headerView = UIView()
     private lazy var headerBottomBorderView: UIView = {
         let view = UIView()
-        view.backgroundColor = MovingStatusViewController.Color.border
+        view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
     private lazy var busNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 27
         
         let label = UILabel()
-        label.textColor = MovingStatusViewController.Color.blueBus
+        label.textColor = BBusColor.bbusTypeBlue
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .medium)
         label.text = "700"
         return label
@@ -96,8 +96,8 @@ class MovingStatusView: UIView {
     private lazy var foldButton = UIButton()
     private lazy var foldImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = MovingStatusViewController.Color.black
-        imageView.image = MovingStatusViewController.Image.fold
+        imageView.tintColor = BBusColor.black
+        imageView.image = BBusImage.fold
         return imageView
     }()
     private lazy var stationsTableView: UITableView = {
@@ -107,7 +107,7 @@ class MovingStatusView: UIView {
         let tableView = UITableView()
         tableView.register(MovingStatusTableViewCell.self, forCellReuseIdentifier: MovingStatusTableViewCell.reusableID)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = MovingStatusViewController.Color.white
+        tableView.backgroundColor = BBusColor.white
         tableView.contentInset = UIEdgeInsets(top: tableViewContentTopInset,
                                               left: tableViewleftBottomRightInset,
                                               bottom: tableViewleftBottomRightInset,
@@ -116,8 +116,8 @@ class MovingStatusView: UIView {
     }()
     private lazy var endAlarmButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = MovingStatusViewController.Color.blueBus
-        button.tintColor = MovingStatusViewController.Color.white
+        button.backgroundColor = BBusColor.bbusTypeBlue
+        button.tintColor = BBusColor.white
         button.setTitle("알람 종료", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.contentVerticalAlignment = .top
@@ -132,18 +132,18 @@ class MovingStatusView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = MovingStatusViewController.Color.blueBus
-        self.headerView.backgroundColor = MovingStatusViewController.Color.white
-        self.endAlarmButton.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.headerView.backgroundColor = BBusColor.white
+        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = MovingStatusViewController.Color.blueBus
-        self.headerView.backgroundColor = MovingStatusViewController.Color.white
-        self.endAlarmButton.backgroundColor = MovingStatusViewController.Color.blueBus
+        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.headerView.backgroundColor = BBusColor.white
+        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
     }
 
     // MARK: - Configure

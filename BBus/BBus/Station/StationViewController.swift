@@ -9,54 +9,29 @@ import UIKit
 import Combine
 
 class StationViewController: UIViewController {
-
-    enum Color {
-        static let white = UIColor.white
-        static let clear = UIColor.clear
-        static let blueBus = UIColor.systemBlue
-        static let tableViewSeperator = UIColor.systemGray6
-        static let tableViewCellSubTitle = UIColor.systemGray
-        static let tagBusNumber = UIColor.darkGray
-        static let tagBusCongestion = UIColor.red
-        static let greenLine = UIColor.green
-        static let redLine = UIColor.red
-        static let yellowLine = UIColor.yellow
-    }
-
-    enum Image {
-        static let navigationBack = UIImage(systemName: "chevron.left")
-        static let headerArrow = UIImage(systemName: "arrow.left.and.right")
-        static let stationCenterCircle = UIImage(named: "StationCenterCircle")
-        static let stationCenterGetOn = UIImage(named: "GetOn")
-        static let stationCenterGetOff = UIImage(named: "GetOff")
-        static let stationCenterUturn = UIImage(named: "Uturn")
-        static let tagMaxSize = UIImage(named: "BusTagMaxSize")
-        static let tagMinSize = UIImage(named: "BusTagMinSize")
-        static let blueBusIcon = UIImage(named: "busIcon")
-    }
     
     @Published private var stationBusInfoHeight: CGFloat = 100
     weak var coordinator: StationCoordinator?
 
     private lazy var customNavigationBar: CustomNavigationBar = {
         let bar = CustomNavigationBar()
-        bar.configureTintColor(color: MyColor.white)
-        bar.configureAlpha(alpha: 0)
-        if let bbusGray = MyColor.bbusGray {
+        bar.configureTintColor(color: BBusColor.white)
+        if let bbusGray = BBusColor.bbusGray {
             bar.configureBackgroundColor(color: bbusGray)
         }
+        bar.configureAlpha(alpha: 0)
         return bar
     }()
     private lazy var stationView: StationView = {
         let view = StationView()
-        view.backgroundColor = MyColor.white
+        view.backgroundColor = BBusColor.white
         return view
     }()
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
 
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray
@@ -69,10 +44,10 @@ class StationViewController: UIViewController {
         super.viewDidLoad()
 
         self.binding()
+        self.configureColor()
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
-        self.configureUI()
     }
 
     // MARK: - Configure
@@ -130,8 +105,8 @@ class StationViewController: UIViewController {
                                              direction: "시흥시노인종합복지관 방면")
     }
 
-    private func configureUI() {
-        self.view.backgroundColor = MyColor.bbusGray
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.bbusGray
     }
 }
 
@@ -175,7 +150,7 @@ extension StationViewController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
-              let title = RouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
+              let title = BBusRouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
 
         header.configureLayout()
         header.configure(title: title)

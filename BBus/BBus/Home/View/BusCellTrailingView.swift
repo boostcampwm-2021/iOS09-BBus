@@ -25,19 +25,21 @@ class BusCellTrailingView: UIView {
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var secondBusTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var firstBusTimeRightLabel = RemainCongestionBadgeLabel()
     private lazy var secondBusTimeRightLabel = RemainCongestionBadgeLabel()
     private lazy var alarmButton: UIButton = {
         let button = UIButton()
-        button.setImage(MyImage.alarm, for: .normal)
-        button.tintColor = MyColor.bbusGray
+        button.setImage(BBusImage.alarm, for: .normal)
+        button.tintColor = BBusColor.bbusGray
         return button
     }()
 
