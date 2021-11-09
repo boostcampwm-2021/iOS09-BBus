@@ -42,7 +42,7 @@ class HomeView: UIView {
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.addSubview(self.favoriteCollectionView)
         self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.favoriteCollectionView.backgroundColor = BBusColor.systemGray6
+        self.favoriteCollectionView.backgroundColor = BBusColor.bbusGray6
         NSLayoutConstraint.activate([
             self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),

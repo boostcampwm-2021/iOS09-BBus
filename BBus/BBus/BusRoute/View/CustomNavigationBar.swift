@@ -13,6 +13,8 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
+    static let height: CGFloat = 43
+    
     private var delegate: BackButtonDelegate? {
         didSet {
             self.backButton.addAction(UIAction(handler: { _ in
@@ -55,21 +57,20 @@ class CustomNavigationBar: UIView {
 
     // MARK: - Configure
     func configureLayout() {
-        let backButtonWidthAnchor: CGFloat = 18
-        let backButtonHeightAnchor: CGFloat = 27
-        let backButtonTopAnchor: CGFloat = 8
-        let backButtonLeadingAnchor: CGFloat = 12
-        let backButtonBottomAnchor: CGFloat = -8
+        let backButtonWidthAnchor: CGFloat = 22
+        let backButtonHeightAnchor: CGFloat = 30
+        let backButtonLeadingAnchor: CGFloat = 16
         let termBackButtonToBackButtonTitle: CGFloat = 12
+
+        self.heightAnchor.constraint(equalToConstant: Self.height).isActive = true
 
         self.addSubview(self.backButton)
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.backButton.widthAnchor.constraint(equalToConstant: backButtonWidthAnchor),
             self.backButton.heightAnchor.constraint(equalToConstant: backButtonHeightAnchor),
-            self.backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: backButtonTopAnchor),
+            self.backButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: backButtonLeadingAnchor),
-            self.backButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: backButtonBottomAnchor)
         ])
 
         self.addSubview(self.backButtonTitleLabel)
