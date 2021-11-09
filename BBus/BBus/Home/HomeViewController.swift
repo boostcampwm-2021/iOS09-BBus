@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.backgroundColor = UIColor.systemBackground
+        self.view.backgroundColor = BBusColor.white
 
         self.view.addSubview(self.homeView)
         self.homeView.translatesAutoresizingMaskIntoConstraints = false

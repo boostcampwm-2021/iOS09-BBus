@@ -18,8 +18,8 @@ class BusRouteViewController: UIViewController {
         let button = UIButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
         return button
     }()
 
