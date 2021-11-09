@@ -9,21 +9,16 @@ import UIKit
 
 enum BBusColor {
     static let gray = UIColor.gray
-    static let lightGray = UIColor.lightGray
-    static let darkGray = UIColor.darkGray
     static let white = UIColor.white
     static let black = UIColor.black
     static let red = UIColor.red
     static let clear = UIColor.clear
-    static let blueBus = UIColor.systemBlue
+    static let green = UIColor.green
+    static let yellow = UIColor.yellow
+    static let systemGray = UIColor.systemGray
+    static let systemGray5 = UIColor.systemGray5
     static let systemGray6 = UIColor.systemGray6
-    static let bbusGreenLine = UIColor.green
-    static let bbusRedLine = UIColor.red
-    static let bbusYellowLine = UIColor.yellow
-    static let tableViewSeperator = UIColor.systemGray6
-    static let tableViewCellSubTitle = UIColor.systemGray
-    static let bbusTagNumber = UIColor.darkGray
-    static let greenLine = UIColor.green
+    static let darkGray = UIColor.darkGray
     static let bbusLightGray = UIColor(named: "bbusLightGray")
     static let bbusGray = UIColor(named: "bbusGray")
     static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
@@ -31,12 +26,6 @@ enum BBusColor {
     static let bbusSearchRed = UIColor(named: "bbusSearchRed")
     static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
     static let bbusLikeYellow = UIColor(named: "bbusLikeYellow")
-    static let tagBusNumber = UIColor.darkGray
-    static let tagBusCongestion = UIColor.red
-    static let redLine = UIColor.red
-    static let tableBackground = UIColor.systemGray5
     static let iconColor = UIColor(named: "bbusAlarmGray")
     static let alarmTint = UIColor(named: "bbusGray")
-    static let bbusLightBorder = UIColor.lightGray
-    static let bbusCongestionLineGray = UIColor.systemGray
 }

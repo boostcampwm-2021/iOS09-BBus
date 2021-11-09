@@ -52,16 +52,16 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
         switch type {
         case .getOn:
             super.configure(beforeColor: BBusColor.clear,
-                            afterColor: BBusColor.bbusCongestionLineGray,
+                            afterColor: BBusColor.bbusGray,
                             title: "웨딩타운",
                             description: "")
         case .waypoint:
-            super.configure(beforeColor: BBusColor.bbusCongestionLineGray,
-                            afterColor: BBusColor.bbusCongestionLineGray,
+            super.configure(beforeColor: BBusColor.bbusGray,
+                            afterColor: BBusColor.bbusGray,
                             title: "웨딩타운",
                             description: "")
         case .getOff:
-            super.configure(beforeColor: BBusColor.bbusCongestionLineGray,
+            super.configure(beforeColor: BBusColor.bbusGray,
                             afterColor: BBusColor.clear,
                             title: "웨딩타운",
                             description: "")

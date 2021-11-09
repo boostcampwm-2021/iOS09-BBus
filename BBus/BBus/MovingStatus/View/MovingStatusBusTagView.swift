@@ -17,7 +17,7 @@ class MovingStatusBusTagView: UIView {
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = BBusImage.speechBubble
-        imageView.tintColor = BBusColor.blueBus
+        imageView.tintColor = BBusColor.bbusTypeBlue
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {

@@ -47,7 +47,7 @@ class MovingStatusView: UIView {
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.blueBus
+        button.backgroundColor = BBusColor.bbusTypeBlue
         return button
     }()
     private lazy var bottomIndicatorImageView: UIImageView = {
@@ -73,14 +73,14 @@ class MovingStatusView: UIView {
     private lazy var headerView = UIView()
     private lazy var headerBottomBorderView: UIView = {
         let view = UIView()
-        view.backgroundColor = BBusColor.bbusLightBorder
+        view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
     private lazy var busNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 27
         
         let label = UILabel()
-        label.textColor = BBusColor.blueBus
+        label.textColor = BBusColor.bbusTypeBlue
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .medium)
         label.text = "700"
         return label
@@ -116,7 +116,7 @@ class MovingStatusView: UIView {
     }()
     private lazy var endAlarmButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.blueBus
+        button.backgroundColor = BBusColor.bbusTypeBlue
         button.tintColor = BBusColor.white
         button.setTitle("알람 종료", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -132,18 +132,18 @@ class MovingStatusView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.blueBus
+        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
         self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.blueBus
+        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.blueBus
+        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
         self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.blueBus
+        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
     }
 
     // MARK: - Configure

@@ -100,7 +100,7 @@ class CustomNavigationBar: UIView {
         self.titleLabel.textColor = color
     }
 
-    func configureBackgroundColor(color: UIColor) {
+    func configureBackgroundColor(color: UIColor?) {
         self.backgroundColor = color
     }
 

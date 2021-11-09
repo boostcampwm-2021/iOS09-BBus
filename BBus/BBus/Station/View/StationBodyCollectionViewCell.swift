@@ -34,7 +34,7 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     lazy var likeButton: UIButton = {
         let button = UIButton()
         button.tintColor = BBusColor.systemGray6
-        button.setImage(BBusImage.filledStar, for: .normal)
+        button.setImage(BBusImage.star, for: .normal)
         return button
     }()
     lazy var directionLabel: UILabel = {

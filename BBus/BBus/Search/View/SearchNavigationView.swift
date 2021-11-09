@@ -65,7 +65,7 @@ class SearchNavigationView: UIView {
         let button = UIButton()
         button.setTitle("버스", for: .normal)
         button.setTitleColor(BBusColor.bbusGray, for: .normal)
-        button.setImage(BBusImage.bus, for: .normal)
+        button.setImage(BBusImage.busRedSymbol, for: .normal)
         button.tintColor = BBusColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.busTabButtonDelegate?.shouldBusTabSelect()
@@ -76,7 +76,7 @@ class SearchNavigationView: UIView {
         let button = UIButton()
         button.setTitle("정거장", for: .normal)
         button.setTitleColor(BBusColor.bbusGray, for: .normal)
-        button.setImage(BBusImage.station, for: .normal)
+        button.setImage(BBusImage.stationRedSymbol, for: .normal)
         button.tintColor = BBusColor.bbusGray
         button.addAction(UIAction(handler: { _ in
             self.stationTabButtonDelegate?.shouldStationTabSelect()

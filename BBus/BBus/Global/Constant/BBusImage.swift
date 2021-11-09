@@ -20,10 +20,8 @@ enum BBusImage {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         return UIImage(systemName: "chevron.left", withConfiguration: largeConfig)
     }()
-    static let bus = UIImage(systemName: "bus.fill")
-    static let station = UIImage(systemName: "bitcoinsign.circle")
     static let keyboardDown = UIImage(systemName: "keyboard.chevron.compact.down")
-    static let filledStar: UIImage? = {
+    static let star: UIImage? = {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         return UIImage(systemName: "star.fill", withConfiguration: largeConfig)
     }()
@@ -43,10 +41,12 @@ enum BBusImage {
     static let stationCenterUturn = UIImage(named: "uturn")
     static let tagMaxSize = UIImage(named: "busTagMaxSize")
     static let tagMinSize = UIImage(named: "busTagMinSize")
-    static let bbusBlueIcon = UIImage(named: "busIcon")
-    static let clockIcon = UIImage(systemName: "clock")
-    static let locationIcon = UIImage(named: "locationIcon")
-    static let busIcon = UIImage(named: "grayBusIcon")
+    static let clockSymbol = UIImage(systemName: "clock")
+    static let locationSymbol = UIImage(named: "locationSymbol")
+    static let busGraySymbol = UIImage(named: "busGraySymbol")
+    static let busRedSymbol = UIImage(systemName: "bus.fill")
+    static let stationRedSymbol = UIImage(systemName: "bitcoinsign.circle")
+    static let blueBusIcon = UIImage(named: "blueBusIcon")
     static let alarmOffIcon = UIImage(named: "alarmOff")
     static let alarmOnIcon = UIImage(named: "alarmOn")
 }

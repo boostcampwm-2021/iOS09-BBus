@@ -27,7 +27,7 @@ class BusStationTableViewCell: UITableViewCell {
     private lazy var stationDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: self.stationDescriptionLabelFontSize)
-        label.textColor = BBusColor.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         return label
     }()
     lazy var labelStackView: UIStackView = {
@@ -93,7 +93,7 @@ class BusStationTableViewCell: UITableViewCell {
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String) {
+    func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String) {
         self.beforeCongestionLineView.backgroundColor = beforeColor
         self.afterCongestionLineView.backgroundColor = afterColor
         self.stationTitleLabel.text = title

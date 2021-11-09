@@ -26,7 +26,7 @@ class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureBusColor(to: BBusColor.blueBus)
+        self.configureBusColor(to: BBusColor.bbusTypeBlue)
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
@@ -71,7 +71,7 @@ class BusRouteViewController: UIViewController {
         self.customNavigationBar.configureDelegate(self)
     }
     
-    private func configureBusColor(to color: UIColor) {
+    private func configureBusColor(to color: UIColor?) {
         self.view.backgroundColor = color
         self.customNavigationBar.configureBackgroundColor(color: color)
         self.customNavigationBar.configureTintColor(color: BBusColor.white)
@@ -85,7 +85,7 @@ class BusRouteViewController: UIViewController {
         for i in 1...20 {
             let location = CGFloat.random(in: (0...19))
             self.busRouteView.addBusTag(location: location,
-                                        busIcon: BBusImage.bbusBlueIcon,
+                                        busIcon: BBusImage.blueBusIcon,
                                         busNumber: "6302",
                                         busCongestion: "혼잡",
                                         isLowFloor: i%2 == 0)
@@ -112,13 +112,13 @@ extension BusRouteViewController: UITableViewDataSource {
             beforeColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            beforeColor = BBusColor.bbusGreenLine
+            beforeColor = BBusColor.green
         }
         else if indexPath.item % 3 == 1 {
-            beforeColor = BBusColor.bbusRedLine
+            beforeColor = BBusColor.red
         }
         else {
-            beforeColor = BBusColor.bbusYellowLine
+            beforeColor = BBusColor.yellow
         }
         
         let afterColor: UIColor
@@ -126,13 +126,13 @@ extension BusRouteViewController: UITableViewDataSource {
             afterColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            afterColor = BBusColor.bbusRedLine
+            afterColor = BBusColor.red
         }
         else if indexPath.item % 3 == 1 {
-            afterColor = BBusColor.bbusYellowLine
+            afterColor = BBusColor.yellow
         }
         else {
-            afterColor = BBusColor.bbusGreenLine
+            afterColor = BBusColor.green
         }
         
         cell.configure(beforeColor: beforeColor,

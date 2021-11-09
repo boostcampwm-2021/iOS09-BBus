@@ -28,7 +28,7 @@ class BusTagView: UIView {
         let labelFontSize: CGFloat = 11
 
         let label = UILabel()
-        label.textColor = BBusColor.bbusTagNumber
+        label.textColor = BBusColor.darkGray
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -54,7 +54,7 @@ class BusTagView: UIView {
         let labelFontSize: CGFloat = 11
 
         let label = UILabel()
-        label.textColor = BBusColor.bbusTagNumber
+        label.textColor = BBusColor.darkGray
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label

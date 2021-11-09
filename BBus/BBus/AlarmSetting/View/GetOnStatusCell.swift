@@ -41,7 +41,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 10
 
         let label = UILabel()
-        label.textColor = BBusColor.lightGray
+        label.textColor = BBusColor.bbusGray
         label.font = UIFont.systemFont(ofSize: 10)
         label.textAlignment = .center
         return label
@@ -63,27 +63,27 @@ class GetOnStatusCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.spacing = stackViewSpacing
         stackView.layer.borderWidth = borderWidth
-        stackView.layer.borderColor = BBusColor.tableViewSeperator.cgColor
+        stackView.layer.borderColor = BBusColor.systemGray6.cgColor
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         return stackView
     }()
     private lazy var clockIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = BBusImage.clockIcon
+        imageView.image = BBusImage.clockSymbol
         imageView.tintColor = BBusColor.iconColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     private lazy var locationIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = BBusImage.locationIcon
+        imageview.image = BBusImage.locationSymbol
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()
     private lazy var busIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = BBusImage.busIcon
+        imageview.image = BBusImage.busGraySymbol
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()
@@ -91,7 +91,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = BBusColor.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -100,7 +100,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = BBusColor.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -109,7 +109,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = BBusColor.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -117,7 +117,7 @@ class GetOnStatusCell: UITableViewCell {
     private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = BBusColor.tableViewSeperator
+        view.backgroundColor = BBusColor.systemGray6
         return view
     }()
 
@@ -258,7 +258,7 @@ class GetOnStatusCell: UITableViewCell {
         ])
     }
 
-    func configure(busColor: UIColor) {
+    func configure(busColor: UIColor?) {
         self.busOrderNumberLabel.backgroundColor = busColor
     }
 

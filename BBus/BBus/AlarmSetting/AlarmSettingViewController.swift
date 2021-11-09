@@ -102,7 +102,7 @@ extension AlarmSettingViewController: UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
 
-            cell.configure(busColor: BBusColor.blueBus)
+            cell.configure(busColor: BBusColor.bbusTypeBlue)
             cell.configure(order: String(indexPath.row+1),
                            remainingTime: "2분 18초",
                            remainingStationCount: "2번째전",
@@ -115,8 +115,8 @@ extension AlarmSettingViewController: UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
 
-            cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.lightGray,
-                           afterColor: indexPath.item == 9 ? .clear : BBusColor.lightGray,
+            cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.bbusGray,
+                           afterColor: indexPath.item == 9 ? .clear : BBusColor.bbusGray,
                            title: "신촌오거리.현대백화점",
                            description: "14062 | 2분 소요",
                            type: indexPath.item == 0 ? .getOn : .waypoint)
