@@ -25,11 +25,11 @@ class AlarmSettingButton: UIButton {
         
         self.setImage(AlarmSettingViewController.Image.alarmOffIcon, for: .normal)
         self.setImage(AlarmSettingViewController.Image.alarmOnIcon, for: .selected)
-        self.tintColor = AlarmSettingViewController.Color.alarmTint
+        self.tintColor = BBusColor.alarmTint
         self.clipsToBounds = true
         self.contentMode = .scaleAspectFill
         self.layer.borderWidth = borderWidth
-        self.layer.borderColor = AlarmSettingViewController.Color.alarmTint?.cgColor
+        self.layer.borderColor = BBusColor.alarmTint?.cgColor
     }
     
     override func layoutSubviews() {

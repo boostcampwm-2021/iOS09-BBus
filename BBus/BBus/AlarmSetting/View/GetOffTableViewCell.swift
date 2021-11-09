@@ -38,7 +38,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
     private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
+        view.backgroundColor = BBusColor.tableViewSeperator
         return view
     }()
 
