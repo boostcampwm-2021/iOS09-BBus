@@ -11,13 +11,13 @@ class MovingStatusBusTagView: UIView {
 
     private lazy var booduckBusImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = MovingStatusViewController.Image.booduckBus
+        imageView.image = BBusImage.booduckBus
         return imageView
     }()
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = MovingStatusViewController.Image.speechBubble
-        imageView.tintColor = MovingStatusViewController.Color.blueBus
+        imageView.image = BBusImage.speechBubble
+        imageView.tintColor = BBusColor.blueBus
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {
@@ -25,7 +25,7 @@ class MovingStatusBusTagView: UIView {
         let numberOfLines = 2
         
         let label = UILabel()
-        label.textColor = MovingStatusViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.numberOfLines = numberOfLines
         label.text = "4정류장 남음"

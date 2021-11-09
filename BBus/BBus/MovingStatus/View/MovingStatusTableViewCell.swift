@@ -39,11 +39,11 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
     private func configureCenterImage(type: BusRouteCenterImageType) {
         switch type {
         case .waypoint:
-            super.centerImageView.image = MovingStatusViewController.Image.waypoint
+            super.centerImageView.image = BBusImage.waypoint
         case .getOn:
-            super.centerImageView.image = MovingStatusViewController.Image.getOn
+            super.centerImageView.image = BBusImage.getOn
         case .getOff:
-            super.centerImageView.image = MovingStatusViewController.Image.getOff
+            super.centerImageView.image = BBusImage.getOff
         }
     }
     
@@ -51,18 +51,18 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
         self.configureCenterImage(type: type)
         switch type {
         case .getOn:
-            super.configure(beforeColor: MovingStatusViewController.Color.clear,
-                            afterColor: MovingStatusViewController.Color.congestionLine,
+            super.configure(beforeColor: BBusColor.clear,
+                            afterColor: BBusColor.bbusCongestionLineGray,
                             title: "웨딩타운",
                             description: "")
         case .waypoint:
-            super.configure(beforeColor: MovingStatusViewController.Color.congestionLine,
-                            afterColor: MovingStatusViewController.Color.congestionLine,
+            super.configure(beforeColor: BBusColor.bbusCongestionLineGray,
+                            afterColor: BBusColor.bbusCongestionLineGray,
                             title: "웨딩타운",
                             description: "")
         case .getOff:
-            super.configure(beforeColor: MovingStatusViewController.Color.congestionLine,
-                            afterColor: MovingStatusViewController.Color.clear,
+            super.configure(beforeColor: BBusColor.bbusCongestionLineGray,
+                            afterColor: BBusColor.clear,
                             title: "웨딩타운",
                             description: "")
         }
