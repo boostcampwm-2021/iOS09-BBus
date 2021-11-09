@@ -15,6 +15,9 @@ class HomeView: UIView {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
         collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
         collectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = BBusColor.bbusBackground
+        collectionView.backgroundView = backgroundView
         return collectionView
     }()
     private lazy var navigationView: HomeNavigationView = {

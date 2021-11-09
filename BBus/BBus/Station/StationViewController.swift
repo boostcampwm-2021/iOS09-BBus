@@ -16,10 +16,10 @@ class StationViewController: UIViewController {
     private lazy var customNavigationBar: CustomNavigationBar = {
         let bar = CustomNavigationBar()
         bar.configureTintColor(color: BBusColor.white)
-        bar.configureAlpha(alpha: 0)
         if let bbusGray = BBusColor.bbusGray {
             bar.configureBackgroundColor(color: bbusGray)
         }
+        bar.configureAlpha(alpha: 0)
         return bar
     }()
     private lazy var stationView: StationView = {
@@ -44,10 +44,10 @@ class StationViewController: UIViewController {
         super.viewDidLoad()
 
         self.binding()
+        self.configureColor()
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
-        self.configureUI()
     }
 
     // MARK: - Configure
@@ -105,7 +105,7 @@ class StationViewController: UIViewController {
                                              direction: "시흥시노인종합복지관 방면")
     }
 
-    private func configureUI() {
+    private func configureColor() {
         self.view.backgroundColor = BBusColor.bbusGray
     }
 }

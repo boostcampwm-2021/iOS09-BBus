@@ -22,6 +22,7 @@ class BusStationTableViewCell: UITableViewCell {
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: self.stationTitleLabelFontSize, weight: .semibold)
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var stationDescriptionLabel: UILabel = {
@@ -41,6 +42,7 @@ class BusStationTableViewCell: UITableViewCell {
         super.init(coder: coder)
 
         self.configureLayout()
+        self.configureColor()
         self.selectionStyle = .none
     }
 
@@ -48,6 +50,7 @@ class BusStationTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.configureLayout()
+        self.configureColor()
         self.selectionStyle = .none
     }
 
@@ -91,6 +94,10 @@ class BusStationTableViewCell: UITableViewCell {
         
         self.addSubview(self.centerImageView)
         self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func configureColor() {
+        self.backgroundColor = BBusColor.white
     }
 
     func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String) {

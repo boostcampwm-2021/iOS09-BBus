@@ -23,7 +23,8 @@ class BusRouteView: UIView {
                                                 left: tableViewLeftInset,
                                                 bottom: tableViewTopBottomRightInset,
                                                 right: tableViewTopBottomRightInset)
-        tableView.separatorColor = BBusColor.systemGray6
+        tableView.backgroundColor = BBusColor.white
+        tableView.separatorColor = BBusColor.bbusLightGray
         return tableView
     }()
     

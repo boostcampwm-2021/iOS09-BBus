@@ -33,6 +33,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "여의도환승센터(4번승강장)"
         label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = BBusColor.black
         return label
     }()
     private lazy var directionLabel: UILabel = {

@@ -237,6 +237,7 @@
 		4ACA51DA272FCCA600EC0531 /* BusRoute */ = {
 			isa = PBXGroup;
 			children = (
+				4ACA5211272FCE7100EC0531 /* Model */,
 				4ACA5236272FCF2C00EC0531 /* BusRouteViewController.swift */,
 				4A04682327327876008D87CE /* BusRouteCoordinator.swift */,
 				4ACA5205272FCE3C00EC0531 /* Model */,
@@ -252,7 +253,6 @@
 			children = (
 				4ACA5238272FCF3200EC0531 /* StationViewController.swift */,
 				4A1A22DC2732801700476861 /* StationCoodinator.swift */,
-				4ACA5211272FCE7100EC0531 /* Model */,
 				4ACA5210272FCE6E00EC0531 /* UseCase */,
 				4ACA520F272FCE6B00EC0531 /* ViewModel */,
 				4ACA520E272FCE6900EC0531 /* View */,
@@ -428,7 +428,8 @@
 			children = (
 				4ACA5212272FCE8500EC0531 /* StationModel.swift */,
 			);
-			path = Model;
+			name = Model;
+			path = ../Station/Model;
 			sourceTree = "<group>";
 		};
 		4ACA521A272FCE9900EC0531 /* View */ = {

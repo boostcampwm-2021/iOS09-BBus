@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Home"
 
+        self.configureColor()
         self.configureLayout()
         self.homeView.configureLayout()
         self.homeView.configureDelegate(self)
@@ -51,8 +52,6 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.backgroundColor = BBusColor.white
-
         self.view.addSubview(self.homeView)
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -61,6 +60,10 @@ class HomeViewController: UIViewController {
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
+    }
+    
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.white
     }
 }
 

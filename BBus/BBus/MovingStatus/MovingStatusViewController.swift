@@ -47,6 +47,10 @@ class MovingStatusViewController: UIViewController {
     private func configureBusTag() {
         self.movingStatusView.addBusTag()
     }
+    
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.white
+    }
 }
 
 // MARK: - DataSource: UITableView

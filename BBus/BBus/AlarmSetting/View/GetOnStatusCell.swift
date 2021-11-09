@@ -63,7 +63,7 @@ class GetOnStatusCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.spacing = stackViewSpacing
         stackView.layer.borderWidth = borderWidth
-        stackView.layer.borderColor = BBusColor.systemGray6.cgColor
+        stackView.layer.borderColor = BBusColor.bbusLightGray?.cgColor
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         return stackView
@@ -117,7 +117,7 @@ class GetOnStatusCell: UITableViewCell {
     private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = BBusColor.systemGray6
+        view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
 
@@ -134,6 +134,7 @@ class GetOnStatusCell: UITableViewCell {
         super.init(coder: coder)
 
         self.configureLayout()
+        self.backgroundColor = BBusColor.white
         self.selectionStyle = .none
     }
 
@@ -141,6 +142,7 @@ class GetOnStatusCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.configureLayout()
+        self.backgroundColor = BBusColor.white
         self.selectionStyle = .none
     }
 

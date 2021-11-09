@@ -20,7 +20,7 @@ class AlarmSettingView: UIView {
         tableView.register(GetOffTableViewCell.self, forCellReuseIdentifier: GetOffTableViewCell.reusableID)
         tableView.register(GetOnStatusCell.self, forCellReuseIdentifier: GetOnStatusCell.reusableID)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = BBusColor.systemGray5
+        tableView.backgroundColor = BBusColor.bbusBackground
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         return tableView
     }()

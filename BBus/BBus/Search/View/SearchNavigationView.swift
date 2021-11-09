@@ -40,7 +40,12 @@ class SearchNavigationView: UIView {
         textField.layer.borderColor = BBusColor.bbusGray?.cgColor
         textField.layer.borderWidth = 0.3
         textField.layer.cornerRadius = 3
-        textField.placeholder = "버스 검색" // 정거장일땐 정거장 검색
+        let placeholder = "버스 검색"
+        let attributedString = NSMutableAttributedString(string: placeholder)
+        let range = (placeholder as NSString).range(of: placeholder)
+        attributedString.addAttribute(.foregroundColor, value: BBusColor.bbusGray as Any, range: range)
+        textField.attributedPlaceholder = attributedString
+        textField.textColor = BBusColor.black
         textField.clearButtonMode = .whileEditing
         textField.becomeFirstResponder()
         textField.keyboardType = .decimalPad

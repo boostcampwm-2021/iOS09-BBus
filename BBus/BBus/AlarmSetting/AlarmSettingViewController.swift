@@ -26,8 +26,8 @@ class AlarmSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.configureLayout()
         self.configureColor()
+        self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
     }
@@ -156,6 +156,8 @@ extension AlarmSettingViewController: UITableViewDelegate {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         
         header.contentView.backgroundColor = BBusColor.white
+        header.textLabel?.textColor = BBusColor.black
+        header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -19,6 +19,7 @@ enum BBusColor {
     static let systemGray5 = UIColor.systemGray5
     static let systemGray6 = UIColor.systemGray6
     static let darkGray = UIColor.darkGray
+    static let bbusBackground = UIColor(named: "bbusBackground")
     static let bbusLightGray = UIColor(named: "bbusLightGray")
     static let bbusGray = UIColor(named: "bbusGray")
     static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
