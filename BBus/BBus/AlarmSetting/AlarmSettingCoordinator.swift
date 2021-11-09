@@ -8,7 +8,7 @@
 import UIKit
 
 class AlarmSettingCoordinator: Coordinator {
-    var finishDelegate: CoordinatorFinishDelegate?
+    var delegate: CoordinatorDelegate?
     var movingStatusDelegate: MovingStatusOpenCloseDelegate?
     var navigationPresenter: UINavigationController?
     var childCoordinators: [Coordinator]

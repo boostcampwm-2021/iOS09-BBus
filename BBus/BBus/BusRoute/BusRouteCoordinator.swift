@@ -8,8 +8,8 @@
 import UIKit
 
 class BusRouteCoordinator: StationPushable {
-    var finishDelegate: CoordinatorFinishDelegate?
     var navigationPresenter: UINavigationController?
+    var delegate: CoordinatorDelegate?
     var childCoordinators: [Coordinator]
 
     init(presenter: UINavigationController?) {

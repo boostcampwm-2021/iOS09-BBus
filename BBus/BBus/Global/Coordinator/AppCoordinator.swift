@@ -10,7 +10,7 @@ import UIKit
 class AppCoordinator: NSObject, Coordinator {
     private let navigationWindow: UIWindow
     private let movingStatusWindow: UIWindow
-    var finishDelegate: CoordinatorFinishDelegate?
+    var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController?
     var movingStatusPresenter: UIViewController?
     var childCoordinators: [Coordinator]

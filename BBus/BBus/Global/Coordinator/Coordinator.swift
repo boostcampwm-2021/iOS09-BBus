@@ -12,9 +12,15 @@ protocol CoordinatorFinishDelegate: AnyObject {
     func removeChildCoordinator(_ coordinator: Coordinator)
 }
 
-protocol Coordinator: CoordinatorFinishDelegate {
-    var finishDelegate: CoordinatorFinishDelegate? { get set }
+protocol CoordinatorCreateDelegate {
+    func addChild(_ coordinator: Coordinator)
+}
+typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)
+
+
+protocol Coordinator: AnyObject, CoordinatorFinishDelegate, CoordinatorCreateDelegate {
     var navigationPresenter: UINavigationController? { get set }
+    var delegate: CoordinatorDelegate? { get set }
     var childCoordinators: [Coordinator] { get set }
     func start()
 }
@@ -33,5 +39,11 @@ extension Coordinator {
                 break
             }
         }
+    }
+}
+
+extension Coordinator {
+    func addChild(_ coordinator: Coordinator) {
+        self.childCoordinators.append(coordinator)
     }
 }

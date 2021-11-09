@@ -14,8 +14,8 @@ protocol BusRoutePushable: Coordinator {
 extension BusRoutePushable {
     func pushToBusRoute() {
         let coordinator = BusRouteCoordinator(presenter: self.navigationPresenter)
-        coordinator.finishDelegate = self
-        self.childCoordinators.append(coordinator)
+        coordinator.delegate = self.delegate
+        self.delegate?.addChild(coordinator)
         coordinator.start()
     }
 }
