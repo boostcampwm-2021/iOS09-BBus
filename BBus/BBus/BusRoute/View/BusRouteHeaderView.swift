@@ -42,7 +42,7 @@ class BusRouteHeaderView: UIView {
         let busArrowImageWidthHeight: CGFloat = 15
         
         let imageView = UIImageView()
-        imageView.image = BusRouteViewController.Image.headerArrow
+        imageView.image = BBusImage.headerArrow
         imageView.frame = CGRect(origin: .zero, size: CGSize(width: busArrowImageWidthHeight, height: busArrowImageWidthHeight))
         imageView.contentMode = .scaleAspectFill
         imageView.tintColor = BBusColor.white

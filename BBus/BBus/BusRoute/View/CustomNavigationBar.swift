@@ -24,7 +24,7 @@ class CustomNavigationBar: UIView {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = BBusColor.white
-        button.setBackgroundImage(BusRouteViewController.Image.navigationBack, for: .normal)
+        button.setBackgroundImage(BBusImage.navigationBack, for: .normal)
         button.contentMode = .scaleAspectFit
         return button
     }()

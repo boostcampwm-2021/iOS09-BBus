@@ -9,18 +9,6 @@ import UIKit
 
 class BusRouteViewController: UIViewController {
 
-    enum Image {
-        static let navigationBack = UIImage(systemName: "chevron.left")
-        static let headerArrow = UIImage(systemName: "arrow.left.and.right")
-        static let stationCenterCircle = UIImage(named: "StationCenterCircle")
-        static let stationCenterGetOn = UIImage(named: "GetOn")
-        static let stationCenterGetOff = UIImage(named: "GetOff")
-        static let stationCenterUturn = UIImage(named: "Uturn")
-        static let tagMaxSize = UIImage(named: "BusTagMaxSize")
-        static let tagMinSize = UIImage(named: "BusTagMinSize")
-        static let blueBusIcon = UIImage(named: "busIcon")
-    }
-
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
     weak var coordinator: BusRouteCoordinator?
@@ -97,7 +85,7 @@ class BusRouteViewController: UIViewController {
         for i in 1...20 {
             let location = CGFloat.random(in: (0...19))
             self.busRouteView.addBusTag(location: location,
-                                        busIcon: Image.blueBusIcon,
+                                        busIcon: BBusImage.bbusBlueIcon,
                                         busNumber: "6302",
                                         busCongestion: "혼잡",
                                         isLowFloor: i%2 == 0)

@@ -127,14 +127,14 @@ class BusTagView: UIView {
         let busTagImageViewHeightAnchorWithMinSize: CGFloat = 20
 
         if isLowFloor {
-            self.busTagImageView.image = BusRouteViewController.Image.tagMaxSize
+            self.busTagImageView.image = BBusImage.tagMaxSize
             NSLayoutConstraint.activate([
                 self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
                 self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageviewHeightAnchorWithMaxSize)
             ])
         }
         else {
-            self.busTagImageView.image = BusRouteViewController.Image.tagMinSize
+            self.busTagImageView.image = BBusImage.tagMinSize
             NSLayoutConstraint.activate([
                 self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
                 self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageViewHeightAnchorWithMinSize)
