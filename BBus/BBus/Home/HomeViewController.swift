@@ -27,7 +27,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
-
         self.configureColor()
         self.configureLayout()
         self.homeView.configureLayout()
