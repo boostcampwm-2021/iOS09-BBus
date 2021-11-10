@@ -2,14 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BUS_ARRIVE_API_ACCESS_KEY</key>
-	<string>${BUS_ARRIVE_API_ACCESS_KEY}</string>
-	<key>BUS_LOCATION_API_ACCESS_KEY</key>
-	<string>${BUS_LOCATION_API_ACCESS_KEY}</string>
-	<key>STATION_INFO_API_ACCESS_KEY</key>
-	<string>${STATION_INFO_API_ACCESS_KEY}</string>
-	<key>ROUTE_INFO_API_ACCESS_KEY</key>
-	<string>${ROUTE_INFO_ACCESS_KEY}</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>ws.bus.go.kr</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<string>1</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>API_ACCESS_KEY</key>
+	<string>${API_ACCESS_KEY}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

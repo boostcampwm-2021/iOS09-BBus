@@ -8,23 +8,6 @@
 import Foundation
 import Combine
 
-enum APIType {
-    case busArrive, routeInfo, stationInfo, busLocation
-    
-    func toString() -> String? {
-        switch self {
-        case .busArrive :
-            return Bundle.main.infoDictionary?["BUS_ARRIVE_API_ACCESS_KEY"] as? String
-        case .busLocation :
-            return Bundle.main.infoDictionary?["BUS_ARRIVE_API_ACCESS_KEY"] as? String
-        case .routeInfo :
-            return Bundle.main.infoDictionary?["BUS_ARRIVE_API_ACCESS_KEY"] as? String
-        case .stationInfo :
-            return Bundle.main.infoDictionary?["BUS_ARRIVE_API_ACCESS_KEY"] as? String
-        }
-    }
-}
-
 enum NetworkError: Error {
     case accessKeyError, urlError
 }
@@ -34,13 +17,15 @@ enum NetworkError: Error {
 class Service {
     static let shared = Service()
     
+    private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)?.removingPercentEncoding
+    
     private init() { }
     
-    func get(url: String, api: APIType, params: [String: String]) -> Result<URLSession.DataTaskPublisher, NetworkError> {
-        guard let accessKey = api.toString() else { return .failure(NetworkError.accessKeyError) }
-        guard var components = URLComponents(string: url + "?serviceKey" + accessKey) else { return .failure(NetworkError.urlError) }
+    func get(url: String, params: [String: String]) -> Result<URLSession.DataTaskPublisher, NetworkError> {
+        guard let accessKey = self.accessKey else { return .failure(NetworkError.accessKeyError) }
+        guard var components = URLComponents(string: url) else { return .failure(NetworkError.urlError) }
         
-        var items: [URLQueryItem] = []
+        var items: [URLQueryItem] = [URLQueryItem(name: "serviceKey", value: accessKey)]
         params.forEach() { item in
             items.append(URLQueryItem(name: item.key, value: item.value))
         }

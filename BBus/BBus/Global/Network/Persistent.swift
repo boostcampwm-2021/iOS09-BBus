@@ -8,10 +8,14 @@
 import Foundation
 
 class Persistent {
+    
     static let shared = Persistent()
+    
     private init() { }
 
-    func create(key: String, param: String) { }
+    func create(key: String, param: String) {
+        
+    }
 
     func get(key: String) { }
 
