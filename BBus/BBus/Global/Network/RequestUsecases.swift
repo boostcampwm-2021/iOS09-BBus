@@ -6,49 +6,50 @@
 //
 
 import Foundation
+import Combine
 
 typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListBySearchKeywordUsecase & GetStationsBySearchKeywordUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
 // MARK: - API Protocol
 protocol GetArrInfoByRouteListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<(data: Data, response: URLResponse), Error>
 }
 
 protocol GetRouteInfoItemUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfoItem(param: [String: String])
 }
 
 protocol GetStationsByRouteListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 protocol GetBusPosByRtidUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 protocol GetStationByUidItemUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 protocol GetStationsByPosListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 // MARK: - Search Protocol
 protocol GetRouteListBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 protocol GetStationsBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 protocol GetFavoriteItemListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfo(key: String, param: [String: String])
 }
 
 // MARK: - Save Persistent
 protocol CreateFavoriteItemUsecase {
-    func createFavoriteItem(key: String, param: String)
+    func createFavoriteItem(key: String, param: [String: String])
 }
 
 protocol DeleteFavoriteItemUsecase {

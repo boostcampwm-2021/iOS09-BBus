@@ -6,21 +6,15 @@
 //
 
 import Foundation
+import Combine
 
-protocol Fetchable {
-    func fetch()
-}
-
-protocol GetArrInfoByRouteListFetchable: Fetchable { }
-
-class PersistentGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
-    func fetch() {
-
-    }
+protocol GetArrInfoByRouteListFetchable {
+    func fetch(param: [String: String]) -> AnyPublisher<(data: Data, response: URLResponse), Error>
 }
 
 class ServiceGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
-    func fetch() {
-
+    func fetch(param: [String: String]) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
+        let url = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute"
+        return Service.shared.get(url: url, params: param)
     }
 }

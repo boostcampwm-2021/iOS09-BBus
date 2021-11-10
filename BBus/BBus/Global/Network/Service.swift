@@ -20,8 +20,8 @@ class Service {
     
     private init() { }
     
-    func get(url: String, params: [String: String]) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
-        let publisher = PassthroughSubject<URLSession.DataTaskPublisher.Output, Error>()
+    func get(url: String, params: [String: String]) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
+        let publisher = PassthroughSubject<(data: Data, response: URLResponse), Error>()
         
         DispatchQueue.global().async { [weak self, weak publisher] in
             guard let self = self else { return }
