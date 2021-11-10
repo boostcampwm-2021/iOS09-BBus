@@ -16,6 +16,7 @@
 		049375A6273B9CB60061ACDA /* BusRouteList.json in Resources */ = {isa = PBXBuildFile; fileRef = 049375A5273B9CB60061ACDA /* BusRouteList.json */; };
 		049375A8273B9CD60061ACDA /* StationList.json in Resources */ = {isa = PBXBuildFile; fileRef = 049375A7273B9CD60061ACDA /* StationList.json */; };
 		049375AB273B9F330061ACDA /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		049375AF273BAA130061ACDA /* StationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AE273BAA130061ACDA /* StationDTO.swift */; };
 		04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */; };
 		04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */; };
 		04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */; };
@@ -106,6 +107,7 @@
 		049375A5273B9CB60061ACDA /* BusRouteList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BusRouteList.json; sourceTree = "<group>"; };
 		049375A7273B9CD60061ACDA /* StationList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StationList.json; sourceTree = "<group>"; };
 		049375AA273B9F330061ACDA /* BusRouteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteDTO.swift; sourceTree = "<group>"; };
+		049375AE273BAA130061ACDA /* StationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDTO.swift; sourceTree = "<group>"; };
 		04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingButton.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				049375AA273B9F330061ACDA /* BusRouteDTO.swift */,
+				049375AE273BAA130061ACDA /* StationDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */,
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
+				049375AF273BAA130061ACDA /* StationDTO.swift in Sources */,
 				4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */,
 				4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */,
 				873578832732545D00CC8ECC /* CustomNavigationBar.swift in Sources */,
