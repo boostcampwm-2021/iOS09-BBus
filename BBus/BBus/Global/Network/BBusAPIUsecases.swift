@@ -16,18 +16,36 @@ class BBusAPIUsecases: RequestUsecases {
         return fetcher.fetch(param: param)
     }
 
-    func getArrInfoItem(param: [String : String]) {
-
+    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
+        let param = ["busRouteId": busRouteId]
+        let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
+        return fetcher.fetch(param: param)
     }
 
-    func getArrInfo(key: String, param: [String : String]) {
-
+    func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
+        let param = ["busRoutedId": busRoutedId]
+        let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher()
+        return fetcher.fetch(param: param)
     }
 
-    func createFavoriteItem(key: String, param: [String : String]) {
-
+    func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
+        let param = ["busRoutedId": busRoutedId]
+        let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher()
+        return fetcher.fetch(param: param)
     }
-    
+
+    func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
+        let param = ["arsId": arsId]
+        let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
+        return fetcher.fetch(param: param)
+    }
+
+    func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error> {
+        let param = ["tmX": tmX, "tmY": tmY, "radius": radius]
+        let fetcher: GetStationsByPosListFetchable = ServiceGetStationsByPosListFetcher()
+        return fetcher.fetch(param: param)
+    }
+
     func getRouteList() -> AnyPublisher<Data, Error> {
         let fetcher: GetRouteListFetchable = PersistentGetRouteListFetcher()
         return fetcher.fetch()

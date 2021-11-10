@@ -16,23 +16,23 @@ protocol GetArrInfoByRouteListUsecase {
 }
 
 protocol GetRouteInfoItemUsecase {
-    func getArrInfoItem(param: [String: String])
+    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationsByRouteListUsecase {
-    func getArrInfo(key: String, param: [String: String])
+    func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetBusPosByRtidUsecase {
-    func getArrInfo(key: String, param: [String: String])
+    func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationByUidItemUsecase {
-    func getArrInfo(key: String, param: [String: String])
+    func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationsByPosListUsecase {
-    func getArrInfo(key: String, param: [String: String])
+    func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetRouteListUsecase {
