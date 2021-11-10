@@ -18,6 +18,7 @@
 		049375B9273BE2640061ACDA /* StationByUidItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */; };
 		049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */; };
 		049375BF273C326A0061ACDA /* StationsByPosDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BE273C326A0061ACDA /* StationsByPosDTO.swift */; };
+		049375C3273C36880061ACDA /* BBusXMLDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375C2273C36880061ACDA /* BBusXMLDTO.swift */; };
 		04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */; };
 		04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */; };
 		04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */; };
@@ -69,7 +70,7 @@
 		4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */; };
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
-		4AD47072273B9EE100F7EBFF /* XMLParseExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */; };
+		4AD47072273B9EE100F7EBFF /* BBusXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD47071273B9EE000F7EBFF /* BBusXMLParser.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */; };
 		87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A84273B90D10078EAE3 /* RequestUsecases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
@@ -111,6 +112,7 @@
 		049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationByUidItemDTO.swift; sourceTree = "<group>"; };
 		049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrInfoByRouteDTO.swift; sourceTree = "<group>"; };
 		049375BE273C326A0061ACDA /* StationsByPosDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsByPosDTO.swift; sourceTree = "<group>"; };
+		049375C2273C36880061ACDA /* BBusXMLDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusXMLDTO.swift; sourceTree = "<group>"; };
 		04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingButton.swift; sourceTree = "<group>"; };
@@ -163,7 +165,7 @@
 		4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewController.swift; sourceTree = "<group>"; };
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
-		4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLParseExample.swift; sourceTree = "<group>"; };
+		4AD47071273B9EE000F7EBFF /* BBusXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusXMLParser.swift; sourceTree = "<group>"; };
 		87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIUsecases.swift; sourceTree = "<group>"; };
 		87038A84273B90D10078EAE3 /* RequestUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestUsecases.swift; sourceTree = "<group>"; };
 		87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArrInfoByRouteListFetcher.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */,
 				049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */,
 				049375BE273C326A0061ACDA /* StationsByPosDTO.swift */,
+				049375C2273C36880061ACDA /* BBusXMLDTO.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -532,7 +535,7 @@
 		4AD47070273B9ED200F7EBFF /* XMLParser */ = {
 			isa = PBXGroup;
 			children = (
-				4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */,
+				4AD47071273B9EE000F7EBFF /* BBusXMLParser.swift */,
 			);
 			path = XMLParser;
 			sourceTree = "<group>";
@@ -717,10 +720,11 @@
 				4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */,
 				4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */,
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
-				4AD47072273B9EE100F7EBFF /* XMLParseExample.swift in Sources */,
+				4AD47072273B9EE100F7EBFF /* BBusXMLParser.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
+				049375C3273C36880061ACDA /* BBusXMLDTO.swift in Sources */,
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				87038A8C273B96DF0078EAE3 /* Persistent.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,

@@ -48,8 +48,6 @@ class HomeViewController: UIViewController {
             .constraint(equalTo: self.view.topAnchor).isActive = true
         statusbarView.centerXAnchor
             .constraint(equalTo: self.view.centerXAnchor).isActive = true
-        
-        dump(BBusParser().parse(dtoType: GovernmentServiceResult.self, xml: xml.data(using: .utf8)!))
     }
 
     // MARK: - Configuration

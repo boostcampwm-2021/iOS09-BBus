@@ -7,6 +7,30 @@
 
 import Foundation
 
+struct BusPosByRtidBody: BBusXMLDTO {
+    private let itemList: [BusPosByRtidDTO]
+
+    init?(dict: [String : [Any]]) {
+        guard let itemList = dict["itemList"] as? [[String:[Any]]] else { return nil }
+        self.itemList = itemList.map({ BusPosByRtidDTO(dict: $0)! })
+    }
+}
+
+struct BusPosByRtidResult: BBusXMLDTO {
+    var header: GovernmentMessageHeader
+    var body: BusPosByRtidBody
+
+    init?(dict: [String : [Any]]) {
+        guard let headerDict = dict["msgHeader"]?[0] as? [String:[Any]],
+              let bodyDict = dict["msgBody"]?[0] as? [String:[Any]],
+              let header = GovernmentMessageHeader(dict: headerDict),
+              let body = BusPosByRtidBody(dict: bodyDict) else { return nil }
+
+        self.header = header
+        self.body = body
+    }
+}
+
 struct BusPosByRtidDTO: BBusXMLDTO {
     let busType: Int
     let congestion: Int
