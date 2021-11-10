@@ -25,56 +25,73 @@ class Persistent {
     
     private init() { }
 
-    func create(param: FavoriteItem) -> Result<FavoriteItem, PersistentError> {
-        var items: [FavoriteItem] = []
-        if let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) {
-            let decodingItems = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data))
-            if let decodingItems = decodingItems {
-                items = decodingItems
-            } else {
-                return .failure(PersistentError.decodingError)
+    func create(param: FavoriteItem) -> AnyPublisher<FavoriteItem, PersistentError> {
+        let publisher = PassthroughSubject<FavoriteItem, PersistentError>()
+        DispatchQueue.global().async { [weak publisher] in
+            var items: [FavoriteItem] = []
+            if let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) {
+                let decodingItems = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data))
+                if let decodingItems = decodingItems {
+                    items = decodingItems
+                } else {
+                    publisher?.send(completion: .failure(PersistentError.decodingError))
+                }
             }
+            items.append(param)
+            if let data = try? PropertyListEncoder().encode(items) {
+                UserDefaults.standard.set(data, forKey: self.favoiteItemsKey)
+            } else {
+                publisher?.send(completion: .failure(PersistentError.encodingError))
+            }
+            publisher?.send(param)
         }
-        items.append(param)
-        if let data = try? PropertyListEncoder().encode(items) {
-            UserDefaults.standard.set(data, forKey: self.favoiteItemsKey)
-        } else {
-            return .failure(PersistentError.encodingError)
-        }
-        return .success(param)
+        return publisher.eraseToAnyPublisher()
     }
 
-    func get() -> Result<[FavoriteItem], PersistentError> {
-        if let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) {
-            let items = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data))
-            if let items = items {
-                return .success(items)
-            } else {
-                return .failure(PersistentError.decodingError)
+    func get() -> AnyPublisher<[FavoriteItem], PersistentError> {
+        let publisher = PassthroughSubject<[FavoriteItem], PersistentError>()
+        DispatchQueue.global().async { [weak publisher] in
+            if let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) {
+                let items = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data))
+                if let items = items {
+                    publisher?.send(items)
+                } else {
+                    publisher?.send(completion: .failure(PersistentError.decodingError))
+                }
             }
+            publisher?.send([])
         }
-        return .success([])
+        return publisher.eraseToAnyPublisher()
     }
 
-    func delete(param: FavoriteItem) -> Result<FavoriteItem, PersistentError> {
-        guard let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) else {
-            return .failure(PersistentError.noneError)
+    func delete(param: FavoriteItem) -> AnyPublisher<FavoriteItem, PersistentError> {
+        let publisher = PassthroughSubject<FavoriteItem, PersistentError>()
+        DispatchQueue.global().async { [weak publisher] in
+            guard let data = UserDefaults.standard.data(forKey: self.favoiteItemsKey) else {
+                publisher?.send(completion: .failure(PersistentError.noneError))
+                return
+            }
+            guard var items = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data)) else {
+                publisher?.send(completion: .failure(PersistentError.decodingError))
+                return
+            }
+            let count = items.count
+            items.removeAll(where: { item in
+                item.busRouteId == param.busRouteId && item.ord == param.ord && item.stId == param.stId
+            })
+            if count == items.count {
+                publisher?.send(completion: .failure(PersistentError.noneError))
+                return
+            }
+            if let data = try? PropertyListEncoder().encode(items) {
+                UserDefaults.standard.set(data, forKey: self.favoiteItemsKey)
+            } else {
+                publisher?.send(completion: .failure(PersistentError.encodingError))
+                return
+            }
+            publisher?.send(param)
         }
-        guard var items = (try? PropertyListDecoder().decode([FavoriteItem].self, from: data)) else {
-            return .failure(PersistentError.decodingError)
-        }
-        let count = items.count
-        items.removeAll(where: { item in
-            item.busRouteId == param.busRouteId && item.ord == param.ord && item.stId == param.stId
-        })
-        if count == items.count {
-            return .failure(PersistentError.noneError)
-        }
-        if let data = try? PropertyListEncoder().encode(items) {
-            UserDefaults.standard.set(data, forKey: self.favoiteItemsKey)
-        } else {
-            return .failure(PersistentError.encodingError)
-        }
-        return .success(param)
+        return publisher.eraseToAnyPublisher()
     }
 }
+
