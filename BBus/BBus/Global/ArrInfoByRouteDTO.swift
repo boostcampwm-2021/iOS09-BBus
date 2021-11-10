@@ -8,7 +8,7 @@
 import Foundation
 
 struct ArrInfoByRouteDTO: BBusXMLDTO {
-
+    
     let firstBusArriveRemainTime: String
     let secondBusArriveRemainTime: String
     let firstBusCongestion: String

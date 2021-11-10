@@ -12,6 +12,7 @@ struct StationByRouteListDTO: BBusXMLDTO {
     let sequence: Int
     let stationName: String
     let fullSectionDistance: Int
+    let arsId: String
     
     init?(dict: [String : [Any]]) {
         guard let sectSpdString = ((dict["sectSpd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -20,11 +21,13 @@ struct StationByRouteListDTO: BBusXMLDTO {
               let seq = Int(seqString),
               let stationName = ((dict["sectionNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let fullSectionDistanceString = ((dict["fullSectDist"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let fullSectionDistance = Int(fullSectionDistanceString) else { return nil }
+              let fullSectionDistance = Int(fullSectionDistanceString),
+              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
         
         self.sectionSpeed = sectSpd
         self.sequence = seq
         self.stationName = stationName
         self.fullSectionDistance = fullSectionDistance
+        self.arsId = arsId
     }
 }
