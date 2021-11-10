@@ -12,6 +12,7 @@ struct FavoriteItem: Codable, Equatable {
     let stId: String
     let busRouteId: String
     let ord: String
+    let arsId: String
 }
 
 class Persistent {
