@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 enum NetworkError: Error {
-    case accessKeyError, urlError, unknownError, noDataError, noResponseError
+    case accessKeyError, urlError, unknownError, noDataError, noResponseError, responseError
 }
 
 // TODO: - Service Return Type 수정 필요
@@ -20,8 +20,8 @@ class Service {
     
     private init() { }
     
-    func get(url: String, params: [String: String]) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
-        let publisher = PassthroughSubject<(data: Data, response: URLResponse), Error>()
+    func get(url: String, params: [String: String]) -> AnyPublisher<Data, Error> {
+        let publisher = PassthroughSubject<Data, Error>()
         
         DispatchQueue.global().async { [weak self, weak publisher] in
             guard let self = self else { return }
@@ -47,15 +47,20 @@ class Service {
                         publisher?.send(completion: .failure(error))
                         return
                     }
-                    guard let data = data else {
-                        publisher?.send(completion: .failure(NetworkError.noDataError))
-                        return
-                    }
-                    guard let response = response else {
+                    guard let response = response as? HTTPURLResponse else {
                         publisher?.send(completion: .failure(NetworkError.noResponseError))
                         return
                     }
-                    publisher?.send((data, response))
+                    if response.statusCode != 200 {
+                        publisher?.send(completion: .failure(NetworkError.responseError))
+                        return
+                    }
+                    if let data = data {
+                        publisher?.send(data)
+                    }
+                    else {
+                        publisher?.send(completion: .failure(NetworkError.noDataError))
+                    }
                 }.resume()
             }
             else {

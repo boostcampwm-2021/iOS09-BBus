@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class BBusAPIUsecases: RequestUsecases {
-    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
+    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error> {
         let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord]
         let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher()
         return fetcher.fetch(param: param)
@@ -26,7 +26,12 @@ class BBusAPIUsecases: RequestUsecases {
     func createFavoriteItem(key: String, param: [String : String]) {
 
     }
-
+    
+    func getRouteList() -> AnyPublisher<Data, Error> {
+        let fetcher: GetRouteListFetchable = PersistentGetRouteListFetcher()
+        return fetcher.fetch()
+    }
+    
     func deleteFavoriteItem(key: String) {
         
     }

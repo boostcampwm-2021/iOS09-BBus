@@ -8,10 +8,10 @@
 import Foundation
 import Combine
 
-typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListBySearchKeywordUsecase & GetStationsBySearchKeywordUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationsBySearchKeywordUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
 // MARK: - API Protocol
 protocol GetArrInfoByRouteListUsecase {
-    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<(data: Data, response: URLResponse), Error>
+    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetRouteInfoItemUsecase {
@@ -35,8 +35,8 @@ protocol GetStationsByPosListUsecase {
 }
 
 // MARK: - Search Protocol
-protocol GetRouteListBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: [String: String])
+protocol GetRouteListUsecase {
+    func getRouteList() -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationsBySearchKeywordUsecase {
