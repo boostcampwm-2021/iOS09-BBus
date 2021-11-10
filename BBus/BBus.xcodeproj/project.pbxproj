@@ -64,6 +64,7 @@
 		4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523A272FCF3C00EC0531 /* AlarmSettingViewController.swift */; };
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
+		4AD47072273B9EE100F7EBFF /* XMLParseExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */; };
 		873578832732545D00CC8ECC /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873578822732545D00CC8ECC /* CustomNavigationBar.swift */; };
 		87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8C27311BF100F461A7 /* BusTagView.swift */; };
 		873D6396273039E100E79069 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D6395273039E100E79069 /* Coordinator.swift */; };
@@ -147,6 +148,7 @@
 		4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewController.swift; sourceTree = "<group>"; };
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
+		4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLParseExample.swift; sourceTree = "<group>"; };
 		873578822732545D00CC8ECC /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		87359B8C27311BF100F461A7 /* BusTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusTagView.swift; sourceTree = "<group>"; };
 		873D6395273039E100E79069 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		047C30FF273A06980075EA14 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				4AD47070273B9ED200F7EBFF /* XMLParser */,
 				873D6394273039C400E79069 /* Coordinator */,
 				047C30F8273A044C0075EA14 /* Constant */,
 			);
@@ -500,6 +503,14 @@
 			path = BBusTests;
 			sourceTree = "<group>";
 		};
+		4AD47070273B9ED200F7EBFF /* XMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				4AD47071273B9EE000F7EBFF /* XMLParseExample.swift */,
+			);
+			path = XMLParser;
+			sourceTree = "<group>";
+		};
 		873D6394273039C400E79069 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +671,7 @@
 				4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */,
 				4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */,
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
+				4AD47072273B9EE100F7EBFF /* XMLParseExample.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
