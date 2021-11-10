@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HomeViewController: UIViewController {
     
@@ -13,6 +14,7 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
     private var lastContentOffset: CGFloat = 0
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
