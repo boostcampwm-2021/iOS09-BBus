@@ -9,9 +9,8 @@ import Foundation
 import Combine
 
 enum NetworkError: Error {
-    case accessKeyError, urlError
+    case accessKeyError, urlError, unknownError, noDataError, noResponseError
 }
-
 
 // TODO: - Service Return Type 수정 필요
 class Service {
@@ -21,22 +20,48 @@ class Service {
     
     private init() { }
     
-    func get(url: String, params: [String: String]) -> Result<URLSession.DataTaskPublisher, NetworkError> {
-        guard let accessKey = self.accessKey else { return .failure(NetworkError.accessKeyError) }
-        guard var components = URLComponents(string: url) else { return .failure(NetworkError.urlError) }
+    func get(url: String, params: [String: String]) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
+        let publisher = PassthroughSubject<URLSession.DataTaskPublisher.Output, Error>()
         
-        var items: [URLQueryItem] = [URLQueryItem(name: "serviceKey", value: accessKey)]
-        params.forEach() { item in
-            items.append(URLQueryItem(name: item.key, value: item.value))
+        DispatchQueue.global().async { [weak self, weak publisher] in
+            guard let self = self else { return }
+            guard let accessKey = self.accessKey else {
+                publisher?.send(completion: .failure(NetworkError.accessKeyError))
+                return
+            }
+            guard var components = URLComponents(string: url) else {
+                publisher?.send(completion: .failure(NetworkError.urlError))
+                return
+            }
+            var items: [URLQueryItem] = [URLQueryItem(name: "serviceKey", value: accessKey)]
+            params.forEach() { item in
+                items.append(URLQueryItem(name: item.key, value: item.value))
+            }
+            components.queryItems = items
+            
+            if let url = components.url {
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                URLSession.shared.dataTask(with: request) { data, response, error in
+                    if let error = error {
+                        publisher?.send(completion: .failure(error))
+                        return
+                    }
+                    guard let data = data else {
+                        publisher?.send(completion: .failure(NetworkError.noDataError))
+                        return
+                    }
+                    guard let response = response else {
+                        publisher?.send(completion: .failure(NetworkError.noResponseError))
+                        return
+                    }
+                    publisher?.send((data, response))
+                }.resume()
+            }
+            else {
+                publisher?.send(completion: .failure(NetworkError.urlError))
+            }
         }
-        components.queryItems = items
-        
-        if let url = components.url {
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            return .success(URLSession.init(configuration: .default).dataTaskPublisher(for: request))
-        } else {
-            return .failure(NetworkError.urlError)
-        }
+        return publisher.eraseToAnyPublisher()
     }
 }

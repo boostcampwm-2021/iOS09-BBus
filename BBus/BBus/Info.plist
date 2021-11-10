@@ -11,7 +11,7 @@
 			<key>ws.bus.go.kr</key>
 			<dict>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<string>1</string>
+				<true/>
 			</dict>
 		</dict>
 	</dict>
