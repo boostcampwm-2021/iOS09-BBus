@@ -35,6 +35,10 @@
 		4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */; };
 		4A992C4B273124D90006FB8C /* BusCellTrailingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */; };
 		4AA294AF273C0E8D008E5497 /* GetRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294AE273C0E8D008E5497 /* GetRouteListFetcher.swift */; };
+		4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B0273C1094008E5497 /* GetStationListFetcher.swift */; };
+		4AA294B3273C111C008E5497 /* GetFavoriteItemListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B2273C111C008E5497 /* GetFavoriteItemListFetcher.swift */; };
+		4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B4273C11DE008E5497 /* CreateFavoriteItemFetcher.swift */; };
+		4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
 		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
@@ -123,6 +127,10 @@
 		4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCellTrailingView.swift; sourceTree = "<group>"; };
 		4AA294AE273C0E8D008E5497 /* GetRouteListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRouteListFetcher.swift; sourceTree = "<group>"; };
+		4AA294B0273C1094008E5497 /* GetStationListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStationListFetcher.swift; sourceTree = "<group>"; };
+		4AA294B2273C111C008E5497 /* GetFavoriteItemListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteItemListFetcher.swift; sourceTree = "<group>"; };
+		4AA294B4273C11DE008E5497 /* CreateFavoriteItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFavoriteItemFetcher.swift; sourceTree = "<group>"; };
+		4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteItemFetchable.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -530,6 +538,10 @@
 			children = (
 				87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */,
 				4AA294AE273C0E8D008E5497 /* GetRouteListFetcher.swift */,
+				4AA294B0273C1094008E5497 /* GetStationListFetcher.swift */,
+				4AA294B2273C111C008E5497 /* GetFavoriteItemListFetcher.swift */,
+				4AA294B4273C11DE008E5497 /* CreateFavoriteItemFetcher.swift */,
+				4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */,
 			);
 			path = Fetcher;
 			sourceTree = "<group>";
@@ -695,11 +707,13 @@
 				4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */,
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */,
+				4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				87038A8C273B96DF0078EAE3 /* Persistent.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,
+				4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */,
 				4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */,
 				04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */,
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
@@ -747,6 +761,7 @@
 				4AA294AF273C0E8D008E5497 /* GetRouteListFetcher.swift in Sources */,
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
+				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
 				87038A8A273B96B60078EAE3 /* Service.swift in Sources */,
 				87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */,
@@ -760,6 +775,7 @@
 				87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */,
 				4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */,
 				4ACA522F272FCEDF00EC0531 /* MovingStatusViewModel.swift in Sources */,
+				4AA294B3273C111C008E5497 /* GetFavoriteItemListFetcher.swift in Sources */,
 				4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

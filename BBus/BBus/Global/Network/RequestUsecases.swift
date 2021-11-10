@@ -8,7 +8,8 @@
 import Foundation
 import Combine
 
-typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationsBySearchKeywordUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationListUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+
 // MARK: - API Protocol
 protocol GetArrInfoByRouteListUsecase {
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error>
@@ -34,24 +35,22 @@ protocol GetStationsByPosListUsecase {
     func getArrInfo(key: String, param: [String: String])
 }
 
-// MARK: - Search Protocol
 protocol GetRouteListUsecase {
     func getRouteList() -> AnyPublisher<Data, Error>
 }
 
-protocol GetStationsBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: [String: String])
+protocol GetStationListUsecase {
+    func getStationList() -> AnyPublisher<Data, Error>
 }
 
 protocol GetFavoriteItemListUsecase {
-    func getArrInfo(key: String, param: [String: String])
+    func getFavoriteItemList() -> AnyPublisher<Data, Error>
 }
 
-// MARK: - Save Persistent
 protocol CreateFavoriteItemUsecase {
-    func createFavoriteItem(key: String, param: [String: String])
+    func createFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
 }
 
 protocol DeleteFavoriteItemUsecase {
-    func deleteFavoriteItem(key: String)
+    func deleteFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
 }
