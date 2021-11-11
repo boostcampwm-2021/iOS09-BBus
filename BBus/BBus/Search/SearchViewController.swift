@@ -64,7 +64,7 @@ class SearchViewController: UIViewController {
     }
     
     private func bindingBusResult() {
-        self.cancellable = self.viewModel?.$busSearchResult
+        self.cancellable = self.viewModel?.$busSearchResults
             .receive(on: SearchUseCase.thread)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
@@ -85,7 +85,7 @@ extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchView.currentSearchType == SearchType.bus {
-            guard let busRouteId = self.viewModel?.busSearchResult[indexPath.row].routeID else { return }
+            guard let busRouteId = self.viewModel?.busSearchResults[indexPath.row].routeID else { return }
             self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
@@ -99,12 +99,12 @@ extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let regionCount = 1
-        return self.viewModel?.busSearchResult.count == 0 ? 0 : regionCount
+        return self.viewModel?.busSearchResults.count == 0 ? 0 : regionCount
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.frame.origin.x == 0 {
-            return self.viewModel?.busSearchResult.count ?? 0
+            return self.viewModel?.busSearchResults.count ?? 0
         }
         else {
             return 1
@@ -121,7 +121,7 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         if collectionView.frame.origin.x == 0 {
-            guard let bus = self.viewModel?.busSearchResult[indexPath.row] else { return UICollectionViewCell() }
+            guard let bus = self.viewModel?.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
