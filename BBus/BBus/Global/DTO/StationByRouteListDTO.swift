@@ -39,6 +39,7 @@ struct StationByRouteListDTO: BBusXMLDTO {
     let stationName: String
     let fullSectionDistance: Int
     let arsId: String
+    let beginTm: String
     
     init?(dict: [String : [Any]]) {
         guard let sectSpdString = ((dict["sectSpd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -48,12 +49,14 @@ struct StationByRouteListDTO: BBusXMLDTO {
               let stationName = ((dict["stationNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let fullSectionDistanceString = ((dict["fullSectDist"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let fullSectionDistance = Int(fullSectionDistanceString),
-              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let beginTm = ((dict["beginTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}) else { return nil }
         
         self.sectionSpeed = sectSpd
         self.sequence = seq
         self.stationName = stationName
         self.fullSectionDistance = fullSectionDistance
         self.arsId = arsId
+        self.beginTm = beginTm
     }
 }

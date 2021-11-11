@@ -13,7 +13,7 @@ class BusRouteViewModel {
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable>
     @Published var header: BusRouteDTO?
-    @Published var bodys: [StationByRouteListDTO]?
+    @Published var bodys: [StationByRouteListDTO] = []
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
@@ -37,7 +37,9 @@ class BusRouteViewModel {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.thread)
             .sink { _ in
-                self.bodys = self.usecase.bodys?.body.itemList
+                guard let bodys = self.usecase.bodys?.body.itemList else { return }
+                self.bodys = bodys
+                dump(bodys)
             }
             .store(in: &cancellables)
     }

@@ -143,12 +143,22 @@ class BusRouteViewController: UIViewController {
             })
             .store(in: &cancellables)
     }
+
+    private func bindingBusRouteBodyResult() {
+        self.viewModel?.$bodys
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveValue: { _ in
+                DispatchQueue.main.async {
+                    self.busRouteView.reload()
+                }
+            })
+    }
 }
 
 // MARK: - DataSource : TableView
 extension BusRouteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.viewModel?.bodys.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
