@@ -41,6 +41,7 @@ struct StationByUidItemDTO: BBusXMLDTO {
     let congestion: Int
     let nextStation: String
     let busNumber: String
+    let routeType: String
 
     init?(dict: [String : [Any]]) {
         guard let firstBusArrivalRemainTime = ((dict["arrmsg1"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -51,7 +52,9 @@ struct StationByUidItemDTO: BBusXMLDTO {
               let congestionString = ((dict["congestion"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let congestion = Int(congestionString),
               let nextStation = ((dict["nxtStn"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let busNumber = ((dict["rtNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+              let busNumber = ((dict["rtNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let routeType = ((dict["routeType"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 })
+        else { return nil }
 
         self.firstBusArriveRemainTime = firstBusArrivalRemainTime
         self.secondBusArriveRemainTime = secondBusArrivalRemainTime
@@ -60,5 +63,6 @@ struct StationByUidItemDTO: BBusXMLDTO {
         self.congestion = congestion
         self.nextStation = nextStation
         self.busNumber = busNumber
+        self.routeType = routeType
     }
 }

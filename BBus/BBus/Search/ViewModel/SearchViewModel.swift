@@ -29,9 +29,9 @@ class SearchViewModel {
     }
 
     private func prepare() {
-        self.usecase.$routeList
-            .receive(on: SearchUseCase.thread)
-            .sink(receiveValue: { _ in
+//        self.usecase.$routeList
+//            .receive(on: SearchUseCase.thread)
+//            .sink(receiveValue: { _ in
                 self.$keyword
                     .receive(on: SearchUseCase.thread)
                     .debounce(for: .milliseconds(400), scheduler: SearchUseCase.thread)
@@ -40,7 +40,7 @@ class SearchViewModel {
                         self.busSearchResult = busSearchResult
                     }
                     .store(in: &self.cancellables)
-            })
-            .store(in: &self.cancellables)
+//            })
+//            .store(in: &self.cancellables)
     }
 }
