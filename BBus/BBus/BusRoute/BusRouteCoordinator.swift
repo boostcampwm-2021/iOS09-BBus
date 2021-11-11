@@ -15,7 +15,9 @@ class BusRouteCoordinator: StationPushable {
         self.navigationPresenter = presenter
     }
 
-    func start() {
+    func start(busRouteId: Int) {
+        // TODO: inject busRouteId
+        print(busRouteId)
         let viewController = BusRouteViewController()
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)

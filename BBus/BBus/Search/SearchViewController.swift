@@ -85,7 +85,8 @@ extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchView.currentSearchType == SearchType.bus {
-            self.coordinator?.pushToBusRoute()
+            guard let busRouteId = self.viewModel?.busSearchResult[indexPath.row].routeID else { return }
+            self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
             self.coordinator?.pushToStation()
