@@ -64,7 +64,7 @@ class SearchViewController: UIViewController {
     }
     
     private func bindingBusResult() {
-        self.cancellable = self.viewModel?.$busSearchResult
+        self.cancellable = self.viewModel?.$busSearchResults
             .receive(on: SearchUseCase.thread)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
@@ -85,10 +85,12 @@ extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchView.currentSearchType == SearchType.bus {
-            self.coordinator?.pushToBusRoute()
+            guard let busRouteId = self.viewModel?.busSearchResults[indexPath.row].routeID else { return }
+            self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
-            self.coordinator?.pushToStation()
+            guard let stationId = self.viewModel?.stationSearchResults[indexPath.row].stationDTO.stationID else { return }
+            self.coordinator?.pushToStation(stationId: stationId)
         }
     }
 }
@@ -98,15 +100,21 @@ extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let regionCount = 1
-        return self.viewModel?.busSearchResult.count == 0 ? 0 : regionCount
+        
+        if collectionView.frame.origin.x == 0 {
+            return self.viewModel?.busSearchResults.count == 0 ? 0 : regionCount
+        }
+        else {
+            return self.viewModel?.stationSearchResults.count == 0 ? 0 : regionCount
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.frame.origin.x == 0 {
-            return self.viewModel?.busSearchResult.count ?? 0
+            return self.viewModel?.busSearchResults.count ?? 0
         }
         else {
-            return 1
+            return self.viewModel?.stationSearchResults.count ?? 0
         }
     }
 
@@ -120,17 +128,12 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         if collectionView.frame.origin.x == 0 {
-            guard let bus = self.viewModel?.busSearchResult[indexPath.row] else { return UICollectionViewCell() }
+            guard let bus = self.viewModel?.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
-            let fullText = "14911 | 공항철도.홍대입구역 방면"
-            let range = (fullText as NSString).range(of: "|")
-            let attributedString = NSMutableAttributedString(string: fullText)
-            attributedString.addAttribute(.foregroundColor,
-                                          value: BBusColor.bbusLightGray as Any,
-                                          range: range)
-            cell.configureStationUI(title: "홍대입구", detailInfo: "")
+            guard let station = self.viewModel?.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            cell.configureStationUI(title: station.stationDTO.stationName, detailInfo: station.stationDTO.arsID)
         }
         cell.configureLayout()
         return cell

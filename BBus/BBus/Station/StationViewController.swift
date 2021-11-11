@@ -113,7 +113,7 @@ class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.coordinator?.pushToBusRoute()
+        self.coordinator?.pushToBusRoute(busRouteId: 272)
     }
 }
 

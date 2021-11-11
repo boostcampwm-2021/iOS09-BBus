@@ -74,7 +74,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Model binding Logic needed
 
-        self.coordinator?.pushToBusRoute()
+        self.coordinator?.pushToBusRoute(busRouteId: 272)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -159,6 +159,6 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene() {
         // TODO: Model binding Logic needed
         
-        self.coordinator?.pushToStation()
+        self.coordinator?.pushToStation(stationId: 3)
     }
 }

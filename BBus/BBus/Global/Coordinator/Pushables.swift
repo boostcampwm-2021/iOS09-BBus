@@ -8,12 +8,12 @@
 import Foundation
 
 protocol BusRoutePushable: Coordinator {
-    func pushToBusRoute()
+    func pushToBusRoute(busRouteId: Int)
 }
 
 extension BusRoutePushable {
-    func pushToBusRoute() {
-        self.delegate?.pushBusRoute()
+    func pushToBusRoute(busRouteId: Int) {
+        self.delegate?.pushBusRoute(busRouteId: busRouteId)
     }
 }
 
@@ -38,11 +38,11 @@ extension AlarmSettingPushable {
 }
 
 protocol StationPushable: Coordinator {
-    func pushToStation()
+    func pushToStation(stationId: Int)
 }
 
 extension StationPushable {
-    func pushToStation() {
-        self.delegate?.pushStation()
+    func pushToStation(stationId: Int) {
+        self.delegate?.pushStation(stationId: stationId)
     }
 }
