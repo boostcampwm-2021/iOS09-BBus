@@ -15,7 +15,9 @@ class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
         self.navigationPresenter = presenter
     }
 
-    func start() {
+    func start(stationId: Int) {
+        // TODO: inject stationId
+        print(stationId)
         let viewController = StationViewController()
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)

@@ -159,6 +159,6 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene() {
         // TODO: Model binding Logic needed
         
-        self.coordinator?.pushToStation()
+        self.coordinator?.pushToStation(stationId: 3)
     }
 }
