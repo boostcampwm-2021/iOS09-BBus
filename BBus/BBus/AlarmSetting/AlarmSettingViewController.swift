@@ -9,35 +9,6 @@ import UIKit
 
 class AlarmSettingViewController: UIViewController {
 
-    enum Color {
-        static let white = UIColor.white
-        static let black = UIColor.black
-        static let clear = UIColor.clear
-        static let red = UIColor.red
-        static let lightGray = UIColor.lightGray
-        static let darkGray = UIColor.darkGray
-        static let blueBus = UIColor.systemBlue
-        static let tableViewSeperator = UIColor.systemGray6
-        static let tableViewCellSubTitle = UIColor.systemGray
-        static let tagBusNumber = UIColor.darkGray
-        static let tagBusCongestion = UIColor.red
-        static let greenLine = UIColor.green
-        static let redLine = UIColor.red
-        static let tableBackground = UIColor.systemGray5
-        static let iconColor = UIColor(named: "alarmIconGrayColor")
-        static let alarmTint = UIColor(named: "bbusGray")
-    }
-    
-    enum Image {
-        static let waypoint = UIImage(named: "StationCenterCircle")
-        static let getOn = UIImage(named: "GetOn")
-        static let clockIcon = UIImage(systemName: "clock")
-        static let locationIcon = UIImage(named: "locationIcon")
-        static let busIcon = UIImage(named: "grayBusIcon")
-        static let alarmOffIcon = UIImage(named: "alarmOff")
-        static let alarmOnIcon = UIImage(named: "alarmOn")
-    }
-
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
     private lazy var customNavigationBar = CustomNavigationBar()
@@ -45,18 +16,18 @@ class AlarmSettingViewController: UIViewController {
         let radius: CGFloat = 25
 
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.configureLayout()
         self.configureColor()
+        self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
     }
@@ -99,8 +70,8 @@ class AlarmSettingViewController: UIViewController {
     }
 
     private func configureColor() {
-        self.view.backgroundColor = Color.white
-        self.customNavigationBar.configureTintColor(color: Color.black)
+        self.view.backgroundColor = BBusColor.white
+        self.customNavigationBar.configureTintColor(color: BBusColor.black)
         self.customNavigationBar.configureAlpha(alpha: 1)
     }
 
@@ -131,7 +102,7 @@ extension AlarmSettingViewController: UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
 
-            cell.configure(busColor: Color.blueBus)
+            cell.configure(busColor: BBusColor.bbusTypeBlue)
             cell.configure(order: String(indexPath.row+1),
                            remainingTime: "2분 18초",
                            remainingStationCount: "2번째전",
@@ -144,8 +115,8 @@ extension AlarmSettingViewController: UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
 
-            cell.configure(beforeColor: indexPath.item == 0 ? .clear : AlarmSettingViewController.Color.lightGray,
-                           afterColor: indexPath.item == 9 ? .clear : AlarmSettingViewController.Color.lightGray,
+            cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.bbusGray,
+                           afterColor: indexPath.item == 9 ? .clear : BBusColor.bbusGray,
                            title: "신촌오거리.현대백화점",
                            description: "14062 | 2분 소요",
                            type: indexPath.item == 0 ? .getOn : .waypoint)
@@ -184,7 +155,9 @@ extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         
-        header.contentView.backgroundColor = Color.white
+        header.contentView.backgroundColor = BBusColor.white
+        header.textLabel?.textColor = BBusColor.black
+        header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -202,7 +175,9 @@ extension AlarmSettingViewController: BackButtonDelegate {
 // MARK: - Delegate: GetOffAlarmButton
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
     func shouldGoToMovingStatusScene() {
-        self.coordinator?.pushToMovingStatus()
+        UIView.animate(withDuration: 0.3) {
+            self.coordinator?.openMovingStatus()
+        }
     }
 }
 

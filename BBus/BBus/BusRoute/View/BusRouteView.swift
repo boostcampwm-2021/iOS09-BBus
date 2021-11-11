@@ -23,14 +23,15 @@ class BusRouteView: UIView {
                                                 left: tableViewLeftInset,
                                                 bottom: tableViewTopBottomRightInset,
                                                 right: tableViewTopBottomRightInset)
-        tableView.separatorColor = BusRouteViewController.Color.tableViewSeperator
+        tableView.backgroundColor = BBusColor.white
+        tableView.separatorColor = BBusColor.bbusLightGray
         return tableView
     }()
     
     convenience init() {
         self.init(frame: CGRect())
 
-        self.backgroundColor = BusRouteViewController.Color.white
+        self.backgroundColor = BBusColor.white
         self.configureLayout()
     }
 
@@ -91,7 +92,7 @@ class BusRouteView: UIView {
         self.busRouteScrollView.delegate = delegate
     }
 
-    func configureColor(to color: UIColor) {
+    func configureColor(to color: UIColor?) {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
     }

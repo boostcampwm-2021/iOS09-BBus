@@ -9,14 +9,17 @@ import UIKit
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
-    static let height: CGFloat = 70
+    var busNumberYAxisMargin: CGFloat { return 0 }
+    var busNumberFontSize: CGFloat { return 22 }
+    var busNumberLeadingInterval: CGFloat { return 20 }
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "272"
-        label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.textColor = MyColor.bbusTypeBlue
+        label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
+        label.textColor = BBusColor.bbusTypeBlue
         return label
     }()
     private lazy var trailingView = BusCellTrailingView()
@@ -36,15 +39,17 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Configuration
-    private func configureLayout() {
-        let leadingInterval: CGFloat = 20
+    // Only uses Subclass
+     func configureLayout() {
         let half: CGFloat = 0.5
 
         self.addSubview(self.busNumberLabel)
+        let busNumberLeadingConstraint = self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.busNumberLeadingInterval)
+        busNumberLeadingConstraint.priority = UILayoutPriority.defaultHigh
         self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval)
+            self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: self.busNumberYAxisMargin),
+            busNumberLeadingConstraint
         ])
 
         self.addSubview(self.trailingView)
@@ -62,6 +67,16 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        self.backgroundColor = MyColor.white
+        self.backgroundColor = BBusColor.white
+    }
+    
+    func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
+        self.busNumberLabel.text = busNumber
+        self.trailingView.configure(firstBusTime: firstBusTime,
+                                    firstBusRemaining: firstBusRelativePosition,
+                                    firstBusCongestion: firstBusCongestion,
+                                    secondBusTime: secondBusTime,
+                                    secondBusRemaining: secondBusRelativePosition,
+                                    secondBusCongestion: secondBusCongsetion)
     }
 }

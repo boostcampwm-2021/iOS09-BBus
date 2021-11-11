@@ -28,7 +28,7 @@ class BusTagView: UIView {
         let labelFontSize: CGFloat = 11
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.tagBusNumber
+        label.textColor = BBusColor.darkGray
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -37,7 +37,7 @@ class BusTagView: UIView {
         let labelFontSize: CGFloat = 11
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.tagBusCongestion
+        label.textColor = BBusColor.bbusCongestionRed
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -54,7 +54,7 @@ class BusTagView: UIView {
         let labelFontSize: CGFloat = 11
 
         let label = UILabel()
-        label.textColor = BusRouteViewController.Color.tagBusNumber
+        label.textColor = BBusColor.darkGray
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.textAlignment = .center
         return label
@@ -127,14 +127,14 @@ class BusTagView: UIView {
         let busTagImageViewHeightAnchorWithMinSize: CGFloat = 20
 
         if isLowFloor {
-            self.busTagImageView.image = BusRouteViewController.Image.tagMaxSize
+            self.busTagImageView.image = BBusImage.tagMaxSize
             NSLayoutConstraint.activate([
                 self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
                 self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageviewHeightAnchorWithMaxSize)
             ])
         }
         else {
-            self.busTagImageView.image = BusRouteViewController.Image.tagMinSize
+            self.busTagImageView.image = BBusImage.tagMinSize
             NSLayoutConstraint.activate([
                 self.busTagImageView.widthAnchor.constraint(equalToConstant: busTagImageViewWidthAnchor),
                 self.busTagImageView.heightAnchor.constraint(equalToConstant: busTagImageViewHeightAnchorWithMinSize)

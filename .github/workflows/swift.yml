@@ -10,9 +10,11 @@ jobs:
   build:
 
     runs-on: macos-latest
+    env:
+      API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }} 
 
     steps:
     - uses: actions/checkout@v2
     - name: Build
       run: |
-        xcodebuild test -project BBus/BBus.xcodeproj -scheme BBus -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest'
+        xcodebuild test -project BBus/BBus.xcodeproj -scheme BBus -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' API_ACCESS_KEY=$API_ACCESS_KEY

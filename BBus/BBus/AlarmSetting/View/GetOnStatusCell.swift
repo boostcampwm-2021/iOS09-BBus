@@ -21,7 +21,7 @@ class GetOnStatusCell: UITableViewCell {
         let radius: CGFloat = 7.5
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.white
+        label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .bold)
         label.textAlignment = .center
         label.clipsToBounds = true
@@ -32,7 +32,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 20
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.black
+        label.textColor = BBusColor.black
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .regular)
         label.textAlignment = .left
         return label
@@ -41,7 +41,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 10
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.lightGray
+        label.textColor = BBusColor.bbusGray
         label.font = UIFont.systemFont(ofSize: 10)
         label.textAlignment = .center
         return label
@@ -50,7 +50,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 10
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.red
+        label.textColor = BBusColor.red
         label.font = UIFont.systemFont(ofSize: 10)
         label.textAlignment = .center
         return label
@@ -63,27 +63,27 @@ class GetOnStatusCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.spacing = stackViewSpacing
         stackView.layer.borderWidth = borderWidth
-        stackView.layer.borderColor = AlarmSettingViewController.Color.tableViewSeperator.cgColor
+        stackView.layer.borderColor = BBusColor.bbusLightGray?.cgColor
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         return stackView
     }()
     private lazy var clockIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = AlarmSettingViewController.Image.clockIcon
-        imageView.tintColor = AlarmSettingViewController.Color.iconColor
+        imageView.image = BBusImage.clockSymbol
+        imageView.tintColor = BBusColor.iconColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     private lazy var locationIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = AlarmSettingViewController.Image.locationIcon
+        imageview.image = BBusImage.locationSymbol
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()
     private lazy var busIconImageView: UIImageView = {
         let imageview = UIImageView()
-        imageview.image = AlarmSettingViewController.Image.busIcon
+        imageview.image = BBusImage.busGraySymbol
         imageView?.contentMode = .scaleAspectFit
         return imageview
     }()
@@ -91,7 +91,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -100,7 +100,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -109,7 +109,7 @@ class GetOnStatusCell: UITableViewCell {
         let labelFontSize: CGFloat = 14
 
         let label = UILabel()
-        label.textColor = AlarmSettingViewController.Color.tableViewCellSubTitle
+        label.textColor = BBusColor.systemGray
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         label.textAlignment = .left
         return label
@@ -117,7 +117,7 @@ class GetOnStatusCell: UITableViewCell {
     private lazy var alarmButton = AlarmSettingButton()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = AlarmSettingViewController.Color.tableViewSeperator
+        view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
 
@@ -134,6 +134,7 @@ class GetOnStatusCell: UITableViewCell {
         super.init(coder: coder)
 
         self.configureLayout()
+        self.backgroundColor = BBusColor.white
         self.selectionStyle = .none
     }
 
@@ -141,6 +142,7 @@ class GetOnStatusCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.configureLayout()
+        self.backgroundColor = BBusColor.white
         self.selectionStyle = .none
     }
 
@@ -258,7 +260,7 @@ class GetOnStatusCell: UITableViewCell {
         ])
     }
 
-    func configure(busColor: UIColor) {
+    func configure(busColor: UIColor?) {
         self.busOrderNumberLabel.backgroundColor = busColor
     }
 

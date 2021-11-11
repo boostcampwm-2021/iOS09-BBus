@@ -6,40 +6,7 @@
 //
 
 import UIKit
-
-enum MyColor {
-    static let gray = UIColor.gray
-    static let darkGray = UIColor.darkGray
-    static let white = UIColor.white
-    static let black = UIColor.black
-    static let clear = UIColor.clear
-    static let blueBus = UIColor.systemBlue
-    static let systemGray6 = UIColor.systemGray6
-    static let bbusLightGray = UIColor(named: "bbusLightGray")
-    static let bbusGray = UIColor(named: "bbusGray")
-    static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
-    static let bbusTypeRed = UIColor(named: "bbusTypeRed")
-    static let bbusSearchRed = UIColor(named: "bbusSearchRed")
-    static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
-}
-
-enum MyImage {
-    static let refresh: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: largeConfig)
-    }()
-    static let alarm: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "alarm", withConfiguration: largeConfig)
-    }()
-    static let back: UIImage? = {
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
-        return UIImage(systemName: "chevron.left", withConfiguration: largeConfig)
-    }()
-    static let bus = UIImage(systemName: "bus.fill")
-    static let station = UIImage(systemName: "bitcoinsign.circle")
-    static let keyboardDown = UIImage(systemName: "keyboard.chevron.compact.down")
-}
+import Combine
 
 class HomeViewController: UIViewController {
     
@@ -47,6 +14,7 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
     private var lastContentOffset: CGFloat = 0
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -61,7 +29,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
-
+        self.configureColor()
         self.configureLayout()
         self.homeView.configureLayout()
         self.homeView.configureDelegate(self)
@@ -70,7 +38,7 @@ class HomeViewController: UIViewController {
         let statusBarHeight: CGFloat = app.statusBarFrame.size.height
 
         let statusbarView = UIView()
-        statusbarView.backgroundColor = UIColor.white //컬러 설정 부분
+        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
         self.view.addSubview(statusbarView)
         statusbarView.translatesAutoresizingMaskIntoConstraints = false
         statusbarView.heightAnchor
@@ -81,12 +49,11 @@ class HomeViewController: UIViewController {
             .constraint(equalTo: self.view.topAnchor).isActive = true
         statusbarView.centerXAnchor
             .constraint(equalTo: self.view.centerXAnchor).isActive = true
+
     }
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.backgroundColor = UIColor.systemBackground
-
         self.view.addSubview(self.homeView)
         self.homeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -96,6 +63,10 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
+    
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.white
+    }
 }
 
 // MARK: - Delegate : UICollectionView
@@ -104,7 +75,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Model binding Logic needed
 
-        self.coordinator?.pushToBusRoute()
+        self.coordinator?.pushToBusRoute(busRouteId: 100100048)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -134,13 +105,19 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                         as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
-
         cell.configureDelegate(self)
+        cell.configure(busNumber: "272",
+                       firstBusTime: "1분 29초",
+                       firstBusRelativePosition: "2번째전",
+                       firstBusCongestion: "여유",
+                       secondBusTime: "9분 51초",
+                       secondBusRelativePosition: "6번째전",
+                       secondBusCongsetion: "여유")
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteHeaderView.identifier, for: indexPath) as? FavoriteHeaderView else { return UICollectionReusableView() }
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
         header.configureDelegate(self)
         return header
     }
@@ -154,18 +131,18 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height + HomeNavigationView.height)
+            return CGSize(width: self.view.frame.width, height: FavoriteCollectionHeaderView.height + HomeNavigationView.height)
         }
         else {
-            return CGSize(width: self.view.frame.width, height: FavoriteHeaderView.height)
+            return CGSize(width: self.view.frame.width, height: FavoriteCollectionHeaderView.height)
         }
     }
 }
 
 // MARK: - HomeSearchButtonDelegate : UICollectionView
 extension HomeViewController: HomeSearchButtonDelegate {
-    func shouldGoToSearchBusScene() {
-        self.coordinator?.pushToSearchBus()
+    func shouldGoToSearchScene() {
+        self.coordinator?.pushToSearch()
     }
 }
 
@@ -183,6 +160,6 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene() {
         // TODO: Model binding Logic needed
         
-        self.coordinator?.pushToStation()
+        self.coordinator?.pushToStation(arsId: "19007")
     }
 }

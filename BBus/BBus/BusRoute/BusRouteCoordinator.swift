@@ -8,23 +8,24 @@
 import UIKit
 
 class BusRouteCoordinator: StationPushable {
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
-    var childCoordinators: [Coordinator]
+    var navigationPresenter: UINavigationController
+    var delegate: CoordinatorDelegate?
 
     init(presenter: UINavigationController) {
-        self.presenter = presenter
-        self.childCoordinators = []
+        self.navigationPresenter = presenter
     }
 
-    func start() {
-        let viewController = BusRouteViewController()
+    func start(busRouteId: Int) {
+        print(busRouteId)
+        let usecase = BusRouteUsecase(usecases: BBusAPIUsecases(on: BusRouteUsecase.thread), busRouteId: busRouteId)
+        let viewModel = BusRouteViewModel(usecase: usecase)
+        let viewController = BusRouteViewController(viewModel: viewModel)
         viewController.coordinator = self
-        self.presenter.pushViewController(viewController, animated: true)
+        self.navigationPresenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
-        self.presenter.popViewController(animated: true)
+        self.navigationPresenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }

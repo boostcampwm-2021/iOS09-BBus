@@ -6,55 +6,44 @@
 //
 
 import UIKit
+import Combine
 
 class BusRouteViewController: UIViewController {
 
-    enum Color {
-        static let white = UIColor.white
-        static let clear = UIColor.clear
-        static let blueBus = UIColor.systemBlue
-        static let tableViewSeperator = UIColor.systemGray6
-        static let tableViewCellSubTitle = UIColor.systemGray
-        static let tagBusNumber = UIColor.darkGray
-        static let tagBusCongestion = UIColor.red
-        static let greenLine = UIColor.green
-        static let redLine = UIColor.red
-        static let yellowLine = UIColor.yellow
-    }
-    
-    enum Image {
-        static let navigationBack = UIImage(systemName: "chevron.left")
-        static let headerArrow = UIImage(systemName: "arrow.left.and.right")
-        static let stationCenterCircle = UIImage(named: "StationCenterCircle")
-        static let stationCenterGetOn = UIImage(named: "GetOn")
-        static let stationCenterGetOff = UIImage(named: "GetOff")
-        static let stationCenterUturn = UIImage(named: "Uturn")
-        static let tagMaxSize = UIImage(named: "BusTagMaxSize")
-        static let tagMinSize = UIImage(named: "BusTagMinSize")
-        static let blueBusIcon = UIImage(named: "busIcon")
-    }
-
+    weak var coordinator: BusRouteCoordinator?
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
-    weak var coordinator: BusRouteCoordinator?
+    private let viewModel: BusRouteViewModel?
+    private var cancellables: Set<AnyCancellable> = []
+
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
 
         let button = UIButton()
-        button.setImage(MyImage.refresh, for: .normal)
+        button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureBusColor(to: Color.blueBus)
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
+        self.binding()
+    }
+
+    init(viewModel: BusRouteViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
     }
 
     // MARK: - Configure
@@ -96,30 +85,63 @@ class BusRouteViewController: UIViewController {
         self.customNavigationBar.configureDelegate(self)
     }
     
-    private func configureBusColor(to color: UIColor) {
+    private func configureBusColor(type: RouteType) {
+        let color: UIColor?
+
+        switch type {
+        case .mainLine:
+            color = BBusColor.bbusTypeBlue
+        case .broadArea:
+            color = BBusColor.bbusTypeRed
+        case .customized:
+            color = BBusColor.bbusTypeGreen
+        case .circulation:
+            color = BBusColor.black
+        case .lateNight:
+            color = BBusColor.black
+        case .localLine:
+            color = BBusColor.bbusTypeGreen
+        }
+
         self.view.backgroundColor = color
         self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BusRouteViewController.Color.white)
+        self.customNavigationBar.configureTintColor(color: BBusColor.white)
         self.customNavigationBar.configureAlpha(alpha: 0)
         self.busRouteView.configureColor(to: color)
     }
 
     private func configureMOCKDATA() {
-        self.customNavigationBar.configureBackButtonTitle("272")
+
 
         for i in 1...20 {
             let location = CGFloat.random(in: (0...19))
             self.busRouteView.addBusTag(location: location,
-                                        busIcon: Image.blueBusIcon,
+                                        busIcon: BBusImage.blueBusIcon,
                                         busNumber: "6302",
                                         busCongestion: "혼잡",
                                         isLowFloor: i%2 == 0)
         }
+    }
 
-        self.busRouteView.configureHeaderView(busType: "간선 버스",
-                                              busNumber: "272",
-                                              fromStation: "면목동",
-                                              toStation: "남가좌동")
+    private func binding() {
+        self.bindingBusRouteHeaderResult()
+    }
+
+    private func bindingBusRouteHeaderResult() {
+        self.viewModel?.$header
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveValue: { _ in
+                guard let header = self.viewModel?.header else { return }
+                DispatchQueue.main.async {
+                    self.customNavigationBar.configureBackButtonTitle(header.busRouteName)
+                    self.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
+                                                          busNumber: header.busRouteName,
+                                                          fromStation: header.startStation,
+                                                          toStation: header.endStation)
+                    self.configureBusColor(type: header.routeType)
+                }
+            })
+            .store(in: &cancellables)
     }
 }
 
@@ -134,30 +156,30 @@ extension BusRouteViewController: UITableViewDataSource {
 
         let beforeColor: UIColor
         if indexPath.item == 0 {
-            beforeColor = BusRouteViewController.Color.clear
+            beforeColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            beforeColor = BusRouteViewController.Color.greenLine
+            beforeColor = BBusColor.green
         }
         else if indexPath.item % 3 == 1 {
-            beforeColor = BusRouteViewController.Color.redLine
+            beforeColor = BBusColor.red
         }
         else {
-            beforeColor = BusRouteViewController.Color.yellowLine
+            beforeColor = BBusColor.yellow
         }
         
         let afterColor: UIColor
         if indexPath.item == 19 {
-            afterColor = BusRouteViewController.Color.clear
+            afterColor = BBusColor.clear
         }
         else if indexPath.item % 3 == 0 {
-            afterColor = BusRouteViewController.Color.redLine
+            afterColor = BBusColor.red
         }
         else if indexPath.item % 3 == 1 {
-            afterColor = BusRouteViewController.Color.yellowLine
+            afterColor = BBusColor.yellow
         }
         else {
-            afterColor = BusRouteViewController.Color.greenLine
+            afterColor = BBusColor.green
         }
         
         cell.configure(beforeColor: beforeColor,
@@ -173,7 +195,7 @@ extension BusRouteViewController: UITableViewDataSource {
 // MARK: - Delegate : UITableView
 extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.coordinator?.pushToStation()
+        self.coordinator?.pushToStation(arsId: "19007")
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -184,7 +206,13 @@ extension BusRouteViewController: UITableViewDelegate {
 // MARK: - Delegate : UIScrollView
 extension BusRouteViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
+        let baseLineContentOffset = BusRouteHeaderView.headerHeight - CustomNavigationBar.height
+        if scrollView.contentOffset.y >= baseLineContentOffset {
+            self.customNavigationBar.configureAlpha(alpha: 1)
+        }
+        else {
+            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

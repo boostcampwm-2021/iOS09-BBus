@@ -7,23 +7,24 @@
 
 import UIKit
 
-class StationCoordinator: NSObject, Coordinator {
-    var delegate: CoordinatorFinishDelegate?
-    var presenter: UINavigationController
-    var childCoordinators: [Coordinator]
+class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
+    var delegate: CoordinatorDelegate?
+    var navigationPresenter: UINavigationController
 
     init(presenter: UINavigationController) {
-        self.presenter = presenter
-        self.childCoordinators = []
+        self.navigationPresenter = presenter
     }
 
-    func start() {
-        let viewController = StationViewController()
+    func start(arsId: String) {
+        let usecase = StationUsecase(usecases: BBusAPIUsecases(on: StationUsecase.thread))
+        let viewModel = StationViewModel(usecase: usecase, arsId: arsId)
+        let viewController = StationViewController(viewModel: viewModel)
         viewController.coordinator = self
-        presenter.pushViewController(viewController, animated: true)
+        self.navigationPresenter.pushViewController(viewController, animated: true)
     }
 
     func terminate() {
+        self.navigationPresenter.popViewController(animated: true)
         self.coordinatorDidFinish()
     }
 }
