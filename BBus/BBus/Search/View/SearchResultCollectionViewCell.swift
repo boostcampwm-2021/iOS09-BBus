@@ -79,6 +79,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     }
     
     func configureStationUI(title: String, detailInfo: String) {
-        
+        self.titleLabel.text = title
+        self.detailInfoLabel.text = detailInfo
     }
 }
