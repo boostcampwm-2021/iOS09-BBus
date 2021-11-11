@@ -6,19 +6,21 @@
 //
 
 import UIKit
+import Combine
 
 class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()
     private let viewModel: SearchViewModel?
+    private var cancellable: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
         self.configureUI()
         self.configureDelegate()
-
+        self.binding()
     }
 
     init(viewModel: SearchViewModel) {
@@ -56,6 +58,20 @@ class SearchViewController: UIViewController {
     private func configureUI() {
         self.view.backgroundColor = BBusColor.white
     }
+    
+    private func binding() {
+        self.bindingBusResult()
+    }
+    
+    private func bindingBusResult() {
+        self.cancellable = self.viewModel?.$busSearchResult
+            .receive(on: SearchUseCase.thread)
+            .sink(receiveValue: { _ in
+                DispatchQueue.main.async {
+                    self.searchView.reload()
+                }
+            })
+    }
 }
 
 extension SearchViewController: SearchBackButtonDelegate {
@@ -81,24 +97,31 @@ extension SearchViewController: UICollectionViewDelegate {
 extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 10
+        let regionCount = 1
+        return self.viewModel?.busSearchResult.count == 0 ? 0 : regionCount
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        if collectionView.frame.origin.x == 0 {
+            return self.viewModel?.busSearchResult.count ?? 0
+        }
+        else {
+            return 1
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SimpleCollectionHeaderView.identifier, for: indexPath) as? SimpleCollectionHeaderView else { return UICollectionReusableView() }
         header.configureLayout()
-        header.configure(title: (indexPath.section % 2 == 0) ? "경기" : "부산")
+        header.configure(title: "서울")
         return header
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         if collectionView.frame.origin.x == 0 {
-            cell.configureUI(title: "15", detailInfo: NSMutableAttributedString(string: "가평군 일반버스"))
+            guard let bus = self.viewModel?.busSearchResult[indexPath.row] else { return UICollectionViewCell() }
+            cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
             let fullText = "14911 | 공항철도.홍대입구역 방면"
@@ -107,7 +130,7 @@ extension SearchViewController: UICollectionViewDataSource {
             attributedString.addAttribute(.foregroundColor,
                                           value: BBusColor.bbusLightGray as Any,
                                           range: range)
-            cell.configureUI(title: "홍대입구", detailInfo: attributedString)
+            cell.configureStationUI(title: "홍대입구", detailInfo: "")
         }
         cell.configureLayout()
         return cell

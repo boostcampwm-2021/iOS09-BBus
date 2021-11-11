@@ -25,10 +25,8 @@ class SearchUseCase {
             .receive(on: Self.thread)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { error in
-                // 에러 처리
                 if case .failure(let error) = error {
                     print(error)
-                    print("error")
                 }
             }, receiveValue: { routeList in
                 self.routeList = routeList
@@ -37,7 +35,11 @@ class SearchUseCase {
     
     func searchBus(by keyword: String) -> [BusRouteDTO]? {
         guard let routeList = self.routeList else { return nil }
-        
-        return routeList.filter { $0.busRouteName.contains(keyword) }
+        if keyword == "" {
+            return []
+        }
+        else {
+            return routeList.filter { $0.busRouteName.hasPrefix(keyword) }
+        }
     }
 }

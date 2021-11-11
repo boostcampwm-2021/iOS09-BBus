@@ -9,14 +9,18 @@ import Foundation
 import Combine
 
 class SearchViewModel {
+    
+    typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
     private let usecase: SearchUseCase
-    private var cancellables: Set<AnyCancellable> = []
-    @Published var keyword: String
-
+    private var cancellables: Set<AnyCancellable>
+    @Published private var keyword: String
+    @Published private(set) var busSearchResult: [BusRouteDTO] = []
+    
     init(usecase: SearchUseCase) {
         self.usecase = usecase
         self.keyword = ""
+        self.cancellables = []
         self.prepare()
     }
 
@@ -25,7 +29,6 @@ class SearchViewModel {
     }
 
     private func prepare() {
-
         self.usecase.$routeList
             .receive(on: SearchUseCase.thread)
             .sink(receiveValue: { _ in
@@ -33,7 +36,8 @@ class SearchViewModel {
                     .receive(on: SearchUseCase.thread)
                     .debounce(for: .milliseconds(400), scheduler: SearchUseCase.thread)
                     .sink { keyword in
-                        dump(self.usecase.searchBus(by: keyword))
+                        guard let busSearchResult = self.usecase.searchBus(by: keyword) else { return }
+                        self.busSearchResult = busSearchResult
                     }
                     .store(in: &self.cancellables)
             })
