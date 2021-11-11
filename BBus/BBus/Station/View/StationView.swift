@@ -113,4 +113,8 @@ class StationView: UIView {
         layout.minimumLineSpacing = bottomLineHeight
         return layout
     }
+    
+    func reload() {
+        self.stationBodyCollectionView.reloadData()
+    }
 }

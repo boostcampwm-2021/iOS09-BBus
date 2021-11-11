@@ -66,14 +66,14 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         ])
     }
     
-    func configure(busNumber: String, direction: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
+    func configure(busNumber: String, direction: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: BusCongestion, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: BusCongestion) {
         super.configure(busNumber: busNumber,
                         firstBusTime: firstBusTime,
                         firstBusRelativePosition: firstBusRelativePosition,
-                        firstBusCongestion: firstBusCongestion,
+                        firstBusCongestion: firstBusCongestion.toString(),
                         secondBusTime: secondBusTime,
                         secondBusRelativePosition: secondBusRelativePosition,
-                        secondBusCongsetion: secondBusCongsetion)
+                        secondBusCongsetion: secondBusCongsetion.toString())
         self.directionLabel.text = direction
     }
     

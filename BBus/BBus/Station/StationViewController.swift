@@ -116,6 +116,13 @@ class StationViewController: UIViewController {
                                                       direction: "")
             })
             .store(in: &self.cancellables)
+        
+        self.viewModel?.$noInfoBuses
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stationView.reload()
+            })
+            .store(in: &self.cancellables)
     }
 
     private func configureColor() {
@@ -134,28 +141,52 @@ extension StationViewController: UICollectionViewDelegate {
 extension StationViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return (self.viewModel?.noInfoBuses.count ?? 0) + (self.viewModel?.infoBuses.count ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        guard let viewModel = self.viewModel else { return 0 }
+        if viewModel.infoBuses.count - 1 >= section {
+            let key = Array(viewModel.infoBuses.keys)[section]
+            return viewModel.infoBuses[key]?.count ?? 0
+        }
+        else {
+            let section = section - viewModel.infoBuses.count
+            let key = Array(viewModel.noInfoBuses.keys)[section]
+            return viewModel.noInfoBuses[key]?.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StationBodyCollectionViewCell.identifier, for: indexPath) as? StationBodyCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StationBodyCollectionViewCell.identifier, for: indexPath) as? StationBodyCollectionViewCell,
+              let viewModel = self.viewModel else { return UICollectionViewCell() }
         // height 재설정
         if collectionView.contentSize.height != self.stationBusInfoHeight {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
-        cell.configure(busNumber: "58-A",
-                       direction: "새보미아파트.고리울동굴시장 방향",
-                       firstBusTime: "1분 29초",
-                       firstBusRelativePosition: "2번째전",
-                       firstBusCongestion: "여유",
-                       secondBusTime: "9분 51초",
-                       secondBusRelativePosition: "6번째전",
-                       secondBusCongsetion: "여유")
-        cell.configure(delegate: self)
+        
+        var busInfo: StationViewModel.BusArriveInfo?
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            let key = Array(viewModel.infoBuses.keys)[indexPath.section]
+            busInfo = viewModel.infoBuses[key]?[indexPath.item]
+        }
+        else {
+            let section = indexPath.section - viewModel.infoBuses.count
+            let key = Array(viewModel.noInfoBuses.keys)[section]
+            busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
+        }
+        
+        if let busInfo = busInfo {
+            cell.configure(busNumber: busInfo.busNumber,
+                           direction: busInfo.nextStation,
+                           firstBusTime: busInfo.firstBusArriveRemainTime,
+                           firstBusRelativePosition: busInfo.firstBusRelativePosition ?? "",
+                           firstBusCongestion: busInfo.congestion,
+                           secondBusTime: busInfo.secondBusArriveRemainTime,
+                           secondBusRelativePosition: busInfo.secondBusRelativePosition ?? "",
+                           secondBusCongsetion: busInfo.congestion)
+            cell.configure(delegate: self)
+        }
         return cell
     }
 
@@ -163,8 +194,18 @@ extension StationViewController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
-              let title = BBusRouteType.init(rawValue: 0)?.toString() else { return UICollectionReusableView() }
-
+              
+                let viewModel = self.viewModel else { return UICollectionReusableView() }
+        let title: String
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            let key = Array(viewModel.infoBuses.keys)[indexPath.section]
+            title = key.toString()
+        }
+        else {
+            let section = indexPath.section - viewModel.infoBuses.count
+            let key = Array(viewModel.noInfoBuses.keys)[section]
+            title = key.toString()
+        }
         header.configureLayout()
         header.configure(title: title)
         return header
