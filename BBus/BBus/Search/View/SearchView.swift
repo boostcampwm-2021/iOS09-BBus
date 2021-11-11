@@ -71,7 +71,7 @@ class SearchView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBackButtonDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBackButtonDelegate & TextFieldDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
         self.searchResultScrollView.delegate = self
@@ -81,7 +81,7 @@ class SearchView: UIView {
         self.currentSearchType = type
     }
 
-    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate) {
+    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate & TextFieldDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
     }
 

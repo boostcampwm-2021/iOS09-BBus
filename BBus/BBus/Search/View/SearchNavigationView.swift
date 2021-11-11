@@ -19,11 +19,22 @@ protocol StationTabButtonDelegate {
     func shouldStationTabSelect()
 }
 
+protocol TextFieldDelegate {
+    func shouldRefreshSearchResult(by keyword: String)
+}
+
 class SearchNavigationView: UIView {
 
     private var backButtonDelegate: SearchBackButtonDelegate?
     private var busTabButtonDelegate: BusTabButtonDelegate?
     private var stationTabButtonDelegate: StationTabButtonDelegate?
+    private var textFieldDelegate: TextFieldDelegate? {
+        didSet {
+            self.searchTextField.addAction(UIAction(handler: { _ in
+                self.textFieldDelegate?.shouldRefreshSearchResult(by: self.searchTextField.text ?? "")
+            }), for: .editingChanged)
+        }
+    }
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -179,8 +190,9 @@ class SearchNavigationView: UIView {
         self.searchTextField.resignFirstResponder()
     }
 
-    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate) {
+    func configureBackButtonDelegate(_ delegate: SearchBackButtonDelegate & TextFieldDelegate) {
         self.backButtonDelegate = delegate
+        self.textFieldDelegate = delegate
     }
 
     func configureTabButtonDelegate(_ delegate: BusTabButtonDelegate & StationTabButtonDelegate) {
