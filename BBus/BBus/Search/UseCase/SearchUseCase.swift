@@ -63,4 +63,18 @@ class SearchUseCase {
             return routeList.filter { $0.busRouteName.hasPrefix(keyword) }
         }
     }
+    
+    func searchStation(by keyword: String) -> [StationSearchResult]? {
+        guard let stationList = self.stationList else { return nil }
+        
+        if keyword == "" {
+            return []
+        }
+        else {
+            return stationList.map { StationSearchResult(stationDTO: $0,
+                                                         arsIdMatchRange: $0.arsID.ranges(of: keyword),
+                                                         stationNameMatchRange: $0.stationName.ranges(of: keyword)) }
+                              .filter { !($0.arsIdMatchRange.isEmpty && $0.stationNameMatchRange.isEmpty) }
+        }
+    }
 }
