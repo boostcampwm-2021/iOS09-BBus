@@ -172,4 +172,9 @@ class SearchResultScrollView: UIScrollView {
             self.delegate?.scrollViewDidEndDecelerating?(self)
         })
     }
+    
+    func reload() {
+        self.busResultCollectionView.reloadData()
+        self.stationResultCollectionView.reloadData()
+    }
 }

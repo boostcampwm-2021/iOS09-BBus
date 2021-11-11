@@ -96,6 +96,10 @@ class SearchView: UIView {
     func isScrollViewHorizontalDragging() -> Bool {
         return self.searchResultScrollView.contentOffset.x.remainder(dividingBy: self.searchResultScrollView.frame.width) == 0
     }
+    
+    func reload() {
+        self.searchResultScrollView.reload()
+    }
 }
 
 extension SearchView: BusTabButtonDelegate & StationTabButtonDelegate {

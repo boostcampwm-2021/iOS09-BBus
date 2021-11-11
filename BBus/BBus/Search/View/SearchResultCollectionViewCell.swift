@@ -59,8 +59,26 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = BBusColor.white
     }
     
-    func configureUI(title: String, detailInfo: NSMutableAttributedString) {
+    func configureBusUI(title: String, detailInfo: RouteType) {
         self.titleLabel.text = title
-        self.detailInfoLabel.attributedText = detailInfo
+        self.detailInfoLabel.text = "\(detailInfo.rawValue) 버스"
+        switch detailInfo {
+        case .mainLine:
+            self.titleLabel.textColor = BBusColor.bbusTypeBlue
+        case .broadArea:
+            self.titleLabel.textColor = BBusColor.bbusTypeRed
+        case .customized:
+            self.titleLabel.textColor = BBusColor.bbusTypeGreen
+        case .circulation:
+            self.titleLabel.textColor = BBusColor.black
+        case .lateNight:
+            self.titleLabel.textColor = BBusColor.black
+        case .localLine:
+            self.titleLabel.textColor = BBusColor.bbusTypeGreen
+        }
+    }
+    
+    func configureStationUI(title: String, detailInfo: String) {
+        
     }
 }
