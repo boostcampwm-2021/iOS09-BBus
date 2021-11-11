@@ -14,9 +14,9 @@ protocol CoordinatorFinishDelegate: AnyObject {
 
 protocol CoordinatorCreateDelegate {
     func pushSearch()
-    func pushBusRoute()
+    func pushBusRoute(busRouteId: Int)
     func pushAlarmSetting()
-    func pushStation()
+    func pushStation(stationId: Int)
 }
 
 typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)

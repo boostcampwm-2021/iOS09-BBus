@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 class BusRouteViewController: UIViewController {
 
+    weak var coordinator: BusRouteCoordinator?
     private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
-    weak var coordinator: BusRouteCoordinator?
+    private let viewModel: BusRouteViewModel?
+    private var cancellables: Set<AnyCancellable> = []
+
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
 
@@ -26,10 +30,20 @@ class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureBusColor(to: BBusColor.bbusTypeBlue)
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
+        self.binding()
+    }
+
+    init(viewModel: BusRouteViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
     }
 
     // MARK: - Configure
@@ -71,7 +85,24 @@ class BusRouteViewController: UIViewController {
         self.customNavigationBar.configureDelegate(self)
     }
     
-    private func configureBusColor(to color: UIColor?) {
+    private func configureBusColor(type: RouteType) {
+        let color: UIColor?
+
+        switch type {
+        case .mainLine:
+            color = BBusColor.bbusTypeBlue
+        case .broadArea:
+            color = BBusColor.bbusTypeRed
+        case .customized:
+            color = BBusColor.bbusTypeGreen
+        case .circulation:
+            color = BBusColor.black
+        case .lateNight:
+            color = BBusColor.black
+        case .localLine:
+            color = BBusColor.bbusTypeGreen
+        }
+
         self.view.backgroundColor = color
         self.customNavigationBar.configureBackgroundColor(color: color)
         self.customNavigationBar.configureTintColor(color: BBusColor.white)
@@ -80,7 +111,7 @@ class BusRouteViewController: UIViewController {
     }
 
     private func configureMOCKDATA() {
-        self.customNavigationBar.configureBackButtonTitle("272")
+
 
         for i in 1...20 {
             let location = CGFloat.random(in: (0...19))
@@ -90,11 +121,27 @@ class BusRouteViewController: UIViewController {
                                         busCongestion: "혼잡",
                                         isLowFloor: i%2 == 0)
         }
+    }
 
-        self.busRouteView.configureHeaderView(busType: "간선 버스",
-                                              busNumber: "272",
-                                              fromStation: "면목동",
-                                              toStation: "남가좌동")
+    private func binding() {
+        self.bindingBusRouteHeaderResult()
+    }
+
+    private func bindingBusRouteHeaderResult() {
+        self.viewModel?.$header
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveValue: { _ in
+                guard let header = self.viewModel?.header else { return }
+                DispatchQueue.main.async {
+                    self.customNavigationBar.configureBackButtonTitle(header.busRouteName)
+                    self.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
+                                                          busNumber: header.busRouteName,
+                                                          fromStation: header.startStation,
+                                                          toStation: header.endStation)
+                    self.configureBusColor(type: header.routeType)
+                }
+            })
+            .store(in: &cancellables)
     }
 }
 
@@ -148,7 +195,7 @@ extension BusRouteViewController: UITableViewDataSource {
 // MARK: - Delegate : UITableView
 extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.coordinator?.pushToStation()
+        self.coordinator?.pushToStation(stationId: 3)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

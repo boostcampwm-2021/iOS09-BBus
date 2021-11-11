@@ -85,12 +85,12 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.start()
     }
 
-    func pushBusRoute() {
+    func pushBusRoute(busRouteId: Int) {
         let coordinator = BusRouteCoordinator(presenter: self.navigationPresenter)
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
-        coordinator.start()
+        coordinator.start(busRouteId: busRouteId)
     }
 
     func pushAlarmSetting() {
@@ -102,12 +102,12 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.start()
     }
 
-    func pushStation() {
+    func pushStation(stationId: Int) {
         let coordinator = StationCoordinator(presenter: self.navigationPresenter)
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
-        coordinator.start()
+        coordinator.start(stationId: stationId)
     }
 }
 

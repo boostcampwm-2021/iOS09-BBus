@@ -15,7 +15,7 @@ class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
         self.navigationPresenter = presenter
     }
 
-    func start() {
+    func start(stationId: Int) {
         let usecase = StationUsecase(usecases: BBusAPIUsecases())
         let viewModel = StationViewModel(usecase: usecase, arsId: "03298")
         let viewController = StationViewController(viewModel: viewModel)
