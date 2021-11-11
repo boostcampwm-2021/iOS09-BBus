@@ -16,8 +16,7 @@ enum NetworkError: Error {
 class Service {
     static let shared = Service()
     
-//    private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)?.removingPercentEncoding
-    private let accessKey: String? = "byZZB3Q96lL2mIDmSCyTTjSzIP8ulUyGJpZxnuLkba6YnCCl0U37193FL7IbiRyXqo4XVCporKYD6jjaNmywaw%3D%3D".removingPercentEncoding
+    private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)?.removingPercentEncoding
     
     private init() { }
     
