@@ -6,51 +6,51 @@
 //
 
 import Foundation
+import Combine
 
-typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListBySearchKeywordUsecase & GetStationsBySearchKeywordUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationListUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+
 // MARK: - API Protocol
 protocol GetArrInfoByRouteListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetRouteInfoItemUsecase {
-    func getArrInfo(key: String, param: String)
+    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationsByRouteListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetBusPosByRtidUsecase {
-    func getArrInfo(key: String, param: String)
+    func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationByUidItemUsecase {
-    func getArrInfo(key: String, param: String)
+    func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error>
 }
 
 protocol GetStationsByPosListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error>
 }
 
-// MARK: - Search Protocol
-protocol GetRouteListBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: String)
+protocol GetRouteListUsecase {
+    func getRouteList() -> AnyPublisher<Data, Error>
 }
 
-protocol GetStationsBySearchKeywordUsecase {
-    func getArrInfo(key: String, param: String)
+protocol GetStationListUsecase {
+    func getStationList() -> AnyPublisher<Data, Error>
 }
 
 protocol GetFavoriteItemListUsecase {
-    func getArrInfo(key: String, param: String)
+    func getFavoriteItemList() -> AnyPublisher<Data, Error>
 }
 
-// MARK: - Save Persistent
 protocol CreateFavoriteItemUsecase {
-    func createFavoriteItem(key: String, param: String)
+    func createFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
 }
 
 protocol DeleteFavoriteItemUsecase {
-    func deleteFavoriteItem(key: String)
+    func deleteFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
 }
