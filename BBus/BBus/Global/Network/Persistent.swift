@@ -57,7 +57,6 @@ class Persistent {
         let publisher = PassthroughSubject<Data, Error>()
         queue.async { [weak publisher] in
             if let data = UserDefaults.standard.data(forKey: key) {
-//                print(String(data: data, encoding: .utf8))
                 publisher?.send(data)
             } else {
                 publisher?.send(completion: .failure(PersistentError.noneError))
@@ -69,7 +68,6 @@ class Persistent {
     func get(file: String, type: String, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
         queue.async { [weak publisher] in
-            dump(publisher)
             guard let url = Bundle.main.url(forResource: file, withExtension: type) else {
                 publisher?.send(completion: .failure(PersistentError.urlError))
                 return
