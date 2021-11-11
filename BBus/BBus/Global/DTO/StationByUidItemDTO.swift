@@ -8,7 +8,7 @@
 import Foundation
 
 struct StationByUidItemBody: BBusXMLDTO {
-    private let itemList: [StationByUidItemDTO]
+    private(set) var itemList: [StationByUidItemDTO]
 
     init?(dict: [String : [Any]]) {
         guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ StationByUidItemDTO(dict: $0) }),

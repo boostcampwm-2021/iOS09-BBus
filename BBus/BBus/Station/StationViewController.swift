@@ -12,6 +12,7 @@ class StationViewController: UIViewController {
     
     @Published private var stationBusInfoHeight: CGFloat = 100
     weak var coordinator: StationCoordinator?
+    private let viewModel: StationViewModel?
 
     private lazy var customNavigationBar: CustomNavigationBar = {
         let bar = CustomNavigationBar()
@@ -39,6 +40,16 @@ class StationViewController: UIViewController {
     }()
     private var collectionHeightConstraint: NSLayoutConstraint?
     private var cancellables: Set<AnyCancellable> = []
+    
+    init(viewModel: StationViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +58,6 @@ class StationViewController: UIViewController {
         self.configureColor()
         self.configureLayout()
         self.configureDelegate()
-        self.configureMOCKDATA()
     }
 
     // MARK: - Configure
@@ -96,13 +106,16 @@ class StationViewController: UIViewController {
                 self?.collectionHeightConstraint?.isActive = false
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
-    }
-
-    private func configureMOCKDATA() {
-        self.customNavigationBar.configureBackButtonTitle("능곡초교")
-        self.stationView.configureHeaderView(stationId: "25780",
-                                             stationName: "능곡초교",
-                                             direction: "시흥시노인종합복지관 방면")
+        
+        self.viewModel?.usecase.$stationInfo
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] station in
+                guard let station = station else { return }
+                self?.stationView.configureHeaderView(stationId: station.arsID,
+                                                      stationName: station.stationName,
+                                                      direction: "")
+            })
+            .store(in: &self.cancellables)
     }
 
     private func configureColor() {
