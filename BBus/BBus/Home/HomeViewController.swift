@@ -48,6 +48,7 @@ class HomeViewController: UIViewController {
             .constraint(equalTo: self.view.topAnchor).isActive = true
         statusbarView.centerXAnchor
             .constraint(equalTo: self.view.centerXAnchor).isActive = true
+
     }
 
     // MARK: - Configuration
