@@ -68,6 +68,7 @@ class Persistent {
     func get(file: String, type: String) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
         DispatchQueue.global().async { [weak publisher] in
+            dump(publisher)
             guard let url = Bundle.main.url(forResource: file, withExtension: type) else {
                 publisher?.send(completion: .failure(PersistentError.urlError))
                 return
