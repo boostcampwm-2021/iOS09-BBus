@@ -89,8 +89,8 @@ extension SearchViewController: UICollectionViewDelegate {
             self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
-            guard let stationId = self.viewModel?.stationSearchResults[indexPath.row].stationDTO.stationID else { return }
-            self.coordinator?.pushToStation(stationId: stationId)
+            guard let arsId = self.viewModel?.stationSearchResults[indexPath.row].stationDTO.arsID else { return }
+            self.coordinator?.pushToStation(arsId: arsId)
         }
     }
 }

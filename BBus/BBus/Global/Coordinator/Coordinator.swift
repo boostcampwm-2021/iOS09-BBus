@@ -16,7 +16,7 @@ protocol CoordinatorCreateDelegate {
     func pushSearch()
     func pushBusRoute(busRouteId: Int)
     func pushAlarmSetting()
-    func pushStation(stationId: Int)
+    func pushStation(arsId: String)
 }
 
 typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)

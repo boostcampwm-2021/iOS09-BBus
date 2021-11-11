@@ -38,11 +38,11 @@ extension AlarmSettingPushable {
 }
 
 protocol StationPushable: Coordinator {
-    func pushToStation(stationId: Int)
+    func pushToStation(arsId: String)
 }
 
 extension StationPushable {
-    func pushToStation(stationId: Int) {
-        self.delegate?.pushStation(stationId: stationId)
+    func pushToStation(arsId: String) {
+        self.delegate?.pushStation(arsId: arsId)
     }
 }

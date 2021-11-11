@@ -102,12 +102,12 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.start()
     }
 
-    func pushStation(stationId: Int) {
+    func pushStation(arsId: String) {
         let coordinator = StationCoordinator(presenter: self.navigationPresenter)
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
-        coordinator.start(stationId: stationId)
+        coordinator.start(arsId: arsId)
     }
 }
 

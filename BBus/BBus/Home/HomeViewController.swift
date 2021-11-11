@@ -160,6 +160,6 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene() {
         // TODO: Model binding Logic needed
         
-        self.coordinator?.pushToStation(stationId: 3)
+        self.coordinator?.pushToStation(arsId: "19007")
     }
 }
