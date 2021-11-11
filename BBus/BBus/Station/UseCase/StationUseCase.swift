@@ -48,7 +48,6 @@ class StationUsecase {
                 guard let result = BBusXMLParser().parse(dtoType: StationByUidItemResult.self, xml: data) else { return }
                 let realTimeInfo = result.body.itemList
                 self.busArriveInfo = realTimeInfo
-                print(realTimeInfo)
             })
             .store(in: &self.cancellable)
     }
