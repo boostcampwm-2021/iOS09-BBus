@@ -6,26 +6,29 @@
 //
 
 import UIKit
-import Combine
 
 class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()
-    var usecase: SearchUseCase?
-    private var cancellable: AnyCancellable?
+    private let viewModel: SearchViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
         self.configureUI()
         self.configureDelegate()
-         
-        self.cancellable = self.usecase?.$routeList
-            .receive(on: SearchUseCase.thread)
-            .sink(receiveValue: { did in
-                dump(self.usecase?.searchBus(by: "46"))
-            })
+
+    }
+
+    init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
     }
 
     // MARK: - Configuration
@@ -124,5 +127,11 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width, height: SimpleCollectionHeaderView.height)
+    }
+}
+
+extension SearchViewController: TextFieldDelegate {
+    func shouldRefreshSearchResult(by keyword: String) {
+        self.viewModel?.configure(keyword: keyword)
     }
 }
