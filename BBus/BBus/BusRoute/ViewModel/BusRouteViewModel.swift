@@ -13,11 +13,13 @@ class BusRouteViewModel {
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable>
     @Published var header: BusRouteDTO?
+    @Published var bodys: [StationByRouteListDTO]?
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
         self.cancellables = []
         self.getHeaderInfo()
+        self.getBodysInfo()
     }
 
     private func getHeaderInfo() {
@@ -26,6 +28,16 @@ class BusRouteViewModel {
             .receive(on: BusRouteUsecase.thread)
             .sink { _ in
                 self.header = self.usecase.header
+            }
+            .store(in: &cancellables)
+    }
+
+    private func getBodysInfo() {
+        self.usecase.fetchRouteList()
+        self.usecase.$bodys
+            .receive(on: BusRouteUsecase.thread)
+            .sink { _ in
+                self.bodys = self.usecase.bodys?.body.itemList
             }
             .store(in: &cancellables)
     }

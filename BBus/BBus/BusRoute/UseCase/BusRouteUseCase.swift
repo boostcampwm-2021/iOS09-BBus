@@ -11,18 +11,19 @@ import Combine
 class BusRouteUsecase {
 
     private let busRouteId: Int
-    private let usecases: GetRouteListUsecase
+    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase
     @Published var header: BusRouteDTO?
-    private var cancellable: AnyCancellable?
+    @Published var bodys: StationByRouteResult?
+    private var cancellables: Set<AnyCancellable> = []
     static let thread = DispatchQueue(label: "BusRoute")
 
-    init(usecases: GetRouteListUsecase, busRouteId: Int) {
+    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase, busRouteId: Int) {
         self.busRouteId = busRouteId
         self.usecases = usecases
     }
 
     func searchHeader() {
-        self.cancellable = usecases.getRouteList()
+        self.usecases.getRouteList()
             .receive(on: Self.thread)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { error in
@@ -32,5 +33,19 @@ class BusRouteUsecase {
             }, receiveValue: { routeList in
                 self.header = routeList.filter { $0.routeID == self.busRouteId }[0]
             })
+            .store(in: &cancellables)
+    }
+
+    func fetchRouteList() {
+        self.usecases.getStationsByRouteList(busRoutedId: "\(self.busRouteId)")
+            .receive(on: Self.thread)
+            .sink { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            } receiveValue: { stationsByRouteList in
+                self.bodys = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList)
+            }
+            .store(in: &cancellables)
     }
 }
