@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -115,6 +116,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		041A5A10273D2E1B00490075 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusFoldUnfoldDelegate.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -233,6 +235,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041A5A0F273D2E0400490075 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				041A5A10273D2E1B00490075 /* StringExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		047C30F8273A044C0075EA14 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +262,7 @@
 				87038A80273B90810078EAE3 /* Network */,
 				873D6394273039C400E79069 /* Coordinator */,
 				047C30F8273A044C0075EA14 /* Constant */,
+				041A5A0F273D2E0400490075 /* Extension */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -825,6 +836,7 @@
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */,
+				041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */,
 				87038A8E273C10480078EAE3 /* GetRouteInfoItemFetcher.swift in Sources */,
 				4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */,
 				049375AF273BAA130061ACDA /* StationDTO.swift in Sources */,
