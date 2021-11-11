@@ -14,6 +14,6 @@ protocol GetStationListFetchable {
 
 class PersistentGetStationListFetcher: GetStationListFetchable {
     func fetch() -> AnyPublisher<Data, Error> {
-        return Persistent.shared.get(file: "fileName", type: "json")
+        return Persistent.shared.get(file: "StationList", type: "json")
     }
 }

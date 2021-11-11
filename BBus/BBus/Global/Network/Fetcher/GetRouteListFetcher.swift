@@ -14,7 +14,6 @@ protocol GetRouteListFetchable {
 
 class PersistentGetRouteListFetcher: GetRouteListFetchable {
     func fetch() -> AnyPublisher<Data, Error> {
-        // TODO: - url 주소 지정 필요
-        return Persistent.shared.get(file: "fileName", type: "json")
+        return Persistent.shared.get(file: "BusRouteList", type: "json")
     }
 }

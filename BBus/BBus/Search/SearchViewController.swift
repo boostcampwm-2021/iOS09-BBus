@@ -6,17 +6,26 @@
 //
 
 import UIKit
+import Combine
 
 class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()
+    var usecase: SearchUseCase?
+    private var cancellable: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
         self.configureUI()
         self.configureDelegate()
+         
+        self.cancellable = self.usecase?.$routeList
+            .receive(on: SearchUseCase.thread)
+            .sink(receiveValue: { did in
+                dump(self.usecase?.searchBus(by: "46"))
+            })
     }
 
     // MARK: - Configuration
