@@ -54,7 +54,7 @@
 		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
 		4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E8272FCDAE00EC0531 /* HomeView.swift */; };
-		4ACA51EF272FCDE600EC0531 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51EE272FCDE600EC0531 /* SearchModel.swift */; };
+		4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */; };
 		4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F0272FCDF200EC0531 /* SearchUseCase.swift */; };
 		4ACA51F3272FCDF900EC0531 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */; };
 		4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F4272FCE0200EC0531 /* SearchView.swift */; };
@@ -163,7 +163,7 @@
 		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		4ACA51E8272FCDAE00EC0531 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		4ACA51EE272FCDE600EC0531 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSearchResult.swift; sourceTree = "<group>"; };
 		4ACA51F0272FCDF200EC0531 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		4ACA51F4272FCE0200EC0531 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -438,7 +438,7 @@
 		4ACA51ED272FCDD900EC0531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA51EE272FCDE600EC0531 /* SearchModel.swift */,
+				4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -787,7 +787,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ACA5231272FCEE600EC0531 /* MovingStatusView.swift in Sources */,
-				4ACA51EF272FCDE600EC0531 /* SearchModel.swift in Sources */,
+				4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */,
 				4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */,
 				4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */,
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
