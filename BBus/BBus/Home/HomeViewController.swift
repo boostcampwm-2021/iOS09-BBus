@@ -75,7 +75,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Model binding Logic needed
 
-        self.coordinator?.pushToBusRoute(busRouteId: 272)
+        self.coordinator?.pushToBusRoute(busRouteId: 100100048)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -106,7 +106,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                         as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         cell.configureDelegate(self)
-        cell.configure(busNumber: "127",
+        cell.configure(busNumber: "272",
                        firstBusTime: "1분 29초",
                        firstBusRelativePosition: "2번째전",
                        firstBusCongestion: "여유",
