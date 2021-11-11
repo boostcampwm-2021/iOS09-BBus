@@ -11,8 +11,10 @@ struct StationByUidItemBody: BBusXMLDTO {
     private let itemList: [StationByUidItemDTO]
 
     init?(dict: [String : [Any]]) {
-        guard let itemList = dict["itemList"] as? [[String:[Any]]] else { return nil }
-        self.itemList = itemList.map({ StationByUidItemDTO(dict: $0)! })
+        guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ StationByUidItemDTO(dict: $0) }),
+              let itemListUnwrapped = itemList as? [StationByUidItemDTO] else { return nil }
+
+        self.itemList = itemListUnwrapped
     }
 }
 

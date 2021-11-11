@@ -16,7 +16,8 @@ class BBusXMLParser: NSObject, XMLParserDelegate {
         parser.delegate = self
         parser.parse()
 
-        return T.init(dict: self.stack.first!.values.first![0] as! [String:[Any]])
+        guard let serviceResult = self.stack.first?.values.first?[0] as? [String:[Any]] else { return nil }
+        return T.init(dict: serviceResult)
     }
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
@@ -25,10 +26,11 @@ class BBusXMLParser: NSObject, XMLParserDelegate {
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         var tempDict = ["bbus": []]
-        while (self.stack.last![elementName] == nil) {
-            let lastElement = self.stack.popLast()!
-            tempDict.merge(lastElement) { tempDictValue, lastElementValue in
-                return lastElementValue + tempDictValue
+        while (self.stack.last?[elementName] == nil) {
+            if let lastElement = self.stack.popLast() {
+                tempDict.merge(lastElement) { tempDictValue, lastElementValue in
+                    return lastElementValue + tempDictValue
+                }
             }
         }
         _ = self.stack.popLast()

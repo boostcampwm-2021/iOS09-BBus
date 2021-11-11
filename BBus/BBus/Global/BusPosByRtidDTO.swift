@@ -11,8 +11,10 @@ struct BusPosByRtidBody: BBusXMLDTO {
     private let itemList: [BusPosByRtidDTO]
 
     init?(dict: [String : [Any]]) {
-        guard let itemList = dict["itemList"] as? [[String:[Any]]] else { return nil }
-        self.itemList = itemList.map({ BusPosByRtidDTO(dict: $0)! })
+        guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ BusPosByRtidDTO(dict: $0) }),
+              let itemListUnwrapped = itemList as? [BusPosByRtidDTO] else { return nil }
+
+        self.itemList = itemListUnwrapped
     }
 }
 
