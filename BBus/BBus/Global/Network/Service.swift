@@ -20,10 +20,10 @@ class Service {
     
     private init() { }
     
-    func get(url: String, params: [String: String]) -> AnyPublisher<Data, Error> {
+    func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
         
-        DispatchQueue.global().async { [weak self, weak publisher] in
+        queue.async { [weak self, weak publisher] in
             guard let self = self else { return }
             guard let accessKey = self.accessKey else {
                 publisher?.send(completion: .failure(NetworkError.accessKeyError))

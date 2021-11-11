@@ -25,9 +25,9 @@ class Persistent {
     
     private init() { }
 
-    func create<T: Codable>(key: String, param: T) -> AnyPublisher<Data, Error> {
+    func create<T: Codable>(key: String, param: T, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
-        DispatchQueue.global().async { [weak publisher] in
+        queue.async { [weak publisher] in
             var items: [T] = []
             if let data = UserDefaults.standard.data(forKey: key) {
                 let decodingItems = (try? PropertyListDecoder().decode([T].self, from: data))
@@ -53,10 +53,11 @@ class Persistent {
         return publisher.eraseToAnyPublisher()
     }
 
-    func getFromUserDefaults(key: String) -> AnyPublisher<Data, Error> {
+    func getFromUserDefaults(key: String, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
-        DispatchQueue.global().async { [weak publisher] in
+        queue.async { [weak publisher] in
             if let data = UserDefaults.standard.data(forKey: key) {
+//                print(String(data: data, encoding: .utf8))
                 publisher?.send(data)
             } else {
                 publisher?.send(completion: .failure(PersistentError.noneError))
@@ -65,9 +66,9 @@ class Persistent {
         return publisher.eraseToAnyPublisher()
     }
     
-    func get(file: String, type: String) -> AnyPublisher<Data, Error> {
+    func get(file: String, type: String, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
-        DispatchQueue.global().async { [weak publisher] in
+        queue.async { [weak publisher] in
             dump(publisher)
             guard let url = Bundle.main.url(forResource: file, withExtension: type) else {
                 publisher?.send(completion: .failure(PersistentError.urlError))
@@ -82,9 +83,9 @@ class Persistent {
         return publisher.eraseToAnyPublisher()
     }
 
-    func delete<T: Codable & Equatable>(key: String, param: T) -> AnyPublisher<Data, Error> {
+    func delete<T: Codable & Equatable>(key: String, param: T, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
-        DispatchQueue.global().async { [weak publisher] in
+        queue.async { [weak publisher] in
             guard let data = UserDefaults.standard.data(forKey: key) else {
                 publisher?.send(completion: .failure(PersistentError.noneError))
                 return
