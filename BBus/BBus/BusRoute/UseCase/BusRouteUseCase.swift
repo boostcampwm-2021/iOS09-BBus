@@ -15,12 +15,12 @@ class BusRouteUsecase {
     private var cancellable: AnyCancellable?
     static let thread = DispatchQueue(label: "BusRoute")
 
-    init(usecases: GetRouteListUsecase, busRouteId: String) {
+    init(usecases: GetRouteListUsecase, busRouteId: Int) {
         self.usecases = usecases
         self.searchHeader(busRouteId: busRouteId)
     }
 
-    private func searchHeader(busRouteId: String) {
+    private func searchHeader(busRouteId: Int) {
         self.cancellable = usecases.getRouteList()
             .receive(on: Self.thread)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
@@ -29,7 +29,7 @@ class BusRouteUsecase {
                     print(error)
                 }
             }, receiveValue: { routeList in
-                self.header = routeList[0]
+                self.header = routeList.filter { $0.routeID == busRouteId }[0]
             })
     }
 }
