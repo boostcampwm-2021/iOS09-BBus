@@ -99,7 +99,13 @@ extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let regionCount = 1
-        return self.viewModel?.busSearchResults.count == 0 ? 0 : regionCount
+        
+        if collectionView.frame.origin.x == 0 {
+            return self.viewModel?.busSearchResults.count == 0 ? 0 : regionCount
+        }
+        else {
+            return self.viewModel?.stationSearchResults.count == 0 ? 0 : regionCount
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -107,7 +113,7 @@ extension SearchViewController: UICollectionViewDataSource {
             return self.viewModel?.busSearchResults.count ?? 0
         }
         else {
-            return 1
+            return self.viewModel?.stationSearchResults.count ?? 0
         }
     }
 
@@ -125,13 +131,8 @@ extension SearchViewController: UICollectionViewDataSource {
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
-            let fullText = "14911 | 공항철도.홍대입구역 방면"
-            let range = (fullText as NSString).range(of: "|")
-            let attributedString = NSMutableAttributedString(string: fullText)
-            attributedString.addAttribute(.foregroundColor,
-                                          value: BBusColor.bbusLightGray as Any,
-                                          range: range)
-            cell.configureStationUI(title: "홍대입구", detailInfo: "")
+            guard let station = self.viewModel?.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            cell.configureStationUI(title: station.stationDTO.stationName, detailInfo: station.stationDTO.arsID)
         }
         cell.configureLayout()
         return cell
