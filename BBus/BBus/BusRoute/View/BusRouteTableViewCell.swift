@@ -51,12 +51,50 @@ class BusRouteTableViewCell: BusStationTableViewCell {
         }
     }
     
-    func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String, type: BusRootCenterImageType) {
-        super.configure(beforeColor: beforeColor,
-                        afterColor: afterColor,
+    func configure(speed: Int, afterSpeed: Int?, index: Int, count: Int, title: String, description: String, type: BusRootCenterImageType) {
+        let lineColors = self.configureLineColors(speed: speed,
+                                                  afterSpeed: afterSpeed,
+                                                 index: index,
+                                                 count: count)
+        super.configure(beforeColor: lineColors.beforeColor,
+                        afterColor: lineColors.afterColor,
                         title: title,
                         description: description)
         
         self.configureCenterImage(type: type)
+    }
+
+    func configureLineColors(speed: Int, afterSpeed: Int?, index: Int, count: Int) -> (beforeColor:  UIColor?, afterColor:  UIColor?) {
+        var beforeColor: UIColor?
+        var afterColor: UIColor?
+        if afterSpeed == nil {
+            beforeColor = self.configureLineColor(speed: speed)
+            afterColor = BBusColor.clear
+        }
+        else {
+            guard let afterSpeed = afterSpeed else { return (UIColor(), UIColor())}
+            if index == 0 {
+                beforeColor = BBusColor.clear
+                afterColor = self.configureLineColor(speed: afterSpeed)
+            } else {
+                beforeColor = self.configureLineColor(speed: speed)
+                afterColor = self.configureLineColor(speed: afterSpeed)
+            }
+        }
+        return (beforeColor, afterColor)
+    }
+
+    func configureLineColor(speed: Int) -> UIColor? {
+        let color: UIColor?
+        if speed <= 9 {
+            color = BBusColor.bbusCongestionHigh
+        }
+        else if speed <= 20 {
+            color = BBusColor.bbusCongestionNormal
+        }
+        else {
+            color = BBusColor.bbusCongestionGood
+        }
+        return color
     }
 }

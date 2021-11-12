@@ -166,9 +166,13 @@ extension BusRouteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
-        guard let stationItem = self.viewModel?.bodys[indexPath.row] else { return UITableViewCell() }
-        cell.configure(beforeColor: BBusColor.bbusTypeBlue,
-                       afterColor: BBusColor.bbusTypeBlue,
+        guard let bodys = self.viewModel?.bodys else { return UITableViewCell() }
+        let stationItem = bodys[indexPath.row]
+        let afterSpeed = indexPath.row+1 == bodys.count ? nil : bodys[indexPath.row+1].sectionSpeed
+        cell.configure(speed: stationItem.sectionSpeed,
+                       afterSpeed: afterSpeed,
+                       index: indexPath.row,
+                       count: self.viewModel?.bodys.count ?? 0,
                        title: stationItem.stationName,
                        description: "\(stationItem.arsId)  |  \(stationItem.beginTm)-\(stationItem.lastTm)",
                        type: stationItem.transYn != "Y" ? .waypoint : .uturn)
