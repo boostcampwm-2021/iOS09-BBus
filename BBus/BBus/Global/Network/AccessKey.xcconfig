@@ -1,0 +1,14 @@
+//
+//  StationInfoAccessKey.xcconfig
+//  BBus
+//
+//  Created by 이지수 on 2021/11/10.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_ACCESS_KEY = aaa
+API_ACCESS_KEY2 = aaa
+API_ACCESS_KEY3 = ""
+API_ACCESS_KEY4 = ""
