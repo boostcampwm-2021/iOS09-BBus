@@ -125,6 +125,7 @@ class BusRouteViewController: UIViewController {
 
     private func binding() {
         self.bindingBusRouteHeaderResult()
+        self.bindingBusRouteBodyResult()
     }
 
     private func bindingBusRouteHeaderResult() {
@@ -149,6 +150,7 @@ class BusRouteViewController: UIViewController {
             .receive(on: BusRouteUsecase.thread)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
+                    dump(self.viewModel?.bodys)
                     self.busRouteView.reload()
                 }
             })

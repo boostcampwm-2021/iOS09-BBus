@@ -35,7 +35,7 @@ class BBusAPIUsecases: RequestUsecases {
     }
 
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRoutedId": busRoutedId]
+        let param = ["busRouteId": busRoutedId]
         let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher()
         return fetcher.fetch(param: param, on: self.queue)
     }

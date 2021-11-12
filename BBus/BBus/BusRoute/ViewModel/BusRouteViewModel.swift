@@ -11,13 +11,12 @@ import Combine
 class BusRouteViewModel {
 
     private let usecase: BusRouteUsecase
-    private var cancellables: Set<AnyCancellable>
+    private var cancellables: Set<AnyCancellable> = []
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
-        self.cancellables = []
         self.getHeaderInfo()
         self.getBodysInfo()
     }
@@ -39,7 +38,6 @@ class BusRouteViewModel {
             .sink { _ in
                 guard let bodys = self.usecase.bodys?.body.itemList else { return }
                 self.bodys = bodys
-                dump(bodys)
             }
             .store(in: &cancellables)
     }
