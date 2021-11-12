@@ -17,28 +17,31 @@ class BusRouteViewModel {
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
-        self.getHeaderInfo()
-        self.getBodysInfo()
+        self.bindingHeaderInfo()
+        self.bindingBodysInfo()
+        self.usecase.searchHeader()
+        self.usecase.fetchRouteList()
     }
 
-    private func getHeaderInfo() {
-        self.usecase.searchHeader()
+    private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.thread)
-            .sink { _ in
-                self.header = self.usecase.header
-            }
+            .sink(receiveCompletion: { error in
+                print(error)
+            }, receiveValue: { header in
+                self.header = header
+            })
             .store(in: &cancellables)
     }
 
-    private func getBodysInfo() {
-        self.usecase.fetchRouteList()
+    private func bindingBodysInfo() {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.thread)
-            .sink { _ in
-                guard let bodys = self.usecase.bodys?.body.itemList else { return }
+            .sink(receiveCompletion: { error in
+                print(error)
+            }, receiveValue: { bodys in
                 self.bodys = bodys
-            }
+            })
             .store(in: &cancellables)
     }
 }
