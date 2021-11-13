@@ -27,6 +27,7 @@ class BusRouteView: UIView {
         tableView.separatorColor = BBusColor.bbusLightGray
         return tableView
     }()
+    private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
     
     convenience init() {
         self.init(frame: CGRect())
@@ -68,6 +69,8 @@ class BusRouteView: UIView {
         
         self.busRouteScrollContentsView.addSubview(self.busRouteTableView)
         self.busRouteTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.busRouteTableViewHeightConstraint = self.busRouteTableView.heightAnchor.constraint(equalToConstant: CGFloat(8)*BusRouteTableViewCell.cellHeight)
+        self.busRouteTableViewHeightConstraint?.isActive = true
         NSLayoutConstraint.activate([
             self.busRouteTableView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
             self.busRouteTableView.trailingAnchor.constraint(equalTo: self.busRouteScrollContentsView.trailingAnchor),
@@ -98,9 +101,10 @@ class BusRouteView: UIView {
     }
 
     func configureTableViewHeight(count: Int) {
-        NSLayoutConstraint.activate([
-            self.busRouteTableView.heightAnchor.constraint(equalToConstant: CGFloat(count)*BusRouteTableViewCell.cellHeight)
-        ])
+        if count > 0 {
+            self.busRouteTableViewHeightConstraint?.constant = CGFloat(count)*BusRouteTableViewCell.cellHeight
+            self.layoutIfNeeded()
+        }
     }
 
     func configureHeaderView(busType: String, busNumber: String, fromStation: String, toStation: String) {
@@ -111,7 +115,7 @@ class BusRouteView: UIView {
     }
 
     // MARK: - Create BusTag
-    func addBusTag(location: CGFloat, busIcon: UIImage?, busNumber: String, busCongestion: String, isLowFloor: Bool) {
+    func createBusTag(location: CGFloat, busIcon: UIImage?, busNumber: String, busCongestion: String, isLowFloor: Bool) -> BusTagView {
         let busTag = BusTagView()
         busTag.configure(busIcon: busIcon,
                          busNumber: busNumber,
@@ -124,6 +128,8 @@ class BusRouteView: UIView {
             busTag.leadingAnchor.constraint(equalTo: self.busRouteTableView.leadingAnchor, constant: 5),
             busTag.centerYAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: (BusRouteTableViewCell.cellHeight/2) + location*BusRouteTableViewCell.cellHeight)
         ])
+
+        return busTag
     }
 
     func reload() {

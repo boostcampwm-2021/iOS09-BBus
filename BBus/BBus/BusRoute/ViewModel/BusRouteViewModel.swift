@@ -9,9 +9,9 @@ import Foundation
 import Combine
 import CoreGraphics
 
-class BusRouteViewModel {
+typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
 
-    typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
+class BusRouteViewModel {
 
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable> = []
@@ -88,6 +88,5 @@ class BusRouteViewModel {
             busesResult.append(info)
         }
         self.buses = busesResult
-        dump(self.buses)
     }
 }
