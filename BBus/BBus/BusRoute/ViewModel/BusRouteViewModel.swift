@@ -11,11 +11,13 @@ import CoreGraphics
 
 class BusRouteViewModel {
 
+    typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
+
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable> = []
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
-    @Published var buses: [BusPosByRtidDTO] = []
+    @Published var buses: [BusPosInfo] = []
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
@@ -25,8 +27,6 @@ class BusRouteViewModel {
         self.usecase.searchHeader()
         self.usecase.fetchRouteList()
         self.usecase.fetchBusPosList()
-        print(self.convertBusPos(order: 3, sect: "0.079", fullSect: "0.236"))
-        print(self.busNumber(from: "서울74사6161"))
     }
 
     private func bindingHeaderInfo() {
@@ -57,7 +57,7 @@ class BusRouteViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { buses in
-                self.buses = buses
+                self.convertBusPosInfo(with: buses)
             })
             .store(in: &cancellables)
     }
@@ -74,8 +74,20 @@ class BusRouteViewModel {
         let endIndex = from.endIndex
         return String(from[startIndex..<endIndex])
     }
+
+    private func convertBusPosInfo(with buses: [BusPosByRtidDTO]) {
+        var busesResult: [BusPosInfo] = []
+        buses.forEach { bus in
+            let info: BusPosInfo
+            info.location = self.convertBusPos(order: bus.sectionOrder,
+                                               sect: bus.sectDist,
+                                               fullSect: bus.fullSectDist)
+            info.number = self.busNumber(from: bus.plainNumber)
+            info.congestion = BusCongestion(rawValue: bus.congestion) ?? .normal
+            info.islower = (bus.busType == 1)
+            busesResult.append(info)
+        }
+        self.buses = busesResult
+        dump(self.buses)
+    }
 }
-// 1. 버스위치 변환
-// 2. 버스번호 추출
-// 3. 저상 변환
-// 4. 여유 변환
