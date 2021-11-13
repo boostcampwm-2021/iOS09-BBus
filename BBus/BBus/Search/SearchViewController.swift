@@ -89,7 +89,7 @@ extension SearchViewController: UICollectionViewDelegate {
             self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
-            guard let arsId = self.viewModel?.stationSearchResults[indexPath.row].stationDTO.arsID else { return }
+            guard let arsId = self.viewModel?.stationSearchResults[indexPath.row].arsId else { return }
             self.coordinator?.pushToStation(arsId: arsId)
         }
     }
@@ -133,7 +133,10 @@ extension SearchViewController: UICollectionViewDataSource {
         }
         else {
             guard let station = self.viewModel?.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
-            cell.configureStationUI(title: station.stationDTO.stationName, detailInfo: station.stationDTO.arsID)
+            cell.configureStationUI(title: station.stationName,
+                                    titleMatchRange: station.stationNameMatchRange,
+                                    arsId: station.arsId,
+                                    arsIdMatchRange: station.arsIdMatchRange)
         }
         cell.configureLayout()
         return cell

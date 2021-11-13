@@ -8,7 +8,8 @@
 import Foundation
 
 struct StationSearchResult {
-    let stationDTO: StationDTO
-    var arsIdMatchRange: [Range<String.Index>]
-    var stationNameMatchRange: [Range<String.Index>]
+    let stationName: String
+    let arsId: String
+    var stationNameMatchRange: [NSRange]
+    var arsIdMatchRange: [NSRange]
 }

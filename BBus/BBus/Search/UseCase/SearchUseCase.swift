@@ -71,10 +71,15 @@ class SearchUseCase {
             return []
         }
         else {
-            return stationList.map { StationSearchResult(stationDTO: $0,
-                                                         arsIdMatchRange: $0.arsID.ranges(of: keyword),
-                                                         stationNameMatchRange: $0.stationName.ranges(of: keyword)) }
-                              .filter { !($0.arsIdMatchRange.isEmpty && $0.stationNameMatchRange.isEmpty) }
+            return stationList.map { (station) in
+                let stationNameMatchRange = station.stationName.ranges(of: keyword).map { NSRange($0, in: station.stationName) }
+                let arsIdMatchRange = station.arsID.ranges(of: keyword).map { NSRange($0, in: station.arsID) }
+                return StationSearchResult(stationName: station.stationName,
+                                           arsId: station.arsID,
+                                           stationNameMatchRange: stationNameMatchRange,
+                                           arsIdMatchRange: arsIdMatchRange)
+                }
+                .filter { !($0.arsIdMatchRange.isEmpty && $0.stationNameMatchRange.isEmpty) }
         }
     }
 }
