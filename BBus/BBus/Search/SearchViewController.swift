@@ -61,10 +61,21 @@ class SearchViewController: UIViewController {
     
     private func binding() {
         self.bindingBusResult()
+        self.bindingStationResult()
     }
     
     private func bindingBusResult() {
         self.cancellable = self.viewModel?.$busSearchResults
+            .receive(on: SearchUseCase.thread)
+            .sink(receiveValue: { _ in
+                DispatchQueue.main.async {
+                    self.searchView.reload()
+                }
+            })
+    }
+    
+    private func bindingStationResult() {
+        self.cancellable = self.viewModel?.$stationSearchResults
             .receive(on: SearchUseCase.thread)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
