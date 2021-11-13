@@ -14,6 +14,7 @@ class BusRouteUsecase {
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
+    @Published var buses: [BusPosByRtidDTO] = []
     private var cancellables: Set<AnyCancellable> = []
     static let thread = DispatchQueue(label: "BusRoute")
 
@@ -58,7 +59,8 @@ class BusRouteUsecase {
                     print(error)
                 }
             } receiveValue: { busPosByRtidList in
-                print(String(data: busPosByRtidList, encoding: .utf8))
+                guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { return }
+                self.buses = result.body.itemList
             }
             .store(in: &cancellables)
     }

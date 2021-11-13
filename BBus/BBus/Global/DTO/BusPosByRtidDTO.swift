@@ -8,7 +8,7 @@
 import Foundation
 
 struct BusPosByRtidBody: BBusXMLDTO {
-    private let itemList: [BusPosByRtidDTO]
+    let itemList: [BusPosByRtidDTO]
 
     init?(dict: [String : [Any]]) {
         guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ BusPosByRtidDTO(dict: $0) }),
@@ -38,6 +38,8 @@ struct BusPosByRtidDTO: BBusXMLDTO {
     let congestion: Int
     let plainNumber: String
     let sectionOrder: Int
+    let fullSectDist: String
+    let sectDist: String
     
     init?(dict: [String : [Any]]) {
         guard let busTypeString = ((dict["busType"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -46,11 +48,15 @@ struct BusPosByRtidDTO: BBusXMLDTO {
               let congestion = Int(congestionString),
               let plainNumber = ((dict["plainNo"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let sectOrd = ((dict["sectOrd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let sectionOrder = Int(sectOrd) else { return nil }
+              let sectionOrder = Int(sectOrd),
+              let fullSectDist = ((dict["fullSectDist"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let sectDist = ((dict["sectDist"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
         
         self.busType = busType
         self.congestion = congestion
         self.plainNumber = plainNumber
         self.sectionOrder = sectionOrder
+        self.fullSectDist = fullSectDist
+        self.sectDist = sectDist
     }
 }
