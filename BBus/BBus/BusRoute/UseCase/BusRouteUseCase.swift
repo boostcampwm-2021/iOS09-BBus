@@ -11,13 +11,13 @@ import Combine
 class BusRouteUsecase {
 
     private let busRouteId: Int
-    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase
+    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
     private var cancellables: Set<AnyCancellable> = []
     static let thread = DispatchQueue(label: "BusRoute")
 
-    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase, busRouteId: Int) {
+    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase, busRouteId: Int) {
         self.busRouteId = busRouteId
         self.usecases = usecases
     }
@@ -46,6 +46,19 @@ class BusRouteUsecase {
             } receiveValue: { stationsByRouteList in
                 guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { return }
                 self.bodys = result.body.itemList
+            }
+            .store(in: &cancellables)
+    }
+
+    func fetchBusPosList() {
+        self.usecases.getBusPosByRtid(busRoutedId: "\(self.busRouteId)")
+            .receive(on: Self.thread)
+            .sink { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            } receiveValue: { busPosByRtidList in
+                print(String(data: busPosByRtidList, encoding: .utf8))
             }
             .store(in: &cancellables)
     }

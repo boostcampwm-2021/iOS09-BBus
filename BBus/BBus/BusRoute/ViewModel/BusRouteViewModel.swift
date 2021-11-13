@@ -21,6 +21,7 @@ class BusRouteViewModel {
         self.bindingBodysInfo()
         self.usecase.searchHeader()
         self.usecase.fetchRouteList()
+        self.usecase.fetchBusPosList()
     }
 
     private func bindingHeaderInfo() {
