@@ -70,7 +70,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = BBusColor.white
     }
     
-    func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
+    func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         self.busNumberLabel.text = busNumber
         self.trailingView.configure(firstBusTime: firstBusTime,
                                     firstBusRemaining: firstBusRelativePosition,

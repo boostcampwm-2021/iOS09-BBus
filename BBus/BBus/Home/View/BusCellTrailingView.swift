@@ -92,7 +92,9 @@ class BusCellTrailingView: UIView {
         self.alarmButtonDelegate = delegate
     }
     
-    func configure(firstBusTime: String, firstBusRemaining: String, firstBusCongestion: String, secondBusTime: String, secondBusRemaining: String, secondBusCongestion: String) {
+    func configure(firstBusTime: String, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String, secondBusRemaining: String?, secondBusCongestion: String?) {
+        
+        
         self.firstBusTimeLabel.text = firstBusTime
         self.firstBusTimeLabel.sizeToFit()
         

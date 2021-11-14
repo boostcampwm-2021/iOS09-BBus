@@ -117,7 +117,7 @@ class StationViewController: UIViewController {
             })
             .store(in: &self.cancellables)
         
-        self.viewModel?.$noInfoBuses
+        self.viewModel?.$busKeys
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.stationView.reload()
@@ -141,18 +141,18 @@ extension StationViewController: UICollectionViewDelegate {
 extension StationViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return (self.viewModel?.noInfoBuses.count ?? 0) + (self.viewModel?.infoBuses.count ?? 0)
+        return (self.viewModel?.busKeys.count ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let viewModel = self.viewModel else { return 0 }
         if viewModel.infoBuses.count - 1 >= section {
-            let key = Array(viewModel.infoBuses.keys)[section]
+            let key = viewModel.busKeys[section]
             return viewModel.infoBuses[key]?.count ?? 0
         }
         else {
             let section = section - viewModel.infoBuses.count
-            let key = Array(viewModel.noInfoBuses.keys)[section]
+            let key = viewModel.busKeys[section]
             return viewModel.noInfoBuses[key]?.count ?? 0
         }
     }
@@ -167,12 +167,12 @@ extension StationViewController: UICollectionViewDataSource {
         
         var busInfo: StationViewModel.BusArriveInfo?
         if viewModel.infoBuses.count - 1 >= indexPath.section {
-            let key = Array(viewModel.infoBuses.keys)[indexPath.section]
+            let key = viewModel.busKeys[indexPath.section]
             busInfo = viewModel.infoBuses[key]?[indexPath.item]
         }
         else {
             let section = indexPath.section - viewModel.infoBuses.count
-            let key = Array(viewModel.noInfoBuses.keys)[section]
+            let key = viewModel.busKeys[section]
             busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
         }
         
@@ -180,11 +180,11 @@ extension StationViewController: UICollectionViewDataSource {
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime,
-                           firstBusRelativePosition: busInfo.firstBusRelativePosition ?? "",
-                           firstBusCongestion: busInfo.congestion,
+                           firstBusRelativePosition: busInfo.firstBusRelativePosition,
+                           firstBusCongestion: busInfo.congestion?.toString(),
                            secondBusTime: busInfo.secondBusArriveRemainTime,
-                           secondBusRelativePosition: busInfo.secondBusRelativePosition ?? "",
-                           secondBusCongsetion: busInfo.congestion)
+                           secondBusRelativePosition: busInfo.secondBusRelativePosition,
+                           secondBusCongsetion: busInfo.congestion?.toString())
             cell.configure(delegate: self)
         }
         return cell
