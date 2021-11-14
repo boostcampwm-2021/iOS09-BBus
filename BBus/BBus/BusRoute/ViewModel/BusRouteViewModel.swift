@@ -15,12 +15,14 @@ class BusRouteViewModel {
 
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable> = []
+    private let busRouteId: Int
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
     @Published var buses: [BusPosInfo] = []
 
-    init(usecase: BusRouteUsecase) {
+    init(usecase: BusRouteUsecase, busRouteId: Int) {
         self.usecase = usecase
+        self.busRouteId = busRouteId
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
@@ -88,12 +90,12 @@ class BusRouteViewModel {
     }
 
     func fetch() {
-        self.usecase.searchHeader()
-        self.usecase.fetchRouteList()
-        self.usecase.fetchBusPosList()
+        self.usecase.searchHeader(busRouteId: self.busRouteId)
+        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 
     func refreshBusPos() {
-        self.usecase.fetchBusPosList()
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 }
