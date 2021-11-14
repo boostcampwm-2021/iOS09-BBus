@@ -36,6 +36,10 @@ class StationViewController: UIViewController {
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray
+        
+        button.addAction(UIAction(handler: { _ in
+            self.viewModel?.refresh()
+        }), for: .touchUpInside)
         return button
     }()
     private var collectionHeightConstraint: NSLayoutConstraint?
