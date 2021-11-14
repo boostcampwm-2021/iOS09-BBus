@@ -161,7 +161,7 @@ class BusRouteViewController: UIViewController {
                     self.configureBusColor(type: header.routeType)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBusRouteBodyResult() {
@@ -173,7 +173,7 @@ class BusRouteViewController: UIViewController {
                     self.busRouteView.configureTableViewHeight(count: bodys.count)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBusesPosInfo() {
@@ -186,7 +186,7 @@ class BusRouteViewController: UIViewController {
                     self.configureBusTags(buses: buses)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func fetch() {

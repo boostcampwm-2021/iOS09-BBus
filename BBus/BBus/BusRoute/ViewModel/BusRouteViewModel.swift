@@ -34,7 +34,7 @@ class BusRouteViewModel {
             }, receiveValue: { header in
                 self.header = header
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBodysInfo() {
@@ -45,7 +45,7 @@ class BusRouteViewModel {
             }, receiveValue: { bodys in
                 self.bodys = bodys
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBusesPosInfo() {
@@ -56,7 +56,7 @@ class BusRouteViewModel {
             }, receiveValue: { buses in
                 self.convertBusPosInfo(with: buses)
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func convertBusPos(order: Int, sect: String, fullSect: String) -> CGFloat {
