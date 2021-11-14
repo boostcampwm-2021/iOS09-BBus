@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FavoriteHeaderViewDelegate {
-    func shouldGoToStationScene()
+    func shouldGoToStationScene(headerView: UICollectionReusableView)
 }
 
 class FavoriteCollectionHeaderView: UICollectionReusableView {
@@ -26,7 +26,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     }
     
     @objc private func headerViewTapped(_ sender: UICollectionReusableView) {
-        delegate?.shouldGoToStationScene()
+        delegate?.shouldGoToStationScene(headerView: sender)
     }
 
     private lazy var stationTitleLabel: UILabel = {

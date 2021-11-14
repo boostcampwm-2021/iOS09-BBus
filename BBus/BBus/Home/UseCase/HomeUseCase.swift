@@ -56,7 +56,7 @@ class HomeUseCase {
     }
 
     private func saveMOCKDATA() {
-        let favoriteItem = FavoriteItemDTO(stId: "20000new", busRouteId: "461_two", ord: "왜필요?", arsId: "25340")
+        let favoriteItem = FavoriteItemDTO(stId: "122000248", busRouteId: "100100063", ord: "87", arsId: "23352")
         self.usecases.createFavoriteItem(param: favoriteItem)
             .receive(on: Self.thread)
             .sink { error in
@@ -68,7 +68,7 @@ class HomeUseCase {
             }
             .store(in: &self.cancellable)
 
-        let favoriteOrder = FavoriteOrderDTO(stationId: "20000new", order: 2)
+        let favoriteOrder = FavoriteOrderDTO(stationId: "122000248", order: 1)
         self.usecases.createFavoriteOrder(param: favoriteOrder)
             .receive(on: Self.thread)
             .sink { error in

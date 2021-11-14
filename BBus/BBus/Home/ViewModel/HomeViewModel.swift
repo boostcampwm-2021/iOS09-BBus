@@ -12,15 +12,14 @@ class HomeViewModel {
 
     private let useCase: HomeUseCase
     private var cancellable: AnyCancellable?
-//    private(set) var orderedFavoriteItemList: [FavoriteItemDTO]?
     @Published private(set) var homeFavoriteList: HomeFavoriteList?
 
     init(useCase: HomeUseCase) {
         self.useCase = useCase
-        self.prepare()
+        self.loadFavoriteData()
     }
 
-    private func prepare() {
+    private func loadFavoriteData() {
         self.cancellable = self.useCase.$favoriteList
             .zip(self.useCase.$favoriteOrderList)
             .receive(on: HomeUseCase.thread)

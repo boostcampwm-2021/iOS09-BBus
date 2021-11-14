@@ -88,9 +88,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Model binding Logic needed
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.busRouteId,
+              let busRouteId = Int(busRouteIdString) else { return }
 
-        self.coordinator?.pushToBusRoute(busRouteId: 100100048)
+
+        self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -110,24 +112,26 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - DataSource : UICollectionView
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return self.viewModel?.homeFavoriteList?.count() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.viewModel?.homeFavoriteList?[section]?.count() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
-                        as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
+                    as? FavoriteCollectionViewCell,
+              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]
+        else { return UICollectionViewCell() }
         cell.configureDelegate(self)
-        cell.configure(busNumber: "272",
-                       firstBusTime: "1분 29초",
-                       firstBusRelativePosition: "2번째전",
-                       firstBusCongestion: "여유",
-                       secondBusTime: "9분 51초",
-                       secondBusRelativePosition: "6번째전",
-                       secondBusCongsetion: "여유")
+        cell.configure(busNumber: model.busRouteId,
+                          firstBusTime: "1분 29초",
+                          firstBusRelativePosition: "2번째전",
+                          firstBusCongestion: "여유",
+                          secondBusTime: "9분 51초",
+                          secondBusRelativePosition: "6번째전",
+                          secondBusCongsetion: "여유")
         return cell
     }
 
@@ -172,9 +176,11 @@ extension HomeViewController: AlarmButtonDelegate {
 
 // MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
-    func shouldGoToStationScene() {
-        // TODO: Model binding Logic needed
-        
-        self.coordinator?.pushToStation(arsId: "19007")
+    func shouldGoToStationScene(headerView: UICollectionReusableView) {
+
+        guard let section = self.homeView.getSectionByHeaderView(header: headerView),
+              let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
+
+        self.coordinator?.pushToStation(arsId: arsId)
     }
 }
