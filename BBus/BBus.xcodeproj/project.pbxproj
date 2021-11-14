@@ -100,7 +100,7 @@
 		87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8C27311BF100F461A7 /* BusTagView.swift */; };
 		873D6396273039E100E79069 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D6395273039E100E79069 /* Coordinator.swift */; };
 		873D639827303A6800E79069 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639727303A6800E79069 /* AppCoordinator.swift */; };
-		873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639927303B0500E79069 /* HomeCoornicator.swift */; };
+		873D639A27303B0500E79069 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639927303B0500E79069 /* HomeCoordinator.swift */; };
 		873D639C27303B5000E79069 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639B27303B5000E79069 /* SearchCoordinator.swift */; };
 		87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556B2728116400A9B5E3 /* AppDelegate.swift */; };
 		87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556D2728116400A9B5E3 /* SceneDelegate.swift */; };
@@ -216,7 +216,7 @@
 		87359B8C27311BF100F461A7 /* BusTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusTagView.swift; sourceTree = "<group>"; };
 		873D6395273039E100E79069 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		873D639727303A6800E79069 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		873D639927303B0500E79069 /* HomeCoornicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoornicator.swift; sourceTree = "<group>"; };
+		873D639927303B0500E79069 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		873D639B27303B5000E79069 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		87A555682728116400A9B5E3 /* BBus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87A5556B2728116400A9B5E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				87A5556F2728116400A9B5E3 /* HomeViewController.swift */,
-				873D639927303B0500E79069 /* HomeCoornicator.swift */,
+				873D639927303B0500E79069 /* HomeCoordinator.swift */,
 				4ACA51E1272FCD7900EC0531 /* Model */,
 				4ACA51E0272FCD7100EC0531 /* UseCase */,
 				4ACA51DF272FCD6B00EC0531 /* ViewModel */,
@@ -852,7 +852,7 @@
 				04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */,
 				4A97C4D4273A822D00F1A765 /* Pushables.swift in Sources */,
 				049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */,
-				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
+				873D639A27303B0500E79069 /* HomeCoordinator.swift in Sources */,
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
 				04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */,
