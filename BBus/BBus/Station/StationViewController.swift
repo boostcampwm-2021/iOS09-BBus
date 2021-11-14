@@ -111,9 +111,15 @@ class StationViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] station in
                 guard let station = station else { return }
-                self?.stationView.configureHeaderView(stationId: station.arsID,
-                                                      stationName: station.stationName,
-                                                      direction: "")
+                self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
+            })
+            .store(in: &self.cancellables)
+        
+        self.viewModel?.$nextStation
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] nextStation in
+                guard let nextStation = nextStation else { return }
+                self?.stationView.configureNextStation(direction: nextStation)
             })
             .store(in: &self.cancellables)
         
@@ -177,10 +183,10 @@ extension StationViewController: UICollectionViewDataSource {
         if let busInfo = busInfo {
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
-                           firstBusTime: busInfo.firstBusArriveRemainTime,
+                           firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
                            firstBusRelativePosition: busInfo.firstBusRelativePosition,
                            firstBusCongestion: busInfo.congestion?.toString(),
-                           secondBusTime: busInfo.secondBusArriveRemainTime,
+                           secondBusTime: busInfo.secondBusArriveRemainTime?.toString(),
                            secondBusRelativePosition: busInfo.secondBusRelativePosition,
                            secondBusCongsetion: busInfo.congestion?.toString())
             cell.configure(delegate: self)

@@ -45,22 +45,27 @@ struct BusRemainTime {
         }
     }
     
-    func toString() -> String {
+    func toString() -> String? {
         if let time = self.seconds {
             let minutes = time / 60
             let seconds = time % 60
             return "\(minutes)분 \(seconds)초"
         }
-        else if let message = message {
-            return message
+        else {
+            return self.checkInfo() ? self.message : nil
         }
-        return ""
+    }
+    
+    func checkInfo() -> Bool {
+        guard let message = self.message else { return true }
+        let noInfoMessages = ["운행종료", "출발대기"]
+        return !noInfoMessages.contains(message)
     }
 }
 
 class StationViewModel {
     
-    typealias BusArriveInfo = (firstBusArriveRemainTime: String, firstBusRelativePosition: String?, secondBusArriveRemainTime: String, secondBusRelativePosition: String?, arsId: String, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
+    typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
     
     let usecase: StationUsecase
     private let arsId: String
@@ -68,6 +73,7 @@ class StationViewModel {
     @Published private(set) var busKeys: [BBusRouteType]
     private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
+    @Published private(set) var nextStation: String? = nil
     
     init(usecase: StationUsecase, arsId: String) {
         self.usecase = usecase
@@ -85,6 +91,8 @@ class StationViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { arriveInfo in
+                guard arriveInfo.count > 0 else { return }
+                self.nextStation = arriveInfo[0].nextStation
                 self.classifyByRouteType(with: arriveInfo)
 //                self.infoBuses.forEach({ key, value in
 //                    print(key.rawValue)
@@ -113,21 +121,21 @@ class StationViewModel {
             info.arsId = bus.arsId
             info.busRouteId = bus.busRouteId
             
-            if checkInfo(with: bus) {
-                let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
-                info.firstBusArriveRemainTime = timeAndPositionInfo1.time?.toString() ?? ""
+            let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
+            if timeAndPositionInfo1.time.checkInfo() {
+                info.firstBusArriveRemainTime = timeAndPositionInfo1.time
                 info.firstBusRelativePosition = timeAndPositionInfo1.position
                 
                 let timeAndPositionInfo2 = self.separateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
-                info.secondBusArriveRemainTime = timeAndPositionInfo2.time?.toString() ?? ""
+                info.secondBusArriveRemainTime = timeAndPositionInfo2.time
                 info.secondBusRelativePosition = timeAndPositionInfo2.position
                 
                 infoBuses.updateValue((infoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
             else {
-                info.firstBusArriveRemainTime = "도착정보 없음"
+                info.firstBusArriveRemainTime = nil
                 info.firstBusRelativePosition = nil
-                info.secondBusArriveRemainTime = "도착정보 없음"
+                info.secondBusArriveRemainTime = nil
                 info.secondBusRelativePosition = nil
                 
                 noInfoBuses.updateValue((noInfoBuses[routeType] ?? []) + [info], forKey: routeType)
@@ -145,7 +153,7 @@ class StationViewModel {
         return !noInfoMessages.contains(bus.firstBusArriveRemainTime)
     }
     
-    private func separateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime?, position: String?) {
+    private func separateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime, position: String?) {
         let components = info.components(separatedBy: ["[", "]"])
         if components.count > 1 {
             return (time: BusRemainTime(arriveRemainTime: components[0]), position: components[1])

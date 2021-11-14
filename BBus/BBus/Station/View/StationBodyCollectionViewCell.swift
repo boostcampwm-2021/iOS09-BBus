@@ -66,7 +66,7 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         ])
     }
     
-    func configure(busNumber: String, direction: String, firstBusTime: String, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
+    func configure(busNumber: String, direction: String, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         super.configure(busNumber: busNumber,
                         firstBusTime: firstBusTime,
                         firstBusRelativePosition: firstBusRelativePosition,

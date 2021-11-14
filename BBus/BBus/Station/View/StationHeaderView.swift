@@ -73,9 +73,13 @@ class StationHeaderView: UIView {
         ])
     }
 
-    func configure(stationId: String, stationName: String, direction: String) {
+    func configureStationInfo(stationId: String, stationName: String) {
         self.stationIdLabel.text = stationId
         self.stationNameLabel.text = stationName
-        self.directionLabel.text = direction
+    }
+    
+    func configure(nextStationName: String) {
+        let suffix = "방면"
+        self.directionLabel.text = "\(nextStationName) \(suffix)"
     }
 }
