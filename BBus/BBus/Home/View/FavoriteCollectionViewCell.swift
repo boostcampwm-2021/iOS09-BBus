@@ -9,6 +9,8 @@ import UIKit
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    var indexPath: IndexPath?
+    
     class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
     var busNumberYAxisMargin: CGFloat { return 0 }
@@ -78,5 +80,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
                                     secondBusTime: secondBusTime,
                                     secondBusRemaining: secondBusRelativePosition,
                                     secondBusCongestion: secondBusCongsetion)
+    }
+    
+    func configure(indexPath: IndexPath) {
+        self.indexPath = indexPath
+        self.trailingView.configure(indexPath: indexPath)
     }
 }

@@ -8,17 +8,19 @@
 import UIKit
 
 protocol AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene()
+    func shouldGoToAlarmSettingScene(at indexPath: IndexPath)
 }
 
 class BusCellTrailingView: UIView {
     
     static let noInfoMessage = "도착 정보 없음"
 
+    private var indexPath: IndexPath?
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             let action = UIAction(handler: {_ in
-                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene()
+                guard let indexPath = self.indexPath else { return }
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: indexPath)
             })
             self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
             self.alarmButton.addAction(action, for: .touchUpInside)
@@ -143,5 +145,9 @@ class BusCellTrailingView: UIView {
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)
         self.secondBusTimeRightLabel.configure(remaining: secondBusRemaining, congestion: secondBusCongestion)
+    }
+    
+    func configure(indexPath: IndexPath) {
+        self.indexPath = indexPath
     }
 }

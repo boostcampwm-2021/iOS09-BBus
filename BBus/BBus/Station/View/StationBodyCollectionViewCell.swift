@@ -14,7 +14,6 @@ protocol LikeButtonDelegate {
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
 
-    private var indexPath: IndexPath?
     private var likeButtonDelegate: LikeButtonDelegate? {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
@@ -85,10 +84,6 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     func configure(delegate: LikeButtonDelegate & AlarmButtonDelegate) {
         self.likeButtonDelegate = delegate
         super.configureDelegate(delegate)
-    }
-    
-    func configure(indexPath: IndexPath) {
-        self.indexPath = indexPath
     }
     
     func configureButton(status: Bool) {
