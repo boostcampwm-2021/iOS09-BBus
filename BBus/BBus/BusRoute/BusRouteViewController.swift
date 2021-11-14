@@ -150,8 +150,8 @@ class BusRouteViewController: UIViewController {
     private func bindingBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: BusRouteUsecase.thread)
-            .sink(receiveValue: { _ in
-                guard let header = self.viewModel?.header else { return }
+            .sink(receiveValue: { header in
+                guard let header = header else { return }
                 DispatchQueue.main.async {
                     self.customNavigationBar.configureBackButtonTitle(header.busRouteName)
                     self.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
