@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04045B7F2740F6B30056A433 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B7E2740F6B20056A433 /* SearchResults.swift */; };
 		04045B812740F6DC0056A433 /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
 		041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
@@ -117,6 +118,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04045B7E2740F6B20056A433 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		04045B802740F6DC0056A433 /* BusSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSearchResult.swift; sourceTree = "<group>"; };
 		041A5A10273D2E1B00490075 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusFoldUnfoldDelegate.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 		4ACA51ED272FCDD900EC0531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04045B7E2740F6B20056A433 /* SearchResults.swift */,
 				4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */,
 				04045B802740F6DC0056A433 /* BusSearchResult.swift */,
 			);
@@ -837,6 +840,7 @@
 				04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */,
 				4A97C4D4273A822D00F1A765 /* Pushables.swift in Sources */,
 				049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */,
+				04045B7F2740F6B30056A433 /* SearchResults.swift in Sources */,
 				873D639A27303B0500E79069 /* HomeCoornicator.swift in Sources */,
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,
 				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
