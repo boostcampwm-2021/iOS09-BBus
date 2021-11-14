@@ -151,7 +151,6 @@ extension StationViewController: UICollectionViewDataSource {
             return viewModel.infoBuses[key]?.count ?? 0
         }
         else {
-            let section = section - viewModel.infoBuses.count
             let key = viewModel.busKeys[section]
             return viewModel.noInfoBuses[key]?.count ?? 0
         }
@@ -171,8 +170,7 @@ extension StationViewController: UICollectionViewDataSource {
             busInfo = viewModel.infoBuses[key]?[indexPath.item]
         }
         else {
-            let section = indexPath.section - viewModel.infoBuses.count
-            let key = viewModel.busKeys[section]
+            let key = viewModel.busKeys[indexPath.section]
             busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
         }
         
