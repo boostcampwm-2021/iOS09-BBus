@@ -35,6 +35,8 @@ class BusRouteViewController: UIViewController {
         self.binding()
         self.configureLayout()
         self.configureDelegate()
+        self.configureBaseColor()
+        self.fetch()
     }
 
     init(viewModel: BusRouteViewModel) {
@@ -84,6 +86,14 @@ class BusRouteViewController: UIViewController {
     private func configureDelegate() {
         self.busRouteView.configureDelegate(self)
         self.customNavigationBar.configureDelegate(self)
+    }
+
+    private func configureBaseColor() {
+        self.view.backgroundColor = BBusColor.gray
+        self.customNavigationBar.configureBackgroundColor(color: BBusColor.gray)
+        self.customNavigationBar.configureTintColor(color: BBusColor.white)
+        self.customNavigationBar.configureAlpha(alpha: 0)
+        self.busRouteView.configureColor(to: BBusColor.gray)
     }
     
     private func configureBusColor(type: RouteType) {
@@ -177,6 +187,10 @@ class BusRouteViewController: UIViewController {
                 }
             })
             .store(in: &cancellables)
+    }
+
+    private func fetch() {
+        self.viewModel?.fetch()
     }
 }
 
