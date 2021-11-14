@@ -136,8 +136,12 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView,
+              let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
+              let stationName = self.viewModel?.stationName(by: stationId) else { return UICollectionReusableView() }
+
         header.configureDelegate(self)
+        header.configure(title: stationName, direction: "추후 변경해야함")
         return header
     }
 }

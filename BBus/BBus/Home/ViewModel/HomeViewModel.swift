@@ -35,4 +35,11 @@ class HomeViewModel {
             })
     }
 
+    func stationName(by stationId: String) -> String? {
+        guard let stationId = Int(stationId),
+              let stationName = self.useCase.stationList?.first(where: { $0.stationID == stationId })?.stationName else { return nil }
+
+        return stationName
+    }
+
 }

@@ -31,14 +31,12 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
 
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "여의도환승센터(4번승강장)"
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = BBusColor.black
         return label
     }()
     private lazy var directionLabel: UILabel = {
         let label = UILabel()
-        label.text = "여의도 공원 방면"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = BBusColor.bbusGray
         return label
@@ -83,5 +81,10 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     
     func configureDelegate(_ delegate: FavoriteHeaderViewDelegate) {
         self.delegate = delegate
+    }
+
+    func configure(title: String, direction: String) {
+        self.stationTitleLabel.text = title
+        self.directionLabel.text = direction
     }
 }
