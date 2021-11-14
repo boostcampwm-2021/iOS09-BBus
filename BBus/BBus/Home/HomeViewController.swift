@@ -122,10 +122,11 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                     as? FavoriteCollectionViewCell,
-              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]
+              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+              let busName = self.viewModel?.busName(by: model.busRouteId)
         else { return UICollectionViewCell() }
         cell.configureDelegate(self)
-        cell.configure(busNumber: model.busRouteId,
+        cell.configure(busNumber: busName,
                           firstBusTime: "1분 29초",
                           firstBusRelativePosition: "2번째전",
                           firstBusCongestion: "여유",

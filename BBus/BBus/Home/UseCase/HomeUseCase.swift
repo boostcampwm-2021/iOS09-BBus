@@ -15,7 +15,7 @@ class HomeUseCase {
     private var cancellables: Set<AnyCancellable>
     static let thread = DispatchQueue.init(label: "Home")
     var stationList: [StationDTO]?
-
+    var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
     @Published var favoriteOrderList: [FavoriteOrderDTO]?
 
@@ -29,6 +29,7 @@ class HomeUseCase {
     private func startHome() {
         self.loadFavoriteData()
         self.loadStation()
+        self.loadRoute()
     }
 
     private func saveMOCKDATA() {
@@ -101,4 +102,17 @@ class HomeUseCase {
             .store(in: &self.cancellables)
     }
 
+    private func loadRoute() {
+        self.usecases.getRouteList()
+            .receive(on: Self.thread)
+            .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { busRouteList in
+                self.busRouteList = busRouteList
+            })
+            .store(in: &self.cancellables)
+    }
 }
