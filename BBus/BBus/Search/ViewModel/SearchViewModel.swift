@@ -13,14 +13,14 @@ class SearchViewModel {
     typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
     private let usecase: SearchUseCase
-    private var cancellables: Set<AnyCancellable>
     @Published private var keyword: String
-    @Published private(set) var busSearchResults: [BusRouteDTO] = []
-    @Published private(set) var stationSearchResults: [StationSearchResult] = []
+    @Published private(set) var searchResults: SearchResults
+    private var cancellables: Set<AnyCancellable>
     
     init(usecase: SearchUseCase) {
         self.usecase = usecase
         self.keyword = ""
+        self.searchResults = SearchResults(busSearchResults: [], stationSearchResults: [])
         self.cancellables = []
         self.prepare()
     }
@@ -30,26 +30,16 @@ class SearchViewModel {
     }
 
     private func prepare() {
-        self.usecase.$routeList
-            .receive(on: SearchUseCase.thread)
-            .sink(receiveValue: { _ in
-                self.$keyword
-                    .receive(on: SearchUseCase.thread)
-                    .debounce(for: .milliseconds(400), scheduler: SearchUseCase.thread)
-                    .sink { keyword in
-                        guard let busSearchResults = self.usecase.searchBus(by: keyword) else { return }
-                        self.busSearchResults = busSearchResults
-                    }
-                    .store(in: &self.cancellables)
-            })
-            .store(in: &self.cancellables)
-        
         self.$keyword
             .receive(on: SearchUseCase.thread)
             .debounce(for: .milliseconds(400), scheduler: SearchUseCase.thread)
             .sink { keyword in
-                guard let stationSearchResults = self.usecase.searchStation(by: keyword) else { return }
-                self.stationSearchResults = stationSearchResults
+                if let busSearchResults = self.usecase.searchBus(by: keyword) {
+                    self.searchResults.busSearchResults = busSearchResults
+                }
+                if let stationSearchResults = self.usecase.searchStation(by: keyword) {
+                    self.searchResults.stationSearchResults = stationSearchResults
+                }
             }
             .store(in: &self.cancellables)
     }

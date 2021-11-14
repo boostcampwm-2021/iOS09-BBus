@@ -54,13 +54,15 @@ class SearchUseCase {
             .store(in: &self.cancellables)
     }
     
-    func searchBus(by keyword: String) -> [BusRouteDTO]? {
+    func searchBus(by keyword: String) -> [BusSearchResult]? {
         guard let routeList = self.routeList else { return nil }
+        
         if keyword == "" {
             return []
         }
         else {
             return routeList.filter { $0.busRouteName.hasPrefix(keyword) }
+                            .map { BusSearchResult(busRouteDTO: $0) }
         }
     }
     
@@ -71,15 +73,11 @@ class SearchUseCase {
             return []
         }
         else {
-            return stationList.map { (station) in
-                let stationNameMatchRange = station.stationName.ranges(of: keyword).map { NSRange($0, in: station.stationName) }
-                let arsIdMatchRange = station.arsID.ranges(of: keyword).map { NSRange($0, in: station.arsID) }
-                return StationSearchResult(stationName: station.stationName,
-                                           arsId: station.arsID,
-                                           stationNameMatchRange: stationNameMatchRange,
-                                           arsIdMatchRange: arsIdMatchRange)
-                }
-                .filter { !($0.arsIdMatchRange.isEmpty && $0.stationNameMatchRange.isEmpty) }
+            return stationList.map { StationSearchResult(stationName: $0.stationName,
+                                                         arsId: $0.arsID,
+                                                         stationNameMatchRanges: $0.stationName.ranges(of: keyword),
+                                                         arsIdMatchRanges: $0.arsID.ranges(of: keyword)) }
+                              .filter { !($0.arsIdMatchRanges.isEmpty && $0.stationNameMatchRanges.isEmpty) }
         }
     }
 }

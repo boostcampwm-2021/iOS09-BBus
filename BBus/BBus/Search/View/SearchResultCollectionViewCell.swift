@@ -78,15 +78,15 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureStationUI(title: String, titleMatchRange: [NSRange], arsId: String, arsIdMatchRange: [NSRange]) {
+    func configureStationUI(title: String, titleMatchRanges: [NSRange], arsId: String, arsIdMatchRanges: [NSRange]) {
         let attributedTitle = NSMutableAttributedString(string: title)
-        titleMatchRange.forEach {
+        titleMatchRanges.forEach {
             attributedTitle.addAttributes([.foregroundColor:BBusColor.bbusSearchRed as Any], range: $0)
         }
         self.titleLabel.attributedText = attributedTitle
         
         let attributedArsId = NSMutableAttributedString(string: arsId)
-        arsIdMatchRange.forEach {
+        arsIdMatchRanges.forEach {
             attributedArsId.addAttributes([.foregroundColor:BBusColor.bbusSearchRed as Any], range: $0)
         }
         self.detailInfoLabel.attributedText = attributedArsId
