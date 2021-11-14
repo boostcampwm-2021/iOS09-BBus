@@ -179,7 +179,7 @@ extension StationViewController: UICollectionViewDataSource {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
         
-        var busInfo: StationViewModel.BusArriveInfo?
+        var busInfo: BusArriveInfo?
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             let key = viewModel.busKeys[indexPath.section]
             busInfo = viewModel.infoBuses[key]?[indexPath.item]
@@ -190,6 +190,7 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         if let busInfo = busInfo {
+            cell.configure(indexPath: indexPath)
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
@@ -208,17 +209,7 @@ extension StationViewController: UICollectionViewDataSource {
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
               
-                let viewModel = self.viewModel else { return UICollectionReusableView() }
-        let title: String
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            let key = Array(viewModel.infoBuses.keys)[indexPath.section]
-            title = key.toString()
-        }
-        else {
-            let section = indexPath.section - viewModel.infoBuses.count
-            let key = Array(viewModel.noInfoBuses.keys)[section]
-            title = key.toString()
-        }
+                let title = self.viewModel?.busKeys[indexPath.section].toString() else { return UICollectionReusableView() }
         header.configureLayout()
         header.configure(title: title)
         return header
@@ -275,8 +266,30 @@ extension StationViewController: BackButtonDelegate {
 
 // MARK: - Delegate: LikeButton
 extension StationViewController: LikeButtonDelegate {
-    func likeStationBus() {
-        print("like button clicked")
+    func likeStationBus(at indexPath: IndexPath) {
+        guard let item = self.makeFavoriteItem(at: indexPath) else { return print("nil")}
+        self.viewModel?.add(favoriteItem: item)
+    }
+    
+    func cancelLikeStationBus(at indexPath: IndexPath) {
+        guard let item = self.makeFavoriteItem(at: indexPath) else { return }
+        self.viewModel?.remove(favoriteItem: item)
+    }
+    
+    private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItem? {
+        guard let viewModel = self.viewModel,
+              let stationId = viewModel.usecase.stationInfo else { return nil }
+        let key = viewModel.busKeys[indexPath.section]
+        let item: FavoriteItem
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
+            item = FavoriteItem(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+        }
+        else {
+            guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
+            item = FavoriteItem(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+        }
+        return item
     }
 }
 

@@ -37,6 +37,7 @@ struct StationByUidItemDTO: BBusXMLDTO {
     let firstBusArriveRemainTime: String
     let secondBusArriveRemainTime: String
     let arsId: String
+    let stationOrd: Int
     let busRouteId: Int
     let congestion: Int
     let nextStation: String
@@ -47,6 +48,8 @@ struct StationByUidItemDTO: BBusXMLDTO {
         guard let firstBusArrivalRemainTime = ((dict["arrmsg1"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let secondBusArrivalRemainTime = ((dict["arrmsg2"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let staOrdString = ((dict["staOrd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let staOrd = Int(staOrdString),
               let busRouteIdString = ((dict["busRouteId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let busRouteId = Int(busRouteIdString),
               let congestionString = ((dict["congestion"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -59,6 +62,7 @@ struct StationByUidItemDTO: BBusXMLDTO {
         self.firstBusArriveRemainTime = firstBusArrivalRemainTime
         self.secondBusArriveRemainTime = secondBusArrivalRemainTime
         self.arsId = arsId
+        self.stationOrd = staOrd
         self.busRouteId = busRouteId
         self.congestion = congestion
         self.nextStation = nextStation

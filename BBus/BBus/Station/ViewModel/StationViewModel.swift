@@ -63,9 +63,10 @@ struct BusRemainTime {
     }
 }
 
+typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, stationOrd: Int, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
+
+
 class StationViewModel {
-    
-    typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
     
     let usecase: StationUsecase
     private let arsId: String
@@ -119,6 +120,7 @@ class StationViewModel {
             info.nextStation = bus.nextStation
             info.busNumber = bus.busNumber
             info.arsId = bus.arsId
+            info.stationOrd = bus.stationOrd
             info.busRouteId = bus.busRouteId
             
             let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
@@ -161,5 +163,13 @@ class StationViewModel {
         else {
             return (time: BusRemainTime(arriveRemainTime: components[0]), position: nil)
         }
+    }
+    
+    func add(favoriteItem: FavoriteItem) {
+        self.usecase.add(favoriteItem: favoriteItem)
+    }
+    
+    func remove(favoriteItem: FavoriteItem) {
+        self.usecase.remove(favoriteItem: favoriteItem)
     }
 }
