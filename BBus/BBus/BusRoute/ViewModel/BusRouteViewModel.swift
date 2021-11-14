@@ -28,7 +28,7 @@ class BusRouteViewModel {
 
     private func bindingHeaderInfo() {
         self.usecase.$header
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { header in
@@ -39,7 +39,7 @@ class BusRouteViewModel {
 
     private func bindingBodysInfo() {
         self.usecase.$bodys
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { bodys in
@@ -50,7 +50,7 @@ class BusRouteViewModel {
 
     private func bindingBusesPosInfo() {
         self.usecase.$buses
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { buses in

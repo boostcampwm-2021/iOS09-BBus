@@ -149,7 +149,7 @@ class BusRouteViewController: UIViewController {
 
     private func bindingBusRouteHeaderResult() {
         self.viewModel?.$header
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { header in
                 guard let header = header else { return }
                 DispatchQueue.main.async {
@@ -166,7 +166,7 @@ class BusRouteViewController: UIViewController {
 
     private func bindingBusRouteBodyResult() {
         self.viewModel?.$bodys
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { bodys in
                 DispatchQueue.main.async {
                     self.busRouteView.reload()
@@ -178,7 +178,7 @@ class BusRouteViewController: UIViewController {
 
     private func bindingBusesPosInfo() {
         self.viewModel?.$buses
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { buses in

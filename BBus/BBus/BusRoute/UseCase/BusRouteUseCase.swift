@@ -16,7 +16,7 @@ class BusRouteUsecase {
     @Published var bodys: [StationByRouteListDTO] = []
     @Published var buses: [BusPosByRtidDTO] = []
     private var cancellables: Set<AnyCancellable> = []
-    static let thread = DispatchQueue(label: "BusRoute")
+    static let queue = DispatchQueue(label: "BusRoute")
 
     init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase, busRouteId: Int) {
         self.busRouteId = busRouteId
@@ -25,7 +25,7 @@ class BusRouteUsecase {
 
     func searchHeader() {
         self.usecases.getRouteList()
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
@@ -39,7 +39,7 @@ class BusRouteUsecase {
 
     func fetchRouteList() {
         self.usecases.getStationsByRouteList(busRoutedId: "\(self.busRouteId)")
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .sink { error in
                 if case .failure(let error) = error {
                     print(error)
@@ -53,7 +53,7 @@ class BusRouteUsecase {
 
     func fetchBusPosList() {
         self.usecases.getBusPosByRtid(busRoutedId: "\(self.busRouteId)")
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .sink { error in
                 if case .failure(let error) = error {
                     print(error)
