@@ -90,4 +90,9 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     func configure(indexPath: IndexPath) {
         self.indexPath = indexPath
     }
+    
+    func configureButton(status: Bool) {
+        self.likeButton.isSelected = status
+        self.likeButton.tintColor = status ? BBusColor.bbusLikeYellow : BBusColor.bbusGray6 
+    }
 }

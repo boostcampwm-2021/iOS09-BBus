@@ -189,7 +189,8 @@ extension StationViewController: UICollectionViewDataSource {
             busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
         }
         
-        if let busInfo = busInfo {
+        if let busInfo = busInfo,
+           let item = self.makeFavoriteItem(at: indexPath) {
             cell.configure(indexPath: indexPath)
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
@@ -200,6 +201,7 @@ extension StationViewController: UICollectionViewDataSource {
                            secondBusRelativePosition: busInfo.secondBusRelativePosition,
                            secondBusCongsetion: busInfo.congestion?.toString())
             cell.configure(delegate: self)
+            cell.configureButton(status: viewModel.favoriteItems.contains(item))
         }
         return cell
     }

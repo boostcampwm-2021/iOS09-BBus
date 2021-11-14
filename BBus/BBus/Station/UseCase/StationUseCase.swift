@@ -16,6 +16,7 @@ class StationUsecase {
     private let usecases: StationUsecases
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
+    @Published private(set) var favoriteItems: [FavoriteItem] // need more
     private var cancellables: Set<AnyCancellable>
     
     init(usecases: StationUsecases) {
@@ -23,6 +24,8 @@ class StationUsecase {
         self.busArriveInfo = []
         self.stationInfo = nil
         self.cancellables = []
+        self.favoriteItems = []
+        self.getFavoriteItems()
     }
     
     func stationInfoWillLoad(with arsId: String) {
@@ -67,6 +70,7 @@ class StationUsecase {
                     print(error)
                 }
             }, receiveValue: { _ in
+                self.getFavoriteItems()
                 return
             })
             .store(in: &self.cancellables)
@@ -79,7 +83,21 @@ class StationUsecase {
                     print(error)
                 }
             }, receiveValue: { _ in
+                self.getFavoriteItems()
                 return
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func getFavoriteItems() {
+        self.usecases.getFavoriteItemList()
+            .decode(type: [FavoriteItem].self, decoder: PropertyListDecoder())
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { items in
+                self.favoriteItems = items
             })
             .store(in: &self.cancellables)
     }
