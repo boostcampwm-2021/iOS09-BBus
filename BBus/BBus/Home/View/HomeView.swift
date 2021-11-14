@@ -84,6 +84,10 @@ class HomeView: UIView {
             self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -HomeNavigationView.height + 1)
         })
     }
+
+    func reload() {
+        self.favoriteCollectionView.reloadData()
+    }
     
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()

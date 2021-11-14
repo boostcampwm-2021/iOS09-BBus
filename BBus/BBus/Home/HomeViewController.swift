@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
     private lazy var homeView = HomeView()
     private var lastContentOffset: CGFloat = 0
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellable: AnyCancellable?
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -31,6 +31,7 @@ class HomeViewController: UIViewController {
         self.title = "Home"
         self.configureColor()
         self.configureLayout()
+        self.binding()
         self.homeView.configureLayout()
         self.homeView.configureDelegate(self)
         
@@ -66,6 +67,20 @@ class HomeViewController: UIViewController {
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
+    }
+
+    private func binding() {
+        self.bindingFavoriteList()
+    }
+
+    private func bindingFavoriteList() {
+        self.cancellable = self.viewModel?.$homeFavoriteList
+            .receive(on: HomeUseCase.thread)
+            .sink(receiveValue: { _ in
+                DispatchQueue.main.async {
+                    self.homeView.reload()
+                }
+            })
     }
 }
 

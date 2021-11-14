@@ -34,6 +34,10 @@
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
 		4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */; };
 		4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
+		4A06AECA27415DB50027222D /* FavoriteOrderDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC927415DB50027222D /* FavoriteOrderDTO.swift */; };
+		4A06AECC27415EAB0027222D /* CreateFavoriteOrderFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AECB27415EAB0027222D /* CreateFavoriteOrderFetcher.swift */; };
+		4A06AECE27415EB80027222D /* DeleteFavoriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AECD27415EB80027222D /* DeleteFavoriteOrder.swift */; };
+		4A06AED027415EBF0027222D /* GetFavoriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AECF27415EBF0027222D /* GetFavoriteOrder.swift */; };
 		4A17CED72733A754007B1646 /* SimpleCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */; };
 		4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */; };
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
@@ -145,6 +149,10 @@
 		4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAccessoryView.swift; sourceTree = "<group>"; };
 		4A06AEC2273E51AE0027222D /* AccessKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AccessKey.xcconfig; sourceTree = "<group>"; };
 		4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItemDTO.swift; sourceTree = "<group>"; };
+		4A06AEC927415DB50027222D /* FavoriteOrderDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteOrderDTO.swift; sourceTree = "<group>"; };
+		4A06AECB27415EAB0027222D /* CreateFavoriteOrderFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFavoriteOrderFetcher.swift; sourceTree = "<group>"; };
+		4A06AECD27415EB80027222D /* DeleteFavoriteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteOrder.swift; sourceTree = "<group>"; };
+		4A06AECF27415EBF0027222D /* GetFavoriteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteOrder.swift; sourceTree = "<group>"; };
 		4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCollectionHeaderView.swift; sourceTree = "<group>"; };
 		4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultScrollView.swift; sourceTree = "<group>"; };
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
@@ -291,6 +299,7 @@
 				049375AA273B9F330061ACDA /* BusRouteDTO.swift */,
 				049375AE273BAA130061ACDA /* StationDTO.swift */,
 				4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */,
+				4A06AEC927415DB50027222D /* FavoriteOrderDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -630,6 +639,9 @@
 				87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */,
 				87038A93273C12E20078EAE3 /* GetStationByUidItemFetcher.swift */,
 				87038A95273C13F10078EAE3 /* GetStationsByPosListFetcher.swift */,
+				4A06AECB27415EAB0027222D /* CreateFavoriteOrderFetcher.swift */,
+				4A06AECD27415EB80027222D /* DeleteFavoriteOrder.swift */,
+				4A06AECF27415EBF0027222D /* GetFavoriteOrder.swift */,
 			);
 			path = Fetcher;
 			sourceTree = "<group>";
@@ -815,6 +827,7 @@
 				87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */,
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
 				4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */,
+				4A06AECA27415DB50027222D /* FavoriteOrderDTO.swift in Sources */,
 				4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */,
 				4ACA521F272FCEAA00EC0531 /* AlarmSettingModel.swift in Sources */,
 				4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */,
@@ -824,6 +837,7 @@
 				4A1A22DD2732801700476861 /* StationCoodinator.swift in Sources */,
 				4ACA5237272FCF2C00EC0531 /* BusRouteViewController.swift in Sources */,
 				873D639827303A6800E79069 /* AppCoordinator.swift in Sources */,
+				4A06AECC27415EAB0027222D /* CreateFavoriteOrderFetcher.swift in Sources */,
 				4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */,
 				047C30FC273A04C20075EA14 /* BBusColor.swift in Sources */,
 				87038A94273C12E20078EAE3 /* GetStationByUidItemFetcher.swift in Sources */,
@@ -866,6 +880,7 @@
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,
 				049375BF273C326A0061ACDA /* StationsByPosDTO.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
+				4A06AED027415EBF0027222D /* GetFavoriteOrder.swift in Sources */,
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
 				87038A8A273B96B60078EAE3 /* Service.swift in Sources */,
@@ -883,6 +898,7 @@
 				4ACA522F272FCEDF00EC0531 /* MovingStatusViewModel.swift in Sources */,
 				4AA294B3273C111C008E5497 /* GetFavoriteItemListFetcher.swift in Sources */,
 				4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */,
+				4A06AECE27415EB80027222D /* DeleteFavoriteOrder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,14 +11,14 @@ import Combine
 class Persistent {
     
     enum PersistentError: Error {
-        case noneError, decodingError, encodingError, urlError
+        case noneError, decodingError, encodingError, urlError, duplicateError
     }
     
     static let shared = Persistent()
     
     private init() { }
 
-    func create<T: Codable>(key: String, param: T, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
+    func create<T: Codable & Equatable>(key: String, param: T, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
         queue.async { [weak publisher] in
             var items: [T] = []
@@ -30,7 +30,11 @@ class Persistent {
                     publisher?.send(completion: .failure(PersistentError.decodingError))
                 }
             }
-            items.append(param)
+            if items.contains(where: { $0 == param }) {
+                publisher?.send(completion: .failure(PersistentError.duplicateError))
+            } else {
+                items.append(param)
+            }
             if let data = try? PropertyListEncoder().encode(items) {
                 UserDefaults.standard.set(data, forKey: key)
             } else {
