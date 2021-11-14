@@ -139,7 +139,16 @@ class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.coordinator?.pushToBusRoute(busRouteId: 100100048)
+        guard let viewModel = viewModel else { return }
+        let busRouteId: Int
+        let key = viewModel.busKeys[indexPath.section]
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            busRouteId = viewModel.infoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+        }
+        else {
+            busRouteId = viewModel.noInfoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+        }
+        self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
 }
 
