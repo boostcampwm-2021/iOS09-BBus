@@ -42,7 +42,7 @@ class StationViewModel {
     
     func bindingBusArriveInfo() {
         self.usecase.$busArriveInfo
-            .receive(on: StationUsecase.thread)
+            .receive(on: StationUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { arriveInfo in
@@ -65,15 +65,20 @@ class StationViewModel {
         buses.forEach() { bus in
             guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0),
                   let congestion = BusCongestion(rawValue: bus.congestion) else { return print(bus.routeType) }
+            
             let info: BusArriveInfo
+
             info.routeType = routeType
             info.congestion = congestion
+            
             let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
             info.firstBusArriveRemainTime = timeAndPositionInfo1.time
             info.firstBusRelativePosition = timeAndPositionInfo1.position
+            
             let timeAndPositionInfo2 = self.separateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
             info.secondBusArriveRemainTime = timeAndPositionInfo2.time
             info.secondBusRelativePosition = timeAndPositionInfo2.position
+            
             info.nextStation = bus.nextStation
             info.busNumber = bus.busNumber
             info.arsId = bus.arsId
@@ -98,7 +103,7 @@ class StationViewModel {
     private func separateTimeAndPositionInfo(with info: String) -> (time: String, position: String?) {
         let components = info.components(separatedBy: ["[", "]"])
         if components.count > 1 {
-            return (time: components.first ?? "", position: components[1])
+            return (time: components[0], position: components[1])
         }
         else {
             return (time: components.first ?? "", position: nil)
