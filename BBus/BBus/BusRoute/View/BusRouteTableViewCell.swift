@@ -54,8 +54,8 @@ class BusRouteTableViewCell: BusStationTableViewCell {
     func configure(speed: Int, afterSpeed: Int?, index: Int, count: Int, title: String, description: String, type: BusRootCenterImageType) {
         let lineColors = self.configureLineColors(speed: speed,
                                                   afterSpeed: afterSpeed,
-                                                 index: index,
-                                                 count: count)
+                                                  index: index,
+                                                  count: count)
         super.configure(beforeColor: lineColors.beforeColor,
                         afterColor: lineColors.afterColor,
                         title: title,
@@ -81,15 +81,19 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 afterColor = self.configureLineColor(speed: afterSpeed)
             }
         }
+        
         return (beforeColor, afterColor)
     }
 
     func configureLineColor(speed: Int) -> UIColor? {
+        let maxHeightCongestionSpped = 9
+        let maxNormalCongestionSpeed = 20
         let color: UIColor?
-        if speed <= 9 {
+
+        if speed <= maxHeightCongestionSpped {
             color = BBusColor.bbusCongestionHigh
         }
-        else if speed <= 20 {
+        else if speed <= maxNormalCongestionSpeed {
             color = BBusColor.bbusCongestionNormal
         }
         else {
