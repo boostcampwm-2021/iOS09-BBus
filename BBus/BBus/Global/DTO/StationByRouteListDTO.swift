@@ -41,6 +41,7 @@ struct StationByRouteListDTO: BBusXMLDTO {
     let arsId: String
     let beginTm: String
     let lastTm: String
+    let transYn: String
     
     init?(dict: [String : [Any]]) {
         guard let sectSpdString = ((dict["sectSpd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
@@ -52,7 +53,8 @@ struct StationByRouteListDTO: BBusXMLDTO {
               let fullSectionDistance = Int(fullSectionDistanceString),
               let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
               let beginTm = ((dict["beginTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}),
-              let lastTm = ((dict["lastTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}) else { return nil }
+              let lastTm = ((dict["lastTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}),
+              let transYn = ((dict["transYn"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}) else { return nil }
         
         self.sectionSpeed = sectSpd
         self.sequence = seq
@@ -61,5 +63,6 @@ struct StationByRouteListDTO: BBusXMLDTO {
         self.arsId = arsId
         self.beginTm = beginTm
         self.lastTm = lastTm
+        self.transYn = transYn
     }
 }

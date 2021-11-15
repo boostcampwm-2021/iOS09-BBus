@@ -170,8 +170,8 @@ extension BusRouteViewController: UITableViewDataSource {
         cell.configure(beforeColor: BBusColor.bbusTypeBlue,
                        afterColor: BBusColor.bbusTypeBlue,
                        title: stationItem.stationName,
-                       description: "\(stationItem.arsId) | \(stationItem.beginTm)-\(stationItem.lastTm)",
-                       type: indexPath.item != 10 ? .waypoint : .uturn)
+                       description: "\(stationItem.arsId)  |  \(stationItem.beginTm)-\(stationItem.lastTm)",
+                       type: stationItem.transYn != "Y" ? .waypoint : .uturn)
         return cell
     }
 }

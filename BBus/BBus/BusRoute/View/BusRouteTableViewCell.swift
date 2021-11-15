@@ -38,6 +38,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 super.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 super.centerImageView.centerXAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor)
             ])
+            super.backgroundColor = BBusColor.bbusLightGray
         case .uturn:
             self.centerImageView.image = BBusImage.stationCenterUturn
             NSLayoutConstraint.activate([
@@ -46,6 +47,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 super.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 super.centerImageView.trailingAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor, constant: uturmImageXaxisMargin)
             ])
+            super.backgroundColor = BBusColor.white
         }
     }
     
