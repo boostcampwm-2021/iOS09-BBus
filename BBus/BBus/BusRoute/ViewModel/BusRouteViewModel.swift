@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import CoreGraphics
 
-typealias BusStationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, description: String, transYn: String)
+typealias BusStationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, description: String, transYn: String, arsId: String)
 typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
 
 class BusRouteViewModel {
@@ -85,6 +85,7 @@ class BusRouteViewModel {
             info.title = body.stationName
             info.description = "\(body.arsId)  |  \(body.beginTm)-\(body.lastTm)"
             info.transYn = body.transYn
+            info.arsId = body.arsId
             bodysResult.append(info)
         }
         self.bodys = bodysResult

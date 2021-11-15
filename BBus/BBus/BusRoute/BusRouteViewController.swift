@@ -218,7 +218,8 @@ extension BusRouteViewController: UITableViewDataSource {
 // MARK: - Delegate : UITableView
 extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.coordinator?.pushToStation(arsId: "19007")
+        guard let stationInfo = self.viewModel?.bodys[indexPath.item] else { return }
+        self.coordinator?.pushToStation(arsId: stationInfo.arsId)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
