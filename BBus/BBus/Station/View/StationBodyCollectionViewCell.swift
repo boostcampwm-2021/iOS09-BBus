@@ -8,16 +8,21 @@
 import UIKit
 
 protocol LikeButtonDelegate {
-    func likeStationBus()
+    func likeStationBus(at: IndexPath)
+    func cancelLikeStationBus(at: IndexPath)
 }
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
 
+    private var indexPath: IndexPath?
     private var likeButtonDelegate: LikeButtonDelegate? {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
-                self?.likeButtonDelegate?.likeStationBus()
-                self?.likeButton.tintColor = self?.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
+                guard let self = self,
+                      let indexPath = self.indexPath,
+                      let delegate = self.likeButtonDelegate else { return }
+                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: indexPath) : delegate.likeStationBus(at: indexPath)
+                self.likeButton.tintColor = self.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)
@@ -80,5 +85,14 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     func configure(delegate: LikeButtonDelegate & AlarmButtonDelegate) {
         self.likeButtonDelegate = delegate
         super.configureDelegate(delegate)
+    }
+    
+    func configure(indexPath: IndexPath) {
+        self.indexPath = indexPath
+    }
+    
+    func configureButton(status: Bool) {
+        self.likeButton.isSelected = status
+        self.likeButton.tintColor = status ? BBusColor.bbusLikeYellow : BBusColor.bbusGray6 
     }
 }

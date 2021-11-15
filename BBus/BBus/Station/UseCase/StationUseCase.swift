@@ -11,16 +11,21 @@ import Combine
 class StationUsecase {
     static let queue = DispatchQueue.init(label: "station")
     
-    private let usecases: GetStationByUidItemUsecase & GetStationListUsecase
+    typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase
+    
+    private let usecases: StationUsecases
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
+    @Published private(set) var favoriteItems: [FavoriteItem] // need more
     private var cancellables: Set<AnyCancellable>
     
-    init(usecases: GetStationByUidItemUsecase & GetStationListUsecase) {
+    init(usecases: StationUsecases) {
         self.usecases = usecases
         self.busArriveInfo = []
         self.stationInfo = nil
         self.cancellables = []
+        self.favoriteItems = []
+        self.getFavoriteItems()
     }
     
     func stationInfoWillLoad(with arsId: String) {
@@ -53,6 +58,46 @@ class StationUsecase {
                 guard let result = BBusXMLParser().parse(dtoType: StationByUidItemResult.self, xml: data) else { return }
                 let realTimeInfo = result.body.itemList
                 self.busArriveInfo = realTimeInfo
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    func add(favoriteItem: FavoriteItem) {
+        self.usecases.createFavoriteItem(param: favoriteItem)
+            .receive(on: Self.queue)
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { _ in
+                self.getFavoriteItems()
+                return
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    func remove(favoriteItem: FavoriteItem) {
+        self.usecases.deleteFavoriteItem(param: favoriteItem)
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { _ in
+                self.getFavoriteItems()
+                return
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func getFavoriteItems() {
+        self.usecases.getFavoriteItemList()
+            .decode(type: [FavoriteItem].self, decoder: PropertyListDecoder())
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { items in
+                self.favoriteItems = items
             })
             .store(in: &self.cancellables)
     }
