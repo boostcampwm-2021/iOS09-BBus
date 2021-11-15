@@ -67,13 +67,28 @@ class BBusAPIUsecases: RequestUsecases {
         return fetcher.fetch(on: self.queue)
     }
     
-    func createFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error> {
+    func createFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
         let fetcher: CreateFavoriteItemFetchable = PersistentCreateFavoriteItemFetcher()
         return fetcher.fetch(param: param, on: self.queue)
     }
     
-    func deleteFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error> {
+    func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
         let fetcher: DeleteFavoriteItemFetchable = PersistentDeleteFavoriteItemFetcher()
+        return fetcher.fetch(param: param, on: self.queue)
+    }
+
+    func getFavoriteOrderList() -> AnyPublisher<Data, Error> {
+        let fetcher: GetFavoriteOrderListFetchable = PersistentGetFavoriteOrderListFetcher()
+        return fetcher.fetch(on: self.queue)
+    }
+
+    func deleteFavoriteOrder(param: FavoriteOrderDTO) -> AnyPublisher<Data, Error> {
+        let fetcher: DeleteFavoriteOrderFetchable = PersistentDeleteFavoriteOrderFetcher()
+        return fetcher.fetch(param: param, on: self.queue)
+    }
+
+    func createFavoriteOrder(param: FavoriteOrderDTO) -> AnyPublisher<Data, Error> {
+        let fetcher: CreateFavoriteOrderFetchable = PersistentCreateFavoriteOrderFetcher()
         return fetcher.fetch(param: param, on: self.queue)
     }
 }
