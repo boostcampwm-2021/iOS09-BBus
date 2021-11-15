@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.configureLayout()
         self.configureUI()
         self.configureDelegate()
@@ -60,11 +61,7 @@ class SearchViewController: UIViewController {
     }
     
     private func binding() {
-        self.bindingBusResult()
-    }
-    
-    private func bindingBusResult() {
-        self.cancellable = self.viewModel?.$busSearchResults
+        self.cancellable = self.viewModel?.$searchResults
             .receive(on: SearchUseCase.thread)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
@@ -74,6 +71,7 @@ class SearchViewController: UIViewController {
     }
 }
 
+// MARK: - Delegate : SearchBackButton
 extension SearchViewController: SearchBackButtonDelegate {
     func shouldNavigationPop() {
         self.coordinator?.terminate()
@@ -85,11 +83,11 @@ extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.searchView.currentSearchType == SearchType.bus {
-            guard let busRouteId = self.viewModel?.busSearchResults[indexPath.row].routeID else { return }
+            guard let busRouteId = self.viewModel?.searchResults.busSearchResults[indexPath.row].routeID else { return }
             self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
         }
         else {
-            guard let arsId = self.viewModel?.stationSearchResults[indexPath.row].stationDTO.arsID else { return }
+            guard let arsId = self.viewModel?.searchResults.stationSearchResults[indexPath.row].arsId else { return }
             self.coordinator?.pushToStation(arsId: arsId)
         }
     }
@@ -102,19 +100,19 @@ extension SearchViewController: UICollectionViewDataSource {
         let regionCount = 1
         
         if collectionView.frame.origin.x == 0 {
-            return self.viewModel?.busSearchResults.count == 0 ? 0 : regionCount
+            return self.viewModel?.searchResults.busSearchResults.count == 0 ? 0 : regionCount
         }
         else {
-            return self.viewModel?.stationSearchResults.count == 0 ? 0 : regionCount
+            return self.viewModel?.searchResults.stationSearchResults.count == 0 ? 0 : regionCount
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.frame.origin.x == 0 {
-            return self.viewModel?.busSearchResults.count ?? 0
+            return self.viewModel?.searchResults.busSearchResults.count ?? 0
         }
         else {
-            return self.viewModel?.stationSearchResults.count ?? 0
+            return self.viewModel?.searchResults.stationSearchResults.count ?? 0
         }
     }
 
@@ -128,12 +126,15 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         if collectionView.frame.origin.x == 0 {
-            guard let bus = self.viewModel?.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            guard let bus = self.viewModel?.searchResults.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
-            guard let station = self.viewModel?.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
-            cell.configureStationUI(title: station.stationDTO.stationName, detailInfo: station.stationDTO.arsID)
+            guard let station = self.viewModel?.searchResults.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            cell.configureStationUI(title: station.stationName,
+                                    titleMatchRanges: station.stationNameMatchRanges,
+                                    arsId: station.arsId,
+                                    arsIdMatchRanges: station.arsIdMatchRanges)
         }
         cell.configureLayout()
         return cell
@@ -156,6 +157,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - Delegate : TextField
 extension SearchViewController: TextFieldDelegate {
     func shouldRefreshSearchResult(by keyword: String) {
         self.viewModel?.configure(keyword: keyword)
