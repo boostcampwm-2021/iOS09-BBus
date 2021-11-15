@@ -23,6 +23,7 @@ class MovingStatusViewModel {
         self.busRouteId = busRouteId
         self.fromArsId = fromArsId
         self.toArsId = toArsId
+        self.bindingHeaderInfo()
     }
 
     private func bindingHeaderInfo() {
@@ -34,5 +35,9 @@ class MovingStatusViewModel {
                 self.busName = header?.busRouteName
             }
             .store(in: &self.cancellables)
+    }
+
+    func fetch() {
+        self.usecase.searchHeader(busRouteId: self.busRouteId)
     }
 }

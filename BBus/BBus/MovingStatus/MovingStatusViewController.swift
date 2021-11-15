@@ -30,9 +30,11 @@ class MovingStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.binding()
         self.configureLayout()
         self.configureDelegate()
         self.configureBusTag()
+        self.fetch()
     }
     
     // MARK: - Configure
@@ -57,6 +59,26 @@ class MovingStatusViewController: UIViewController {
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
+    }
+
+    private func binding() {
+        self.bindingHeaderBusName()
+    }
+
+    private func bindingHeaderBusName() {
+        self.viewModel?.$busName
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { busName in
+                guard let busName = busName else { return }
+                DispatchQueue.main.async {
+                    self.movingStatusView.configureBusName(to: busName)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func fetch() {
+        self.viewModel?.fetch()
     }
 }
 
