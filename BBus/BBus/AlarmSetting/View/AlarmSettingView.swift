@@ -48,4 +48,8 @@ class AlarmSettingView: UIView {
         self.alarmTableView.delegate = delegate
         self.alarmTableView.dataSource = delegate
     }
+    
+    func reload() {
+        self.alarmTableView.reloadData()
+    }
 }

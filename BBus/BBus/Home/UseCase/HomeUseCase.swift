@@ -68,7 +68,7 @@ class HomeUseCase {
                         print(error)
                     }
                 }, receiveValue: { favoriteDTO in
-                    dump(favoriteDTO)
+//                    dump(favoriteDTO)
     //                print("fewj")
                     self.favoriteList = favoriteDTO
                 })
@@ -81,7 +81,7 @@ class HomeUseCase {
                         print(error)
                     }
                 }, receiveValue: { favoriteOrderListDTO in
-                    dump(favoriteOrderListDTO)
+//                    dump(favoriteOrderListDTO)
                     self.favoriteOrderList = favoriteOrderListDTO
                 })
                 .store(in: &self.cancellables)

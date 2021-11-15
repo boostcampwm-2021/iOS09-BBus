@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class AlarmSettingViewController: UIViewController {
 
@@ -23,6 +24,7 @@ class AlarmSettingViewController: UIViewController {
         return button
     }()
     private let viewModel: AlarmSettingViewModel?
+    private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: AlarmSettingViewModel) {
         self.viewModel = viewModel
@@ -41,6 +43,8 @@ class AlarmSettingViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
+        
+        self.binding()
     }
     
     // MARK: - Configure
@@ -89,6 +93,15 @@ class AlarmSettingViewController: UIViewController {
     private func configureMOCKDATA() {
         self.customNavigationBar.configureTitle(NSAttributedString(string: "461 ∙ 예술인마을.사당초등학교"))
     }
+    
+    private func binding() {
+        self.viewModel?.$busArriveInfos
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { data in
+                self.alarmSettingView.reload()
+            })
+            .store(in: &self.cancellables)
+    }
 }
 
 // MARK: - DataSource: UITableView
@@ -100,7 +113,7 @@ extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            return self.viewModel?.busArriveInfos.count ?? 0
         case 1:
             return 10
         default:
@@ -112,20 +125,21 @@ extension AlarmSettingViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
-
+            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return cell }
+            
             cell.configure(busColor: BBusColor.bbusTypeBlue)
             cell.configure(order: String(indexPath.row+1),
-                           remainingTime: "2분 18초",
-                           remainingStationCount: "2번째전",
-                           busCongestionStatus: "여유",
-                           arrivalTime: "오후 04시 11분 도착 예정",
-                           currentLocation: "낙성대입구",
-                           busNumber: "서울74사3082")
+                           remainingTime: info.arriveRemainTime?.toString(),
+                           remainingStationCount: info.relativePosition,
+                           busCongestionStatus: info.congestion?.toString(),
+                           arrivalTime: info.estimatedArrivalTime,
+                           currentLocation: info.currentStation,
+                           busNumber: info.plainNumber)
             cell.configureDelegate(self)
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
-
+            
             cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.bbusGray,
                            afterColor: indexPath.item == 9 ? .clear : BBusColor.bbusGray,
                            title: "신촌오거리.현대백화점",

@@ -6,14 +6,41 @@
 //
 
 import Foundation
+import Combine
 
 class AlarmSettingUseCase {
     static let queue = DispatchQueue.init(label: "alarmSetting")
     
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsecase
-    let usecases: AlarmSettingUseCases
+    private let useCases: AlarmSettingUseCases
+    @Published private(set) var busArriveInfo: ArrInfoByRouteDTO?
+    private var cancellables: Set<AnyCancellable>
     
-    init(usecases: AlarmSettingUseCases) {
-        self.usecases = usecases
+    init(useCases: AlarmSettingUseCases) {
+        self.useCases = useCases
+        self.busArriveInfo = nil
+        self.cancellables = []
     }
+    
+    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) {
+        Self.queue.async {
+            self.useCases.getArrInfoByRouteList(stId: stId,
+                                                busRouteId: busRouteId,
+                                                ord: ord)
+                .receive(on: Self.queue)
+                .sink(receiveCompletion: { error in
+                    if case .failure(let error) = error {
+                        print(error)
+                    }
+                }, receiveValue: { data in
+                    guard let result = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
+                          let item = result.body.itemList.first
+                    else { return }
+                    self.busArriveInfo = item
+                })
+                .store(in: &self.cancellables)
+        }
+    }
+    
+    
 }

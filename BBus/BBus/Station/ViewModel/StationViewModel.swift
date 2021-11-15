@@ -56,6 +56,12 @@ struct BusRemainTime {
         }
     }
     
+    func estimateArrivalTime() -> Date? {
+        guard self.checkInfo() else { return nil }
+        guard let seconds = self.seconds else { return Date() }
+        return Date(timeIntervalSinceNow: TimeInterval(seconds))
+    }
+    
     func checkInfo() -> Bool {
         guard let message = self.message else { return true }
         let noInfoMessages = ["운행종료", "출발대기"]
@@ -159,11 +165,6 @@ class StationViewModel {
         
         let keys = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue }) + Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
         self.busKeys = keys
-    }
-    
-    private func checkInfo(with bus: StationByUidItemDTO) -> Bool {
-        let noInfoMessages = ["운행종료", "출발대기"]
-        return !noInfoMessages.contains(bus.firstBusArriveRemainTime)
     }
     
     private func separateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime, position: String?) {
