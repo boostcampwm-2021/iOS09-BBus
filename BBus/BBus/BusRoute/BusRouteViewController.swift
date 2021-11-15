@@ -149,9 +149,9 @@ class BusRouteViewController: UIViewController {
 
     private func bindingBusRouteHeaderResult() {
         self.viewModel?.$header
-            .receive(on: BusRouteUsecase.thread)
-            .sink(receiveValue: { _ in
-                guard let header = self.viewModel?.header else { return }
+            .receive(on: BusRouteUsecase.queue)
+            .sink(receiveValue: { header in
+                guard let header = header else { return }
                 DispatchQueue.main.async {
                     self.customNavigationBar.configureBackButtonTitle(header.busRouteName)
                     self.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
@@ -161,24 +161,24 @@ class BusRouteViewController: UIViewController {
                     self.configureBusColor(type: header.routeType)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBusRouteBodyResult() {
         self.viewModel?.$bodys
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { bodys in
                 DispatchQueue.main.async {
                     self.busRouteView.reload()
                     self.busRouteView.configureTableViewHeight(count: bodys.count)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func bindingBusesPosInfo() {
         self.viewModel?.$buses
-            .receive(on: BusRouteUsecase.thread)
+            .receive(on: BusRouteUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { buses in
@@ -186,7 +186,7 @@ class BusRouteViewController: UIViewController {
                     self.configureBusTags(buses: buses)
                 }
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     private func fetch() {
@@ -203,15 +203,14 @@ extension BusRouteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
         guard let bodys = self.viewModel?.bodys else { return UITableViewCell() }
-        let stationItem = bodys[indexPath.row]
-        let afterSpeed = indexPath.row+1 == bodys.count ? nil : bodys[indexPath.row+1].sectionSpeed
-        cell.configure(speed: stationItem.sectionSpeed,
-                       afterSpeed: afterSpeed,
+        let stationInfo = bodys[indexPath.row]
+        cell.configure(speed: stationInfo.speed,
+                       afterSpeed: stationInfo.afterSpeed,
                        index: indexPath.row,
-                       count: self.viewModel?.bodys.count ?? 0,
-                       title: stationItem.stationName,
-                       description: "\(stationItem.arsId)  |  \(stationItem.beginTm)-\(stationItem.lastTm)",
-                       type: stationItem.transYn != "Y" ? .waypoint : .uturn)
+                       count: stationInfo.count,
+                       title: stationInfo.title,
+                       description: stationInfo.description,
+                       type: stationInfo.transYn != "Y" ? .waypoint : .uturn)
         return cell
     }
 }
@@ -219,7 +218,8 @@ extension BusRouteViewController: UITableViewDataSource {
 // MARK: - Delegate : UITableView
 extension BusRouteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.coordinator?.pushToStation(arsId: "19007")
+        guard let stationInfo = self.viewModel?.bodys[indexPath.item] else { return }
+        self.coordinator?.pushToStation(arsId: stationInfo.arsId)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
