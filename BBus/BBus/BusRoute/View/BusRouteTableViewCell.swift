@@ -49,7 +49,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
         }
     }
     
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
+    func configure(beforeColor: UIColor?, afterColor: UIColor?, title: String, description: String, type: BusRootCenterImageType) {
         super.configure(beforeColor: beforeColor,
                         afterColor: afterColor,
                         title: title,

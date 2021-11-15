@@ -30,10 +30,10 @@ class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.binding()
         self.configureLayout()
         self.configureDelegate()
         self.configureMOCKDATA()
-        self.binding()
     }
 
     init(viewModel: BusRouteViewModel) {
@@ -125,6 +125,7 @@ class BusRouteViewController: UIViewController {
 
     private func binding() {
         self.bindingBusRouteHeaderResult()
+        self.bindingBusRouteBodyResult()
     }
 
     private func bindingBusRouteHeaderResult() {
@@ -143,51 +144,34 @@ class BusRouteViewController: UIViewController {
             })
             .store(in: &cancellables)
     }
+
+    private func bindingBusRouteBodyResult() {
+        self.viewModel?.$bodys
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveValue: { _ in
+                DispatchQueue.main.async {
+                    dump(self.viewModel?.bodys)
+                    self.busRouteView.reload()
+                }
+            })
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - DataSource : TableView
 extension BusRouteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.viewModel?.bodys.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
-
-        let beforeColor: UIColor
-        if indexPath.item == 0 {
-            beforeColor = BBusColor.clear
-        }
-        else if indexPath.item % 3 == 0 {
-            beforeColor = BBusColor.green
-        }
-        else if indexPath.item % 3 == 1 {
-            beforeColor = BBusColor.red
-        }
-        else {
-            beforeColor = BBusColor.yellow
-        }
-        
-        let afterColor: UIColor
-        if indexPath.item == 19 {
-            afterColor = BBusColor.clear
-        }
-        else if indexPath.item % 3 == 0 {
-            afterColor = BBusColor.red
-        }
-        else if indexPath.item % 3 == 1 {
-            afterColor = BBusColor.yellow
-        }
-        else {
-            afterColor = BBusColor.green
-        }
-        
-        cell.configure(beforeColor: beforeColor,
-                       afterColor: afterColor,
-                       title: "면복동",
-                       description: "19283 | 04:00-23:50",
+        guard let stationItem = self.viewModel?.bodys[indexPath.row] else { return UITableViewCell() }
+        cell.configure(beforeColor: BBusColor.bbusTypeBlue,
+                       afterColor: BBusColor.bbusTypeBlue,
+                       title: stationItem.stationName,
+                       description: "\(stationItem.arsId) | \(stationItem.beginTm)-\(stationItem.lastTm)",
                        type: indexPath.item != 10 ? .waypoint : .uturn)
-
         return cell
     }
 }

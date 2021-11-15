@@ -125,4 +125,8 @@ class BusRouteView: UIView {
             busTag.centerYAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: (BusRouteTableViewCell.cellHeight/2) + location*BusRouteTableViewCell.cellHeight)
         ])
     }
+
+    func reload() {
+        self.busRouteTableView.reloadData()
+    }
 }
