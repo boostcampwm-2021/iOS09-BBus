@@ -83,6 +83,10 @@ class StationViewModel {
         self.cancellables = []
         self.busKeys = []
         self.binding()
+        self.refresh()
+    }
+    
+    func refresh() {
         self.usecase.stationInfoWillLoad(with: arsId)
         self.usecase.refreshInfo(about: arsId)
     }
