@@ -21,17 +21,10 @@ class HomeViewModel {
 
     private func loadFavoriteData() {
         self.cancellable = self.useCase.$favoriteList
-            .zip(self.useCase.$favoriteOrderList)
             .receive(on: HomeUseCase.thread)
-            .sink(receiveValue: { (favoriteListDTO, favoriteOrderListDTO) in
-                guard let favoriteListDTO = favoriteListDTO,
-                      let favoriteOrderListDTO = favoriteOrderListDTO else { return }
-                let favoriteList = HomeFavoriteList()
-                favoriteListDTO.forEach({
-                    favoriteList.append(newElement: $0)
-                })
-                favoriteList.sort(by: favoriteOrderListDTO)
-                self.homeFavoriteList = favoriteList
+            .sink(receiveValue: { favoriteItems in
+                guard let favoriteItems = favoriteItems else { return }
+                self.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
             })
     }
 
