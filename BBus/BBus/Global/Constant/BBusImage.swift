@@ -47,6 +47,9 @@ enum BBusImage {
     static let busRedSymbol = UIImage(systemName: "bus.fill")
     static let stationRedSymbol = UIImage(systemName: "bitcoinsign.circle")
     static let blueBusIcon = UIImage(named: "blueBusIcon")
+    static let greenBusIcon = UIImage(named: "greenBusIcon")
+    static let redBusIcon = UIImage(named: "redBusIcon")
+    static let circulationBusIcon = UIImage(named: "circulationBusIcon")
     static let alarmOffIcon = UIImage(named: "alarmOff")
     static let alarmOnIcon = UIImage(named: "alarmOn")
 }

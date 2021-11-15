@@ -15,7 +15,7 @@ protocol CoordinatorFinishDelegate: AnyObject {
 protocol CoordinatorCreateDelegate {
     func pushSearch()
     func pushBusRoute(busRouteId: Int)
-    func pushAlarmSetting()
+    func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int)
     func pushStation(arsId: String)
 }
 

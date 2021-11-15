@@ -8,15 +8,19 @@
 import UIKit
 
 protocol AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene()
+    func shouldGoToAlarmSettingScene(at indexPath: IndexPath)
 }
 
 class BusCellTrailingView: UIView {
+    
+    static let noInfoMessage = "도착 정보 없음"
 
+    private var indexPath: IndexPath?
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             let action = UIAction(handler: {_ in
-                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene()
+                guard let indexPath = self.indexPath else { return }
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: indexPath)
             })
             self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
             self.alarmButton.addAction(action, for: .touchUpInside)
@@ -24,13 +28,13 @@ class BusCellTrailingView: UIView {
     }
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = BBusColor.black
         return label
     }()
     private lazy var secondBusTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = BBusColor.black
         return label
     }()
@@ -41,6 +45,14 @@ class BusCellTrailingView: UIView {
         button.setImage(BBusImage.alarm, for: .normal)
         button.tintColor = BBusColor.bbusGray
         return button
+    }()
+    private lazy var busTimeMessageLabel: UILabel = {
+        let label = UILabel()
+        label.text = Self.noInfoMessage
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = BBusColor.bbusGray
+        label.isHidden = true
+        return label
     }()
 
     // MARK: - Configuration
@@ -58,6 +70,13 @@ class BusCellTrailingView: UIView {
         self.secondBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: centerYInterval),
+            self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        ])
+        
+        self.addSubview(self.busTimeMessageLabel)
+        self.busTimeMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.busTimeMessageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
@@ -92,14 +111,43 @@ class BusCellTrailingView: UIView {
         self.alarmButtonDelegate = delegate
     }
     
-    func configure(firstBusTime: String, firstBusRemaining: String, firstBusCongestion: String, secondBusTime: String, secondBusRemaining: String, secondBusCongestion: String) {
+    func configure(firstBusTime: String?, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRemaining: String?, secondBusCongestion: String?) {
+        
+        if firstBusTime == nil {
+            self.busTimeMessageLabel.isHidden = false
+            self.firstBusTimeLabel.isHidden = true
+            self.firstBusTimeRightLabel.isHidden = true
+            self.secondBusTimeLabel.isHidden = true
+            self.secondBusTimeRightLabel.isHidden = true
+            return
+        }
+        else {
+            self.busTimeMessageLabel.isHidden = true
+            self.firstBusTimeLabel.isHidden = false
+            self.firstBusTimeRightLabel.isHidden = false
+            self.secondBusTimeLabel.isHidden = false
+            self.secondBusTimeRightLabel.isHidden = false
+        }
+        
         self.firstBusTimeLabel.text = firstBusTime
         self.firstBusTimeLabel.sizeToFit()
         
-        self.secondBusTimeLabel.text = secondBusTime
+        
+        if secondBusTime == nil {
+            self.secondBusTimeLabel.text = Self.noInfoMessage
+            self.secondBusTimeLabel.textColor = BBusColor.bbusGray
+        }
+        else {
+            self.secondBusTimeLabel.text = secondBusTime
+            self.secondBusTimeLabel.textColor = BBusColor.black
+        }
         self.secondBusTimeLabel.sizeToFit()
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)
         self.secondBusTimeRightLabel.configure(remaining: secondBusRemaining, congestion: secondBusCongestion)
+    }
+    
+    func configure(indexPath: IndexPath) {
+        self.indexPath = indexPath
     }
 }

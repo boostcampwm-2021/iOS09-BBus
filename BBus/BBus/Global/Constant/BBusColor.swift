@@ -25,9 +25,13 @@ enum BBusColor {
     static let bbusTypeBlue = UIColor(named: "bbusTypeBlue")
     static let bbusTypeRed = UIColor(named: "bbusTypeRed")
     static let bbusTypeGreen = UIColor(named: "bbusTypeGreen")
+    static let bbusTypeCirculation = UIColor(named: "bbusTypeCirculation")
     static let bbusSearchRed = UIColor(named: "bbusSearchRed")
     static let bbusCongestionRed = UIColor(named: "bbusCongestionRed")
     static let bbusLikeYellow = UIColor(named: "bbusLikeYellow")
     static let iconColor = UIColor(named: "bbusAlarmGray")
     static let alarmTint = UIColor(named: "bbusGray")
+    static let bbusCongestionHigh = UIColor(named: "bbusCongestionHigh")
+    static let bbusCongestionNormal = UIColor(named: "bbusCongestionNormal")
+    static let bbusCongestionGood = UIColor(named: "bbusCongestionGood")
 }

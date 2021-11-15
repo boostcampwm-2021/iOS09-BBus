@@ -8,7 +8,8 @@
 import UIKit
 
 protocol LikeButtonDelegate {
-    func likeStationBus()
+    func likeStationBus(at: IndexPath)
+    func cancelLikeStationBus(at: IndexPath)
 }
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
@@ -16,8 +17,11 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     private var likeButtonDelegate: LikeButtonDelegate? {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
-                self?.likeButtonDelegate?.likeStationBus()
-                self?.likeButton.tintColor = self?.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
+                guard let self = self,
+                      let indexPath = self.indexPath,
+                      let delegate = self.likeButtonDelegate else { return }
+                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: indexPath) : delegate.likeStationBus(at: indexPath)
+                self.likeButton.tintColor = self.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)
@@ -66,19 +70,24 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         ])
     }
     
-    func configure(busNumber: String, direction: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: BusCongestion, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: BusCongestion) {
+    func configure(busNumber: String, direction: String, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         super.configure(busNumber: busNumber,
                         firstBusTime: firstBusTime,
                         firstBusRelativePosition: firstBusRelativePosition,
-                        firstBusCongestion: firstBusCongestion.toString(),
+                        firstBusCongestion: firstBusCongestion,
                         secondBusTime: secondBusTime,
                         secondBusRelativePosition: secondBusRelativePosition,
-                        secondBusCongsetion: secondBusCongsetion.toString())
+                        secondBusCongsetion: secondBusCongsetion)
         self.directionLabel.text = direction
     }
     
     func configure(delegate: LikeButtonDelegate & AlarmButtonDelegate) {
         self.likeButtonDelegate = delegate
         super.configureDelegate(delegate)
+    }
+    
+    func configureButton(status: Bool) {
+        self.likeButton.isSelected = status
+        self.likeButton.tintColor = status ? BBusColor.bbusLikeYellow : BBusColor.bbusGray6 
     }
 }

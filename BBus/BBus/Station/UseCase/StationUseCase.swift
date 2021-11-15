@@ -9,23 +9,28 @@ import Foundation
 import Combine
 
 class StationUsecase {
-    static let thread = DispatchQueue.init(label: "station")
+    static let queue = DispatchQueue.init(label: "station")
     
-    private let usecases: GetStationByUidItemUsecase & GetStationListUsecase
+    typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase
+    
+    private let usecases: StationUsecases
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
-    private var cancellable: Set<AnyCancellable>
+    @Published private(set) var favoriteItems: [FavoriteItem] // need more
+    private var cancellables: Set<AnyCancellable>
     
-    init(usecases: GetStationByUidItemUsecase & GetStationListUsecase) {
+    init(usecases: StationUsecases) {
         self.usecases = usecases
         self.busArriveInfo = []
         self.stationInfo = nil
-        self.cancellable = []
+        self.cancellables = []
+        self.favoriteItems = []
+        self.getFavoriteItems()
     }
     
     func stationInfoWillLoad(with arsId: String) {
         self.usecases.getStationList()
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .decode(type: [StationDTO].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
@@ -34,12 +39,17 @@ class StationUsecase {
             }, receiveValue: { stations in
                 self.stationInfo = self.findStation(in: stations, with: arsId)
             })
-            .store(in: &self.cancellable)
+            .store(in: &self.cancellables)
+    }
+    
+    private func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
+        let station = stations.filter() { $0.arsID == arsId }
+        return station.first
     }
     
     func refreshInfo(about arsId: String) {
         self.usecases.getStationByUidItem(arsId: arsId)
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
                     print(error)
@@ -49,11 +59,46 @@ class StationUsecase {
                 let realTimeInfo = result.body.itemList
                 self.busArriveInfo = realTimeInfo
             })
-            .store(in: &self.cancellable)
+            .store(in: &self.cancellables)
     }
     
-    private func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
-        let station = stations.filter() { $0.arsID == arsId }
-        return station.first
+    func add(favoriteItem: FavoriteItem) {
+        self.usecases.createFavoriteItem(param: favoriteItem)
+            .receive(on: Self.queue)
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { _ in
+                self.getFavoriteItems()
+                return
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    func remove(favoriteItem: FavoriteItem) {
+        self.usecases.deleteFavoriteItem(param: favoriteItem)
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { _ in
+                self.getFavoriteItems()
+                return
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func getFavoriteItems() {
+        self.usecases.getFavoriteItemList()
+            .decode(type: [FavoriteItem].self, decoder: PropertyListDecoder())
+            .sink(receiveCompletion: { error in
+                if case .failure(let error) = error {
+                    print(error)
+                }
+            }, receiveValue: { items in
+                self.favoriteItems = items
+            })
+            .store(in: &self.cancellables)
     }
 }

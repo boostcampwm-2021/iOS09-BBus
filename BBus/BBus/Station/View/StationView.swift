@@ -100,8 +100,12 @@ class StationView: UIView {
         return constraint
     }
 
-    func configureHeaderView(stationId: String, stationName: String, direction: String) {
-        self.stationHeaderView.configure(stationId: stationId, stationName: stationName, direction: direction)
+    func configureHeaderView(stationId: String, stationName: String) {
+        self.stationHeaderView.configureStationInfo(stationId: stationId, stationName: stationName)
+    }
+    
+    func configureNextStation(direction: String) {
+        self.stationHeaderView.configure(nextStationName: direction)
     }
 
     private func collectionViewLayout() -> UICollectionViewLayout {

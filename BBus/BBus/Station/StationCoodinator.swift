@@ -16,7 +16,7 @@ class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
     }
 
     func start(arsId: String) {
-        let usecase = StationUsecase(usecases: BBusAPIUsecases(on: StationUsecase.thread))
+        let usecase = StationUsecase(usecases: BBusAPIUsecases(on: StationUsecase.queue))
         let viewModel = StationViewModel(usecase: usecase, arsId: arsId)
         let viewController = StationViewController(viewModel: viewModel)
         viewController.coordinator = self
