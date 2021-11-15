@@ -6,3 +6,33 @@
 //
 
 import Foundation
+import Combine
+import CoreGraphics
+
+class MovingStatusViewModel {
+
+    private let usecase: MovingStatusUsecase
+    private var cancellables: Set<AnyCancellable> = []
+    private let busRouteId: Int
+    private let fromArsId: String
+    private let toArsId: String
+    @Published var busName: String?
+
+    init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
+        self.usecase = usecase
+        self.busRouteId = busRouteId
+        self.fromArsId = fromArsId
+        self.toArsId = toArsId
+    }
+
+    private func bindingHeaderInfo() {
+        self.usecase.$header
+            .receive(on: MovingStatusUsecase.queue)
+            .sink { error in
+                print(error)
+            } receiveValue: { header in
+                self.busName = header?.busRouteName
+            }
+            .store(in: &self.cancellables)
+    }
+}
