@@ -26,6 +26,10 @@ class BusRouteViewController: UIViewController {
         button.layer.cornerRadius = radius
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
+
+        button.addAction(UIAction(handler: { _ in
+            self.viewModel?.refreshBusPos()
+        }), for: .touchUpInside)
         return button
     }()
 
