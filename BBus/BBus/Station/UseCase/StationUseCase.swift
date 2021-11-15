@@ -9,23 +9,23 @@ import Foundation
 import Combine
 
 class StationUsecase {
-    static let thread = DispatchQueue.init(label: "station")
+    static let queue = DispatchQueue.init(label: "station")
     
     private let usecases: GetStationByUidItemUsecase & GetStationListUsecase
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
-    private var cancellable: Set<AnyCancellable>
+    private var cancellables: Set<AnyCancellable>
     
     init(usecases: GetStationByUidItemUsecase & GetStationListUsecase) {
         self.usecases = usecases
         self.busArriveInfo = []
         self.stationInfo = nil
-        self.cancellable = []
+        self.cancellables = []
     }
     
     func stationInfoWillLoad(with arsId: String) {
         self.usecases.getStationList()
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .decode(type: [StationDTO].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
@@ -34,12 +34,17 @@ class StationUsecase {
             }, receiveValue: { stations in
                 self.stationInfo = self.findStation(in: stations, with: arsId)
             })
-            .store(in: &self.cancellable)
+            .store(in: &self.cancellables)
+    }
+    
+    private func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
+        let station = stations.filter() { $0.arsID == arsId }
+        return station.first
     }
     
     func refreshInfo(about arsId: String) {
         self.usecases.getStationByUidItem(arsId: arsId)
-            .receive(on: Self.thread)
+            .receive(on: Self.queue)
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
                     print(error)
@@ -49,11 +54,6 @@ class StationUsecase {
                 let realTimeInfo = result.body.itemList
                 self.busArriveInfo = realTimeInfo
             })
-            .store(in: &self.cancellable)
-    }
-    
-    private func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
-        let station = stations.filter() { $0.arsID == arsId }
-        return station.first
+            .store(in: &self.cancellables)
     }
 }

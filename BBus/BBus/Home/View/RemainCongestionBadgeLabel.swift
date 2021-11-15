@@ -46,14 +46,21 @@ class RemainCongestionBadgeLabel: UILabel {
         self.textAlignment = .center
     }
 
-    func configure(remaining: String, congestion: String) {
-        let description = remaining + " " + congestion
-        let redRange = (description as NSString).range(of: congestion)
-        let attributedString = NSMutableAttributedString(string: description)
-        attributedString.addAttribute(.foregroundColor,
-                                      value: BBusColor.bbusCongestionRed as Any,
-                                      range: redRange)
-        self.attributedText = attributedString
+    func configure(remaining: String?, congestion: String?) {
+        if let congestion = congestion,
+           let remaining = remaining {
+            let description = remaining + " " + congestion
+            let redRange = (description as NSString).range(of: congestion)
+            let attributedString = NSMutableAttributedString(string: description)
+            attributedString.addAttribute(.foregroundColor,
+                                          value: BBusColor.bbusCongestionRed as Any,
+                                          range: redRange)
+            self.attributedText = attributedString
+            self.isHidden = false
+        }
+        else {
+            self.isHidden = true
+        }
         self.sizeToFit()
     }
 }
