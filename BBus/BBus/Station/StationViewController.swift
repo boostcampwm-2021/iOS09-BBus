@@ -301,7 +301,21 @@ extension StationViewController: LikeButtonDelegate {
 
 // MARK: - Delegate: AlarmButton
 extension StationViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene() {
-        self.coordinator?.pushToAlarmSetting()
+    func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
+        guard let viewModel = viewModel,
+              let stationId = viewModel.usecase.stationInfo?.stationID else { return }
+        let key = viewModel.busKeys[indexPath.section]
+        let bus: BusArriveInfo
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            guard let info = viewModel.infoBuses[key]?[indexPath.item] else { return }
+            bus = info
+        }
+        else {
+            guard let info = viewModel.noInfoBuses[key]?[indexPath.item] else { return }
+            bus = info
+        }
+        self.coordinator?.pushToAlarmSetting(stationId: stationId,
+                                             busRouteId: bus.busRouteId,
+                                             stationOrd: bus.stationOrd)
     }
 }
