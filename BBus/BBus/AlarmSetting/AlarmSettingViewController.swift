@@ -22,6 +22,17 @@ class AlarmSettingViewController: UIViewController {
         button.backgroundColor = BBusColor.darkGray
         return button
     }()
+    private let viewModel: AlarmSettingViewModel?
+    
+    init(viewModel: AlarmSettingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+class AlarmSettingViewModel {
+    let stationId: Int
+    let busRouteId: Int
+    let stationOrd: Int
+    let useCase: AlarmSettingUseCase
+    
+    init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int) {
+        self.useCase = useCase
+        self.stationId = stationId
+        self.busRouteId = busRouteId
+        self.stationOrd = stationOrd
+    }
+}

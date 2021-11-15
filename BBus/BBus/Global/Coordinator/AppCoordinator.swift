@@ -99,7 +99,7 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
         coordinator.movingStatusDelegate = self
-        coordinator.start()
+        coordinator.start(stationId: stationId, busRouteId: busRouteId, stationOrd: stationOrd)
     }
 
     func pushStation(arsId: String) {
