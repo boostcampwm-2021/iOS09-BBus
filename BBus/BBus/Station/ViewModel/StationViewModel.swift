@@ -74,7 +74,7 @@ class StationViewModel {
     @Published private(set) var busKeys: [BBusRouteType]
     private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
-    private(set) var favoriteItems = [FavoriteItem]()
+    private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
     
     init(usecase: StationUsecase, arsId: String) {
@@ -176,11 +176,11 @@ class StationViewModel {
         }
     }
     
-    func add(favoriteItem: FavoriteItem) {
+    func add(favoriteItem: FavoriteItemDTO) {
         self.usecase.add(favoriteItem: favoriteItem)
     }
     
-    func remove(favoriteItem: FavoriteItem) {
+    func remove(favoriteItem: FavoriteItemDTO) {
         self.usecase.remove(favoriteItem: favoriteItem)
     }
 }

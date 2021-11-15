@@ -282,18 +282,18 @@ extension StationViewController: LikeButtonDelegate {
         self.viewModel?.remove(favoriteItem: item)
     }
     
-    private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItem? {
+    private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
         guard let viewModel = self.viewModel,
               let stationId = viewModel.usecase.stationInfo else { return nil }
         let key = viewModel.busKeys[indexPath.section]
-        let item: FavoriteItem
+        let item: FavoriteItemDTO
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItem(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
         }
         else {
             guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItem(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(stationId)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
         }
         return item
     }

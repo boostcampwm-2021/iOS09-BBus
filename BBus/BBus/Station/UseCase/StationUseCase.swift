@@ -16,7 +16,7 @@ class StationUsecase {
     private let usecases: StationUsecases
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
-    @Published private(set) var favoriteItems: [FavoriteItem] // need more
+    @Published private(set) var favoriteItems: [FavoriteItemDTO] // need more
     private var cancellables: Set<AnyCancellable>
     
     init(usecases: StationUsecases) {
@@ -62,7 +62,7 @@ class StationUsecase {
             .store(in: &self.cancellables)
     }
     
-    func add(favoriteItem: FavoriteItem) {
+    func add(favoriteItem: FavoriteItemDTO) {
         self.usecases.createFavoriteItem(param: favoriteItem)
             .receive(on: Self.queue)
             .sink(receiveCompletion: { error in
@@ -76,7 +76,7 @@ class StationUsecase {
             .store(in: &self.cancellables)
     }
     
-    func remove(favoriteItem: FavoriteItem) {
+    func remove(favoriteItem: FavoriteItemDTO) {
         self.usecases.deleteFavoriteItem(param: favoriteItem)
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
@@ -91,7 +91,7 @@ class StationUsecase {
     
     private func getFavoriteItems() {
         self.usecases.getFavoriteItemList()
-            .decode(type: [FavoriteItem].self, decoder: PropertyListDecoder())
+            .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
             .sink(receiveCompletion: { error in
                 if case .failure(let error) = error {
                     print(error)
