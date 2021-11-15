@@ -1,6 +1,12 @@
 //
+//  MovingStatusViewController.swift
+//  BBus
+//
+//  Created by Minsang on 2021/11/15.
+//
 
 import UIKit
+import Combine
 
 typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
 
@@ -8,6 +14,18 @@ class MovingStatusViewController: UIViewController {
 
     weak var coordinator: MovingStatusCoordinator?
     private lazy var movingStatusView = MovingStatusView()
+    private let viewModel: MovingStatusViewModel?
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(viewModel: MovingStatusViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
