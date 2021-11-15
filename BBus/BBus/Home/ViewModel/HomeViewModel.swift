@@ -42,4 +42,10 @@ class HomeViewModel {
         return stationName
     }
 
+    func busName(by busRouteId: String) -> String? {
+        guard let busRouteId = Int(busRouteId),
+              let busName = self.useCase.busRouteList?.first(where: { $0.routeID == busRouteId })?.busRouteName else { return nil }
+
+        return busName
+    }
 }

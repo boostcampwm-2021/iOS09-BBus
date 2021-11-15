@@ -121,11 +121,12 @@ extension HomeViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
-                    as? FavoriteCollectionViewCell,
-              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]
-        else { return UICollectionViewCell() }
+                as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
+        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+              let busName = self.viewModel?.busName(by: model.busRouteId) else { return cell }
+
         cell.configureDelegate(self)
-        cell.configure(busNumber: model.busRouteId,
+        cell.configure(busNumber: busName,
                           firstBusTime: "1분 29초",
                           firstBusRelativePosition: "2번째전",
                           firstBusCongestion: "여유",
@@ -136,9 +137,9 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView,
-              let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
-              let stationName = self.viewModel?.stationName(by: stationId) else { return UICollectionReusableView() }
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
+        guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
+              let stationName = self.viewModel?.stationName(by: stationId) else { return header }
 
         header.configureDelegate(self)
         header.configure(title: stationName, direction: "추후 변경해야함")
