@@ -54,6 +54,7 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
 
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
     func open() {
+        //TODO: busRouteId(버스정보), fromStationId(승차점), toStationId(하차점) 파라미터가 필요
         let viewController = MovingStatusViewController()
         viewController.coordinator = self
         self.movingStatusPresenter = viewController
