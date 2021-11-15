@@ -24,9 +24,6 @@ class BusRouteViewModel {
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
-        self.usecase.searchHeader()
-        self.usecase.fetchRouteList()
-        self.usecase.fetchBusPosList()
     }
 
     private func bindingHeaderInfo() {
@@ -88,5 +85,15 @@ class BusRouteViewModel {
             busesResult.append(info)
         }
         self.buses = busesResult
+    }
+
+    func fetch() {
+        self.usecase.searchHeader()
+        self.usecase.fetchRouteList()
+        self.usecase.fetchBusPosList()
+    }
+
+    func refreshBusPos() {
+        self.usecase.fetchBusPosList()
     }
 }

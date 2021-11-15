@@ -16,6 +16,7 @@ class BusRouteViewController: UIViewController {
     private let viewModel: BusRouteViewModel?
     private var cancellables: Set<AnyCancellable> = []
     private var busTags: [BusTagView] = []
+    private var busIcon: UIImage?
 
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
@@ -34,6 +35,8 @@ class BusRouteViewController: UIViewController {
         self.binding()
         self.configureLayout()
         self.configureDelegate()
+        self.configureBaseColor()
+        self.fetch()
     }
 
     init(viewModel: BusRouteViewModel) {
@@ -84,6 +87,14 @@ class BusRouteViewController: UIViewController {
         self.busRouteView.configureDelegate(self)
         self.customNavigationBar.configureDelegate(self)
     }
+
+    private func configureBaseColor() {
+        self.view.backgroundColor = BBusColor.gray
+        self.customNavigationBar.configureBackgroundColor(color: BBusColor.gray)
+        self.customNavigationBar.configureTintColor(color: BBusColor.white)
+        self.customNavigationBar.configureAlpha(alpha: 0)
+        self.busRouteView.configureColor(to: BBusColor.gray)
+    }
     
     private func configureBusColor(type: RouteType) {
         let color: UIColor?
@@ -91,16 +102,22 @@ class BusRouteViewController: UIViewController {
         switch type {
         case .mainLine:
             color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
         case .broadArea:
             color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBusIcon
         case .customized:
             color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
         case .circulation:
-            color = BBusColor.black
+            color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBusIcon
         case .lateNight:
-            color = BBusColor.black
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
         case .localLine:
             color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
         }
 
         self.view.backgroundColor = color
@@ -116,7 +133,7 @@ class BusRouteViewController: UIViewController {
 
         buses.forEach { bus in
             let tag = self.busRouteView.createBusTag(location: bus.location,
-                                                     busIcon: BBusImage.blueBusIcon,
+                                                     busIcon: self.busIcon,
                                                      busNumber: bus.number,
                                                      busCongestion: bus.congestion.toString(),
                                                      isLowFloor: bus.islower)
@@ -170,6 +187,10 @@ class BusRouteViewController: UIViewController {
                 }
             })
             .store(in: &cancellables)
+    }
+
+    private func fetch() {
+        self.viewModel?.fetch()
     }
 }
 
