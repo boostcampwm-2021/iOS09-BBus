@@ -16,6 +16,7 @@ class MovingStatusViewController: UIViewController {
     private lazy var movingStatusView = MovingStatusView()
     private let viewModel: MovingStatusViewModel?
     private var cancellables: Set<AnyCancellable> = []
+    private var busIcon: UIImage?
 
     init(viewModel: MovingStatusViewModel) {
         self.viewModel = viewModel
@@ -62,19 +63,47 @@ class MovingStatusViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingHeaderBusName()
+        self.bindingHeaderBusInfo()
     }
 
-    private func bindingHeaderBusName() {
-        self.viewModel?.$busName
+    private func bindingHeaderBusInfo() {
+        self.viewModel?.$busInfo
             .receive(on: MovingStatusUsecase.queue)
-            .sink(receiveValue: { busName in
-                guard let busName = busName else { return }
+            .sink(receiveValue: { busInfo in
+                guard let busInfo = busInfo else { return }
                 DispatchQueue.main.async {
-                    self.movingStatusView.configureBusName(to: busName)
+                    self.movingStatusView.configureBusName(to: busInfo.busName)
+                    self.configureBusColor(type: busInfo.type)
                 }
             })
             .store(in: &self.cancellables)
+    }
+
+    private func configureBusColor(type: RouteType) {
+        let color: UIColor?
+
+        switch type {
+        case .mainLine:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .broadArea:
+            color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBusIcon
+        case .customized:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .circulation:
+            color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBusIcon
+        case .lateNight:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .localLine:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        }
+
+        self.movingStatusView.configureColor(to: color)
     }
 
     private func fetch() {

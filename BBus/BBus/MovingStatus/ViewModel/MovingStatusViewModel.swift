@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import CoreGraphics
 
+typealias BusInfo = (busName: String, type: RouteType)
 class MovingStatusViewModel {
 
     private let usecase: MovingStatusUsecase
@@ -16,7 +17,7 @@ class MovingStatusViewModel {
     private let busRouteId: Int
     private let fromArsId: String
     private let toArsId: String
-    @Published var busName: String?
+    @Published var busInfo: BusInfo?
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -32,9 +33,18 @@ class MovingStatusViewModel {
             .sink { error in
                 print(error)
             } receiveValue: { header in
-                self.busName = header?.busRouteName
+                self.convertBusInfo(header: header)
             }
             .store(in: &self.cancellables)
+    }
+
+    private func convertBusInfo(header: BusRouteDTO?) {
+        guard let header = header else { return }
+        let busInfo: BusInfo
+        busInfo.busName = header.busRouteName
+        busInfo.type = header.routeType
+
+        self.busInfo = busInfo
     }
 
     func fetch() {
