@@ -15,6 +15,7 @@ class BusRouteViewController: UIViewController {
     private lazy var busRouteView = BusRouteView()
     private let viewModel: BusRouteViewModel?
     private var cancellables: Set<AnyCancellable> = []
+    private var busTags: [BusTagView] = []
 
     private lazy var refreshButton: UIButton = {
         let radius: CGFloat = 25
@@ -33,7 +34,6 @@ class BusRouteViewController: UIViewController {
         self.binding()
         self.configureLayout()
         self.configureDelegate()
-        self.configureMOCKDATA()
     }
 
     init(viewModel: BusRouteViewModel) {
@@ -110,22 +110,24 @@ class BusRouteViewController: UIViewController {
         self.busRouteView.configureColor(to: color)
     }
 
-    private func configureMOCKDATA() {
+    private func configureBusTags(buses: [BusPosInfo]) {
+        self.busTags.forEach { $0.removeFromSuperview() }
+        self.busTags.removeAll()
 
-
-        for i in 1...20 {
-            let location = CGFloat.random(in: (0...19))
-            self.busRouteView.addBusTag(location: location,
-                                        busIcon: BBusImage.blueBusIcon,
-                                        busNumber: "6302",
-                                        busCongestion: "혼잡",
-                                        isLowFloor: i%2 == 0)
+        buses.forEach { bus in
+            let tag = self.busRouteView.createBusTag(location: bus.location,
+                                                     busIcon: BBusImage.blueBusIcon,
+                                                     busNumber: bus.number,
+                                                     busCongestion: bus.congestion.toString(),
+                                                     isLowFloor: bus.islower)
+            self.busTags.append(tag)
         }
     }
 
     private func binding() {
         self.bindingBusRouteHeaderResult()
         self.bindingBusRouteBodyResult()
+        self.bindingBusesPosInfo()
     }
 
     private func bindingBusRouteHeaderResult() {
@@ -148,10 +150,23 @@ class BusRouteViewController: UIViewController {
     private func bindingBusRouteBodyResult() {
         self.viewModel?.$bodys
             .receive(on: BusRouteUsecase.thread)
-            .sink(receiveValue: { _ in
+            .sink(receiveValue: { bodys in
                 DispatchQueue.main.async {
-                    dump(self.viewModel?.bodys)
                     self.busRouteView.reload()
+                    self.busRouteView.configureTableViewHeight(count: bodys.count)
+                }
+            })
+            .store(in: &cancellables)
+    }
+
+    private func bindingBusesPosInfo() {
+        self.viewModel?.$buses
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveCompletion: { error in
+                print(error)
+            }, receiveValue: { buses in
+                DispatchQueue.main.async {
+                    self.configureBusTags(buses: buses)
                 }
             })
             .store(in: &cancellables)

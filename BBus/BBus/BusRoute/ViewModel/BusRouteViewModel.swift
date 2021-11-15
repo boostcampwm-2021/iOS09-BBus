@@ -7,6 +7,9 @@
 
 import Foundation
 import Combine
+import CoreGraphics
+
+typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
 
 class BusRouteViewModel {
 
@@ -14,13 +17,16 @@ class BusRouteViewModel {
     private var cancellables: Set<AnyCancellable> = []
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
+    @Published var buses: [BusPosInfo] = []
 
     init(usecase: BusRouteUsecase) {
         self.usecase = usecase
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
+        self.bindingBusesPosInfo()
         self.usecase.searchHeader()
         self.usecase.fetchRouteList()
+        self.usecase.fetchBusPosList()
     }
 
     private func bindingHeaderInfo() {
@@ -43,5 +49,44 @@ class BusRouteViewModel {
                 self.bodys = bodys
             })
             .store(in: &cancellables)
+    }
+
+    private func bindingBusesPosInfo() {
+        self.usecase.$buses
+            .receive(on: BusRouteUsecase.thread)
+            .sink(receiveCompletion: { error in
+                print(error)
+            }, receiveValue: { buses in
+                self.convertBusPosInfo(with: buses)
+            })
+            .store(in: &cancellables)
+    }
+
+    private func convertBusPos(order: Int, sect: String, fullSect: String) -> CGFloat {
+        let order = CGFloat(order-1)
+        let sect = CGFloat((sect as NSString).floatValue)
+        let fullSect = CGFloat((fullSect as NSString).floatValue)
+        return order + (sect/fullSect)
+    }
+
+    private func busNumber(from: String) -> String {
+        let startIndex = from.index(from.startIndex, offsetBy: 5)
+        let endIndex = from.endIndex
+        return String(from[startIndex..<endIndex])
+    }
+
+    private func convertBusPosInfo(with buses: [BusPosByRtidDTO]) {
+        var busesResult: [BusPosInfo] = []
+        buses.forEach { bus in
+            let info: BusPosInfo
+            info.location = self.convertBusPos(order: bus.sectionOrder,
+                                               sect: bus.sectDist,
+                                               fullSect: bus.fullSectDist)
+            info.number = self.busNumber(from: bus.plainNumber)
+            info.congestion = BusCongestion(rawValue: bus.congestion) ?? .normal
+            info.islower = (bus.busType == 1)
+            busesResult.append(info)
+        }
+        self.buses = busesResult
     }
 }
