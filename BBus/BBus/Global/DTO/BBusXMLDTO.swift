@@ -16,9 +16,9 @@ struct GovernmentMessageHeader: BBusXMLDTO {
     private let headerMessage: String
     private let itemCount: String // 제대로 출력되지 않음.
     init?(dict: [String : [Any]]) {
-        guard let headerCode = ((dict["headerCd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let headerMessage = ((dict["headerMsg"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let itemCount = ((dict["itemCount"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+        guard let headerCode = ((dict["headerCd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let headerMessage = ((dict["headerMsg"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let itemCount = ((dict["itemCount"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
 
         self.headerCode = headerCode
         self.headerMessage = headerMessage
