@@ -36,6 +36,7 @@
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
 		4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */; };
 		4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
+		4A094CDF27435C5900428F55 /* BusRemainTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CDE27435C5900428F55 /* BusRemainTime.swift */; };
 		4A17CED72733A754007B1646 /* SimpleCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */; };
 		4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */; };
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
@@ -65,7 +66,7 @@
 		4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */; };
 		4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */; };
 		4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520C272FCE6500EC0531 /* BusRouteView.swift */; };
-		4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* StationModel.swift */; };
+		4ACA5213272FCE8500EC0531 /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
 		4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5214272FCE8A00EC0531 /* StationUseCase.swift */; };
 		4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5216272FCE8E00EC0531 /* StationViewModel.swift */; };
 		4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5218272FCE9500EC0531 /* StationView.swift */; };
@@ -149,6 +150,7 @@
 		4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAccessoryView.swift; sourceTree = "<group>"; };
 		4A06AEC2273E51AE0027222D /* AccessKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AccessKey.xcconfig; sourceTree = "<group>"; };
 		4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItemDTO.swift; sourceTree = "<group>"; };
+		4A094CDE27435C5900428F55 /* BusRemainTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRemainTime.swift; sourceTree = "<group>"; };
 		4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCollectionHeaderView.swift; sourceTree = "<group>"; };
 		4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultScrollView.swift; sourceTree = "<group>"; };
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
@@ -178,7 +180,7 @@
 		4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteUseCase.swift; sourceTree = "<group>"; };
 		4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteViewModel.swift; sourceTree = "<group>"; };
 		4ACA520C272FCE6500EC0531 /* BusRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteView.swift; sourceTree = "<group>"; };
-		4ACA5212272FCE8500EC0531 /* StationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
+		4ACA5212272FCE8500EC0531 /* BusCongestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCongestion.swift; sourceTree = "<group>"; };
 		4ACA5214272FCE8A00EC0531 /* StationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationUseCase.swift; sourceTree = "<group>"; };
 		4ACA5216272FCE8E00EC0531 /* StationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationViewModel.swift; sourceTree = "<group>"; };
 		4ACA5218272FCE9500EC0531 /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
@@ -519,7 +521,8 @@
 		4ACA5211272FCE7100EC0531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA5212272FCE8500EC0531 /* StationModel.swift */,
+				4ACA5212272FCE8500EC0531 /* BusCongestion.swift */,
+				4A094CDE27435C5900428F55 /* BusRemainTime.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
 				4AD47072273B9EE100F7EBFF /* BBusXMLParser.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */,
+				4A094CDF27435C5900428F55 /* BusRemainTime.swift in Sources */,
 				4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
@@ -847,7 +851,7 @@
 				873D639A27303B0500E79069 /* HomeCoordinator.swift in Sources */,
 				04045B7F2740F6B30056A433 /* SearchResults.swift in Sources */,
 				4ACA5215272FCE8A00EC0531 /* StationUseCase.swift in Sources */,
-				4ACA5213272FCE8500EC0531 /* StationModel.swift in Sources */,
+				4ACA5213272FCE8500EC0531 /* BusCongestion.swift in Sources */,
 				04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */,
 				04045B812740F6DC0056A433 /* BusSearchResult.swift in Sources */,
 				041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */,
