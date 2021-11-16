@@ -28,6 +28,9 @@ class BusRouteView: UIView {
         return tableView
     }()
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
+    private var tableViewMinHeight: CGFloat {
+        return self.frame.height - BusRouteHeaderView.headerHeight
+    }
     
     convenience init() {
         self.init(frame: CGRect())
@@ -69,7 +72,7 @@ class BusRouteView: UIView {
         
         self.busRouteScrollContentsView.addSubview(self.busRouteTableView)
         self.busRouteTableView.translatesAutoresizingMaskIntoConstraints = false
-        self.busRouteTableViewHeightConstraint = self.busRouteTableView.heightAnchor.constraint(equalToConstant: CGFloat(8)*BusRouteTableViewCell.cellHeight)
+        self.busRouteTableViewHeightConstraint = self.busRouteTableView.heightAnchor.constraint(equalToConstant: tableViewMinHeight)
         self.busRouteTableViewHeightConstraint?.isActive = true
         NSLayoutConstraint.activate([
             self.busRouteTableView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
@@ -101,7 +104,9 @@ class BusRouteView: UIView {
     }
 
     func configureTableViewHeight(count: Int) {
-        if count > 0 {
+        let newHeight = CGFloat(count)*BusRouteTableViewCell.cellHeight
+
+        if newHeight > tableViewMinHeight {
             self.busRouteTableViewHeightConstraint?.constant = CGFloat(count)*BusRouteTableViewCell.cellHeight
             self.layoutIfNeeded()
         }
