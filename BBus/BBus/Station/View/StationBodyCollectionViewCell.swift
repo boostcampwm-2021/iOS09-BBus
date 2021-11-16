@@ -8,8 +8,8 @@
 import UIKit
 
 protocol LikeButtonDelegate {
-    func likeStationBus(at: IndexPath)
-    func cancelLikeStationBus(at: IndexPath)
+    func likeStationBus(at: UICollectionViewCell)
+    func cancelLikeStationBus(at: UICollectionViewCell)
 }
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
@@ -18,9 +18,8 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
                 guard let self = self,
-                      let indexPath = self.indexPath,
                       let delegate = self.likeButtonDelegate else { return }
-                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: indexPath) : delegate.likeStationBus(at: indexPath)
+                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: self) : delegate.likeStationBus(at: self)
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)

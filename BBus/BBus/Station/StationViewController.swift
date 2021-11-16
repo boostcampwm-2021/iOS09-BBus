@@ -206,7 +206,6 @@ extension StationViewController: UICollectionViewDataSource {
         
         if let busInfo = busInfo,
            let item = self.makeFavoriteItem(at: indexPath) {
-            cell.configure(indexPath: indexPath)
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
@@ -283,14 +282,20 @@ extension StationViewController: BackButtonDelegate {
 
 // MARK: - Delegate: LikeButton
 extension StationViewController: LikeButtonDelegate {
-    func likeStationBus(at indexPath: IndexPath) {
-        guard let item = self.makeFavoriteItem(at: indexPath) else { return print("nil")}
+    func likeStationBus(at cell: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: cell),
+              let item = self.makeFavoriteItem(at: indexPath) else { return }
         self.viewModel?.add(favoriteItem: item)
     }
     
-    func cancelLikeStationBus(at indexPath: IndexPath) {
-        guard let item = self.makeFavoriteItem(at: indexPath) else { return }
+    func cancelLikeStationBus(at cell: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: cell),
+              let item = self.makeFavoriteItem(at: indexPath) else { return }
         self.viewModel?.remove(favoriteItem: item)
+    }
+    
+    private func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.stationView.indexPath(for: cell)
     }
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
