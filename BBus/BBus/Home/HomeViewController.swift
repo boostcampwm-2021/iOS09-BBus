@@ -172,7 +172,7 @@ extension HomeViewController: HomeSearchButtonDelegate {
 
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         self.coordinator?.pushToAlarmSetting(stationId: 118000007, busRouteId: 100100042, stationOrd: 49)
     }
 }
