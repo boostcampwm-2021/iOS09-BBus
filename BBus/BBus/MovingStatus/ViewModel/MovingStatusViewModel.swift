@@ -30,11 +30,9 @@ class MovingStatusViewModel {
     private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: MovingStatusUsecase.queue)
-            .sink { error in
-                print(error)
-            } receiveValue: { header in
+            .sink(receiveValue: { header in
                 self.convertBusInfo(header: header)
-            }
+            })
             .store(in: &self.cancellables)
     }
 

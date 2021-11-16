@@ -72,7 +72,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
             afterColor = BBusColor.clear
         }
         else {
-            guard let afterSpeed = afterSpeed else { return (UIColor(), UIColor())}
+            guard let afterSpeed = afterSpeed else { return (nil, nil)}
             if index == 0 {
                 beforeColor = BBusColor.clear
                 afterColor = self.configureLineColor(speed: afterSpeed)
@@ -94,10 +94,10 @@ class BusRouteTableViewCell: BusStationTableViewCell {
             color = BBusColor.bbusCongestionHigh
         }
         else if speed <= maxNormalCongestionSpeed {
-            color = BBusColor.bbusCongestionNormal
+            color = BBusColor.bbusCongestionMedium
         }
         else {
-            color = BBusColor.bbusCongestionGood
+            color = BBusColor.bbusCongestionLow
         }
         return color
     }

@@ -14,11 +14,12 @@ class BusRouteUsecase {
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
     @Published var buses: [BusPosByRtidDTO] = []
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue(label: "BusRoute")
 
     init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
         self.usecases = usecases
+        self.cancellables = []
     }
 
     func searchHeader(busRouteId: Int) {
@@ -30,7 +31,9 @@ class BusRouteUsecase {
                     print(error)
                 }
             }, receiveValue: { routeList in
-                self.header = routeList.filter { $0.routeID == busRouteId }[0]
+                let headers = routeList.filter { $0.routeID == busRouteId }
+                guard let header = headers.first else { return }
+                self.header = header
             })
             .store(in: &cancellables)
     }

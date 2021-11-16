@@ -114,7 +114,6 @@ class BusRouteView: UIView {
                                      toStation: toStation)
     }
 
-    // MARK: - Create BusTag
     func createBusTag(location: CGFloat, busIcon: UIImage?, busNumber: String, busCongestion: String, isLowFloor: Bool) -> BusTagView {
         let busTag = BusTagView()
         busTag.configure(busIcon: busIcon,

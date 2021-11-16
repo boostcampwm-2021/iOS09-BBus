@@ -206,7 +206,7 @@ extension BusRouteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
-        guard let bodys = self.viewModel?.bodys else { return UITableViewCell() }
+        guard let bodys = self.viewModel?.bodys else { return cell }
         let stationInfo = bodys[indexPath.row]
         cell.configure(speed: stationInfo.speed,
                        afterSpeed: stationInfo.afterSpeed,
