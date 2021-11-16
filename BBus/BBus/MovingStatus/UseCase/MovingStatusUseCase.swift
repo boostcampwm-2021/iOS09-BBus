@@ -8,17 +8,18 @@
 import Foundation
 import Combine
 
-class MovingStatusUsecase {
+final class MovingStatusUsecase {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase
     @Published var header: BusRouteDTO?
-    @Published var bodys: [StationByRouteListDTO] = []
+    @Published var stations: [StationByRouteListDTO] = []
 
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue(label: "MovingStatus")
 
     init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase) {
         self.usecases = usecases
+        self.cancellables = []
     }
 
     func searchHeader(busRouteId: Int) {
@@ -29,10 +30,12 @@ class MovingStatusUsecase {
                 if case .failure(let error) = error {
                     print(error)
                 }
-            }, receiveValue: { routeList in
-                self.header = routeList.filter { $0.routeID == busRouteId }[0]
+            }, receiveValue: { [weak self] routeList in
+                let headers = routeList.filter { $0.routeID == busRouteId }
+                guard let header = headers.first else { return }
+                self?.header = header
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     func fetchRouteList(busRouteId: Int) {
@@ -42,10 +45,10 @@ class MovingStatusUsecase {
                 if case .failure(let error) = error {
                     print(error)
                 }
-            } receiveValue: { stationsByRouteList in
+            } receiveValue: { [weak self] stationsByRouteList in
                 guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { return }
-                self.bodys = result.body.itemList
+                self?.stations = result.body.itemList
             }
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 }
