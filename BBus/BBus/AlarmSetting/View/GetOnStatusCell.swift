@@ -14,7 +14,8 @@ protocol GetOnAlarmButtonDelegate {
 class GetOnStatusCell: UITableViewCell {
 
     static let reusableID = "GetOnStatusCell"
-    static let cellHeight: CGFloat = 115
+    static let infoCellHeight: CGFloat = 115
+    static let noInfoCellHeight: CGFloat = 50
 
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
@@ -120,6 +121,15 @@ class GetOnStatusCell: UITableViewCell {
         view.backgroundColor = BBusColor.bbusLightGray
         return view
     }()
+    private lazy var noInfoMessageLabel: UILabel = {
+        let labelFontSize: CGFloat = 20
+        
+        let label = UILabel()
+        label.text = "도착 정보 없음"
+        label.textColor = BBusColor.bbusGray
+        label.font = UIFont.systemFont(ofSize: labelFontSize)
+        return label
+    }()
 
     private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
         didSet {
@@ -170,8 +180,8 @@ class GetOnStatusCell: UITableViewCell {
         let indicatorLabelLeadingAnchor: CGFloat = 5
         let separatorHeight: CGFloat = 1
 
-        self.addSubview(self.busOrderNumberLabel)
-        self.busOrderNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.busOrderNumberLabel, self.remainingTimeLabel, self.busStatusTagStackView, self.clockIconImageView, self.arrivalTimeLabel, self.locationIconImageView, self.currentLocationLabel, self.busIconImageView, self.busOrderNumberLabel, self.busNumberLabel, self.alarmButton, self.separatorView, self.noInfoMessageLabel)
+        
         NSLayoutConstraint.activate([
             self.busOrderNumberLabel.widthAnchor.constraint(equalToConstant: busColorViewWidthAnchor),
             self.busOrderNumberLabel.heightAnchor.constraint(equalToConstant: busColorViewHeightAnchor),
@@ -179,22 +189,16 @@ class GetOnStatusCell: UITableViewCell {
             self.busOrderNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: busColorViewLeadingAnchor)
         ])
 
-        self.addSubview(self.remainingTimeLabel)
-        self.remainingTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.remainingTimeLabel.centerYAnchor.constraint(equalTo: self.busOrderNumberLabel.centerYAnchor),
             self.remainingTimeLabel.leadingAnchor.constraint(equalTo: self.busOrderNumberLabel.trailingAnchor, constant: termBusColorViewToRemainingTimeLabel)
         ])
 
-        self.addSubview(self.busStatusTagStackView)
-        self.busStatusTagStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busStatusTagStackView.centerYAnchor.constraint(equalTo: self.remainingTimeLabel.centerYAnchor),
             self.busStatusTagStackView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.trailingAnchor, constant: busStatusTagStackViewLeadingAnchor)
         ])
 
-        self.addSubview(self.clockIconImageView)
-        self.clockIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.clockIconImageView.widthAnchor.constraint(equalToConstant: iconWidthAnchor),
             self.clockIconImageView.heightAnchor.constraint(equalToConstant: iconHeightAnchor),
@@ -202,15 +206,11 @@ class GetOnStatusCell: UITableViewCell {
             self.clockIconImageView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.leadingAnchor)
         ])
 
-        self.addSubview(self.arrivalTimeLabel)
-        self.arrivalTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.arrivalTimeLabel.leadingAnchor.constraint(equalTo: self.clockIconImageView.trailingAnchor, constant: indicatorLabelLeadingAnchor),
             self.arrivalTimeLabel.centerYAnchor.constraint(equalTo: self.clockIconImageView.centerYAnchor)
         ])
 
-        self.addSubview(self.locationIconImageView)
-        self.locationIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.locationIconImageView.widthAnchor.constraint(equalToConstant: iconWidthAnchor),
             self.locationIconImageView.heightAnchor.constraint(equalToConstant: iconHeightAnchor),
@@ -218,15 +218,11 @@ class GetOnStatusCell: UITableViewCell {
             self.locationIconImageView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.leadingAnchor)
         ])
 
-        self.addSubview(self.currentLocationLabel)
-        self.currentLocationLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.currentLocationLabel.leadingAnchor.constraint(equalTo: self.locationIconImageView.trailingAnchor, constant: indicatorLabelLeadingAnchor),
             self.currentLocationLabel.centerYAnchor.constraint(equalTo: self.locationIconImageView.centerYAnchor)
         ])
-
-        self.addSubview(self.busIconImageView)
-        self.busIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             self.busIconImageView.widthAnchor.constraint(equalToConstant: iconWidthAnchor),
             self.busIconImageView.heightAnchor.constraint(equalToConstant: iconHeightAnchor),
@@ -234,15 +230,11 @@ class GetOnStatusCell: UITableViewCell {
             self.busIconImageView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.leadingAnchor)
         ])
 
-        self.addSubview(self.busNumberLabel)
-        self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.leadingAnchor.constraint(equalTo: self.busIconImageView.trailingAnchor, constant: indicatorLabelLeadingAnchor),
             self.busNumberLabel.centerYAnchor.constraint(equalTo: self.busIconImageView.centerYAnchor)
         ])
 
-        self.addSubview(self.alarmButton)
-        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.alarmButton.widthAnchor.constraint(equalToConstant: alarmButtonWidthAnchor),
             self.alarmButton.heightAnchor.constraint(equalToConstant: alarmButtonHeightAnchor),
@@ -250,13 +242,16 @@ class GetOnStatusCell: UITableViewCell {
             self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmButtonTrailingAnchor)
         ])
         
-        self.addSubview(self.separatorView)
-        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.separatorView.leadingAnchor.constraint(equalTo: self.remainingTimeLabel.leadingAnchor),
             self.separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.separatorView.heightAnchor.constraint(equalToConstant: separatorHeight),
             self.separatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.noInfoMessageLabel.centerYAnchor.constraint(equalTo: self.busOrderNumberLabel.centerYAnchor),
+            self.noInfoMessageLabel.leadingAnchor.constraint(equalTo: self.busOrderNumberLabel.trailingAnchor, constant: termBusColorViewToRemainingTimeLabel)
         ])
     }
 
@@ -266,6 +261,20 @@ class GetOnStatusCell: UITableViewCell {
 
     func configure(order: String, remainingTime: String?, remainingStationCount: String?, busCongestionStatus: String?, arrivalTime: String?, currentLocation: String, busNumber: String) {
         self.busOrderNumberLabel.text = order
+        let isHidden = remainingTime == nil
+        self.noInfoMessageLabel.isHidden = !isHidden
+        self.remainingTimeLabel.isHidden = isHidden
+        self.remainingStationCountLabel.isHidden = isHidden
+        self.busCongestionStatusLabel.isHidden = isHidden
+        self.arrivalTimeLabel.isHidden = isHidden
+        self.currentLocationLabel.isHidden = isHidden
+        self.busNumberLabel.isHidden = isHidden
+        self.alarmButton.isHidden = isHidden
+        self.locationIconImageView.isHidden = isHidden
+        self.clockIconImageView.isHidden = isHidden
+        self.busIconImageView.isHidden = isHidden
+        
+        if isHidden { return }
         self.remainingTimeLabel.text = remainingTime
         self.remainingStationCountLabel.text = remainingStationCount
         self.busCongestionStatusLabel.text = busCongestionStatus
