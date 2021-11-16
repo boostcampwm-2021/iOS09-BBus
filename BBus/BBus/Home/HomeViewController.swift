@@ -132,6 +132,7 @@ extension HomeViewController: UICollectionViewDataSource {
               let busName = self.viewModel?.busName(by: model.0.busRouteId),
               let busType = self.viewModel?.busType(by: busName) else { return cell }
         let busArrivalInfo = model.1
+        cell.configure(indexPath: indexPath)
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
                        routeType: busType,
@@ -181,7 +182,13 @@ extension HomeViewController: HomeSearchButtonDelegate {
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
-        self.coordinator?.pushToAlarmSetting(stationId: 118000007, busRouteId: 100100042, stationOrd: 49)
+
+        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+              let stationId = Int(model.0.stId),
+              let busRouteId = Int(model.0.busRouteId),
+              let ord = Int(model.0.ord) else { return }
+
+        self.coordinator?.pushToAlarmSetting(stationId: stationId, busRouteId: busRouteId, stationOrd: ord)
     }
 }
 
