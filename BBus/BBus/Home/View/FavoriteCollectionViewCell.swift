@@ -9,6 +9,15 @@ import UIKit
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    private var alarmButtonDelegate: AlarmButtonDelegate? {
+        didSet {
+            self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
+            self.trailingView.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: self)
+            }), for: .touchUpInside)
+
+        }
+    }
     class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
     var busNumberYAxisMargin: CGFloat { return 0 }
@@ -69,7 +78,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     func configureDelegate(_ delegate: AlarmButtonDelegate) {
-        self.trailingView.configureDelegate(delegate)
+        self.alarmButtonDelegate = delegate
     }
 
     private func configureUI() {

@@ -15,17 +15,6 @@ class BusCellTrailingView: UIView {
     
     static let noInfoMessage = "도착 정보 없음"
 
-    private var alarmButtonDelegate: AlarmButtonDelegate? {
-        didSet {
-            let action = UIAction(handler: {_ in
-                guard let cell = self.superview as? UICollectionViewCell else { return print("error")}
-                print(cell)
-                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: cell)
-            })
-            self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
-            self.alarmButton.addAction(action, for: .touchUpInside)
-        }
-    }
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -40,7 +29,7 @@ class BusCellTrailingView: UIView {
     }()
     private lazy var firstBusTimeRightLabel = RemainCongestionBadgeLabel()
     private lazy var secondBusTimeRightLabel = RemainCongestionBadgeLabel()
-    private lazy var alarmButton: UIButton = {
+    private(set) lazy var alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(BBusImage.alarm, for: .normal)
         button.tintColor = BBusColor.bbusGray
@@ -107,10 +96,6 @@ class BusCellTrailingView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: AlarmButtonDelegate) {
-        self.alarmButtonDelegate = delegate
-    }
-    
     func configure(firstBusTime: String?, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRemaining: String?, secondBusCongestion: String?) {
         
         let isHidden = firstBusTime == nil

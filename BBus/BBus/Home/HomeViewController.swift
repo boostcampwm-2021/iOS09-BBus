@@ -82,7 +82,6 @@ class HomeViewController: UIViewController {
         self.cancellable = self.viewModel?.$homeFavoriteList
             .receive(on: HomeUseCase.thread)
             .sink(receiveValue: { response in
-                dump(response)
                 DispatchQueue.main.async {
                     self.homeView.reload()
                 }
@@ -132,7 +131,6 @@ extension HomeViewController: UICollectionViewDataSource {
               let busName = self.viewModel?.busName(by: model.0.busRouteId),
               let busType = self.viewModel?.busType(by: busName) else { return cell }
         let busArrivalInfo = model.1
-        cell.configure(indexPath: indexPath)
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
                        routeType: busType,
@@ -182,9 +180,9 @@ extension HomeViewController: HomeSearchButtonDelegate {
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
-      //TODO: cell indexPath 찾는 작업 필요
       
-        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+        guard let indexPath = self.homeView.indexPath(for: cell),
+              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
               let stationId = Int(model.0.stId),
               let busRouteId = Int(model.0.busRouteId),
               let ord = Int(model.0.ord) else { return }

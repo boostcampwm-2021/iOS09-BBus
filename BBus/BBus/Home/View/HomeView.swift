@@ -89,6 +89,10 @@ class HomeView: UIView {
         self.favoriteCollectionView.reloadData()
     }
 
+    func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.favoriteCollectionView.indexPath(for: cell)
+    }
+
     func getSectionByHeaderView(header: UICollectionReusableView) -> Int? {
         guard let section = self.favoriteCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader)
                 .first(where: { header == self.favoriteCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: $0) })?
