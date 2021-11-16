@@ -73,15 +73,16 @@ final class MovingStatusViewModel {
             info.afterSpeed = idx+1 == stations.count ? nil : stations[idx+1].sectionSpeed
             info.count = stations.count
             info.title = station.stationName
-            info.sectTime = self.averageSectionTime(speed: info.speed, distance: station.fullSectionDistance)
+            info.sectTime = Self.averageSectionTime(speed: info.speed, distance: station.fullSectionDistance)
             stationsResult.append(info)
         }
         self.stationInfos = stationsResult
         dump(self.stationInfos)
     }
 
-    private func averageSectionTime(speed: Int, distance: Int) -> Int {
-        return 1
+    static func averageSectionTime(speed: Int, distance: Int) -> Int {
+        let result = Double(distance)/22.5*0.06
+        return Int(ceil(result))
     }
 
     func fetch() {
