@@ -192,11 +192,12 @@ extension StationViewController: UICollectionViewDataSource {
             let key = viewModel.busKeys[indexPath.section]
             busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
         }
-        
+
         if let busInfo = busInfo,
            let item = self.makeFavoriteItem(at: indexPath) {
             cell.configure(indexPath: indexPath)
             cell.configure(busNumber: busInfo.busNumber,
+                           routeType: busInfo.routeType.toRouteType(),
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
                            firstBusRelativePosition: busInfo.firstBusRelativePosition,

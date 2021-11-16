@@ -25,4 +25,19 @@ enum BBusRouteType: Int {
         case .closed: return "폐지" + common
         }
     }
+
+    func toRouteType() -> RouteType? {
+        switch self {
+        case .shared: return RouteType.customized
+        case .airport: return RouteType.mainLine
+        case .town: return RouteType.customized
+        case .gansun: return RouteType.mainLine
+        case .jisun: return RouteType.localLine
+        case .circular: return RouteType.circulation
+        case .wideArea: return RouteType.broadArea
+        case .incheon: return nil
+        case .gyeonggi: return nil
+        case .closed: return nil
+        }
+    }
 }

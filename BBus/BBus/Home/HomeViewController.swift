@@ -129,10 +129,12 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.0.busRouteId)  else { return cell }
+              let busName = self.viewModel?.busName(by: model.0.busRouteId),
+              let busType = self.viewModel?.busType(by: busName) else { return cell }
         let busArrivalInfo = model.1
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
+                       routeType: busType,
                        firstBusTime: busArrivalInfo?.firstTime.toString(),
                        firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
                        firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),

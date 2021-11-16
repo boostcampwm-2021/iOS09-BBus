@@ -52,4 +52,8 @@ class HomeViewModel {
 
         return busName
     }
+
+    func busType(by busName: String) -> RouteType? {
+        return self.useCase.busRouteList?.first(where: { $0.busRouteName == busName } )?.routeType
+    }
 }
