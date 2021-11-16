@@ -10,6 +10,7 @@ import Combine
 import CoreGraphics
 
 typealias BusInfo = (busName: String, type: RouteType)
+typealias BoardedBus = (location: CGFloat, remainStation: Int)
 typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, sectTime: Int)
 
 final class MovingStatusViewModel {
@@ -25,6 +26,7 @@ final class MovingStatusViewModel {
     @Published var buses: [BusPosByRtidDTO] = []
     @Published var remainingTime: Int?
     @Published var remainingStation: Int?
+    @Published var boardedBus: BoardedBus?
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -74,24 +76,25 @@ final class MovingStatusViewModel {
         self.busInfo = busInfo
     }
 
-    // GPS 를 통해 특정 버스를 찾은 경우 사용되는 메소드
-    private func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> CGFloat {
-        let order = CGFloat(order-1-startOrd)
-        let sect = CGFloat((sect as NSString).floatValue)
-        let fullSect = CGFloat((fullSect as NSString).floatValue)
-        return order + (sect/fullSect)
-    }
-
     // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
     private func findBoardBus(gpsY: Double, gpsX: Double) {
         if buses.isEmpty { return }
         if stationInfos.isEmpty { return }
         guard let startOrd = startOrd else { return }
 
-        buses.forEach { bus in
+        for bus in buses {
             if Self.onBoard(gpsY: gpsY, gpsX: gpsX, bus: bus) {
-                self.remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 남은 정거장수 update
-                // 버스 변수 저장 로직 구현필요
+                let remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 남은 정거장수 update
+                self.remainingStation = remainingStation
+
+                let boardedBus: BoardedBus
+                boardedBus.location = self.convertBusPos(startOrd: startOrd,
+                                                         order: bus.sectionOrder,
+                                                         sect: bus.sectDist,
+                                                         fullSect: bus.fullSectDist)
+                boardedBus.remainStation = remainingStation
+                self.boardedBus = boardedBus
+                break
             }
         }
     }
@@ -99,6 +102,14 @@ final class MovingStatusViewModel {
     // Bus - 유저간 거리 측정 로직
     static func onBoard(gpsY: Double, gpsX: Double, bus: BusPosByRtidDTO) -> Bool {
         return true
+    }
+
+    // 현재 버스의 노선도 위치 반환
+    private func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> CGFloat {
+        let order = CGFloat(order-1-startOrd)
+        let sect = CGFloat((sect as NSString).floatValue)
+        let fullSect = CGFloat((fullSect as NSString).floatValue)
+        return order + (sect/fullSect)
     }
 
     private func convertBusStations(with stations: [StationByRouteListDTO]) {

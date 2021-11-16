@@ -16,6 +16,8 @@ final class MovingStatusViewController: UIViewController {
     private lazy var movingStatusView = MovingStatusView()
     private let viewModel: MovingStatusViewModel?
     private var cancellables: Set<AnyCancellable> = []
+    private var busTag: MovingStatusBusTagView?
+    private var color: UIColor?
     private var busIcon: UIImage?
 
     init(viewModel: MovingStatusViewModel) {
@@ -54,12 +56,22 @@ final class MovingStatusViewController: UIViewController {
         self.movingStatusView.configureDelegate(self)
     }
     
-    private func configureBusTag() {
-        self.movingStatusView.addBusTag()
-    }
-    
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
+    }
+
+    private func configureBusTag(bus: BoardedBus? = nil) {
+        self.busTag?.removeFromSuperview()
+
+        if let bus = bus {
+            self.busTag = self.movingStatusView.createBusTag(location: bus.location,
+                                                             color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: bus.remainStation)
+        }
+        else {
+            self.busTag = self.movingStatusView.createBusTag(busIcon: self.busIcon, remainStation: nil)
+        }
     }
 
     private func binding() {
@@ -67,6 +79,7 @@ final class MovingStatusViewController: UIViewController {
         self.bindingRemainTime()
         self.bindingCurrentStation()
         self.bindingStationInfos()
+        self.bindingBoardedBus()
     }
 
     private func bindingHeaderBusInfo() {
@@ -115,27 +128,36 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func configureBusColor(type: RouteType) {
-        let color: UIColor?
+    private func bindingBoardedBus() {
+        self.viewModel?.$boardedBus
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] boardedBus in
+                DispatchQueue.main.async {
+                    self?.configureBusTag(bus: boardedBus)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
 
+    private func configureBusColor(type: RouteType) {
         switch type {
         case .mainLine:
-            color = BBusColor.bbusTypeBlue
+            self.color = BBusColor.bbusTypeBlue
             self.busIcon = BBusImage.blueBusIcon
         case .broadArea:
-            color = BBusColor.bbusTypeRed
+            self.color = BBusColor.bbusTypeRed
             self.busIcon = BBusImage.redBusIcon
         case .customized:
-            color = BBusColor.bbusTypeGreen
+            self.color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBusIcon
         case .circulation:
-            color = BBusColor.bbusTypeCirculation
+            self.color = BBusColor.bbusTypeCirculation
             self.busIcon = BBusImage.circulationBusIcon
         case .lateNight:
-            color = BBusColor.bbusTypeBlue
+            self.color = BBusColor.bbusTypeBlue
             self.busIcon = BBusImage.blueBusIcon
         case .localLine:
-            color = BBusColor.bbusTypeGreen
+            self.color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBusIcon
         }
 

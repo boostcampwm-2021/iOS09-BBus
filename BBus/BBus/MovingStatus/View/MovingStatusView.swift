@@ -291,16 +291,22 @@ class MovingStatusView: UIView {
         self.endAlarmButtonDelegate = delegate
     }
     
-    func addBusTag() {
+    func createBusTag(location: CGFloat = 0, color: UIColor? = BBusColor.gray, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) -> MovingStatusBusTagView {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
+        busTag.configure(color: color,
+                         busIcon: busIcon,
+                         remainStation: remainStation)
+        
         self.stationsTableView.addSubview(busTag)
         busTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
-            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + 2*MovingStatusTableViewCell.cellHeight)
+            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + location*MovingStatusTableViewCell.cellHeight)
         ])
+
+        return busTag
     }
 
     func configureColor(to color: UIColor?) {
