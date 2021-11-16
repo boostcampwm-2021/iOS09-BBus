@@ -24,15 +24,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
               let movingStatusWindow = self.movingStatusWindow else { return }
         self.movingStatusWindow?.frame.size = CGSize(width: movingStatusWindow.frame.width, height: movingStatusWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
         self.appCoordinator = AppCoordinator(navigationWindow: navigationWindow, movingStatusWindow: movingStatusWindow)
+        appCoordinator?.start()
 
+        self.fireMainTimer()
+    }
+
+    func fireMainTimer() {
         let timer = Timer.init(timeInterval: 1, repeats: true) { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "haha"), object: nil)
+            NotificationCenter.default.post(name: .oneSecondPassed, object: nil)
         }
         RunLoop.current.add(timer, forMode: .common)
-//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "haha"), object: nil)
-//        }
-        appCoordinator?.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -62,7 +63,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
 
 }
 

@@ -17,8 +17,11 @@ class HomeViewModel {
     init(useCase: HomeUseCase) {
         self.useCase = useCase
         self.bindFavoriteData()
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "haha"), object: nil, queue: .main) { _ in
+        self.configureObserver()
+    }
 
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
             self.descendTime()
         }
     }

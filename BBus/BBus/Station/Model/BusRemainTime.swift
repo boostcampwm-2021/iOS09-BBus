@@ -53,4 +53,10 @@ struct BusRemainTime {
         let noInfoMessages = ["운행종료", "출발대기"]
         return !noInfoMessages.contains(message)
     }
+
+    mutating func descend() {
+        if let second = self.seconds {
+            self.seconds = second - 1
+        }
+    }
 }

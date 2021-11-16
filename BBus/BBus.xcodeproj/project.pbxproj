@@ -36,8 +36,9 @@
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
 		4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */; };
 		4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
-		4A094CE127438EB800428F55 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CE027438EB800428F55 /* UIViewExtension.swift */; };
+		4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
 		4A094CDF27435C5900428F55 /* BusRemainTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CDE27435C5900428F55 /* BusRemainTime.swift */; };
+		4A094CE127438EB800428F55 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CE027438EB800428F55 /* UIViewExtension.swift */; };
 		4A17CED72733A754007B1646 /* SimpleCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */; };
 		4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */; };
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
@@ -151,8 +152,9 @@
 		4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAccessoryView.swift; sourceTree = "<group>"; };
 		4A06AEC2273E51AE0027222D /* AccessKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AccessKey.xcconfig; sourceTree = "<group>"; };
 		4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItemDTO.swift; sourceTree = "<group>"; };
-		4A094CE027438EB800428F55 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		4A094CDE27435C5900428F55 /* BusRemainTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRemainTime.swift; sourceTree = "<group>"; };
+		4A094CE027438EB800428F55 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		4A17CED62733A754007B1646 /* SimpleCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCollectionHeaderView.swift; sourceTree = "<group>"; };
 		4A17CED82733B5C5007B1646 /* SearchResultScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultScrollView.swift; sourceTree = "<group>"; };
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			children = (
 				041A5A10273D2E1B00490075 /* StringExtension.swift */,
 				4A094CE027438EB800428F55 /* UIViewExtension.swift */,
+				4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -871,6 +874,7 @@
 				4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */,
 				4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */,
 				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
+				4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */,
 				049375B5273BB98E0061ACDA /* StationByRouteListDTO.swift in Sources */,

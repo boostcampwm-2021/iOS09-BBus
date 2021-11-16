@@ -94,7 +94,7 @@ struct HomeFavorite: Equatable {
     mutating func descendTime() {
         self.buses = self.buses.map({
             guard var arriveInfo = $0.1 else { return ($0.0, nil) }
-            arriveInfo.descended()
+            arriveInfo.descend()
             return ($0.0, arriveInfo)
         })
     }
@@ -119,12 +119,8 @@ struct HomeArriveInfo {
         self.secondBusCongestion = BusCongestion(rawValue: arrInfoByRouteDTO.secondBusCongestion)
     }
 
-    mutating func descended() {
-        if let first = self.firstTime.seconds {
-            self.firstTime.seconds = first - 1
-        }
-        if let second = self.secondTime.seconds {
-            self.secondTime.seconds = second - 1
-        }
+    mutating func descend() {
+        self.firstTime.descend()
+        self.secondTime.descend()
     }
 }
