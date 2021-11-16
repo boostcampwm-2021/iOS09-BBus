@@ -144,6 +144,13 @@ class StationViewController: UIViewController {
                 self?.stationView.reload()
             })
             .store(in: &self.cancellables)
+
+        self.viewModel?.$infoBuses
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stationView.reload()
+            })
+            .store(in: &self.cancellables)
     }
 
     private func configureColor() {
