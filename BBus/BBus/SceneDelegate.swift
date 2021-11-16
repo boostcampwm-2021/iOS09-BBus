@@ -24,7 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
               let movingStatusWindow = self.movingStatusWindow else { return }
         self.movingStatusWindow?.frame.size = CGSize(width: movingStatusWindow.frame.width, height: movingStatusWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
         self.appCoordinator = AppCoordinator(navigationWindow: navigationWindow, movingStatusWindow: movingStatusWindow)
-        
+
+        let timer = Timer.init(timeInterval: 1, repeats: true) { _ in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "haha"), object: nil)
+        }
+        RunLoop.current.add(timer, forMode: .common)
+//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "haha"), object: nil)
+//        }
         appCoordinator?.start()
     }
 

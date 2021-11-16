@@ -48,6 +48,14 @@ struct HomeFavoriteList {
 
         return IndexPath(row: row, section: section)
     }
+
+    mutating func descendAllTime() {
+        self.favorites = self.favorites.map({
+            var favorite = $0
+            favorite.descendTime()
+            return favorite
+        })
+    }
 }
 
 struct HomeFavorite: Equatable {
@@ -83,11 +91,18 @@ struct HomeFavorite: Equatable {
         self.buses[row].1 = homeArrivalInfo
     }
 
+    mutating func descendTime() {
+        self.buses = self.buses.map({
+            guard var arriveInfo = $0.1 else { return ($0.0, nil) }
+            arriveInfo.descended()
+            return ($0.0, arriveInfo)
+        })
+    }
 }
 
 struct HomeArriveInfo {
-    let firstTime: BusRemainTime
-    let secondTime: BusRemainTime
+    var firstTime: BusRemainTime
+    var secondTime: BusRemainTime
     let firstRemainStation: String?
     let secondRemainStation: String?
     let firstBusCongestion: BusCongestion?
@@ -102,5 +117,14 @@ struct HomeArriveInfo {
         self.secondRemainStation = secondSeperatedTuple.position
         self.firstBusCongestion = BusCongestion(rawValue: arrInfoByRouteDTO.firstBusCongestion)
         self.secondBusCongestion = BusCongestion(rawValue: arrInfoByRouteDTO.secondBusCongestion)
+    }
+
+    mutating func descended() {
+        if let first = self.firstTime.seconds {
+            self.firstTime.seconds = first - 1
+        }
+        if let second = self.secondTime.seconds {
+            self.secondTime.seconds = second - 1
+        }
     }
 }
