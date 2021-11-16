@@ -121,4 +121,8 @@ class StationView: UIView {
     func reload() {
         self.stationBodyCollectionView.reloadData()
     }
+    
+    func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.stationBodyCollectionView.indexPath(for: cell)
+    }
 }

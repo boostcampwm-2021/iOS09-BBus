@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, stationOrd: Int, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
 
@@ -19,7 +20,7 @@ class StationViewModel {
     @Published private(set) var busKeys: [BBusRouteType]
     private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
-    private(set) var favoriteItems = [FavoriteItemDTO]()
+    @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
     
     init(usecase: StationUsecase, arsId: String) {

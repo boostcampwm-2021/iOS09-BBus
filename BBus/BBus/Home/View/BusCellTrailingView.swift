@@ -8,19 +8,19 @@
 import UIKit
 
 protocol AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene(at indexPath: IndexPath)
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell)
 }
 
 class BusCellTrailingView: UIView {
     
     static let noInfoMessage = "도착 정보 없음"
 
-    private var indexPath: IndexPath?
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             let action = UIAction(handler: {_ in
-                guard let indexPath = self.indexPath else { return }
-                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: indexPath)
+                guard let cell = self.superview as? UICollectionViewCell else { return print("error")}
+                print(cell)
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: cell)
             })
             self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
             self.alarmButton.addAction(action, for: .touchUpInside)
@@ -129,9 +129,5 @@ class BusCellTrailingView: UIView {
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)
         self.secondBusTimeRightLabel.configure(remaining: secondBusRemaining, congestion: secondBusCongestion)
-    }
-    
-    func configure(indexPath: IndexPath) {
-        self.indexPath = indexPath
     }
 }

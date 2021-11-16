@@ -137,6 +137,13 @@ class StationViewController: UIViewController {
                 self?.stationView.reload()
             })
             .store(in: &self.cancellables)
+        
+        self.viewModel?.$favoriteItems
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stationView.reload()
+            })
+            .store(in: &self.cancellables)
     }
 
     private func configureColor() {
@@ -147,7 +154,7 @@ class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel = self.viewModel else { return }
         let busRouteId: Int
         let key = viewModel.busKeys[indexPath.section]
         if viewModel.infoBuses.count - 1 >= indexPath.section {
@@ -199,7 +206,6 @@ extension StationViewController: UICollectionViewDataSource {
         
         if let busInfo = busInfo,
            let item = self.makeFavoriteItem(at: indexPath) {
-            cell.configure(indexPath: indexPath)
             cell.configure(busNumber: busInfo.busNumber,
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
@@ -276,14 +282,20 @@ extension StationViewController: BackButtonDelegate {
 
 // MARK: - Delegate: LikeButton
 extension StationViewController: LikeButtonDelegate {
-    func likeStationBus(at indexPath: IndexPath) {
-        guard let item = self.makeFavoriteItem(at: indexPath) else { return print("nil")}
+    func likeStationBus(at cell: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: cell),
+              let item = self.makeFavoriteItem(at: indexPath) else { return }
         self.viewModel?.add(favoriteItem: item)
     }
     
-    func cancelLikeStationBus(at indexPath: IndexPath) {
-        guard let item = self.makeFavoriteItem(at: indexPath) else { return }
+    func cancelLikeStationBus(at cell: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: cell),
+              let item = self.makeFavoriteItem(at: indexPath) else { return }
         self.viewModel?.remove(favoriteItem: item)
+    }
+    
+    private func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.stationView.indexPath(for: cell)
     }
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
@@ -305,8 +317,9 @@ extension StationViewController: LikeButtonDelegate {
 
 // MARK: - Delegate: AlarmButton
 extension StationViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
-        guard let viewModel = viewModel,
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
+        guard let indexPath = self.indexPath(for: cell),
+              let viewModel = viewModel,
               let stationId = viewModel.usecase.stationInfo?.stationID else { return }
         let key = viewModel.busKeys[indexPath.section]
         let bus: BusArriveInfo
