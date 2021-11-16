@@ -8,7 +8,7 @@
 import Foundation
 
 struct ArrInfoByRouteBody: BBusXMLDTO {
-    private let itemList: [ArrInfoByRouteDTO?]
+    private(set) var itemList: [ArrInfoByRouteDTO]
 
     init?(dict: [String : [Any]]) {
         guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ ArrInfoByRouteDTO(dict: $0) }),

@@ -56,6 +56,12 @@ struct BusRemainTime {
         }
     }
     
+    func estimateArrivalTime() -> Date? {
+        guard self.checkInfo() else { return nil }
+        guard let seconds = self.seconds else { return Date() }
+        return Date(timeIntervalSinceNow: TimeInterval(seconds))
+    }
+    
     func checkInfo() -> Bool {
         guard let message = self.message else { return true }
         let noInfoMessages = ["운행종료", "출발대기"]
@@ -134,12 +140,12 @@ class StationViewModel {
             info.stationOrd = bus.stationOrd
             info.busRouteId = bus.busRouteId
             
-            let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
+            let timeAndPositionInfo1 = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
             if timeAndPositionInfo1.time.checkInfo() {
                 info.firstBusArriveRemainTime = timeAndPositionInfo1.time
                 info.firstBusRelativePosition = timeAndPositionInfo1.position
                 
-                let timeAndPositionInfo2 = self.separateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
+                let timeAndPositionInfo2 = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
                 info.secondBusArriveRemainTime = timeAndPositionInfo2.time
                 info.secondBusRelativePosition = timeAndPositionInfo2.position
                 
@@ -159,21 +165,6 @@ class StationViewModel {
         
         let keys = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue }) + Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
         self.busKeys = keys
-    }
-    
-    private func checkInfo(with bus: StationByUidItemDTO) -> Bool {
-        let noInfoMessages = ["운행종료", "출발대기"]
-        return !noInfoMessages.contains(bus.firstBusArriveRemainTime)
-    }
-    
-    private func separateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime, position: String?) {
-        let components = info.components(separatedBy: ["[", "]"])
-        if components.count > 1 {
-            return (time: BusRemainTime(arriveRemainTime: components[0]), position: components[1])
-        }
-        else {
-            return (time: BusRemainTime(arriveRemainTime: components[0]), position: nil)
-        }
     }
     
     func add(favoriteItem: FavoriteItemDTO) {

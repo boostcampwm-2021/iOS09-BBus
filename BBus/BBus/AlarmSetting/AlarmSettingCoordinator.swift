@@ -8,16 +8,21 @@
 import UIKit
 
 class AlarmSettingCoordinator: Coordinator {
-    var delegate: CoordinatorDelegate?
-    var movingStatusDelegate: MovingStatusOpenCloseDelegate?
+    weak var delegate: CoordinatorDelegate?
+    weak var movingStatusDelegate: MovingStatusOpenCloseDelegate?
     var navigationPresenter: UINavigationController
 
     init(presenter: UINavigationController) {
         self.navigationPresenter = presenter
     }
 
-    func start() {
-        let viewController = AlarmSettingViewController()
+    func start(stationId: Int, busRouteId: Int, stationOrd: Int) {
+        let useCase = AlarmSettingUseCase(useCases: BBusAPIUsecases(on: AlarmSettingUseCase.queue))
+        let viewModel = AlarmSettingViewModel(useCase: useCase,
+                                              stationId: stationId,
+                                              busRouteId: busRouteId,
+                                              stationOrd: stationOrd)
+        let viewController = AlarmSettingViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)
     }

@@ -264,7 +264,7 @@ class GetOnStatusCell: UITableViewCell {
         self.busOrderNumberLabel.backgroundColor = busColor
     }
 
-    func configure(order: String, remainingTime: String, remainingStationCount: String, busCongestionStatus: String, arrivalTime: String, currentLocation: String, busNumber: String) {
+    func configure(order: String, remainingTime: String?, remainingStationCount: String?, busCongestionStatus: String?, arrivalTime: String?, currentLocation: String, busNumber: String) {
         self.busOrderNumberLabel.text = order
         self.remainingTimeLabel.text = remainingTime
         self.remainingStationCountLabel.text = remainingStationCount

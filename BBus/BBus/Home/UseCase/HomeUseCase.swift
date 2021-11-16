@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import os
 
 class HomeUseCase {
 
@@ -55,7 +54,6 @@ class HomeUseCase {
                         print(error)
                     }
                 }, receiveValue: { favoriteDTO in
-                    dump(favoriteDTO)
                     self.favoriteList = favoriteDTO
                 })
                 .store(in: &self.cancellables)
