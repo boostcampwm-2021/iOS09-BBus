@@ -88,9 +88,18 @@ struct HomeFavorite: Equatable {
 struct HomeArriveInfo {
     let firstTime: BusRemainTime
     let secondTime: BusRemainTime
+    let firstRemainStation: String?
+    let secondRemainStation: String?
 
     init(arrInfoByRouteDTO: ArrInfoByRouteDTO) {
-        self.firstTime = BusRemainTime(arriveRemainTime: arrInfoByRouteDTO.firstBusArriveRemainTime)
-        self.secondTime = BusRemainTime(arriveRemainTime: arrInfoByRouteDTO.secondBusArriveRemainTime)
+        let firstBusInfo = BusRemainTime(arriveRemainTime: arrInfoByRouteDTO.firstBusArriveRemainTime)
+        let secondBusInfo = BusRemainTime(arriveRemainTime: arrInfoByRouteDTO.secondBusArriveRemainTime)
+
+        let firstSeperatedTuple = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: arrInfoByRouteDTO.firstBusArriveRemainTime )
+        let secondSeperatedTuple = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: arrInfoByRouteDTO.secondBusArriveRemainTime)
+        self.firstTime = firstSeperatedTuple.time
+        self.secondTime = secondSeperatedTuple.time
+        self.firstRemainStation = firstSeperatedTuple.position
+        self.secondRemainStation = secondSeperatedTuple.position
     }
 }
