@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchResultScrollView: UIScrollView {
+final class SearchResultScrollView: UIScrollView {
 
     static let indicatorHeight: CGFloat = 3
 

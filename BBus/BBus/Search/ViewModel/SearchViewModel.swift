@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SearchViewModel {
+final class SearchViewModel {
     
     typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
@@ -31,8 +31,8 @@ class SearchViewModel {
 
     private func prepare() {
         self.$keyword
-            .receive(on: SearchUseCase.thread)
-            .debounce(for: .milliseconds(400), scheduler: SearchUseCase.thread)
+            .receive(on: SearchUseCase.queue)
+            .debounce(for: .milliseconds(400), scheduler: SearchUseCase.queue)
             .sink { keyword in
                 if let busSearchResults = self.usecase.searchBus(by: keyword) {
                     self.searchResults.busSearchResults = busSearchResults

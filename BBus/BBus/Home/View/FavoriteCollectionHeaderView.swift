@@ -25,8 +25,8 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         }
     }
     
-    @objc private func headerViewTapped(_ sender: UICollectionReusableView) {
-        delegate?.shouldGoToStationScene(headerView: sender)
+    @objc private func headerViewTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.shouldGoToStationScene(headerView: self)
     }
 
     private lazy var stationTitleLabel: UILabel = {

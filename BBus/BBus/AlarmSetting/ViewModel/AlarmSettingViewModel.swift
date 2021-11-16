@@ -9,12 +9,13 @@ import Foundation
 import Combine
 
 class AlarmSettingViewModel {
+    
+    let useCase: AlarmSettingUseCase
     private let stationId: Int
     private let busRouteId: Int
     private let stationOrd: Int
-    let useCase: AlarmSettingUseCase
-    private var cancellables: Set<AnyCancellable>
     @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
+    private var cancellables: Set<AnyCancellable>
     
     init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int) {
         self.useCase = useCase

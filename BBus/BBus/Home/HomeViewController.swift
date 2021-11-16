@@ -181,8 +181,9 @@ extension HomeViewController: HomeSearchButtonDelegate {
 
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
-
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
+      //TODO: cell indexPath 찾는 작업 필요
+      
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
               let stationId = Int(model.0.stId),
               let busRouteId = Int(model.0.busRouteId),
@@ -195,7 +196,6 @@ extension HomeViewController: AlarmButtonDelegate {
 // MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene(headerView: UICollectionReusableView) {
-
         guard let section = self.homeView.getSectionByHeaderView(header: headerView),
               let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
 

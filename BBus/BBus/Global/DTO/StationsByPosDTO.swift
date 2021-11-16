@@ -39,9 +39,9 @@ struct StationsByPosDTO: BBusXMLDTO {
     let stationName: String
 
     init?(dict: [String : [Any]]) {
-        guard let stationIdString = ((dict["stationId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+        guard let stationIdString = ((dict["stationId"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let stationId = Int(stationIdString),
-              let stationName = ((dict["stationNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+              let stationName = ((dict["stationNm"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
         
         self.stationId = stationId
         self.stationName = stationName

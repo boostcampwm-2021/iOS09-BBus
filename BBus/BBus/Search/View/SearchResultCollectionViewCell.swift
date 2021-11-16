@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchResultCollectionViewCell: UICollectionViewCell {
+final class SearchResultCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "SearchResultCollectionViewCell"
     static let height: CGFloat = 70

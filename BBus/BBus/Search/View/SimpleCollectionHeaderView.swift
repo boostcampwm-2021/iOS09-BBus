@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SimpleCollectionHeaderView: UICollectionReusableView {
+final class SimpleCollectionHeaderView: UICollectionReusableView {
     
     static let identifier = "SearchResultHeaderView"
     static let height: CGFloat = 20

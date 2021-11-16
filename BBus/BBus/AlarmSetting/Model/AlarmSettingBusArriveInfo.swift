@@ -8,6 +8,14 @@
 import Foundation
 
 struct AlarmSettingBusArriveInfo {
+    static let estimatedTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "a hh시 mm분 도착 예정"
+        return formatter
+    }()
+    
     let arriveRemainTime: BusRemainTime?
     let estimatedArrivalTime: String?
     let relativePosition: String?
@@ -23,13 +31,8 @@ struct AlarmSettingBusArriveInfo {
         self.currentStation = currentStation
         self.plainNumber = plainNumber
         
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone.current
-        formatter.locale = Locale(identifier: "ko_KR")
-        
-        formatter.dateFormat = "a hh시 mm분 도착 예정"
         if let estimatedTime = timeAndPositionInfo.time.estimateArrivalTime() {
-            self.estimatedArrivalTime = formatter.string(from: estimatedTime)
+            self.estimatedArrivalTime = Self.estimatedTimeFormatter.string(from: estimatedTime)
         }
         else {
             self.estimatedArrivalTime = nil

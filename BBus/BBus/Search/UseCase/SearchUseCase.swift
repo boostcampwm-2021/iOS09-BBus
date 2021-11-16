@@ -8,13 +8,13 @@
 import Foundation
 import Combine
 
-class SearchUseCase {
+final class SearchUseCase {
     
     private let usecases: GetRouteListUsecase & GetStationListUsecase
     @Published var routeList: [BusRouteDTO]?
     @Published var stationList: [StationDTO]?
     private var cancellables: Set<AnyCancellable> = []
-    static let thread = DispatchQueue(label: "Search")
+    static let queue = DispatchQueue(label: "Search")
     
     init(usecases: GetRouteListUsecase & GetStationListUsecase) {
         self.usecases = usecases
@@ -27,9 +27,9 @@ class SearchUseCase {
     }
     
     private func startRouteSearch() {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getRouteList()
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {
@@ -43,9 +43,9 @@ class SearchUseCase {
     }
     
     private func startStationSearch() {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getStationList()
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {
