@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class BusRouteViewController: UIViewController {
+final class BusRouteViewController: UIViewController {
 
     weak var coordinator: BusRouteCoordinator?
     private lazy var customNavigationBar = CustomNavigationBar()
@@ -154,15 +154,15 @@ class BusRouteViewController: UIViewController {
     private func bindingBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { header in
+            .sink(receiveValue: { [weak self] header in
                 guard let header = header else { return }
                 DispatchQueue.main.async {
-                    self.customNavigationBar.configureBackButtonTitle(header.busRouteName)
-                    self.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
+                    self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
+                    self?.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
                                                           busNumber: header.busRouteName,
                                                           fromStation: header.startStation,
                                                           toStation: header.endStation)
-                    self.configureBusColor(type: header.routeType)
+                    self?.configureBusColor(type: header.routeType)
                 }
             })
             .store(in: &self.cancellables)
@@ -171,10 +171,10 @@ class BusRouteViewController: UIViewController {
     private func bindingBusRouteBodyResult() {
         self.viewModel?.$bodys
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { bodys in
+            .sink(receiveValue: { [weak self] bodys in
                 DispatchQueue.main.async {
-                    self.busRouteView.reload()
-                    self.busRouteView.configureTableViewHeight(count: bodys.count)
+                    self?.busRouteView.reload()
+                    self?.busRouteView.configureTableViewHeight(count: bodys.count)
                 }
             })
             .store(in: &self.cancellables)
@@ -183,11 +183,9 @@ class BusRouteViewController: UIViewController {
     private func bindingBusesPosInfo() {
         self.viewModel?.$buses
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { buses in
+            .sink(receiveValue: { [weak self] buses in
                 DispatchQueue.main.async {
-                    self.configureBusTags(buses: buses)
+                    self?.configureBusTags(buses: buses)
                 }
             })
             .store(in: &self.cancellables)
@@ -206,7 +204,7 @@ extension BusRouteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BusRouteTableViewCell.reusableID, for: indexPath) as? BusRouteTableViewCell else { return UITableViewCell() }
-        guard let bodys = self.viewModel?.bodys else { return UITableViewCell() }
+        guard let bodys = self.viewModel?.bodys else { return cell }
         let stationInfo = bodys[indexPath.row]
         cell.configure(speed: stationInfo.speed,
                        afterSpeed: stationInfo.afterSpeed,
