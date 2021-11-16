@@ -12,7 +12,7 @@ import CoreGraphics
 typealias BusStationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, description: String, transYn: String, arsId: String)
 typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
 
-class BusRouteViewModel {
+final class BusRouteViewModel {
 
     private let usecase: BusRouteUsecase
     private var cancellables: Set<AnyCancellable>
@@ -33,8 +33,8 @@ class BusRouteViewModel {
     private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { header in
-                self.header = header
+            .sink(receiveValue: { [weak self] header in
+                self?.header = header
             })
             .store(in: &self.cancellables)
     }
@@ -42,8 +42,8 @@ class BusRouteViewModel {
     private func bindingBodysInfo() {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { bodys in
-                self.convertBusStationInfo(with: bodys)
+            .sink(receiveValue: { [weak self] bodys in
+                self?.convertBusStationInfo(with: bodys)
             })
             .store(in: &self.cancellables)
     }
@@ -51,10 +51,8 @@ class BusRouteViewModel {
     private func bindingBusesPosInfo() {
         self.usecase.$buses
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { buses in
-                self.convertBusPosInfo(with: buses)
+            .sink(receiveValue: { [weak self] buses in
+                self?.convertBusPosInfo(with: buses)
             })
             .store(in: &self.cancellables)
     }
