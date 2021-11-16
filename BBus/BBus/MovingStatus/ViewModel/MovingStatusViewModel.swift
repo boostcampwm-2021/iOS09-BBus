@@ -82,6 +82,25 @@ final class MovingStatusViewModel {
         return order + (sect/fullSect)
     }
 
+    // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
+    private func findBoardBus(gpsY: Double, gpsX: Double) {
+        if buses.isEmpty { return }
+        if stationInfos.isEmpty { return }
+        guard let startOrd = startOrd else { return }
+
+        buses.forEach { bus in
+            if Self.onBoard(gpsY: gpsY, gpsX: gpsX, bus: bus) {
+                self.remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 남은 정거장수 update
+                // 버스 변수 저장 로직 구현필요
+            }
+        }
+    }
+
+    // Bus - 유저간 거리 측정 로직
+    static func onBoard(gpsY: Double, gpsX: Double, bus: BusPosByRtidDTO) -> Bool {
+        return true
+    }
+
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
         guard let startIndex = stations.firstIndex(where: { $0.arsId == self.fromArsId }) else { return }
         guard let endIndex = stations.firstIndex(where: { $0.arsId == self.toArsId }) else { return }

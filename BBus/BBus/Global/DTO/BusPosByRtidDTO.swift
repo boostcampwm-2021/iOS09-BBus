@@ -40,6 +40,8 @@ struct BusPosByRtidDTO: BBusXMLDTO {
     let sectionOrder: Int
     let fullSectDist: String
     let sectDist: String
+    let gpsY: String
+    let gpsX: String
     
     init?(dict: [String : [Any]]) {
         guard let busTypeString = ((dict["busType"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
@@ -50,7 +52,9 @@ struct BusPosByRtidDTO: BBusXMLDTO {
               let sectOrd = ((dict["sectOrd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let sectionOrder = Int(sectOrd),
               let fullSectDist = ((dict["fullSectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let sectDist = ((dict["sectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+              let sectDist = ((dict["sectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let gpsY = ((dict["gpsY"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
+              let gpsX = ((dict["gpsX"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}) else { return nil }
         
         self.busType = busType
         self.congestion = congestion
@@ -58,5 +62,7 @@ struct BusPosByRtidDTO: BBusXMLDTO {
         self.sectionOrder = sectionOrder
         self.fullSectDist = fullSectDist
         self.sectDist = sectDist
+        self.gpsY = gpsY
+        self.gpsX = gpsX
     }
 }
