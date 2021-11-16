@@ -53,6 +53,12 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         self.configureLayout()
         self.configureUI()
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.stationTitleLabel.text = ""
+        self.directionLabel.text = ""
+    }
     
     // MARK: - Configuration
     private func configureLayout() {

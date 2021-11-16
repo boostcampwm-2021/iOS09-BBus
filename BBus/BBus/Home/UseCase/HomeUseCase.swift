@@ -10,17 +10,16 @@ import Combine
 
 class HomeUseCase {
 
-    private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase
+    private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
     private var cancellables: Set<AnyCancellable>
     static let thread = DispatchQueue.init(label: "Home")
     var stationList: [StationDTO]?
     var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
 
-    init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase) {
+    init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase) {
         self.usecases = usecases
         self.cancellables = []
-        self.saveMOCKDATA()
         self.startHome()
     }
 
@@ -30,21 +29,7 @@ class HomeUseCase {
         self.loadRoute()
     }
 
-    private func saveMOCKDATA() {
-        let favoriteItem = FavoriteItemDTO(stId: "122000248", busRouteId: "100100063", ord: "87", arsId: "23352")
-        self.usecases.createFavoriteItem(param: favoriteItem)
-            .receive(on: Self.thread)
-            .sink { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            } receiveValue: { data in
-                dump(String(data: data, encoding: .utf8))
-            }
-            .store(in: &self.cancellables)
-    }
-
-    private func loadFavoriteData() {
+    func loadFavoriteData() {
         Self.thread.async {
             self.usecases.getFavoriteItemList()
                 .receive(on: Self.thread)
@@ -56,6 +41,25 @@ class HomeUseCase {
                 }, receiveValue: { favoriteDTO in
                     self.favoriteList = favoriteDTO
                 })
+                .store(in: &self.cancellables)
+        }
+    }
+
+    func loadBusRemainTime(favoriteItem: FavoriteItemDTO, completion: @escaping (ArrInfoByRouteDTO) -> Void) {
+        Self.thread.async {
+            self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
+                                                busRouteId: favoriteItem.busRouteId,
+                                                ord: favoriteItem.ord)
+                .receive(on: Self.thread)
+                .sink { error in
+                    if case .failure(let error) = error {
+                        print(error)
+                    }
+                } receiveValue: { data in
+                    guard let dto = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
+                          let item = dto.body.itemList.first else { return }
+                    completion(item)
+                }
                 .store(in: &self.cancellables)
         }
     }

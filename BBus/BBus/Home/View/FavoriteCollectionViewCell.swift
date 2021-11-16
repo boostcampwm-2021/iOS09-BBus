@@ -26,6 +26,12 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var trailingView = BusCellTrailingView()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.busNumberLabel.text = ""
+        self.trailingView.configure(firstBusTime: nil, firstBusRemaining: nil, firstBusCongestion: nil, secondBusTime: nil, secondBusRemaining: nil, secondBusCongestion: nil)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.trailingView.configureLayout()

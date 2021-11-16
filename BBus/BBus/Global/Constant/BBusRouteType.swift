@@ -9,7 +9,7 @@ import Foundation
 
 enum BBusRouteType: Int {
     case shared = 0, airport, town, gansun, jisun, circular, wideArea, incheon, gyeonggi, closed
-
+    
     func toString() -> String {
         let common = "버스"
         switch self {
