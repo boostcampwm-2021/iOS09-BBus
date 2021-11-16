@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class BusRouteUsecase {
+final class BusRouteUsecase {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var header: BusRouteDTO?
@@ -30,12 +30,12 @@ class BusRouteUsecase {
                 if case .failure(let error) = error {
                     print(error)
                 }
-            }, receiveValue: { routeList in
+            }, receiveValue: { [weak self] routeList in
                 let headers = routeList.filter { $0.routeID == busRouteId }
                 guard let header = headers.first else { return }
-                self.header = header
+                self?.header = header
             })
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     func fetchRouteList(busRouteId: Int) {
@@ -45,11 +45,11 @@ class BusRouteUsecase {
                 if case .failure(let error) = error {
                     print(error)
                 }
-            } receiveValue: { stationsByRouteList in
+            } receiveValue: { [weak self] stationsByRouteList in
                 guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { return }
-                self.bodys = result.body.itemList
+                self?.bodys = result.body.itemList
             }
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 
     func fetchBusPosList(busRouteId: Int) {
@@ -59,10 +59,10 @@ class BusRouteUsecase {
                 if case .failure(let error) = error {
                     print(error)
                 }
-            } receiveValue: { busPosByRtidList in
+            } receiveValue: { [weak self] busPosByRtidList in
                 guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { return }
-                self.buses = result.body.itemList
+                self?.buses = result.body.itemList
             }
-            .store(in: &cancellables)
+            .store(in: &self.cancellables)
     }
 }
