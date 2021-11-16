@@ -16,7 +16,7 @@ struct AlarmSettingBusArriveInfo {
         return formatter
     }()
     
-    let arriveRemainTime: BusRemainTime?
+    var arriveRemainTime: BusRemainTime?
     let estimatedArrivalTime: String?
     let relativePosition: String?
     let congestion: BusCongestion?
