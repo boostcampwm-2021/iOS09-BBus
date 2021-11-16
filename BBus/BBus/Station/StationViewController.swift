@@ -10,7 +10,11 @@ import Combine
 
 class StationViewController: UIViewController {
     
-    @Published private var stationBusInfoHeight: CGFloat = 100
+    @Published private var stationBusInfoHeight: CGFloat?
+    private var collectionViewMinHeight: CGFloat {
+        let twice: CGFloat = 2
+        return self.view.frame.height - (StationHeaderView.headerHeight*twice)
+    }
     weak var coordinator: StationCoordinator?
     private let viewModel: StationViewModel?
 
@@ -85,8 +89,8 @@ class StationViewController: UIViewController {
             self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
-
-        self.collectionHeightConstraint = self.stationView.configureTableViewHeight(height: self.stationBusInfoHeight)
+        
+        self.stationBusInfoHeight = nil
 
         self.view.addSubview(self.refreshButton)
         self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +109,7 @@ class StationViewController: UIViewController {
     
     private func binding() {
         self.$stationBusInfoHeight
-            .receive(on: DispatchQueue.main, options: nil)
+            .receive(on: DispatchQueue.main)
             .sink() { [weak self] height in
                 self?.collectionHeightConstraint?.isActive = false
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
@@ -179,7 +183,7 @@ extension StationViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StationBodyCollectionViewCell.identifier, for: indexPath) as? StationBodyCollectionViewCell,
               let viewModel = self.viewModel else { return UICollectionViewCell() }
         // height 재설정
-        if collectionView.contentSize.height != self.stationBusInfoHeight {
+        if collectionView.contentSize.height > self.collectionViewMinHeight {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
         

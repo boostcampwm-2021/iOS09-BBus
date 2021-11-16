@@ -94,10 +94,10 @@ class StationView: UIView {
         self.stationScrollView.delegate = delegate
     }
 
-    func configureTableViewHeight(height: CGFloat) -> NSLayoutConstraint {
-        let constraint = self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: height)
-        constraint.isActive = true
-        return constraint
+    func configureTableViewHeight(height: CGFloat?) -> NSLayoutConstraint {
+        let layoutConstraint: NSLayoutConstraint = height == nil ? self.stationBodyCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor) : self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: height ?? 0)
+        layoutConstraint.isActive = true
+        return layoutConstraint
     }
 
     func configureHeaderView(stationId: String, stationName: String) {

@@ -77,7 +77,7 @@ class BusCellTrailingView: UIView {
         self.busTimeMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTimeMessageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+            self.busTimeMessageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
         let trailingViewLabelsInterval: CGFloat = 4
@@ -113,34 +113,18 @@ class BusCellTrailingView: UIView {
     
     func configure(firstBusTime: String?, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRemaining: String?, secondBusCongestion: String?) {
         
-        if firstBusTime == nil {
-            self.busTimeMessageLabel.isHidden = false
-            self.firstBusTimeLabel.isHidden = true
-            self.firstBusTimeRightLabel.isHidden = true
-            self.secondBusTimeLabel.isHidden = true
-            self.secondBusTimeRightLabel.isHidden = true
-            return
-        }
-        else {
-            self.busTimeMessageLabel.isHidden = true
-            self.firstBusTimeLabel.isHidden = false
-            self.firstBusTimeRightLabel.isHidden = false
-            self.secondBusTimeLabel.isHidden = false
-            self.secondBusTimeRightLabel.isHidden = false
-        }
+        let isHidden = firstBusTime == nil
+        self.busTimeMessageLabel.isHidden = !isHidden
+        self.firstBusTimeLabel.isHidden = isHidden
+        self.firstBusTimeRightLabel.isHidden = isHidden
+        self.secondBusTimeLabel.isHidden = isHidden
+        self.secondBusTimeRightLabel.isHidden = isHidden
         
         self.firstBusTimeLabel.text = firstBusTime
         self.firstBusTimeLabel.sizeToFit()
         
-        
-        if secondBusTime == nil {
-            self.secondBusTimeLabel.text = Self.noInfoMessage
-            self.secondBusTimeLabel.textColor = BBusColor.bbusGray
-        }
-        else {
-            self.secondBusTimeLabel.text = secondBusTime
-            self.secondBusTimeLabel.textColor = BBusColor.black
-        }
+        self.secondBusTimeLabel.text = secondBusTime == nil ? Self.noInfoMessage : secondBusTime
+        self.secondBusTimeLabel.textColor = secondBusTime == nil ? BBusColor.bbusGray : BBusColor.black
         self.secondBusTimeLabel.sizeToFit()
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)

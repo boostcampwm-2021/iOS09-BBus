@@ -8,67 +8,6 @@
 import Foundation
 import Combine
 
-enum BusCongestion: Int {
-    case relaxed = 3, normal, confusion, veryCrowded
-    
-    func toString() -> String {
-        switch self {
-        case .relaxed : return "여유"
-        case .normal : return "보통"
-        case .confusion : return "혼잡"
-        case .veryCrowded : return "매우 혼잡"
-        }
-    }
-}
-
-struct BusRemainTime {
-    let seconds: Int?
-    let message: String?
-    
-    init(arriveRemainTime: String) {
-        let times = arriveRemainTime.components(separatedBy: ["분", "초"])
-        switch times.count {
-        case 3 :
-            self.seconds = 60 * (Int(times[0]) ?? 0) + (Int(times[1]) ?? 0)
-            self.message = nil
-        case 2:
-            if arriveRemainTime.contains("분") {
-                self.seconds = 60 * (Int(times[0]) ?? 0)
-            }
-            else {
-                self.seconds = Int(times[1]) ?? 0
-            }
-            self.message = nil
-        default :
-            self.seconds = nil
-            self.message = arriveRemainTime
-        }
-    }
-    
-    func toString() -> String? {
-        if let time = self.seconds {
-            let minutes = time / 60
-            let seconds = time % 60
-            return "\(minutes)분 \(seconds)초"
-        }
-        else {
-            return self.checkInfo() ? self.message : nil
-        }
-    }
-    
-    func estimateArrivalTime() -> Date? {
-        guard self.checkInfo() else { return nil }
-        guard let seconds = self.seconds else { return Date() }
-        return Date(timeIntervalSinceNow: TimeInterval(seconds))
-    }
-    
-    func checkInfo() -> Bool {
-        guard let message = self.message else { return true }
-        let noInfoMessages = ["운행종료", "출발대기"]
-        return !noInfoMessages.contains(message)
-    }
-}
-
 typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, stationOrd: Int, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
 
 
