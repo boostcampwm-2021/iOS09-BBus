@@ -16,16 +16,27 @@ class HomeViewModel {
 
     init(useCase: HomeUseCase) {
         self.useCase = useCase
-        self.loadFavoriteData()
+        self.bindFavoriteData()
     }
 
-    private func loadFavoriteData() {
+    private func bindFavoriteData() {
         self.cancellable = self.useCase.$favoriteList
             .receive(on: HomeUseCase.thread)
             .sink(receiveValue: { favoriteItems in
                 guard let favoriteItems = favoriteItems else { return }
                 self.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
+                favoriteItems.forEach({ favoriteItem in
+                    self.useCase.loadBusRemainTime(favoriteItem: favoriteItem) { arrInfoByRouteDTO in
+                        guard let indexPath = self.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
+                        let homeArrivalInfo = HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
+                        self.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
+                    }
+                })
             })
+    }
+
+    func reloadFavoriteData() {
+        self.useCase.loadFavoriteData()
     }
 
     func stationName(by stationId: String) -> String? {
@@ -40,5 +51,9 @@ class HomeViewModel {
               let busName = self.useCase.busRouteList?.first(where: { $0.routeID == busRouteId })?.busRouteName else { return nil }
 
         return busName
+    }
+
+    func busType(by busName: String) -> RouteType? {
+        return self.useCase.busRouteList?.first(where: { $0.busRouteName == busName } )?.routeType
     }
 }

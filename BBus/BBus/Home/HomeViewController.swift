@@ -53,6 +53,11 @@ class HomeViewController: UIViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.reloadFavoriteData()
+    }
+
     // MARK: - Configuration
     private func configureLayout() {
         self.view.addSubview(self.homeView)
@@ -76,7 +81,8 @@ class HomeViewController: UIViewController {
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
             .receive(on: HomeUseCase.thread)
-            .sink(receiveValue: { _ in
+            .sink(receiveValue: { response in
+                dump(response)
                 DispatchQueue.main.async {
                     self.homeView.reload()
                 }
@@ -88,7 +94,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.busRouteId,
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.0.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
 
 
@@ -123,16 +129,18 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.busRouteId) else { return cell }
-
+              let busName = self.viewModel?.busName(by: model.0.busRouteId),
+              let busType = self.viewModel?.busType(by: busName) else { return cell }
+        let busArrivalInfo = model.1
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
-                          firstBusTime: "1분 29초",
-                          firstBusRelativePosition: "2번째전",
-                          firstBusCongestion: "여유",
-                          secondBusTime: "9분 51초",
-                          secondBusRelativePosition: "6번째전",
-                          secondBusCongsetion: "여유")
+                       routeType: busType,
+                       firstBusTime: busArrivalInfo?.firstTime.toString(),
+                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                       secondBusTime: busArrivalInfo?.secondTime.toString(),
+                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
         return cell
     }
 

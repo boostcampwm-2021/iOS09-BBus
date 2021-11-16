@@ -24,6 +24,12 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var trailingView = BusCellTrailingView()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.busNumberLabel.text = ""
+        self.trailingView.configure(firstBusTime: nil, firstBusRemaining: nil, firstBusCongestion: nil, secondBusTime: nil, secondBusRemaining: nil, secondBusCongestion: nil)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.trailingView.configureLayout()
@@ -70,8 +76,25 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = BBusColor.white
     }
     
-    func configure(busNumber: String, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
+    func configure(busNumber: String, routeType: RouteType?, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         self.busNumberLabel.text = busNumber
+
+        switch routeType {
+        case .mainLine:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
+        case .broadArea:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeRed
+        case .customized:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .circulation:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeCirculation
+        case .lateNight:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
+        case .localLine:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        default:
+            self.busNumberLabel.textColor = BBusColor.bbusGray
+        }
         self.trailingView.configure(firstBusTime: firstBusTime,
                                     firstBusRemaining: firstBusRelativePosition,
                                     firstBusCongestion: firstBusCongestion,
