@@ -147,7 +147,7 @@ class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel = self.viewModel else { return }
         let busRouteId: Int
         let key = viewModel.busKeys[indexPath.section]
         if viewModel.infoBuses.count - 1 >= indexPath.section {
