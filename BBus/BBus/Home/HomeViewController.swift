@@ -130,16 +130,15 @@ extension HomeViewController: UICollectionViewDataSource {
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
               let busName = self.viewModel?.busName(by: model.0.busRouteId)  else { return cell }
-          let firstRemainStation = model.1?.firstRemainStation
-          let secondRemainStation = model.1?.secondRemainStation
+        let busArrivalInfo = model.1
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
-                       firstBusTime: model.1?.firstTime.toString(),
-                          firstBusRelativePosition: firstRemainStation,
-                          firstBusCongestion: "여유",
-                       secondBusTime: model.1?.secondTime.toString(),
-                          secondBusRelativePosition: secondRemainStation,
-                          secondBusCongsetion: "여유")
+                       firstBusTime: busArrivalInfo?.firstTime.toString(),
+                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                       secondBusTime: busArrivalInfo?.secondTime.toString(),
+                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
         return cell
     }
 
