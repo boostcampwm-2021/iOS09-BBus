@@ -331,4 +331,8 @@ class MovingStatusView: UIView {
         self.bottomIndicatorLabel.text = headerInfoResult
         self.alarmStatusLabel.text = headerInfoResult
     }
+
+    func reload() {
+        self.stationsTableView.reloadData()
+    }
 }

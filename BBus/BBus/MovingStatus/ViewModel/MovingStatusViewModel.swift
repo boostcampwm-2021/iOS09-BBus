@@ -21,6 +21,8 @@ final class MovingStatusViewModel {
     private let toArsId: String
     @Published var busInfo: BusInfo?
     @Published var stationInfos: [StationInfo] = []
+    @Published var remainingTime: Int?
+    @Published var currentStation: String?
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -65,6 +67,7 @@ final class MovingStatusViewModel {
         guard let endIndex = stations.firstIndex(where: { $0.arsId == self.toArsId }) else { return }
 
         var stationsResult: [StationInfo] = []
+        var totalTime: Int = 0
         let stations = Array(stations[startIndex...endIndex])
 
         for (idx, station) in stations.enumerated() {
@@ -73,11 +76,14 @@ final class MovingStatusViewModel {
             info.afterSpeed = idx+1 == stations.count ? nil : stations[idx+1].sectionSpeed
             info.count = stations.count
             info.title = station.stationName
-            info.sectTime = Self.averageSectionTime(speed: info.speed, distance: station.fullSectionDistance)
+            info.sectTime = idx == 0 ? 0 : Self.averageSectionTime(speed: info.speed, distance: station.fullSectionDistance)
+
             stationsResult.append(info)
+            totalTime += info.sectTime
         }
+
         self.stationInfos = stationsResult
-        dump(self.stationInfos)
+        self.remainingTime = totalTime
     }
 
     static func averageSectionTime(speed: Int, distance: Int) -> Int {

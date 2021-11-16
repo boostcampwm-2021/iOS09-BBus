@@ -10,7 +10,7 @@ import Combine
 
 typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
 
-class MovingStatusViewController: UIViewController {
+final class MovingStatusViewController: UIViewController {
 
     weak var coordinator: MovingStatusCoordinator?
     private lazy var movingStatusView = MovingStatusView()
@@ -64,16 +64,52 @@ class MovingStatusViewController: UIViewController {
 
     private func binding() {
         self.bindingHeaderBusInfo()
+        self.bindingRemainTime()
+        self.bindingCurrentStation()
+        self.bindingStationInfos()
     }
 
     private func bindingHeaderBusInfo() {
         self.viewModel?.$busInfo
             .receive(on: MovingStatusUsecase.queue)
-            .sink(receiveValue: { busInfo in
+            .sink(receiveValue: { [weak self] busInfo in
                 guard let busInfo = busInfo else { return }
                 DispatchQueue.main.async {
-                    self.movingStatusView.configureBusName(to: busInfo.busName)
-                    self.configureBusColor(type: busInfo.type)
+                    self?.movingStatusView.configureBusName(to: busInfo.busName)
+                    self?.configureBusColor(type: busInfo.type)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingRemainTime() {
+        self.viewModel?.$remainingTime
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] remainingTime in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.configureHeaderInfo(currentStation: self?.viewModel?.currentStation, remainTime: remainingTime)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingCurrentStation() {
+        self.viewModel?.$currentStation
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] currentStation in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.configureHeaderInfo(currentStation: currentStation, remainTime: self?.viewModel?.remainingTime)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingStationInfos() {
+        self.viewModel?.$stationInfos
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.reload()
                 }
             })
             .store(in: &self.cancellables)
@@ -114,11 +150,13 @@ class MovingStatusViewController: UIViewController {
 // MARK: - DataSource: UITableView
 extension MovingStatusViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.viewModel?.stationInfos.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovingStatusTableViewCell.reusableID, for: indexPath) as? MovingStatusTableViewCell else { return UITableViewCell() }
+        guard let stationInfo = self.viewModel?.stationInfos[indexPath.row] else { return cell }
+        dump(stationInfo)
 
         switch indexPath.item {
         case 0:
