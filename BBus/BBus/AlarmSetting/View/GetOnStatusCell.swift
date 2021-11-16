@@ -16,7 +16,6 @@ class GetOnStatusCell: UITableViewCell {
     static let reusableID = "GetOnStatusCell"
     static let infoCellHeight: CGFloat = 115
     static let singleInfoCellHeight: CGFloat = 50
-    static let noneInfoCellHeight: CGFloat = 130
 
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
@@ -131,26 +130,6 @@ class GetOnStatusCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: labelFontSize)
         return label
     }()
-    private lazy var noInfoView: UIView = {
-        let view = UIView()
-        let noInfoImageView = UIImageView(image: BBusImage.info)
-        noInfoImageView.tintColor = BBusColor.bbusGray
-        let noInfoMessageLabel = UILabel()
-        noInfoMessageLabel.text = "도착예정 정보없음"
-        noInfoMessageLabel.textColor = BBusColor.bbusGray
-        view.addSubviews(noInfoImageView, noInfoMessageLabel)
-        
-        NSLayoutConstraint.activate([
-            noInfoImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-            noInfoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        NSLayoutConstraint.activate([
-            noInfoMessageLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 10),
-            noInfoMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        view.isHidden = true
-        return view
-    }()
 
     private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
         didSet {
@@ -201,7 +180,7 @@ class GetOnStatusCell: UITableViewCell {
         let indicatorLabelLeadingAnchor: CGFloat = 5
         let separatorHeight: CGFloat = 1
 
-        self.addSubviews(self.busOrderNumberLabel, self.remainingTimeLabel, self.busStatusTagStackView, self.clockIconImageView, self.arrivalTimeLabel, self.locationIconImageView, self.currentLocationLabel, self.busIconImageView, self.busOrderNumberLabel, self.busNumberLabel, self.alarmButton, self.separatorView, self.noInfoMessageLabel, self.noInfoView)
+        self.addSubviews(self.busOrderNumberLabel, self.remainingTimeLabel, self.busStatusTagStackView, self.clockIconImageView, self.arrivalTimeLabel, self.locationIconImageView, self.currentLocationLabel, self.busIconImageView, self.busOrderNumberLabel, self.busNumberLabel, self.alarmButton, self.separatorView, self.noInfoMessageLabel)
         
         NSLayoutConstraint.activate([
             self.busOrderNumberLabel.widthAnchor.constraint(equalToConstant: busColorViewWidthAnchor),
@@ -274,13 +253,6 @@ class GetOnStatusCell: UITableViewCell {
             self.noInfoMessageLabel.centerYAnchor.constraint(equalTo: self.busOrderNumberLabel.centerYAnchor),
             self.noInfoMessageLabel.leadingAnchor.constraint(equalTo: self.busOrderNumberLabel.trailingAnchor, constant: termBusColorViewToRemainingTimeLabel)
         ])
-        
-        NSLayoutConstraint.activate([
-            self.noInfoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.noInfoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.noInfoView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.noInfoView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
     }
 
     func configure(busColor: UIColor?) {
@@ -309,12 +281,6 @@ class GetOnStatusCell: UITableViewCell {
         self.arrivalTimeLabel.text = arrivalTime
         self.currentLocationLabel.text = currentLocation
         self.busNumberLabel.text = busNumber
-    }
-    
-    func configureNoneInfo(_ isHidden: Bool) {
-        self.busOrderNumberLabel.isHidden = isHidden
-        self.noInfoMessageLabel.isHidden = isHidden
-        self.noInfoView.isHidden = !isHidden
     }
 
     func configureDelegate(_ delegate: GetOnAlarmButtonDelegate) {

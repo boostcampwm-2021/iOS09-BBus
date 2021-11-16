@@ -129,24 +129,24 @@ extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
-            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return cell }
-            
-            cell.configure(busColor: BBusColor.bbusTypeBlue)
-            cell.configure(order: String(indexPath.row+1),
-                           remainingTime: info.arriveRemainTime?.toString(),
-                           remainingStationCount: info.relativePosition,
-                           busCongestionStatus: info.congestion?.toString(),
-                           arrivalTime: info.estimatedArrivalTime,
-                           currentLocation: info.currentStation,
-                           busNumber: info.plainNumber)
-            cell.configureDelegate(self)
-            
-            if info.arriveRemainTime == nil {
-                cell.configureNoneInfo(indexPath.row == 0)
+            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return UITableViewCell() }
+            if (info.arriveRemainTime == nil && indexPath.row == 0) {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: NoneInfoTableViewCell.reusableID, for: indexPath) as? NoneInfoTableViewCell else { return UITableViewCell() }
+                return cell
             }
-            
-            return cell
+            else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
+                cell.configure(busColor: BBusColor.bbusTypeBlue)
+                cell.configure(order: String(indexPath.row+1),
+                               remainingTime: info.arriveRemainTime?.toString(),
+                               remainingStationCount: info.relativePosition,
+                               busCongestionStatus: info.congestion?.toString(),
+                               arrivalTime: info.estimatedArrivalTime,
+                               currentLocation: info.currentStation,
+                               busNumber: info.plainNumber)
+                cell.configureDelegate(self)
+                return cell
+            }
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
             
@@ -182,7 +182,7 @@ extension AlarmSettingViewController: UITableViewDelegate {
             guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return 0 }
             switch info.arriveRemainTime {
             case nil :
-                return indexPath.row == 0 ? GetOnStatusCell.noneInfoCellHeight : GetOnStatusCell.singleInfoCellHeight
+                return indexPath.row == 0 ? NoneInfoTableViewCell.height : GetOnStatusCell.singleInfoCellHeight
             default :
                 return GetOnStatusCell.infoCellHeight
             }
