@@ -87,18 +87,18 @@ final class MovingStatusViewController: UIViewController {
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] remainingTime in
                 DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(currentStation: self?.viewModel?.currentStation, remainTime: remainingTime)
+                    self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
                 }
             })
             .store(in: &self.cancellables)
     }
 
     private func bindingCurrentStation() {
-        self.viewModel?.$currentStation
+        self.viewModel?.$remainingStation
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] currentStation in
                 DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(currentStation: currentStation, remainTime: self?.viewModel?.remainingTime)
+                    self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
                 }
             })
             .store(in: &self.cancellables)

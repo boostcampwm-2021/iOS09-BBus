@@ -19,10 +19,12 @@ final class MovingStatusViewModel {
     private let busRouteId: Int
     private let fromArsId: String
     private let toArsId: String
+    private var startOrd: Int?
     @Published var busInfo: BusInfo?
     @Published var stationInfos: [StationInfo] = []
+    @Published var buses: [BusPosByRtidDTO] = []
     @Published var remainingTime: Int?
-    @Published var currentStation: String?
+    @Published var remainingStation: Int?
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -32,6 +34,7 @@ final class MovingStatusViewModel {
         self.cancellables = []
         self.bindingHeaderInfo()
         self.bindingStationsInfo()
+        self.bindingBusesPosInfo()
     }
 
     private func bindingHeaderInfo() {
@@ -52,6 +55,15 @@ final class MovingStatusViewModel {
             .store(in: &self.cancellables)
     }
 
+    private func bindingBusesPosInfo() {
+        self.usecase.$buses
+            .receive(on: MovingStatusUsecase.queue)
+            .sink { [weak self] buses in
+                self?.buses = buses
+            }
+            .store(in: &self.cancellables)
+    }
+
     private func convertBusInfo(header: BusRouteDTO?) {
         guard let header = header else { return }
 
@@ -62,6 +74,14 @@ final class MovingStatusViewModel {
         self.busInfo = busInfo
     }
 
+    // GPS 를 통해 특정 버스를 찾은 경우 사용되는 메소드
+    private func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> CGFloat {
+        let order = CGFloat(order-1-startOrd)
+        let sect = CGFloat((sect as NSString).floatValue)
+        let fullSect = CGFloat((fullSect as NSString).floatValue)
+        return order + (sect/fullSect)
+    }
+
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
         guard let startIndex = stations.firstIndex(where: { $0.arsId == self.fromArsId }) else { return }
         guard let endIndex = stations.firstIndex(where: { $0.arsId == self.toArsId }) else { return }
@@ -69,6 +89,7 @@ final class MovingStatusViewModel {
         var stationsResult: [StationInfo] = []
         var totalTime: Int = 0
         let stations = Array(stations[startIndex...endIndex])
+        self.startOrd = stations.first?.sectionOrd
 
         for (idx, station) in stations.enumerated() {
             let info: StationInfo

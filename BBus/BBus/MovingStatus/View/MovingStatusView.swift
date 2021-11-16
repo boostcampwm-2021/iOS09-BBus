@@ -133,7 +133,7 @@ class MovingStatusView: UIView {
         self.configureLayout()
         self.configureColor(to: BBusColor.gray)
         self.configureBusName(to: "탐색중")
-        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
     
     override init(frame: CGRect) {
@@ -142,7 +142,7 @@ class MovingStatusView: UIView {
         self.configureLayout()
         self.configureColor(to: BBusColor.gray)
         self.configureBusName(to: "탐색중")
-        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
 
     // MARK: - Configure
@@ -313,12 +313,12 @@ class MovingStatusView: UIView {
         self.busNumberLabel.text = to
     }
 
-    func configureHeaderInfo(currentStation: String? = nil, remainTime: Int?) {
+    func configureHeaderInfo(remainStation: Int? = nil, remainTime: Int?) {
         var headerInfoResult: String = ""
         let currentInfo: String
 
-        if let currentStation = currentStation {
-            currentInfo = currentStation
+        if let remainStation = remainStation {
+            currentInfo = "\(remainStation)정거장 남음"
         } else {
             currentInfo = "현위치 탐색중"
         }
