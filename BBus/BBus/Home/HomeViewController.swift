@@ -180,7 +180,6 @@ extension HomeViewController: AlarmButtonDelegate {
 // MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene(headerView: UICollectionReusableView) {
-
         guard let section = self.homeView.getSectionByHeaderView(header: headerView),
               let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
 
