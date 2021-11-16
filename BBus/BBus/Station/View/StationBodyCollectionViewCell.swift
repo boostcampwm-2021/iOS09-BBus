@@ -21,7 +21,6 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
                       let indexPath = self.indexPath,
                       let delegate = self.likeButtonDelegate else { return }
                 self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: indexPath) : delegate.likeStationBus(at: indexPath)
-                self.likeButton.tintColor = self.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)

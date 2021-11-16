@@ -19,7 +19,7 @@ class StationViewModel {
     @Published private(set) var busKeys: [BBusRouteType]
     private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
-    private(set) var favoriteItems = [FavoriteItemDTO]()
+    @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
     
     init(usecase: StationUsecase, arsId: String) {
