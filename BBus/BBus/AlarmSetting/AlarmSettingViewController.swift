@@ -95,10 +95,14 @@ class AlarmSettingViewController: UIViewController {
     }
     
     private func binding() {
+        self.bindingBusArriveInfos()
+    }
+    
+    private func bindingBusArriveInfos() {
         self.viewModel?.$busArriveInfos
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { data in
-                self.alarmSettingView.reload()
+            .sink(receiveValue: { [weak self] data in
+                self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
     }

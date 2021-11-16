@@ -52,6 +52,7 @@ class Service {
                         return
                     }
                     if response.statusCode != 200 {
+                        dump(String(data: data!, encoding: .utf8))
                         publisher?.send(completion: .failure(NetworkError.responseError))
                         return
                     }

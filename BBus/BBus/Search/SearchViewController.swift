@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()
@@ -62,7 +62,7 @@ class SearchViewController: UIViewController {
     
     private func binding() {
         self.cancellable = self.viewModel?.$searchResults
-            .receive(on: SearchUseCase.thread)
+            .receive(on: SearchUseCase.queue)
             .sink(receiveValue: { _ in
                 DispatchQueue.main.async {
                     self.searchView.reload()
@@ -118,13 +118,16 @@ extension SearchViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SimpleCollectionHeaderView.identifier, for: indexPath) as? SimpleCollectionHeaderView else { return UICollectionReusableView() }
+        
         header.configureLayout()
         header.configure(title: "서울")
+        
         return header
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+        
         if collectionView.frame.origin.x == 0 {
             guard let bus = self.viewModel?.searchResults.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
@@ -136,7 +139,9 @@ extension SearchViewController: UICollectionViewDataSource {
                                     arsId: station.arsId,
                                     arsIdMatchRanges: station.arsIdMatchRanges)
         }
+        
         cell.configureLayout()
+        
         return cell
     }
 

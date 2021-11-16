@@ -8,8 +8,8 @@
 import UIKit
 
 protocol LikeButtonDelegate {
-    func likeStationBus(at: IndexPath)
-    func cancelLikeStationBus(at: IndexPath)
+    func likeStationBus(at: UICollectionViewCell)
+    func cancelLikeStationBus(at: UICollectionViewCell)
 }
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
@@ -18,10 +18,8 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
                 guard let self = self,
-                      let indexPath = self.indexPath,
                       let delegate = self.likeButtonDelegate else { return }
-                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: indexPath) : delegate.likeStationBus(at: indexPath)
-                self.likeButton.tintColor = self.likeButton.tintColor == BBusColor.bbusLikeYellow ? BBusColor.bbusGray6 : BBusColor.bbusLikeYellow
+                self.likeButton.isSelected ? delegate.cancelLikeStationBus(at: self) : delegate.likeStationBus(at: self)
             })
             self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
             self.likeButton.addAction(action, for: .touchUpInside)
@@ -70,8 +68,9 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         ])
     }
     
-    func configure(busNumber: String, direction: String, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
+    func configure(busNumber: String, routeType: RouteType?, direction: String, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         super.configure(busNumber: busNumber,
+                        routeType: routeType,
                         firstBusTime: firstBusTime,
                         firstBusRelativePosition: firstBusRelativePosition,
                         firstBusCongestion: firstBusCongestion,

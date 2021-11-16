@@ -25,8 +25,8 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         }
     }
     
-    @objc private func headerViewTapped(_ sender: UICollectionReusableView) {
-        delegate?.shouldGoToStationScene(headerView: sender)
+    @objc private func headerViewTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.shouldGoToStationScene(headerView: self)
     }
 
     private lazy var stationTitleLabel: UILabel = {
@@ -52,6 +52,12 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         self.configureLayout()
         self.configureUI()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.stationTitleLabel.text = ""
+        self.directionLabel.text = ""
     }
     
     // MARK: - Configuration

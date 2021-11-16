@@ -12,6 +12,7 @@ class AlarmSettingUseCase {
     static let queue = DispatchQueue.init(label: "alarmSetting")
     
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsecase
+    
     private let useCases: AlarmSettingUseCases
     @Published private(set) var busArriveInfo: ArrInfoByRouteDTO?
     private var cancellables: Set<AnyCancellable>
@@ -34,8 +35,7 @@ class AlarmSettingUseCase {
                     }
                 }, receiveValue: { data in
                     guard let result = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
-                          let item = result.body.itemList.first
-                    else { return }
+                          let item = result.body.itemList.first else { return }
                     self.busArriveInfo = item
                 })
                 .store(in: &self.cancellables)

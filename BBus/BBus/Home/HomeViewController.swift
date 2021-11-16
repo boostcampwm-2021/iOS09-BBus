@@ -53,6 +53,11 @@ class HomeViewController: UIViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.reloadFavoriteData()
+    }
+
     // MARK: - Configuration
     private func configureLayout() {
         self.view.addSubview(self.homeView)
@@ -76,7 +81,8 @@ class HomeViewController: UIViewController {
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
             .receive(on: HomeUseCase.thread)
-            .sink(receiveValue: { _ in
+            .sink(receiveValue: { response in
+                dump(response)
                 DispatchQueue.main.async {
                     self.homeView.reload()
                 }
@@ -88,7 +94,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.busRouteId,
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.0.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
 
 
@@ -123,16 +129,19 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.busRouteId) else { return cell }
-
+              let busName = self.viewModel?.busName(by: model.0.busRouteId),
+              let busType = self.viewModel?.busType(by: busName) else { return cell }
+        let busArrivalInfo = model.1
+        cell.configure(indexPath: indexPath)
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
-                          firstBusTime: "1분 29초",
-                          firstBusRelativePosition: "2번째전",
-                          firstBusCongestion: "여유",
-                          secondBusTime: "9분 51초",
-                          secondBusRelativePosition: "6번째전",
-                          secondBusCongsetion: "여유")
+                       routeType: busType,
+                       firstBusTime: busArrivalInfo?.firstTime.toString(),
+                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                       secondBusTime: busArrivalInfo?.secondTime.toString(),
+                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
         return cell
     }
 
@@ -172,15 +181,21 @@ extension HomeViewController: HomeSearchButtonDelegate {
 
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene(at indexPath: IndexPath) {
-        self.coordinator?.pushToAlarmSetting(stationId: 118000007, busRouteId: 100100042, stationOrd: 49)
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
+      //TODO: cell indexPath 찾는 작업 필요
+      
+        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+              let stationId = Int(model.0.stId),
+              let busRouteId = Int(model.0.busRouteId),
+              let ord = Int(model.0.ord) else { return }
+
+        self.coordinator?.pushToAlarmSetting(stationId: stationId, busRouteId: busRouteId, stationOrd: ord)
     }
 }
 
 // MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
     func shouldGoToStationScene(headerView: UICollectionReusableView) {
-
         guard let section = self.homeView.getSectionByHeaderView(header: headerView),
               let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
 

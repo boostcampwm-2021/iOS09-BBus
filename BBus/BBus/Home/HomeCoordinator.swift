@@ -23,4 +23,3 @@ class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, S
         navigationPresenter.pushViewController(viewController, animated: false) // present
     }
 }
-

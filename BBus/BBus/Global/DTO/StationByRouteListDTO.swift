@@ -1,5 +1,5 @@
 //
-//  RouteInfoItemDTO.swift
+//  StationByRouteListDTO.swift
 //  BBus
 //
 //  Created by 최수정 on 2021/11/10.
@@ -44,17 +44,17 @@ struct StationByRouteListDTO: BBusXMLDTO {
     let transYn: String
     
     init?(dict: [String : [Any]]) {
-        guard let sectSpdString = ((dict["sectSpd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+        guard let sectSpdString = ((dict["sectSpd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let sectSpd = Int(sectSpdString),
-              let seqString = ((dict["seq"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let seqString = ((dict["seq"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let seq = Int(seqString),
-              let stationName = ((dict["stationNm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let fullSectionDistanceString = ((dict["fullSectDist"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let stationName = ((dict["stationNm"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let fullSectionDistanceString = ((dict["fullSectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let fullSectionDistance = Int(fullSectionDistanceString),
-              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let beginTm = ((dict["beginTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}),
-              let lastTm = ((dict["lastTm"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}),
-              let transYn = ((dict["transYn"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1}) else { return nil }
+              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let beginTm = ((dict["beginTm"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
+              let lastTm = ((dict["lastTm"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
+              let transYn = ((dict["transYn"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}) else { return nil }
         
         self.sectionSpeed = sectSpd
         self.sequence = seq

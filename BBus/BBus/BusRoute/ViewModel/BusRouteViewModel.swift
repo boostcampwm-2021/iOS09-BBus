@@ -12,10 +12,10 @@ import CoreGraphics
 typealias BusStationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, description: String, transYn: String, arsId: String)
 typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusCongestion, islower: Bool)
 
-class BusRouteViewModel {
+final class BusRouteViewModel {
 
     private let usecase: BusRouteUsecase
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     @Published var header: BusRouteDTO?
     @Published var bodys: [BusStationInfo] = []
@@ -24,6 +24,7 @@ class BusRouteViewModel {
     init(usecase: BusRouteUsecase, busRouteId: Int) {
         self.usecase = usecase
         self.busRouteId = busRouteId
+        self.cancellables = []
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
@@ -32,10 +33,8 @@ class BusRouteViewModel {
     private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { header in
-                self.header = header
+            .sink(receiveValue: { [weak self] header in
+                self?.header = header
             })
             .store(in: &self.cancellables)
     }
@@ -43,10 +42,8 @@ class BusRouteViewModel {
     private func bindingBodysInfo() {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { bodys in
-                self.convertBusStationInfo(with: bodys)
+            .sink(receiveValue: { [weak self] bodys in
+                self?.convertBusStationInfo(with: bodys)
             })
             .store(in: &self.cancellables)
     }
@@ -54,10 +51,8 @@ class BusRouteViewModel {
     private func bindingBusesPosInfo() {
         self.usecase.$buses
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { buses in
-                self.convertBusPosInfo(with: buses)
+            .sink(receiveValue: { [weak self] buses in
+                self?.convertBusPosInfo(with: buses)
             })
             .store(in: &self.cancellables)
     }
@@ -69,10 +64,10 @@ class BusRouteViewModel {
         return order + (sect/fullSect)
     }
 
-    private func busNumber(from: String) -> String {
-        let startIndex = from.index(from.startIndex, offsetBy: 5)
-        let endIndex = from.endIndex
-        return String(from[startIndex..<endIndex])
+    private func busNumber(from fullBusNumber: String) -> String {
+        let startIndex = fullBusNumber.index(fullBusNumber.startIndex, offsetBy: 5)
+        let endIndex = fullBusNumber.endIndex
+        return String(fullBusNumber[startIndex..<endIndex])
     }
 
     private func convertBusStationInfo(with bodys: [StationByRouteListDTO]) {
