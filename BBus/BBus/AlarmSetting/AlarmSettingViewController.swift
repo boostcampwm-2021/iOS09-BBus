@@ -169,7 +169,8 @@ extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return GetOnStatusCell.cellHeight
+            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return 0 }
+            return info.arriveRemainTime != nil ? GetOnStatusCell.infoCellHeight : GetOnStatusCell.noInfoCellHeight
         case 1:
             return GetOffTableViewCell.cellHeight
         default:
