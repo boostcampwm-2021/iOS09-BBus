@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SearchViewModel {
+final class SearchViewModel {
     
     typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
