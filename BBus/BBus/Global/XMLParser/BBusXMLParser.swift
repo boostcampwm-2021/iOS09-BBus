@@ -8,16 +8,23 @@
 import Foundation
 
 class BBusXMLParser: NSObject, XMLParserDelegate {
-
+    
     var stack = [[String:[Any]]]()
+    
+    static let baseKey = "bbus"
 
     func parse<T: BBusXMLDTO>(dtoType: T.Type, xml: Data) -> T? {
         let parser = XMLParser(data: xml)
+        
         parser.delegate = self
         parser.parse()
 
-        guard let serviceResult = self.stack.first?.values.first?[0] as? [String:[Any]] else { return nil }
-        return T.init(dict: serviceResult)
+        if let serviceResult = self.stack.first?.values.first?[0] as? [String:[Any]] {
+            return T.init(dict: serviceResult)
+        }
+        else {
+            return nil
+        }
     }
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
@@ -38,6 +45,6 @@ class BBusXMLParser: NSObject, XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        self.stack.append(["bbus":[string]])
+        self.stack.append([Self.baseKey:[string]])
     }
 }
