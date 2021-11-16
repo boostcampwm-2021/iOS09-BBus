@@ -16,13 +16,12 @@ enum NetworkError: Error {
 class Service {
     static let shared = Service()
     
-    private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)?.removingPercentEncoding
-    
+    private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)
+
     private init() { }
-    
+
     func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
-        
         queue.async { [weak self, weak publisher] in
             guard let self = self else { return }
             guard let accessKey = self.accessKey else {
@@ -33,11 +32,14 @@ class Service {
                 publisher?.send(completion: .failure(NetworkError.urlError))
                 return
             }
-            var items: [URLQueryItem] = [URLQueryItem(name: "serviceKey", value: accessKey)]
+            var items: [URLQueryItem] = []
             params.forEach() { item in
                 items.append(URLQueryItem(name: item.key, value: item.value))
             }
             components.queryItems = items
+            if let query = components.percentEncodedQuery  {
+                components.percentEncodedQuery = query + "&serviceKey=" + accessKey
+            }
             
             if let url = components.url {
                 var request = URLRequest(url: url)
