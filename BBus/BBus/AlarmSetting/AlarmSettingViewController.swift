@@ -117,7 +117,8 @@ extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return self.viewModel?.busArriveInfos.count ?? 0
+            guard let info = self.viewModel?.busArriveInfos.first else { return 0 }
+            return info.arriveRemainTime != nil ? (self.viewModel?.busArriveInfos.count ?? 0) : 1
         case 1:
             return 10
         default:
@@ -140,6 +141,11 @@ extension AlarmSettingViewController: UITableViewDataSource {
                            currentLocation: info.currentStation,
                            busNumber: info.plainNumber)
             cell.configureDelegate(self)
+            
+            if info.arriveRemainTime == nil {
+                cell.configureNoneInfo(indexPath.row == 0)
+            }
+            
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
@@ -174,7 +180,12 @@ extension AlarmSettingViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return 0 }
-            return info.arriveRemainTime != nil ? GetOnStatusCell.infoCellHeight : GetOnStatusCell.noInfoCellHeight
+            switch info.arriveRemainTime {
+            case nil :
+                return indexPath.row == 0 ? GetOnStatusCell.noneInfoCellHeight : GetOnStatusCell.singleInfoCellHeight
+            default :
+                return GetOnStatusCell.infoCellHeight
+            }
         case 1:
             return GetOffTableViewCell.cellHeight
         default:
