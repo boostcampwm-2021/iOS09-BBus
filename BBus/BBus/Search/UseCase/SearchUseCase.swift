@@ -27,31 +27,35 @@ class SearchUseCase {
     }
     
     private func startRouteSearch() {
-        usecases.getRouteList()
-            .receive(on: Self.thread)
-            .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            }, receiveValue: { routeList in
-                self.routeList = routeList
-            })
-            .store(in: &self.cancellables)
+        Self.thread.async {
+            self.usecases.getRouteList()
+                .receive(on: Self.thread)
+                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+                .sink(receiveCompletion: { error in
+                    if case .failure(let error) = error {
+                        print(error)
+                    }
+                }, receiveValue: { routeList in
+                    self.routeList = routeList
+                })
+                .store(in: &self.cancellables)
+        }
     }
     
     private func startStationSearch() {
-        usecases.getStationList()
-            .receive(on: Self.thread)
-            .decode(type: [StationDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            }, receiveValue: { stationList in
-                self.stationList = stationList
-            })
-            .store(in: &self.cancellables)
+        Self.thread.async {
+            self.usecases.getStationList()
+                .receive(on: Self.thread)
+                .decode(type: [StationDTO].self, decoder: JSONDecoder())
+                .sink(receiveCompletion: { error in
+                    if case .failure(let error) = error {
+                        print(error)
+                    }
+                }, receiveValue: { stationList in
+                    self.stationList = stationList
+                })
+                .store(in: &self.cancellables)
+        }
     }
     
     func searchBus(by keyword: String) -> [BusSearchResult]? {

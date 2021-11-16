@@ -47,7 +47,6 @@ class MovingStatusView: UIView {
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.bbusTypeBlue
         return button
     }()
     private lazy var bottomIndicatorImageView: UIImageView = {
@@ -61,7 +60,6 @@ class MovingStatusView: UIView {
         let label = UILabel()
         label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
-        label.text = "현위치 탐색중, 19분 소요예정"
         return label
     }()
     private lazy var unfoldImageView: UIImageView = {
@@ -70,7 +68,11 @@ class MovingStatusView: UIView {
         imageView.image = BBusImage.unfold
         return imageView
     }()
-    private lazy var headerView = UIView()
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = BBusColor.white
+        return view
+    }()
     private lazy var headerBottomBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = BBusColor.bbusLightGray
@@ -80,9 +82,7 @@ class MovingStatusView: UIView {
         let labelFontSize: CGFloat = 27
         
         let label = UILabel()
-        label.textColor = BBusColor.bbusTypeBlue
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .medium)
-        label.text = "700"
         return label
     }()
     private lazy var alarmStatusLabel: UILabel = {
@@ -90,7 +90,6 @@ class MovingStatusView: UIView {
         
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: labelFontSize)
-        label.text = "현위치 탐색중, 19분 소요예정"
         label.textColor = BBusColor.black
         return label
     }()
@@ -117,7 +116,6 @@ class MovingStatusView: UIView {
     }()
     private lazy var endAlarmButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.bbusTypeBlue
         button.tintColor = BBusColor.white
         button.setTitle("알람 종료", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -133,18 +131,18 @@ class MovingStatusView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
-        self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.configureColor(to: BBusColor.gray)
+        self.configureBusName(to: "탐색중")
+        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
-        self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.configureColor(to: BBusColor.gray)
+        self.configureBusName(to: "탐색중")
+        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
     }
 
     // MARK: - Configure
@@ -303,5 +301,34 @@ class MovingStatusView: UIView {
             busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
             busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + 2*MovingStatusTableViewCell.cellHeight)
         ])
+    }
+
+    func configureColor(to color: UIColor?) {
+        self.bottomIndicatorButton.backgroundColor = color
+        self.busNumberLabel.textColor = color
+        self.endAlarmButton.backgroundColor = color
+    }
+
+    func configureBusName(to: String) {
+        self.busNumberLabel.text = to
+    }
+
+    func configureHeaderInfo(currentStation: String? = nil, remainTime: Int?) {
+        var headerInfoResult: String = ""
+        let currentInfo: String
+
+        if let currentStation = currentStation {
+            currentInfo = currentStation
+        } else {
+            currentInfo = "현위치 탐색중"
+        }
+        if let remainTime = remainTime {
+            headerInfoResult = "\(currentInfo), \(remainTime)분 소요예정"
+        } else {
+            headerInfoResult = currentInfo
+        }
+
+        self.bottomIndicatorLabel.text = headerInfoResult
+        self.alarmStatusLabel.text = headerInfoResult
     }
 }

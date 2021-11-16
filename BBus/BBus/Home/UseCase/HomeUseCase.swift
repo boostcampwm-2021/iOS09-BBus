@@ -7,19 +7,17 @@
 
 import Foundation
 import Combine
-import os
 
 class HomeUseCase {
 
-    private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & CreateFavoriteOrderUsecase & GetFavoriteOrderListUsecase & GetStationListUsecase & GetRouteListUsecase
+    private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase
     private var cancellables: Set<AnyCancellable>
     static let thread = DispatchQueue.init(label: "Home")
     var stationList: [StationDTO]?
     var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
-    @Published var favoriteOrderList: [FavoriteOrderDTO]?
 
-    init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & CreateFavoriteOrderUsecase & GetFavoriteOrderListUsecase & GetStationListUsecase & GetRouteListUsecase) {
+    init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase) {
         self.usecases = usecases
         self.cancellables = []
         self.saveMOCKDATA()
@@ -41,19 +39,7 @@ class HomeUseCase {
                     print(error)
                 }
             } receiveValue: { data in
-//                dump(String(data: data, encoding: .utf8))
-            }
-            .store(in: &self.cancellables)
-
-        let favoriteOrder = FavoriteOrderDTO(stationId: "122000248", order: 1)
-        self.usecases.createFavoriteOrder(param: favoriteOrder)
-            .receive(on: Self.thread)
-            .sink { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            } receiveValue: { data in
-//                dump(String(data: data, encoding: .utf8))
+                dump(String(data: data, encoding: .utf8))
             }
             .store(in: &self.cancellables)
     }
@@ -61,28 +47,14 @@ class HomeUseCase {
     private func loadFavoriteData() {
         Self.thread.async {
             self.usecases.getFavoriteItemList()
-    //            .receive(on: Self.thread)
+                .receive(on: Self.thread)
                 .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {
                         print(error)
                     }
                 }, receiveValue: { favoriteDTO in
-//                    dump(favoriteDTO)
-    //                print("fewj")
                     self.favoriteList = favoriteDTO
-                })
-                .store(in: &self.cancellables)
-
-            self.usecases.getFavoriteOrderList()
-                .decode(type: [FavoriteOrderDTO].self, decoder: PropertyListDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { favoriteOrderListDTO in
-//                    dump(favoriteOrderListDTO)
-                    self.favoriteOrderList = favoriteOrderListDTO
                 })
                 .store(in: &self.cancellables)
         }
