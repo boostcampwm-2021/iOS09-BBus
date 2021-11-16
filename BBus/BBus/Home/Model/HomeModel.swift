@@ -16,24 +16,16 @@ class HomeFavoriteList {
         return self.favorites[index]
     }
 
-    func append(newElement: FavoriteItemDTO) {
-        if let found = self.favorites.first(where: { $0.stationId == newElement.stId }) {
-            found.append(newElement: newElement)
-        }
-        else {
-            self.favorites.append(HomeFavorite(stationId: newElement.stId,
-                                               arsId: newElement.arsId,
-                                               buses: [newElement]))
-        }
-    }
-
-    func sort(by orderList: [FavoriteOrderDTO]) {
-        self.favorites.sort(by: { lhs, rhs in
-            guard let lhsOrder = orderList.first(where: { $0.stationId == lhs.stationId })?.order,
-                  let rhsOrder = orderList.first(where: { $0.stationId == rhs.stationId })?.order
-            else { return true }
-
-            return lhsOrder < rhsOrder
+    init(dtoList: [FavoriteItemDTO]) {
+        dtoList.forEach({ dto in
+            if let found = self.favorites.first(where: { $0.stationId == dto.stId }) {
+                found.append(newElement: dto)
+            }
+            else {
+                self.favorites.append(HomeFavorite(stationId: dto.stId,
+                                                   arsId: dto.arsId,
+                                                   buses: [dto]))
+            }
         })
     }
 
