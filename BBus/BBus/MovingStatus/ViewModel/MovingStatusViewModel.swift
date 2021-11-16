@@ -10,7 +10,7 @@ import Combine
 import CoreGraphics
 
 typealias BusInfo = (busName: String, type: RouteType)
-typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, fullDistance: Int)
+typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String, sectTime: Int)
 
 final class MovingStatusViewModel {
 
@@ -20,7 +20,7 @@ final class MovingStatusViewModel {
     private let fromArsId: String
     private let toArsId: String
     @Published var busInfo: BusInfo?
-    @Published var stationsInfo: [StationInfo] = []
+    @Published var stationInfos: [StationInfo] = []
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -61,11 +61,27 @@ final class MovingStatusViewModel {
     }
 
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
-        // fromArsId - toArsId 로 줄여야 한다
-        var startIndex: Int? = stations.firstIndex(where: { $0.arsId == self.fromArsId })
-        var endIndex: Int? = stations.firstIndex(where: { $0.arsId == self.toArsId })
-        print(startIndex, endIndex)
+        guard let startIndex = stations.firstIndex(where: { $0.arsId == self.fromArsId }) else { return }
+        guard let endIndex = stations.firstIndex(where: { $0.arsId == self.toArsId }) else { return }
 
+        var stationsResult: [StationInfo] = []
+        let stations = Array(stations[startIndex...endIndex])
+
+        for (idx, station) in stations.enumerated() {
+            let info: StationInfo
+            info.speed = station.sectionSpeed
+            info.afterSpeed = idx+1 == stations.count ? nil : stations[idx+1].sectionSpeed
+            info.count = stations.count
+            info.title = station.stationName
+            info.sectTime = self.averageSectionTime(speed: info.speed, distance: station.fullSectionDistance)
+            stationsResult.append(info)
+        }
+        self.stationInfos = stationsResult
+        dump(self.stationInfos)
+    }
+
+    private func averageSectionTime(speed: Int, distance: Int) -> Int {
+        return 1
     }
 
     func fetch() {
