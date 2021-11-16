@@ -11,7 +11,7 @@ enum SearchType {
     case bus, station
 }
 
-class SearchView: UIView {
+final class SearchView: UIView {
 
     private lazy var searchResultScrollView = SearchResultScrollView()
     private lazy var navigationView: SearchNavigationView = {

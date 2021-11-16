@@ -23,7 +23,7 @@ protocol TextFieldDelegate {
     func shouldRefreshSearchResult(by keyword: String)
 }
 
-class SearchNavigationView: UIView {
+final class SearchNavigationView: UIView {
 
     private var backButtonDelegate: SearchBackButtonDelegate?
     private var busTabButtonDelegate: BusTabButtonDelegate?

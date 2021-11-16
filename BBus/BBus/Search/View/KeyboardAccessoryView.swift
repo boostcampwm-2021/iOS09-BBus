@@ -19,7 +19,7 @@ protocol KeyboardAccessoryDownKeyboardButtonDelegate {
     func shouldHideKeyboard()
 }
 
-class KeyboardAccessoryView: UIView {
+final class KeyboardAccessoryView: UIView {
 
     private var numberDelegate: KeyboardAccessoryNumberButtonDelegate? {
         didSet {

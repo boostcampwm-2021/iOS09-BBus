@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCoordinator: BusRoutePushable, StationPushable {
+final class SearchCoordinator: BusRoutePushable, StationPushable {
     var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
 

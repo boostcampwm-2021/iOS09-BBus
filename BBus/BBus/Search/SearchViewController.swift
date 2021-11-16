@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
 
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()

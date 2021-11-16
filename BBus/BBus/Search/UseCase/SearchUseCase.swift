@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SearchUseCase {
+final class SearchUseCase {
     
     private let usecases: GetRouteListUsecase & GetStationListUsecase
     @Published var routeList: [BusRouteDTO]?
