@@ -147,8 +147,11 @@ class StationViewController: UIViewController {
 
         self.viewModel?.$infoBuses
             .receive(on: DispatchQueue.main)
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
             .sink(receiveValue: { [weak self] _ in
-                self?.stationView.reload()
+                DispatchQueue.main.async {
+                    self?.stationView.reload()
+                }
             })
             .store(in: &self.cancellables)
     }
