@@ -87,7 +87,7 @@ final class MovingStatusViewModel {
     }
 
     static func averageSectionTime(speed: Int, distance: Int) -> Int {
-        let result = Double(distance)/22.5*0.06
+        let result = Double(distance)/21*0.06
         return Int(ceil(result))
     }
 

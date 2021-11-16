@@ -156,16 +156,12 @@ extension MovingStatusViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovingStatusTableViewCell.reusableID, for: indexPath) as? MovingStatusTableViewCell else { return UITableViewCell() }
         guard let stationInfo = self.viewModel?.stationInfos[indexPath.row] else { return cell }
-        dump(stationInfo)
 
-        switch indexPath.item {
-        case 0:
-            cell.configure(type: .getOn)
-        case 9:
-            cell.configure(type: .getOff)
-        default:
-            cell.configure(type: .waypoint)
-        }
+        cell.configure(speed: stationInfo.speed,
+                       afterSpeed: stationInfo.afterSpeed,
+                       index: indexPath.row,
+                       count: stationInfo.count,
+                       title: stationInfo.title)
         
         return cell
     }
