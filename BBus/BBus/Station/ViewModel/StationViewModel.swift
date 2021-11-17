@@ -37,6 +37,9 @@ class StationViewModel {
         NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
             self.descendTime()
         }
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
+            self.refresh()
+        }
     }
     
     func refresh() {
