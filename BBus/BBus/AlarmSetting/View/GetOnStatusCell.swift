@@ -15,7 +15,7 @@ class GetOnStatusCell: UITableViewCell {
 
     static let reusableID = "GetOnStatusCell"
     static let infoCellHeight: CGFloat = 115
-    static let noInfoCellHeight: CGFloat = 50
+    static let singleInfoCellHeight: CGFloat = 50
 
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
