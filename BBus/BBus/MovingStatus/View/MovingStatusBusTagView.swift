@@ -34,12 +34,14 @@ class MovingStatusBusTagView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
+        self.configure(color: BBusColor.gray, remainStation: nil)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
+        self.configure(color: BBusColor.gray, remainStation: nil)
     }
     
     private func configureLayout() {
@@ -83,7 +85,7 @@ class MovingStatusBusTagView: UIView {
         ])
     }
 
-    func configure(color: UIColor?, busIcon: UIImage?, remainStation: Int?) {
+    func configure(color: UIColor?, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) {
         self.speechBubbleImageView.tintColor = color
         self.booduckBusImageView.image = busIcon
         if let remainStation = remainStation {

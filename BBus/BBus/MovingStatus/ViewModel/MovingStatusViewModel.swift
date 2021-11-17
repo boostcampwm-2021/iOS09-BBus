@@ -145,5 +145,6 @@ final class MovingStatusViewModel {
     func fetch() {
         self.usecase.searchHeader(busRouteId: self.busRouteId)
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 }

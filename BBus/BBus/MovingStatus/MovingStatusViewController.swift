@@ -70,7 +70,9 @@ final class MovingStatusViewController: UIViewController {
                                                              remainStation: bus.remainStation)
         }
         else {
-            self.busTag = self.movingStatusView.createBusTag(busIcon: self.busIcon, remainStation: nil)
+            self.busTag = self.movingStatusView.createBusTag(color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: nil)
         }
     }
 
@@ -90,6 +92,9 @@ final class MovingStatusViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.movingStatusView.configureBusName(to: busInfo.busName)
                     self?.configureBusColor(type: busInfo.type)
+
+                    let testBus = BoardedBus(location: 2.0, remainStation: 5)
+                    self?.configureBusTag(bus: testBus)
                 }
             })
             .store(in: &self.cancellables)
