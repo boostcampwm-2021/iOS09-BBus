@@ -77,12 +77,12 @@ final class MovingStatusViewModel {
     }
 
     // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
-    private func findBoardBus(gpsY: Double, gpsX: Double) {
+    func findBoardBus(gpsY: Double, gpsX: Double) {
         if buses.isEmpty { return }
         if stationInfos.isEmpty { return }
 
         for bus in buses {
-            if Self.onBoard(gpsY: gpsY, gpsX: gpsX, bus: bus) {
+            if self.onBoard(gpsY: gpsY, gpsX: gpsX, busY: bus.gpsY, busX: bus.gpsX) {
                 self.updateRemainingStation(bus: bus)
                 self.updateRemainingTime(bus: bus)
                 self.updateBoardBus(bus: bus)
@@ -130,7 +130,7 @@ final class MovingStatusViewModel {
     }
 
     // Bus - 유저간 거리 측정 로직
-    static func onBoard(gpsY: Double, gpsX: Double, bus: BusPosByRtidDTO) -> Bool {
+    func onBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
         return true
     }
 
