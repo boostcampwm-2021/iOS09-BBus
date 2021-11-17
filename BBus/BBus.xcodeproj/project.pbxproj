@@ -36,7 +36,7 @@
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
 		4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682B2732ECA9008D87CE /* KeyboardAccessoryView.swift */; };
 		4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
-		4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; 
+		4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
 		4A094CDF27435C5900428F55 /* BusRemainTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CDE27435C5900428F55 /* BusRemainTime.swift */; };
 		4A094CE127438EB800428F55 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CE027438EB800428F55 /* UIViewExtension.swift */; };
 		4A094D072743E12C00428F55 /* NoneInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094D062743E12C00428F55 /* NoneInfoTableViewCell.swift */; };
