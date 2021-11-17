@@ -52,6 +52,9 @@ final class MovingStatusViewController: UIViewController {
 
         // 위치 정보 제공의 정확도를 설정할 수 있다.
         self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // 백그라운드에서 위치 업데이트
+//        self.locationManager?.allowsBackgroundLocationUpdates = true
 
         // 위치 정보를 지속적으로 받고 싶은 경우 이벤트를 시작
         self.locationManager?.startUpdatingLocation()
@@ -123,10 +126,6 @@ final class MovingStatusViewController: UIViewController {
             .sink(receiveValue: { [weak self] remainingTime in
                 DispatchQueue.main.async {
                     self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
-                    // test 용 bus 생성
-//                    guard let count = self?.viewModel?.stationInfos.count else { return }
-//                    let testBus = BoardedBus(location: 4.5, remainStation: count-5)
-//                    self?.configureBusTag(bus: testBus)
                 }
             })
             .store(in: &self.cancellables)

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CoreGraphics
+import CoreLocation
 
 typealias BusInfo = (busName: String, type: RouteType)
 typealias BoardedBus = (location: CGFloat, remainStation: Int?)
@@ -21,6 +22,7 @@ final class MovingStatusViewModel {
     private let fromArsId: String
     private let toArsId: String
     private var startOrd: Int? // 2
+    private var currentOrd: Int?
     @Published var busInfo: BusInfo? // 1
     @Published var stationInfos: [StationInfo] = [] // 3
     @Published var buses: [BusPosByRtidDTO] = [] // 5
@@ -37,6 +39,18 @@ final class MovingStatusViewModel {
         self.bindingHeaderInfo()
         self.bindingStationsInfo()
         self.bindingBusesPosInfo()
+        self.configureObserver()
+    }
+    
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { _ in
+            self.updateAPI()
+            
+            guard let y = self.buses.first?.gpsY,
+                  let x = self.buses.first?.gpsX else { return }
+            
+            self.findBoardBus(gpsY: y, gpsX: x)
+        }
     }
 
     private func bindingHeaderInfo() {
@@ -61,7 +75,11 @@ final class MovingStatusViewModel {
         self.usecase.$buses
             .receive(on: MovingStatusUsecase.queue)
             .sink { [weak self] buses in
-                self?.buses = buses // 5
+                guard let currentOrd = self?.currentOrd,
+                      let startOrd = self?.startOrd,
+                      let count = self?.stationInfos.count else { return }
+
+                self?.buses = buses.filter { $0.sectionOrder >= currentOrd && $0.sectionOrder < startOrd + count } // 5
             }
             .store(in: &self.cancellables)
     }
@@ -120,6 +138,7 @@ final class MovingStatusViewModel {
     // 탑승한 버스 업데이트 로직
     private func updateBoardBus(bus: BusPosByRtidDTO) {
         guard let startOrd = self.startOrd else { return }
+        self.currentOrd = bus.sectionOrder
         let boardedBus: BoardedBus
         boardedBus.location = self.convertBusPos(startOrd: startOrd,
                                                  order: bus.sectionOrder,
@@ -131,7 +150,12 @@ final class MovingStatusViewModel {
 
     // Bus - 유저간 거리 측정 로직
     func onBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
-        return true
+        let userLocation = CLLocation(latitude: gpsX, longitude: gpsY)
+        let busLocation = CLLocation(latitude: busX, longitude: busY)
+        let distanceInMeters = userLocation.distance(from: busLocation)
+        print(distanceInMeters)
+        
+        return distanceInMeters <= 30.0
     }
 
     // 현재 버스의 노선도 위치 반환
@@ -139,7 +163,7 @@ final class MovingStatusViewModel {
         let order = CGFloat(order-1-startOrd)
         let sect = CGFloat((sect as NSString).floatValue)
         let fullSect = CGFloat((fullSect as NSString).floatValue)
-        return order + (sect/fullSect)
+        return order + (sect/fullSect) + 1
     }
 
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
@@ -149,7 +173,8 @@ final class MovingStatusViewModel {
         var stationsResult: [StationInfo] = []
         var totalTime: Int = 0
         let stations = Array(stations[startIndex...endIndex])
-        self.startOrd = stations.first?.sectionOrd // 2
+        self.startOrd = stations.first?.sectionOrd  // 2
+        self.currentOrd = self.startOrd
 
         for (idx, station) in stations.enumerated() {
             let info: StationInfo
@@ -181,6 +206,5 @@ final class MovingStatusViewModel {
     // 타이머가 일정주기로 실행
     func updateAPI() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId) //고민 필요
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 }
