@@ -33,8 +33,8 @@ class AlarmSettingCoordinator: Coordinator {
         self.coordinatorDidFinish()
     }
     
-    func openMovingStatus() {
-        self.movingStatusDelegate?.open()
+    func openMovingStatus(busRouteId: Int, fromArsId: String, toArsId: String) {
+        self.movingStatusDelegate?.open(busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
     }
     
     func closeMovingStatus() {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GetOffAlarmButtonDelegate {
-    func shouldGoToMovingStatusScene()
+    func shouldGoToMovingStatusScene(from cell: UITableViewCell)
 }
 
 class GetOffTableViewCell: BusStationTableViewCell {
@@ -30,7 +30,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { _ in
                 self.alarmButton.isSelected.toggle()
-                self.alarmButtonDelegate?.shouldGoToMovingStatusScene()
+                self.alarmButtonDelegate?.shouldGoToMovingStatusScene(from: self)
             }), for: .touchUpInside)
         }
     }

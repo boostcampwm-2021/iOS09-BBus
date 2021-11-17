@@ -14,7 +14,7 @@ class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
     private let stationId: Int
-    private let busRouteId: Int
+    let busRouteId: Int
     private let stationOrd: Int
     private let arsId: String
     @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
