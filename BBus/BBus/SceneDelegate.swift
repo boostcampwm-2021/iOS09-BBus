@@ -26,12 +26,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.appCoordinator = AppCoordinator(navigationWindow: navigationWindow, movingStatusWindow: movingStatusWindow)
         appCoordinator?.start()
 
-        self.fireMainTimer()
+        self.fireOneSecondTimer()
+        self.fire30SecondsTimer()
     }
 
-    func fireMainTimer() {
+    func fireOneSecondTimer() {
         let timer = Timer.init(timeInterval: 1, repeats: true) { _ in
             NotificationCenter.default.post(name: .oneSecondPassed, object: nil)
+        }
+        RunLoop.current.add(timer, forMode: .common)
+    }
+
+    func fire30SecondsTimer() {
+        let timer = Timer.init(timeInterval: 30, repeats: true) { _ in
+            NotificationCenter.default.post(name: .thirtySecondPassed, object: nil)
         }
         RunLoop.current.add(timer, forMode: .common)
     }

@@ -21,6 +21,9 @@ class AlarmSettingViewController: UIViewController {
         button.layer.cornerRadius = radius
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
+        button.addAction(UIAction(handler: { _ in
+            self.viewModel?.refresh()
+        }), for: .touchUpInside)
         return button
     }()
     private let viewModel: AlarmSettingViewModel?
