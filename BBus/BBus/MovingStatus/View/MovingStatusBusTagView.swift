@@ -9,11 +9,7 @@ import UIKit
 
 class MovingStatusBusTagView: UIView {
 
-    private lazy var booduckBusImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = BBusImage.booduckBus
-        return imageView
-    }()
+    private lazy var booduckBusImageView = UIImageView()
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = BBusImage.speechBubble?.withRenderingMode(.alwaysTemplate)
