@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreLocation
 
 typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
 
@@ -19,6 +20,7 @@ final class MovingStatusViewController: UIViewController {
     private var busTag: MovingStatusBusTagView?
     private var color: UIColor?
     private var busIcon: UIImage?
+    private var locationManager: CLLocationManager?
 
     init(viewModel: MovingStatusViewModel) {
         self.viewModel = viewModel
@@ -38,6 +40,23 @@ final class MovingStatusViewController: UIViewController {
         self.configureDelegate()
         self.configureBusTag()
         self.fetch()
+        self.configureLocationManager()
+    }
+
+    private func configureLocationManager() {
+        // locationManager 인스턴스를 생성
+        self.locationManager = CLLocationManager()
+
+        // 앱을 사용할 때만 위치 정보를 허용할 경우 호출
+        self.locationManager?.requestWhenInUseAuthorization()
+
+        // 위치 정보 제공의 정확도를 설정할 수 있다.
+        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+
+        // 위치 정보를 지속적으로 받고 싶은 경우 이벤트를 시작
+        self.locationManager?.startUpdatingLocation()
+
+        self.locationManager?.delegate = self
     }
     
     // MARK: - Configure
@@ -231,5 +250,14 @@ extension MovingStatusViewController: EndAlarmButtonDelegate {
         // alarm 종료
         print("end the alarm")
         self.coordinator?.close()
+    }
+}
+
+// MARK: - Delegate: CLLocation
+extension MovingStatusViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coordinate = locations.last?.coordinate {
+            self.viewModel?.findBoardBus(gpsY: Double(coordinate.latitude), gpsX: Double(coordinate.longitude))
+        }
     }
 }
