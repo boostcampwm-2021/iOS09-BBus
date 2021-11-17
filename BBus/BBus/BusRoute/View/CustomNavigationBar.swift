@@ -115,7 +115,30 @@ class CustomNavigationBar: UIView {
         self.backButtonTitleLabel.text = title
     }
 
-    func configureTitle(_ title: NSAttributedString) {
-        self.titleLabel.attributedText = title
+    func configureTitle( busName: String, stationName: String, routeType: RouteType?) {
+        let title = "\(busName) ∙ \(stationName)"
+        let highlightColor: UIColor?
+        switch routeType {
+        case .mainLine:
+            highlightColor = BBusColor.bbusTypeBlue
+        case .broadArea:
+            highlightColor = BBusColor.bbusTypeRed
+        case .customized:
+            highlightColor = BBusColor.bbusTypeGreen
+        case .circulation:
+            highlightColor = BBusColor.bbusTypeCirculation
+        case .lateNight:
+            highlightColor = BBusColor.bbusTypeBlue
+        case .localLine:
+            highlightColor = BBusColor.bbusTypeGreen
+        default:
+            highlightColor = BBusColor.bbusGray
+        }
+        let attributedString = NSMutableAttributedString(string: title)
+        let range = (title as NSString).range(of: busName)
+        attributedString.addAttribute(.foregroundColor,
+                                      value: highlightColor as Any,
+                                      range: range)
+        self.titleLabel.attributedText = attributedString
     }
 }

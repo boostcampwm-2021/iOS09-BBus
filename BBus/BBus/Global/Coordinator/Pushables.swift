@@ -29,12 +29,17 @@ extension SearchPushable {
 }
 
 protocol AlarmSettingPushable: Coordinator {
-    func pushToAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?)
+    func pushToAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String)
 }
 
 extension AlarmSettingPushable {
-    func pushToAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?) {
-        self.delegate?.pushAlarmSetting(stationId: stationId, busRouteId: busRouteId, stationOrd: stationOrd, arsId: arsId, routeType: routeType)
+    func pushToAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
+        self.delegate?.pushAlarmSetting(stationId: stationId,
+                                        busRouteId: busRouteId,
+                                        stationOrd: stationOrd,
+                                        arsId: arsId,
+                                        routeType: routeType,
+                                        busName: busName)
     }
 }
 

@@ -45,7 +45,6 @@ class AlarmSettingViewController: UIViewController {
         self.configureColor()
         self.configureLayout()
         self.configureDelegate()
-        self.configureMOCKDATA()
         
         self.binding()
     }
@@ -92,10 +91,6 @@ class AlarmSettingViewController: UIViewController {
         self.customNavigationBar.configureTintColor(color: BBusColor.black)
         self.customNavigationBar.configureAlpha(alpha: 1)
     }
-
-    private func configureMOCKDATA() {
-        self.customNavigationBar.configureTitle(NSAttributedString(string: "461 ∙ 예술인마을.사당초등학교"))
-    }
     
     private func binding() {
         self.bindingBusArriveInfos()
@@ -117,7 +112,12 @@ class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busStationInfos
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
-                self?.alarmSettingView.reload()
+                guard let self = self else { return }
+                self.alarmSettingView.reload()
+                if let viewModel = self.viewModel,
+                   let stationName = infos.first?.name {
+                    self.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                }
             })
             .store(in: &self.cancellables)
     }
