@@ -32,18 +32,17 @@ class StationViewController: UIViewController {
         view.backgroundColor = BBusColor.white
         return view
     }()
-    private lazy var refreshButton: UIButton = {
+    private lazy var refreshButton: ThrottleButton = {
         let radius: CGFloat = 25
 
-        let button = UIButton()
+        let button = ThrottleButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray
-        
-        button.addAction(UIAction(handler: { _ in
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
             self.viewModel?.refresh()
-        }), for: .touchUpInside)
+        }
         return button
     }()
     private var collectionHeightConstraint: NSLayoutConstraint?

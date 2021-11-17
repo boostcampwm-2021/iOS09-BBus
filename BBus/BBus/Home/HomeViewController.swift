@@ -9,11 +9,25 @@ import UIKit
 import Combine
 
 class HomeViewController: UIViewController {
-    
+
+    private var lastContentOffset: CGFloat = 0
+    private let refreshButtonWidth: CGFloat = 50
+
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
+
     private lazy var homeView = HomeView()
-    private var lastContentOffset: CGFloat = 0
+    lazy var refreshButton: ThrottleButton = {
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = self.refreshButtonWidth / 2
+        button.tintColor = BBusColor.white
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
+            self.viewModel?.reloadFavoriteData()
+        }
+        return button
+    }()
+
     private var cancellable: AnyCancellable?
 
     init(viewModel: HomeViewModel) {
@@ -68,6 +82,18 @@ class HomeViewController: UIViewController {
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
+
+        self.view.addSubview(self.refreshButton)
+        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        self.refreshButton.backgroundColor = BBusColor.darkGray
+        let refreshTrailingBottomInterval: CGFloat = -16
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
+            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+        ])
+
     }
     
     private func configureColor() {

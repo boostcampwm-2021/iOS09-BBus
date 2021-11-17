@@ -9,8 +9,7 @@ import UIKit
 
 class HomeView: UIView {
 
-    private let refreshButtonWidth: CGFloat = 50
-    
+
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
         collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
@@ -24,13 +23,6 @@ class HomeView: UIView {
         let view = HomeNavigationView()
         view.backgroundColor = BBusColor.white
         return view
-    }()
-    lazy var refreshButton: UIButton = {
-        let button = UIButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = self.refreshButtonWidth / 2
-        button.tintColor = BBusColor.white
-        return button
     }()
 
     convenience init() {
@@ -50,17 +42,6 @@ class HomeView: UIView {
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        self.refreshButton.backgroundColor = BBusColor.darkGray
-        let refreshTrailingBottomInterval: CGFloat = -16
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
-            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
-        
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

@@ -26,6 +26,7 @@
 		049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */; };
 		049375BF273C326A0061ACDA /* StationsByPosDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BE273C326A0061ACDA /* StationsByPosDTO.swift */; };
 		049375C3273C36880061ACDA /* BBusXMLDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375C2273C36880061ACDA /* BBusXMLDTO.swift */; };
+		049B9D002744D2AA004DE66E /* ThrottleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049B9CFF2744D2AA004DE66E /* ThrottleButton.swift */; };
 		04AC7D112733AF090095CD4E /* BusRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */; };
 		04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */; };
 		04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */; };
@@ -142,6 +143,7 @@
 		049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrInfoByRouteDTO.swift; sourceTree = "<group>"; };
 		049375BE273C326A0061ACDA /* StationsByPosDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsByPosDTO.swift; sourceTree = "<group>"; };
 		049375C2273C36880061ACDA /* BBusXMLDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusXMLDTO.swift; sourceTree = "<group>"; };
+		049B9CFF2744D2AA004DE66E /* ThrottleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottleButton.swift; sourceTree = "<group>"; };
 		04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D122733B0940095CD4E /* GetOffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffTableViewCell.swift; sourceTree = "<group>"; };
 		04AC7D1A2733E7270095CD4E /* AlarmSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingButton.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				873D6394273039C400E79069 /* Coordinator */,
 				047C30F8273A044C0075EA14 /* Constant */,
 				041A5A0F273D2E0400490075 /* Extension */,
+				049B9CFE2744D27F004DE66E /* View */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -307,6 +310,14 @@
 				4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		049B9CFE2744D27F004DE66E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				049B9CFF2744D2AA004DE66E /* ThrottleButton.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		4ACA51D7272FCC4E00EC0531 /* Home */ = {
@@ -879,6 +890,7 @@
 				4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */,
 				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
 				4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */,
+				049B9D002744D2AA004DE66E /* ThrottleButton.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */,
 				049375B5273BB98E0061ACDA /* StationByRouteListDTO.swift in Sources */,
