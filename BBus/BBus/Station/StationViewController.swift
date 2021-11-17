@@ -340,7 +340,7 @@ extension StationViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         guard let indexPath = self.indexPath(for: cell),
               let viewModel = viewModel,
-              let stationId = viewModel.usecase.stationInfo?.stationID else { return }
+              let stationID = viewModel.usecase.stationInfo?.stationID else { return }
         let key = viewModel.busKeys[indexPath.section]
         let bus: BusArriveInfo
         if viewModel.infoBuses.count - 1 >= indexPath.section {
@@ -351,10 +351,11 @@ extension StationViewController: AlarmButtonDelegate {
             guard let info = viewModel.noInfoBuses[key]?[indexPath.item] else { return }
             bus = info
         }
-        self.coordinator?.pushToAlarmSetting(stationId: stationId,
+        self.coordinator?.pushToAlarmSetting(stationId: stationID,
                                              busRouteId: bus.busRouteId,
                                              stationOrd: bus.stationOrd,
                                              arsId: viewModel.arsId,
-                                             routeType: bus.routeType.toRouteType())
+                                             routeType: bus.routeType.toRouteType(),
+                                             busName: bus.busNumber)
     }
 }

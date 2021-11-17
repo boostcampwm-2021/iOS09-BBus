@@ -16,14 +16,15 @@ class AlarmSettingCoordinator: Coordinator {
         self.navigationPresenter = presenter
     }
 
-    func start(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?) {
+    func start(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
         let useCase = AlarmSettingUseCase(useCases: BBusAPIUsecases(on: AlarmSettingUseCase.queue))
         let viewModel = AlarmSettingViewModel(useCase: useCase,
                                               stationId: stationId,
                                               busRouteId: busRouteId,
                                               stationOrd: stationOrd,
                                               arsId: arsId,
-                                              routeType: routeType)
+                                              routeType: routeType,
+                                              busName: busName)
         let viewController = AlarmSettingViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)

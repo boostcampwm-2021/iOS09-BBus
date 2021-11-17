@@ -220,7 +220,8 @@ extension HomeViewController: AlarmButtonDelegate {
                                              busRouteId: busRouteId,
                                              stationOrd: ord,
                                              arsId: arsId,
-                                             routeType: routeType)
+                                             routeType: routeType,
+                                             busName: busName)
     }
 }
 
