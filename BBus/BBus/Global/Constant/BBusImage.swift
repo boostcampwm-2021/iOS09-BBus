@@ -25,6 +25,10 @@ enum BBusImage {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .regular, scale: .large)
         return UIImage(systemName: "star.fill", withConfiguration: largeConfig)
     }()
+    static let info: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large)
+        return UIImage(systemName: "info.circle", withConfiguration: largeConfig)
+    }()
     static let booDuck = UIImage(named: "booDuck")
     static let unfold = UIImage(systemName: "chevron.up")
     static let fold = UIImage(systemName: "chevron.down")
