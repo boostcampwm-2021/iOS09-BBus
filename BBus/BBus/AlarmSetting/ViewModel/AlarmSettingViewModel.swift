@@ -17,16 +17,18 @@ class AlarmSettingViewModel {
     let busRouteId: Int
     private let stationOrd: Int
     private let arsId: String
+    let routeType: RouteType?
     @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
     private var cancellables: Set<AnyCancellable>
     
-    init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String) {
+    init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?) {
         self.useCase = useCase
         self.stationId = stationId
         self.busRouteId = busRouteId
         self.stationOrd = stationOrd
         self.arsId = arsId
+        self.routeType = routeType
         self.cancellables = []
         self.busArriveInfos = []
         self.busStationInfos = []
