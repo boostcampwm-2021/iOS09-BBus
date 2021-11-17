@@ -112,7 +112,7 @@ final class MovingStatusViewModel {
                                                  fullSect: bus.fullSectDist)
         let extraPersent = Double(currentLocation) - Double(currentIdx)
         let extraTime = extraPersent * Double(self.stationInfos[currentIdx].sectTime)
-        totalRemainTime += Int(ceil(extraTime))
+        totalRemainTime -= Int(ceil(extraTime))
 
         self.remainingTime = totalRemainTime // 7
     }
