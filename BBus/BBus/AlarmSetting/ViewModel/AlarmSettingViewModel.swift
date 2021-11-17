@@ -20,6 +20,7 @@ class AlarmSettingViewModel {
     let routeType: RouteType?
     @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
+    @Published private(set) var errorMessage: String?
     private var cancellables: Set<AnyCancellable>
     
     init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?) {
@@ -32,6 +33,7 @@ class AlarmSettingViewModel {
         self.cancellables = []
         self.busArriveInfos = []
         self.busStationInfos = []
+        self.errorMessage = nil
         self.binding()
         self.refresh()
         self.configureObserver()
@@ -115,5 +117,9 @@ class AlarmSettingViewModel {
             .collect()
             .assign(to: \.busStationInfos, on: self)
             .store(in: &self.cancellables)
+    }
+    
+    func sendErrorMessage(_ message: String) {
+        self.errorMessage = message
     }
 }

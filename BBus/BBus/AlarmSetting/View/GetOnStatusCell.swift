@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GetOnAlarmButtonDelegate {
-    func toggleGetOnAlarmSetting()
+    func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool?
 }
 
 class GetOnStatusCell: UITableViewCell {
@@ -133,9 +133,12 @@ class GetOnStatusCell: UITableViewCell {
 
     private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
         didSet {
-            self.alarmButton.addAction(UIAction(handler: { _ in
-                self.alarmButton.isSelected.toggle()
-                self.alarmButtonDelegate?.toggleGetOnAlarmSetting()
+            self.alarmButton.addAction(UIAction(handler: { [weak self] _ in
+                guard let self = self else { return }
+                let result = self.alarmButtonDelegate?.toggleGetOnAlarmSetting(for: self, cancel: self.alarmButton.isSelected)
+                if result == true {
+                    self.alarmButton.isSelected.toggle()
+                }
             }), for: .touchUpInside)
         }
     }

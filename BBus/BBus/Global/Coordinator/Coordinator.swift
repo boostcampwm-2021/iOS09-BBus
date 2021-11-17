@@ -19,7 +19,11 @@ protocol CoordinatorCreateDelegate {
     func pushStation(arsId: String)
 }
 
-typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)
+protocol CoordinatorAlertDelegate {
+    func pushAlert(controller: UIAlertController, completion: (() -> Void)?)
+}
+
+typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate & CoordinatorAlertDelegate)
 
 protocol Coordinator: AnyObject {
     var navigationPresenter: UINavigationController { get set }
