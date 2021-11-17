@@ -20,13 +20,13 @@ final class MovingStatusViewModel {
     private let busRouteId: Int
     private let fromArsId: String
     private let toArsId: String
-    private var startOrd: Int?
-    @Published var busInfo: BusInfo?
-    @Published var stationInfos: [StationInfo] = []
-    @Published var buses: [BusPosByRtidDTO] = []
-    @Published var remainingTime: Int?
-    @Published var remainingStation: Int?
-    @Published var boardedBus: BoardedBus?
+    private var startOrd: Int? // 2
+    @Published var busInfo: BusInfo? // 1
+    @Published var stationInfos: [StationInfo] = [] // 3
+    @Published var buses: [BusPosByRtidDTO] = [] // 5
+    @Published var remainingTime: Int? // 4, 7
+    @Published var remainingStation: Int? // 6
+    @Published var boardedBus: BoardedBus? // 8
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -61,7 +61,7 @@ final class MovingStatusViewModel {
         self.usecase.$buses
             .receive(on: MovingStatusUsecase.queue)
             .sink { [weak self] buses in
-                self?.buses = buses
+                self?.buses = buses // 5
             }
             .store(in: &self.cancellables)
     }
@@ -73,7 +73,7 @@ final class MovingStatusViewModel {
         busInfo.busName = header.busRouteName
         busInfo.type = header.routeType
 
-        self.busInfo = busInfo
+        self.busInfo = busInfo // 1
     }
 
     // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
@@ -84,6 +84,7 @@ final class MovingStatusViewModel {
         for bus in buses {
             if Self.onBoard(gpsY: gpsY, gpsX: gpsX, bus: bus) {
                 self.updateRemainingStation(bus: bus)
+                self.updateRemainingTime(bus: bus)
                 self.updateBoardBus(bus: bus)
                 break
             }
@@ -93,7 +94,7 @@ final class MovingStatusViewModel {
     // 남은 정거장 수 업데이트 로직
     private func updateRemainingStation(bus: BusPosByRtidDTO) {
         guard let startOrd = self.startOrd else { return }
-        self.remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd)
+        self.remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 6
     }
 
     // 남은 시간 업데이트 로직
@@ -113,7 +114,7 @@ final class MovingStatusViewModel {
         let extraTime = extraPersent * Double(self.stationInfos[currentIdx].sectTime)
         totalRemainTime += Int(ceil(extraTime))
 
-        self.remainingTime = totalRemainTime
+        self.remainingTime = totalRemainTime // 7
     }
 
     // 탑승한 버스 업데이트 로직
@@ -125,7 +126,7 @@ final class MovingStatusViewModel {
                                                  sect: bus.sectDist,
                                                  fullSect: bus.fullSectDist)
         boardedBus.remainStation = self.remainingStation
-        self.boardedBus = boardedBus
+        self.boardedBus = boardedBus // 8
     }
 
     // Bus - 유저간 거리 측정 로직
@@ -148,7 +149,7 @@ final class MovingStatusViewModel {
         var stationsResult: [StationInfo] = []
         var totalTime: Int = 0
         let stations = Array(stations[startIndex...endIndex])
-        self.startOrd = stations.first?.sectionOrd
+        self.startOrd = stations.first?.sectionOrd // 2
 
         for (idx, station) in stations.enumerated() {
             let info: StationInfo
@@ -162,8 +163,8 @@ final class MovingStatusViewModel {
             totalTime += info.sectTime
         }
 
-        self.stationInfos = stationsResult
-        self.remainingTime = totalTime
+        self.stationInfos = stationsResult // 3
+        self.remainingTime = totalTime // 4
     }
 
     static func averageSectionTime(speed: Int, distance: Int) -> Int {
