@@ -104,6 +104,10 @@ final class MovingStatusViewController: UIViewController {
             .sink(receiveValue: { [weak self] remainingTime in
                 DispatchQueue.main.async {
                     self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
+                    // test 용 bus 생성
+//                    guard let count = self?.viewModel?.stationInfos.count else { return }
+//                    let testBus = BoardedBus(location: 4.5, remainStation: count-5)
+//                    self?.configureBusTag(bus: testBus)
                 }
             })
             .store(in: &self.cancellables)

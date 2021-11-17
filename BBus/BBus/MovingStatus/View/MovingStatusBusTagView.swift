@@ -16,7 +16,7 @@ class MovingStatusBusTagView: UIView {
     }()
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = BBusImage.speechBubble
+        imageView.image = BBusImage.speechBubble?.withRenderingMode(.alwaysTemplate)
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {
