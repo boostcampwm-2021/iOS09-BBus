@@ -43,7 +43,10 @@ final class BusRouteViewModel {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] bodys in
-                self?.convertBusStationInfo(with: bodys)
+                guard let self = self else { return }
+                
+                self.convertBusStationInfo(with: bodys)
+                self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
             })
             .store(in: &self.cancellables)
     }
@@ -104,7 +107,6 @@ final class BusRouteViewModel {
     func fetch() {
         self.usecase.searchHeader(busRouteId: self.busRouteId)
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 
     func refreshBusPos() {

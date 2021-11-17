@@ -29,7 +29,7 @@ class BusRouteView: UIView {
     }()
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
     private var tableViewMinHeight: CGFloat {
-        return self.frame.height - BusRouteHeaderView.headerHeight
+        return max(self.frame.height - BusRouteHeaderView.headerHeight, 0)
     }
     
     convenience init() {
