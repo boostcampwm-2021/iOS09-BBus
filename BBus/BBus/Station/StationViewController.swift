@@ -109,39 +109,59 @@ class StationViewController: UIViewController {
     
     private func binding() {
         self.$stationBusInfoHeight
-            .receive(on: DispatchQueue.main)
+            .receive(on: StationUsecase.queue)
             .sink() { [weak self] height in
-                self?.collectionHeightConstraint?.isActive = false
-                self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
+                DispatchQueue.main.async {
+                    self?.collectionHeightConstraint?.isActive = false
+                    self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
+                }
             }.store(in: &self.cancellables)
         
         self.viewModel?.usecase.$stationInfo
-            .receive(on: DispatchQueue.main)
+            .receive(on: StationUsecase.queue)
             .sink(receiveValue: { [weak self] station in
-                guard let station = station else { return }
-                self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
+                DispatchQueue.main.async {
+                    guard let station = station else { return }
+                    self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
+                }
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.$nextStation
-            .receive(on: DispatchQueue.main)
+            .receive(on: StationUsecase.queue)
             .sink(receiveValue: { [weak self] nextStation in
-                guard let nextStation = nextStation else { return }
-                self?.stationView.configureNextStation(direction: nextStation)
+                DispatchQueue.main.async {
+                    guard let nextStation = nextStation else { return }
+                    self?.stationView.configureNextStation(direction: nextStation)
+                }
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.$busKeys
-            .receive(on: DispatchQueue.main)
+            .receive(on: StationUsecase.queue)
             .sink(receiveValue: { [weak self] _ in
-                self?.stationView.reload()
+                DispatchQueue.main.async {
+                    self?.stationView.reload()
+                }
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.$favoriteItems
-            .receive(on: DispatchQueue.main)
+            .receive(on: StationUsecase.queue)
             .sink(receiveValue: { [weak self] _ in
-                self?.stationView.reload()
+                DispatchQueue.main.async {
+                    self?.stationView.reload()
+                }
+            })
+            .store(in: &self.cancellables)
+
+        self.viewModel?.$infoBuses
+            .receive(on: StationUsecase.queue)
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
+            .sink(receiveValue: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.stationView.reload()
+                }
             })
             .store(in: &self.cancellables)
     }

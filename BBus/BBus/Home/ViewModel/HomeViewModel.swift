@@ -17,6 +17,17 @@ class HomeViewModel {
     init(useCase: HomeUseCase) {
         self.useCase = useCase
         self.bindFavoriteData()
+        self.configureObserver()
+    }
+
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
+            self.descendTime()
+        }
+    }
+
+    private func descendTime() {
+        self.homeFavoriteList?.descendAllTime()
     }
 
     private func bindFavoriteData() {

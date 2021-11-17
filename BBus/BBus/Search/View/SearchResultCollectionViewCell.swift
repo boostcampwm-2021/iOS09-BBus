@@ -70,9 +70,9 @@ final class SearchResultCollectionViewCell: UICollectionViewCell {
         case .customized:
             self.titleLabel.textColor = BBusColor.bbusTypeGreen
         case .circulation:
-            self.titleLabel.textColor = BBusColor.black
+            self.titleLabel.textColor = BBusColor.bbusTypeCirculation
         case .lateNight:
-            self.titleLabel.textColor = BBusColor.black
+            self.titleLabel.textColor = BBusColor.bbusTypeBlue
         case .localLine:
             self.titleLabel.textColor = BBusColor.bbusTypeGreen
         }

@@ -18,7 +18,7 @@ class StationViewModel {
     private let arsId: String
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busKeys: [BBusRouteType]
-    private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
+    @Published private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
     @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
@@ -30,11 +30,29 @@ class StationViewModel {
         self.busKeys = []
         self.binding()
         self.refresh()
+        self.configureObserver()
+    }
+
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
+            self.descendTime()
+        }
     }
     
     func refresh() {
         self.usecase.stationInfoWillLoad(with: arsId)
         self.usecase.refreshInfo(about: arsId)
+    }
+
+    private func descendTime() {
+        self.infoBuses.forEach({
+            self.infoBuses[$0.key] = $0.value.map { result in
+                var remainTime = result
+                remainTime.firstBusArriveRemainTime?.descend()
+                remainTime.secondBusArriveRemainTime?.descend()
+                return remainTime
+            }
+        })
     }
     
     private func binding() {

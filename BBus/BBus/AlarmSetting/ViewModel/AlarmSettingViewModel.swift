@@ -26,6 +26,21 @@ class AlarmSettingViewModel {
         self.busArriveInfos = []
         self.bindingBusArriveInfo()
         self.refresh()
+        self.configureObserver()
+    }
+    
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
+            self.descendTime()
+        }
+    }
+    
+    private func descendTime() {
+        self.busArriveInfos = self.busArriveInfos.map {
+            var arriveInfo = $0
+            arriveInfo.arriveRemainTime?.descend()
+            return arriveInfo
+        }
     }
     
     func refresh() {
