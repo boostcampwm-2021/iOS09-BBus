@@ -8,25 +8,32 @@
 import Foundation
 import Combine
 
+typealias AlarmSettingBusStationInfo = (arsId: String, name: String, estimatedTime: Int)
+
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
     private let stationId: Int
     private let busRouteId: Int
     private let stationOrd: Int
+    private let arsId: String
     @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
+    @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
     private var cancellables: Set<AnyCancellable>
     
-    init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int) {
+    init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String) {
         self.useCase = useCase
         self.stationId = stationId
         self.busRouteId = busRouteId
         self.stationOrd = stationOrd
+        self.arsId = arsId
         self.cancellables = []
         self.busArriveInfos = []
-        self.bindingBusArriveInfo()
+        self.busStationInfos = []
+        self.binding()
         self.refresh()
         self.configureObserver()
+        self.showBusStations()
     }
     
     private func configureObserver() {
@@ -52,7 +59,16 @@ class AlarmSettingViewModel {
                                              ord: "\(self.stationOrd)")
     }
     
-    func bindingBusArriveInfo() {
+    private func showBusStations() {
+        self.useCase.busStationsInfoWillLoaded(busRouetId: "\(self.busRouteId)", arsId: self.arsId)
+    }
+    
+    private func binding() {
+        self.bindingBusArriveInfo()
+        self.bindingBusStationsInfo()
+    }
+    
+    private func bindingBusArriveInfo() {
         self.useCase.$busArriveInfo
             .receive(on: AlarmSettingUseCase.queue)
             .sink(receiveValue: { data in
@@ -69,6 +85,33 @@ class AlarmSettingViewModel {
                 self.busArriveInfos = arriveInfos
             })
             .store(in: &self.cancellables)
+    }
+    
+    private func bindingBusStationsInfo() {
+        self.useCase.$busStationsInfo
+            .receive(on: AlarmSettingUseCase.queue)
+            .sink(receiveValue: { infos in
+                self.mappingStationsDTOtoAlarmSettingInfo()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func mappingStationsDTOtoAlarmSettingInfo() {
+        let initInfo: AlarmSettingBusStationInfo
+        initInfo.estimatedTime = 0
+        initInfo.arsId = ""
+        initInfo.name = ""
         
+        self.useCase.busStationsInfo.publisher
+            .scan(initInfo, { before, info in
+                let alarmSettingInfo: AlarmSettingBusStationInfo
+                alarmSettingInfo.arsId = info.arsId
+                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
+                alarmSettingInfo.name = info.stationName
+                return alarmSettingInfo
+            })
+            .collect()
+            .assign(to: \.busStationInfos, on: self)
+            .store(in: &self.cancellables)
     }
 }

@@ -212,8 +212,9 @@ extension HomeViewController: AlarmButtonDelegate {
               let stationId = Int(model.0.stId),
               let busRouteId = Int(model.0.busRouteId),
               let ord = Int(model.0.ord) else { return }
+        let arsId = model.0.arsId
 
-        self.coordinator?.pushToAlarmSetting(stationId: stationId, busRouteId: busRouteId, stationOrd: ord)
+        self.coordinator?.pushToAlarmSetting(stationId: stationId, busRouteId: busRouteId, stationOrd: ord, arsId: arsId)
     }
 }
 

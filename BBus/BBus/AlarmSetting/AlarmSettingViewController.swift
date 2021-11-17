@@ -99,6 +99,7 @@ class AlarmSettingViewController: UIViewController {
     
     private func binding() {
         self.bindingBusArriveInfos()
+        self.bindingBusStationInfos()
     }
     
     private func bindingBusArriveInfos() {
@@ -108,6 +109,15 @@ class AlarmSettingViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.alarmSettingView.reloadGetOnSection()
                 }
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingBusStationInfos() {
+        self.viewModel?.$busStationInfos
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] infos in
+                self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
     }
@@ -125,7 +135,8 @@ extension AlarmSettingViewController: UITableViewDataSource {
             guard let info = self.viewModel?.busArriveInfos.first else { return 0 }
             return info.arriveRemainTime != nil ? (self.viewModel?.busArriveInfos.count ?? 0) : 1
         case 1:
-            return 10
+            guard let info = self.viewModel?.busStationInfos else { return 0 }
+            return info.count
         default:
             return 0
         }
@@ -154,11 +165,13 @@ extension AlarmSettingViewController: UITableViewDataSource {
             }
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
+            guard let infos = self.viewModel?.busStationInfos else { return cell }
+            let info = infos[indexPath.item]
             
             cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.bbusGray,
-                           afterColor: indexPath.item == 9 ? .clear : BBusColor.bbusGray,
-                           title: "신촌오거리.현대백화점",
-                           description: "14062 | 2분 소요",
+                           afterColor: indexPath.item == infos.count - 1 ? .clear : BBusColor.bbusGray,
+                           title: info.name,
+                           description: indexPath.item == 0 ? "\(info.arsId)" : "\(info.arsId) | \(info.estimatedTime)분 소요",
                            type: indexPath.item == 0 ? .getOn : .waypoint)
             cell.configureDelegate(self)
             return cell
