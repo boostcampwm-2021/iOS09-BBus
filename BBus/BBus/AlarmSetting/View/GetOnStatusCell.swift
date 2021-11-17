@@ -255,8 +255,23 @@ class GetOnStatusCell: UITableViewCell {
         ])
     }
 
-    func configure(busColor: UIColor?) {
-        self.busOrderNumberLabel.backgroundColor = busColor
+    func configure(routeType: RouteType?) {
+        switch routeType {
+        case .mainLine:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeBlue
+        case .broadArea:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeRed
+        case .customized:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeGreen
+        case .circulation:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeCirculation
+        case .lateNight:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeBlue
+        case .localLine:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeGreen
+        default:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusGray
+        }
     }
 
     func configure(order: String, remainingTime: String?, remainingStationCount: String?, busCongestionStatus: String?, arrivalTime: String?, currentLocation: String, busNumber: String) {

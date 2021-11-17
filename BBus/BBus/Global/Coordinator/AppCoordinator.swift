@@ -96,13 +96,13 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.start(busRouteId: busRouteId)
     }
 
-    func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String) {
+    func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?) {
         let coordinator = AlarmSettingCoordinator(presenter: self.navigationPresenter)
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
         coordinator.movingStatusDelegate = self
-        coordinator.start(stationId: stationId, busRouteId: busRouteId, stationOrd: stationOrd, arsId: arsId)
+        coordinator.start(stationId: stationId, busRouteId: busRouteId, stationOrd: stationOrd, arsId: arsId, routeType: routeType)
     }
 
     func pushStation(arsId: String) {

@@ -152,7 +152,7 @@ extension AlarmSettingViewController: UITableViewDataSource {
             }
             else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
-                cell.configure(busColor: BBusColor.bbusTypeBlue)
+                cell.configure(routeType: self.viewModel?.routeType)
                 cell.configure(order: String(indexPath.row+1),
                                remainingTime: info.arriveRemainTime?.toString(),
                                remainingStationCount: info.relativePosition,
