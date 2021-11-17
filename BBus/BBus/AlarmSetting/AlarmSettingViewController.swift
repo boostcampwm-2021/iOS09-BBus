@@ -121,6 +121,23 @@ class AlarmSettingViewController: UIViewController {
             })
             .store(in: &self.cancellables)
     }
+    
+    private func bindingErrorMessage() {
+        self.viewModel?.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                guard let message = message else { return }
+                self?.alert(message: message)
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func alert(message: String) {
+        let controller = UIAlertController()
+        let action = UIAlertAction(title: message, style: .cancel, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
+    }
 }
 
 // MARK: - DataSource: UITableView
@@ -247,7 +264,20 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
 
 // MARK: - Delegate: GetOnAlarmButton
 extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
-    func toggleGetOnAlarmSetting() {
-        print("toggle Alarm")
+    func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool? {
+        guard let indexPath = self.alarmSettingView.indexPath(for: cell),
+              let arriveInfo = self.viewModel?.busArriveInfos[indexPath.item],
+              let remainTime = arriveInfo.arriveRemainTime?.toString() else { return nil }
+        if let count = Int(String(arriveInfo.relativePosition?.first ?? "0")),
+           count <= 1 {
+            let arrivingSoonMessage = "버스가 곧 도착합니다"
+            self.alert(message: arrivingSoonMessage)
+            return false
+        }
+        else {
+            print("\(arriveInfo.plainNumber) 버스 승차알람을 \(cancel ? "취소" : "설정")하였습니다.")
+            if !cancel { print("약 \(remainTime) 후 도착 예정입니다.") }
+            return true
+        }
     }
 }

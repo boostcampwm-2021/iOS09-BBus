@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol BusRoutePushable: Coordinator {
     func pushToBusRoute(busRouteId: Int)
@@ -44,5 +45,15 @@ protocol StationPushable: Coordinator {
 extension StationPushable {
     func pushToStation(arsId: String) {
         self.delegate?.pushStation(arsId: arsId)
+    }
+}
+
+protocol AlertPushable: Coordinator {
+    func pushAlert(controller: UIAlertController, completion: (() -> Void)?)
+}
+
+extension AlertPushable {
+    func pushAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.delegate?.pushAlert(controller: controller, completion: completion)
     }
 }
