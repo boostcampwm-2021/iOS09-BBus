@@ -233,9 +233,14 @@ extension AlarmSettingViewController: BackButtonDelegate {
 
 // MARK: - Delegate: GetOffAlarmButton
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
-    func shouldGoToMovingStatusScene() {
+    func shouldGoToMovingStatusScene(from cell: UITableViewCell) {
+        guard let busRouteId = self.viewModel?.busRouteId,
+              let indexPath = self.alarmSettingView.indexPath(for: cell),
+              let startStationArsId = self.viewModel?.busStationInfos.first?.arsId,
+              let endStationArsId = self.viewModel?.busStationInfos[indexPath.item].arsId else { return }
+        
         UIView.animate(withDuration: 0.3) {
-            self.coordinator?.openMovingStatus()
+            self.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
         }
     }
 }

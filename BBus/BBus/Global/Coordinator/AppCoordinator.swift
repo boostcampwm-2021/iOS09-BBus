@@ -53,11 +53,10 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
 }
 
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
-    func open() {
-        //TODO: busRouteId(버스정보), fromArsId(승차점), toArsId(하차점) 파라미터가 필요
+    func open(busRouteId: Int, fromArsId: String, toArsId: String) {
 
         let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
-        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: 100100048, fromArsId: "13014", toArsId: "01127")
+        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController

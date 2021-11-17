@@ -53,4 +53,8 @@ class AlarmSettingView: UIView {
     func reloadGetOnSection() {
         self.alarmTableView.reloadSections(IndexSet(integer: .zero), with: .none)
     }
+    
+    func indexPath(for cell: UITableViewCell) -> IndexPath? {
+        return self.alarmTableView.indexPath(for: cell)
+    }
 }
