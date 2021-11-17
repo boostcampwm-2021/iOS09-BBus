@@ -13,17 +13,17 @@ class AlarmSettingViewController: UIViewController {
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
     private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var refreshButton: UIButton = {
+    private lazy var refreshButton: ThrottleButton = {
         let radius: CGFloat = 25
 
-        let button = UIButton()
+        let button = ThrottleButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
-        button.addAction(UIAction(handler: { _ in
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
             self.viewModel?.refresh()
-        }), for: .touchUpInside)
+        }
         return button
     }()
     private let viewModel: AlarmSettingViewModel?

@@ -17,14 +17,14 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
 
     private lazy var homeView = HomeView()
-    lazy var refreshButton: UIButton = {
-        let button = UIButton()
+    lazy var refreshButton: ThrottleButton = {
+        let button = ThrottleButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = self.refreshButtonWidth / 2
         button.tintColor = BBusColor.white
-        button.addAction(UIAction(handler: { _ in
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
             self.viewModel?.reloadFavoriteData()
-        }), for: .touchUpInside)
+        }
         return button
     }()
 
