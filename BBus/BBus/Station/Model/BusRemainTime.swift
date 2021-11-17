@@ -8,9 +8,9 @@
 import Foundation
 
 struct BusRemainTime {
-    let seconds: Int?
+    var seconds: Int?
     let message: String?
-    
+
     init(arriveRemainTime: String) {
         let times = arriveRemainTime.components(separatedBy: ["분", "초"])
         switch times.count {
@@ -35,7 +35,7 @@ struct BusRemainTime {
         if let time = self.seconds {
             let minutes = time / 60
             let seconds = time % 60
-            return "\(minutes)분 \(seconds)초"
+            return minutes >= 1 ? "\(minutes)분 \(seconds)초" : "\(max(seconds, 0))초"
         }
         else {
             return self.checkInfo() ? self.message : nil
@@ -52,5 +52,11 @@ struct BusRemainTime {
         guard let message = self.message else { return true }
         let noInfoMessages = ["운행종료", "출발대기"]
         return !noInfoMessages.contains(message)
+    }
+
+    mutating func descend() {
+        if let second = self.seconds {
+            self.seconds = second - 1
+        }
     }
 }
