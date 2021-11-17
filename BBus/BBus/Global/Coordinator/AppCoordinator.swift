@@ -57,7 +57,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         //TODO: busRouteId(버스정보), fromArsId(승차점), toArsId(하차점) 파라미터가 필요
 
         let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
-        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: 100100048, fromArsId: "07168", toArsId: "06011")
+        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: 100100048, fromArsId: "13014", toArsId: "01127")
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController

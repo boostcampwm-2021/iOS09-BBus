@@ -147,4 +147,10 @@ final class MovingStatusViewModel {
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
+
+    // 타이머가 일정주기로 실행
+    func updateAPI() {
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId) //고민 필요
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+    }
 }
