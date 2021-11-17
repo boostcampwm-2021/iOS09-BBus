@@ -17,9 +17,8 @@ class Service {
     static let shared = Service()
     
     private let accessKey = (Bundle.main.infoDictionary?["API_ACCESS_KEY"] as? String)
-    
     private init() { }
-    
+
     func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let publisher = PassthroughSubject<Data, Error>()
         queue.async { [weak self, weak publisher] in

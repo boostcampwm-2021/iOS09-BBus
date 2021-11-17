@@ -17,7 +17,6 @@ class MovingStatusBusTagView: UIView {
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = BBusImage.speechBubble
-        imageView.tintColor = BBusColor.bbusTypeBlue
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {
@@ -28,7 +27,6 @@ class MovingStatusBusTagView: UIView {
         label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.numberOfLines = numberOfLines
-        label.text = "4정류장 남음"
         return label
     }()
     
@@ -36,12 +34,14 @@ class MovingStatusBusTagView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
+        self.configure(color: BBusColor.gray, remainStation: nil)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
+        self.configure(color: BBusColor.gray, remainStation: nil)
     }
     
     private func configureLayout() {
@@ -83,5 +83,15 @@ class MovingStatusBusTagView: UIView {
             self.booduckBusImageView.leadingAnchor.constraint(equalTo: self.speechBubbleImageView.trailingAnchor, constant: booduckBusImageLeftMargin),
             self.booduckBusImageView.widthAnchor.constraint(equalTo: self.booduckBusImageView.heightAnchor, multiplier: booduckBusImageRatio)
         ])
+    }
+
+    func configure(color: UIColor?, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) {
+        self.speechBubbleImageView.tintColor = color
+        self.booduckBusImageView.image = busIcon
+        if let remainStation = remainStation {
+            self.movingStatusLabel.text = "\(remainStation)정거장 남음"
+        } else {
+            self.movingStatusLabel.text = "현위치 탐색중"
+        }
     }
 }

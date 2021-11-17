@@ -10,12 +10,14 @@ import Combine
 
 typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
 
-class MovingStatusViewController: UIViewController {
+final class MovingStatusViewController: UIViewController {
 
     weak var coordinator: MovingStatusCoordinator?
     private lazy var movingStatusView = MovingStatusView()
     private let viewModel: MovingStatusViewModel?
     private var cancellables: Set<AnyCancellable> = []
+    private var busTag: MovingStatusBusTagView?
+    private var color: UIColor?
     private var busIcon: UIImage?
 
     init(viewModel: MovingStatusViewModel) {
@@ -54,52 +56,113 @@ class MovingStatusViewController: UIViewController {
         self.movingStatusView.configureDelegate(self)
     }
     
-    private func configureBusTag() {
-        self.movingStatusView.addBusTag()
-    }
-    
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
     }
 
+    private func configureBusTag(bus: BoardedBus? = nil) {
+        self.busTag?.removeFromSuperview()
+
+        if let bus = bus {
+            self.busTag = self.movingStatusView.createBusTag(location: bus.location,
+                                                             color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: bus.remainStation)
+        }
+        else {
+            self.busTag = self.movingStatusView.createBusTag(color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: nil)
+        }
+    }
+
     private func binding() {
         self.bindingHeaderBusInfo()
+        self.bindingRemainTime()
+        self.bindingCurrentStation()
+        self.bindingStationInfos()
+        self.bindingBoardedBus()
     }
 
     private func bindingHeaderBusInfo() {
         self.viewModel?.$busInfo
             .receive(on: MovingStatusUsecase.queue)
-            .sink(receiveValue: { busInfo in
+            .sink(receiveValue: { [weak self] busInfo in
                 guard let busInfo = busInfo else { return }
                 DispatchQueue.main.async {
-                    self.movingStatusView.configureBusName(to: busInfo.busName)
-                    self.configureBusColor(type: busInfo.type)
+                    self?.movingStatusView.configureBusName(to: busInfo.busName)
+                    self?.configureBusColor(type: busInfo.type)
+
+                    let testBus = BoardedBus(location: 2.0, remainStation: 5)
+                    self?.configureBusTag(bus: testBus)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingRemainTime() {
+        self.viewModel?.$remainingTime
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] remainingTime in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingCurrentStation() {
+        self.viewModel?.$remainingStation
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] currentStation in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingStationInfos() {
+        self.viewModel?.$stationInfos
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.movingStatusView.reload()
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindingBoardedBus() {
+        self.viewModel?.$boardedBus
+            .receive(on: MovingStatusUsecase.queue)
+            .sink(receiveValue: { [weak self] boardedBus in
+                DispatchQueue.main.async {
+                    self?.configureBusTag(bus: boardedBus)
                 }
             })
             .store(in: &self.cancellables)
     }
 
     private func configureBusColor(type: RouteType) {
-        let color: UIColor?
-
         switch type {
         case .mainLine:
-            color = BBusColor.bbusTypeBlue
+            self.color = BBusColor.bbusTypeBlue
             self.busIcon = BBusImage.blueBusIcon
         case .broadArea:
-            color = BBusColor.bbusTypeRed
+            self.color = BBusColor.bbusTypeRed
             self.busIcon = BBusImage.redBusIcon
         case .customized:
-            color = BBusColor.bbusTypeGreen
+            self.color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBusIcon
         case .circulation:
-            color = BBusColor.bbusTypeCirculation
+            self.color = BBusColor.bbusTypeCirculation
             self.busIcon = BBusImage.circulationBusIcon
         case .lateNight:
-            color = BBusColor.bbusTypeBlue
+            self.color = BBusColor.bbusTypeBlue
             self.busIcon = BBusImage.blueBusIcon
         case .localLine:
-            color = BBusColor.bbusTypeGreen
+            self.color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBusIcon
         }
 
@@ -114,20 +177,18 @@ class MovingStatusViewController: UIViewController {
 // MARK: - DataSource: UITableView
 extension MovingStatusViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.viewModel?.stationInfos.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovingStatusTableViewCell.reusableID, for: indexPath) as? MovingStatusTableViewCell else { return UITableViewCell() }
+        guard let stationInfo = self.viewModel?.stationInfos[indexPath.row] else { return cell }
 
-        switch indexPath.item {
-        case 0:
-            cell.configure(type: .getOn)
-        case 9:
-            cell.configure(type: .getOff)
-        default:
-            cell.configure(type: .waypoint)
-        }
+        cell.configure(speed: stationInfo.speed,
+                       afterSpeed: stationInfo.afterSpeed,
+                       index: indexPath.row,
+                       count: stationInfo.count,
+                       title: stationInfo.title)
         
         return cell
     }

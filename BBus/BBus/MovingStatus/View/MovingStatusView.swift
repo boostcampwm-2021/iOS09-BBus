@@ -133,7 +133,7 @@ class MovingStatusView: UIView {
         self.configureLayout()
         self.configureColor(to: BBusColor.gray)
         self.configureBusName(to: "탐색중")
-        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
     
     override init(frame: CGRect) {
@@ -142,7 +142,7 @@ class MovingStatusView: UIView {
         self.configureLayout()
         self.configureColor(to: BBusColor.gray)
         self.configureBusName(to: "탐색중")
-        self.configureHeaderInfo(currentStation: nil, remainTime: nil)
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
 
     // MARK: - Configure
@@ -291,16 +291,22 @@ class MovingStatusView: UIView {
         self.endAlarmButtonDelegate = delegate
     }
     
-    func addBusTag() {
+    func createBusTag(location: CGFloat = 0, color: UIColor? = BBusColor.gray, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) -> MovingStatusBusTagView {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
+        busTag.configure(color: color,
+                         busIcon: busIcon,
+                         remainStation: remainStation)
+        
         self.stationsTableView.addSubview(busTag)
         busTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
-            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + 2*MovingStatusTableViewCell.cellHeight)
+            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + location*MovingStatusTableViewCell.cellHeight)
         ])
+
+        return busTag
     }
 
     func configureColor(to color: UIColor?) {
@@ -313,12 +319,12 @@ class MovingStatusView: UIView {
         self.busNumberLabel.text = to
     }
 
-    func configureHeaderInfo(currentStation: String? = nil, remainTime: Int?) {
+    func configureHeaderInfo(remainStation: Int? = nil, remainTime: Int?) {
         var headerInfoResult: String = ""
         let currentInfo: String
 
-        if let currentStation = currentStation {
-            currentInfo = currentStation
+        if let remainStation = remainStation {
+            currentInfo = "\(remainStation)정거장 남음"
         } else {
             currentInfo = "현위치 탐색중"
         }
@@ -330,5 +336,9 @@ class MovingStatusView: UIView {
 
         self.bottomIndicatorLabel.text = headerInfoResult
         self.alarmStatusLabel.text = headerInfoResult
+    }
+
+    func reload() {
+        self.stationsTableView.reloadData()
     }
 }
