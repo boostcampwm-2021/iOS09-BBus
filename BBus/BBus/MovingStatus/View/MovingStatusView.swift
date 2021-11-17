@@ -324,12 +324,13 @@ class MovingStatusView: UIView {
         let currentInfo: String
 
         if let remainStation = remainStation {
-            currentInfo = "\(remainStation)정거장 남음"
+            currentInfo = remainStation > 1 ? "\(remainStation)정거장 남음" : "이번에 내리세요!"
         } else {
             currentInfo = "현위치 탐색중"
         }
-        if let remainTime = remainTime {
-            headerInfoResult = "\(currentInfo), \(remainTime)분 소요예정"
+        if let remainTime = remainTime,
+           let remainStation = remainStation {
+            headerInfoResult = remainStation > 1 ? "\(currentInfo), \(remainTime)분 소요예정" : currentInfo
         } else {
             headerInfoResult = currentInfo
         }

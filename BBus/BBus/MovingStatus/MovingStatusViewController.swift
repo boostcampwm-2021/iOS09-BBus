@@ -92,9 +92,7 @@ final class MovingStatusViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.movingStatusView.configureBusName(to: busInfo.busName)
                     self?.configureBusColor(type: busInfo.type)
-
-                    let testBus = BoardedBus(location: 2.0, remainStation: 5)
-                    self?.configureBusTag(bus: testBus)
+                    self?.configureBusTag(bus: nil)
                 }
             })
             .store(in: &self.cancellables)

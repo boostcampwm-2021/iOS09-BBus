@@ -89,7 +89,7 @@ class MovingStatusBusTagView: UIView {
         self.speechBubbleImageView.tintColor = color
         self.booduckBusImageView.image = busIcon
         if let remainStation = remainStation {
-            self.movingStatusLabel.text = "\(remainStation)정거장 남음"
+            self.movingStatusLabel.text = remainStation > 1 ? "\(remainStation)정거장 남음" : "이번에 내리세요!"
         } else {
             self.movingStatusLabel.text = "현위치 탐색중"
         }
