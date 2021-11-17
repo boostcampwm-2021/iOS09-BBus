@@ -15,7 +15,7 @@ typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRel
 class StationViewModel {
     
     let usecase: StationUsecase
-    private let arsId: String
+    let arsId: String
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busKeys: [BBusRouteType]
     @Published private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()

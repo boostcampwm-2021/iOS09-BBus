@@ -354,6 +354,7 @@ extension StationViewController: AlarmButtonDelegate {
         }
         self.coordinator?.pushToAlarmSetting(stationId: stationId,
                                              busRouteId: bus.busRouteId,
-                                             stationOrd: bus.stationOrd)
+                                             stationOrd: bus.stationOrd,
+                                             arsId: viewModel.arsId)
     }
 }

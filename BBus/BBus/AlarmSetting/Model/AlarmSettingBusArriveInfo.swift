@@ -37,7 +37,6 @@ struct AlarmSettingBusArriveInfo {
         else {
             self.estimatedArrivalTime = nil
         }
-        
     }
     
     static func seperateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime, position: String?) {
