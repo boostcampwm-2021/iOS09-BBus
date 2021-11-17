@@ -8,6 +8,8 @@
 import UIKit
 
 class ThrottleButton: UIButton {
+    
+    static let refreshInterval: Double = 3
 
     private var workItem: DispatchWorkItem?
     private var delay: Double = 0
@@ -30,7 +32,7 @@ class ThrottleButton: UIButton {
             })
             self.workItem = workItem
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + self.delay, execute: workItem)
+            DispatchQueue.global().asyncAfter(deadline: .now() + self.delay, execute: workItem)
         }
     }
     
