@@ -206,7 +206,7 @@ final class BusRouteViewController: UIViewController {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
         controller.addAction(action)
-        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
     
     private func fetch() {

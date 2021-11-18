@@ -23,7 +23,7 @@ extension Publisher where Failure == Error {
     func retry(_ retry: @escaping () -> Void, handler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
         self.catch({ error -> AnyPublisher<Self.Output, Never> in
             switch error {
-            case BBusAPIError.noMoreAccessKeyError:
+            case BBusAPIError.noMoreAccessKeyError, BBusAPIError.trafficExceed:
                 handler(error)
             default:
                 retry()
