@@ -49,6 +49,7 @@
 		4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEC2737885F0029915F /* StationHeaderView.swift */; };
 		4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */; };
 		4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */; };
+		4A917DF227462E36002489FE /* EmptyFavoriteNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A917DF127462E36002489FE /* EmptyFavoriteNoticeView.swift */; };
 		4A97C4D4273A822D00F1A765 /* Pushables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A97C4D3273A822D00F1A765 /* Pushables.swift */; };
 		4A992C4727311F1C0006FB8C /* FavoriteCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C4627311F1C0006FB8C /* FavoriteCollectionHeaderView.swift */; };
 		4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */; };
@@ -167,6 +168,7 @@
 		4A7BBFEC2737885F0029915F /* StationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationHeaderView.swift; sourceTree = "<group>"; };
 		4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationBodyCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainCongestionBadgeLabel.swift; sourceTree = "<group>"; };
+		4A917DF127462E36002489FE /* EmptyFavoriteNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFavoriteNoticeView.swift; sourceTree = "<group>"; };
 		4A97C4D3273A822D00F1A765 /* Pushables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushables.swift; sourceTree = "<group>"; };
 		4A992C4627311F1C0006FB8C /* FavoriteCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionHeaderView.swift; sourceTree = "<group>"; };
 		4A992C48273124AF0006FB8C /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				4A992C4A273124D90006FB8C /* BusCellTrailingView.swift */,
 				4A1A22DA27326FD100476861 /* HomeNavigationView.swift */,
 				4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */,
+				4A917DF127462E36002489FE /* EmptyFavoriteNoticeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -866,6 +869,7 @@
 				4A992C4727311F1C0006FB8C /* FavoriteCollectionHeaderView.swift in Sources */,
 				049375B7273BE08F0061ACDA /* BusPosByRtidDTO.swift in Sources */,
 				4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */,
+				4A917DF227462E36002489FE /* EmptyFavoriteNoticeView.swift in Sources */,
 				04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */,
 				4A97C4D4273A822D00F1A765 /* Pushables.swift in Sources */,
 				049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */,

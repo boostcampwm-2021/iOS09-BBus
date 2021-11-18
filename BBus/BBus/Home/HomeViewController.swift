@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
         }
         return button
     }()
+    private lazy var emptyFavoriteNotice = EmptyFavoriteNoticeView()
 
     private var cancellable: AnyCancellable?
 
@@ -74,8 +75,8 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.addSubview(self.homeView)
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.homeView, self.emptyFavoriteNotice, self.refreshButton)
+
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -83,8 +84,13 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.emptyFavoriteNotice.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: HomeNavigationView.height),
+            self.emptyFavoriteNotice.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.emptyFavoriteNotice.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.emptyFavoriteNotice.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+
         self.refreshButton.backgroundColor = BBusColor.darkGray
         let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
@@ -93,7 +99,6 @@ class HomeViewController: UIViewController {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
-
     }
     
     private func configureColor() {
@@ -109,7 +114,13 @@ class HomeViewController: UIViewController {
             .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
             .sink(receiveValue: { response in
                 DispatchQueue.main.async {
-                    self.homeView.reload()
+                    if response?.count() == 0 {
+                        self.emptyFavoriteNotice.isHidden = false
+                    }
+                    else {
+                        self.homeView.reload()
+                        self.emptyFavoriteNotice.isHidden = true
+                    }
                 }
             })
     }
@@ -121,7 +132,6 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.0.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
-
 
         self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
