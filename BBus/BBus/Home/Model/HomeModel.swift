@@ -19,14 +19,14 @@ struct HomeFavoriteList {
 
     init(dtoList: [FavoriteItemDTO]) {
         var favorites = [HomeFavorite]()
-        dtoList.forEach({ dto in
-            if let index = favorites.firstIndex(where: { $0.stationId == dto.stId }) {
-                favorites[index].append(newElement: dto)
+        dtoList.forEach({ favoriteDTO in
+            if let index = favorites.firstIndex(where: { $0.stationId == favoriteDTO.stId }) {
+                favorites[index].append(newElement: favoriteDTO)
             }
             else {
-                favorites.append(HomeFavorite(stationId: dto.stId,
-                                                   arsId: dto.arsId,
-                                                   buses: [dto]))
+                favorites.append(HomeFavorite(stationId: favoriteDTO.stId,
+                                                   arsId: favoriteDTO.arsId,
+                                                   buses: [favoriteDTO]))
             }
         })
         self.favorites = favorites
@@ -39,8 +39,8 @@ struct HomeFavoriteList {
 
     mutating func configure(homeArrivalinfo: HomeArriveInfo, indexPath: IndexPath) {
         let section = indexPath.section
-        let row = indexPath.row
-        self.favorites[section].configure(homeArrivalInfo: homeArrivalinfo, row: row)
+        let item = indexPath.item
+        self.favorites[section].configure(homeArrivalInfo: homeArrivalinfo, item: item)
     }
 
     func indexPath(of favoriteItemDTO: FavoriteItemDTO) -> IndexPath? {
@@ -63,7 +63,9 @@ struct HomeFavoriteList {
 
 struct HomeFavorite: Equatable {
 
-    subscript(index: Int) -> (FavoriteItemDTO, HomeArriveInfo?)? {
+    typealias HomeBusInfo = (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)
+
+    subscript(index: Int) -> HomeBusInfo? {
         guard 0..<self.buses.count ~= index else { return nil }
         return self.buses[index]
     }
@@ -74,7 +76,7 @@ struct HomeFavorite: Equatable {
 
     let stationId: String
     let arsId: String
-    var buses: [(FavoriteItemDTO, HomeArriveInfo?)]
+    var buses: [HomeBusInfo]
 
     init(stationId: String, arsId: String, buses: [FavoriteItemDTO]) {
         self.stationId = stationId
@@ -90,15 +92,15 @@ struct HomeFavorite: Equatable {
         return self.buses.count
     }
 
-    mutating func configure(homeArrivalInfo: HomeArriveInfo, row: Int) {
-        self.buses[row].1 = homeArrivalInfo
+    mutating func configure(homeArrivalInfo: HomeArriveInfo, item: Int) {
+        self.buses[item].arriveInfo = homeArrivalInfo
     }
 
     mutating func descendTime() {
         self.buses = self.buses.map({
-            guard var arriveInfo = $0.1 else { return ($0.0, nil) }
+            guard var arriveInfo = $0.arriveInfo else { return ($0.favoriteItem, nil) }
             arriveInfo.descend()
-            return ($0.0, arriveInfo)
+            return ($0.favoriteItem, arriveInfo)
         })
     }
 }

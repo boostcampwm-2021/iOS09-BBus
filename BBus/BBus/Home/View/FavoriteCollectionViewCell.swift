@@ -41,7 +41,12 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
         self.busNumberLabel.text = ""
-        self.trailingView.configure(firstBusTime: nil, firstBusRemaining: nil, firstBusCongestion: nil, secondBusTime: nil, secondBusRemaining: nil, secondBusCongestion: nil)
+        self.trailingView.configure(firstBusTime: nil,
+                                    firstBusRemaining: nil,
+                                    firstBusCongestion: nil,
+                                    secondBusTime: nil,
+                                    secondBusRemaining: nil,
+                                    secondBusCongestion: nil)
     }
 
     required init?(coder: NSCoder) {
