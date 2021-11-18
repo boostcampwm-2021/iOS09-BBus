@@ -99,14 +99,14 @@ final class MovingStatusViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingHeaderBusInfo()
-        self.bindingRemainTime()
-        self.bindingCurrentStation()
-        self.bindingStationInfos()
-        self.bindingBoardedBus()
+        self.bindHeaderBusInfo()
+        self.bindRemainTime()
+        self.bindCurrentStation()
+        self.bindStationInfos()
+        self.bindBoardedBus()
     }
 
-    private func bindingHeaderBusInfo() {
+    private func bindHeaderBusInfo() {
         self.viewModel?.$busInfo
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] busInfo in
@@ -120,7 +120,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingRemainTime() {
+    private func bindRemainTime() {
         self.viewModel?.$remainingTime
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] remainingTime in
@@ -131,7 +131,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingCurrentStation() {
+    private func bindCurrentStation() {
         self.viewModel?.$remainingStation
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] currentStation in
@@ -142,7 +142,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingStationInfos() {
+    private func bindStationInfos() {
         self.viewModel?.$stationInfos
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] _ in
@@ -153,7 +153,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBoardedBus() {
+    private func bindBoardedBus() {
         self.viewModel?.$boardedBus
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] boardedBus in

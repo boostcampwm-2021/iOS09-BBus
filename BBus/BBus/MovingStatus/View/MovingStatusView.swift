@@ -295,7 +295,7 @@ class MovingStatusView: UIView {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
-        busTag.configure(color: color,
+        busTag.configureInfo(color: color,
                          busIcon: busIcon,
                          remainStation: remainStation)
         

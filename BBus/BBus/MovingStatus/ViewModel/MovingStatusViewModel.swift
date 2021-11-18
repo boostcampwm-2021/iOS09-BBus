@@ -36,9 +36,9 @@ final class MovingStatusViewModel {
         self.fromArsId = fromArsId
         self.toArsId = toArsId
         self.cancellables = []
-        self.bindingHeaderInfo()
-        self.bindingStationsInfo()
-        self.bindingBusesPosInfo()
+        self.bindHeaderInfo()
+        self.bindStationsInfo()
+        self.bindBusesPosInfo()
         self.configureObserver()
     }
     
@@ -53,7 +53,7 @@ final class MovingStatusViewModel {
         }
     }
 
-    private func bindingHeaderInfo() {
+    private func bindHeaderInfo() {
         self.usecase.$header
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] header in
@@ -62,7 +62,7 @@ final class MovingStatusViewModel {
             .store(in: &self.cancellables)
     }
 
-    private func bindingStationsInfo() {
+    private func bindStationsInfo() {
         self.usecase.$stations
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] stations in
@@ -71,7 +71,7 @@ final class MovingStatusViewModel {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusesPosInfo() {
+    private func bindBusesPosInfo() {
         self.usecase.$buses
             .receive(on: MovingStatusUsecase.queue)
             .sink { [weak self] buses in
