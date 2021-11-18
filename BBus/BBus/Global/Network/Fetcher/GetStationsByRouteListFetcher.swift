@@ -15,6 +15,6 @@ protocol GetStationsByRouteListFetchable {
 class ServiceGetStationsByRouteListFetcher: GetStationsByRouteListFetchable {
     func fetch(param: [String : String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/busRouteInfo/getStaionByRoute"
-        return Service.shared.get(url: url, params: param, on: queue)
+        return Service.shared.get(url: url, params: param, on: queue).mapBBusAPIError()
     }
 }

@@ -149,6 +149,7 @@ final class BusRouteViewController: UIViewController {
         self.bindingBusRouteHeaderResult()
         self.bindingBusRouteBodyResult()
         self.bindingBusesPosInfo()
+        self.bindingNetworkError()
     }
 
     private func bindingBusRouteHeaderResult() {
@@ -190,7 +191,24 @@ final class BusRouteViewController: UIViewController {
             })
             .store(in: &self.cancellables)
     }
+    
+    private func bindingNetworkError() {
+        self.viewModel?.usecase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
 
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
+    }
+    
     private func fetch() {
         self.viewModel?.fetch()
     }

@@ -13,7 +13,7 @@ final class SearchViewController: UIViewController {
     weak var coordinator: SearchCoordinator?
     private lazy var searchView = SearchView()
     private let viewModel: SearchViewModel?
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +57,7 @@ final class SearchViewController: UIViewController {
     }
     
     private func binding() {
-        self.cancellable = self.viewModel?.$searchResults
+        self.viewModel?.$searchResults
             .receive(on: SearchUseCase.queue)
             .sink(receiveValue: { response in
                 DispatchQueue.main.async {
@@ -68,6 +68,22 @@ final class SearchViewController: UIViewController {
                     self.searchView.reload()
                 }
             })
+            .store(in: &self.cancellables)
+        
+        self.viewModel?.usecase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
     }
 }
 

@@ -12,7 +12,7 @@ final class SearchViewModel {
     
     typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
-    private let usecase: SearchUseCase
+    let usecase: SearchUseCase
     @Published private var keyword: String
     @Published private(set) var searchResults: SearchResults
     private var cancellables: Set<AnyCancellable>
@@ -34,12 +34,8 @@ final class SearchViewModel {
             .receive(on: SearchUseCase.queue)
             .debounce(for: .milliseconds(400), scheduler: SearchUseCase.queue)
             .sink { keyword in
-                if let busSearchResults = self.usecase.searchBus(by: keyword) {
-                    self.searchResults.busSearchResults = busSearchResults
-                }
-                if let stationSearchResults = self.usecase.searchStation(by: keyword) {
-                    self.searchResults.stationSearchResults = stationSearchResults
-                }
+                self.searchResults.busSearchResults = self.usecase.searchBus(by: keyword)
+                self.searchResults.stationSearchResults = self.usecase.searchStation(by: keyword)
             }
             .store(in: &self.cancellables)
     }

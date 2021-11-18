@@ -95,6 +95,7 @@ class AlarmSettingViewController: UIViewController {
     private func binding() {
         self.bindingBusArriveInfos()
         self.bindingBusStationInfos()
+        self.bindingErrorMessage()
     }
     
     private func bindingBusArriveInfos() {
@@ -126,16 +127,31 @@ class AlarmSettingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] message in
                 guard let message = message else { return }
-                self?.alert(message: message)
+                self?.alarmSettingAlert(message: message)
+            })
+            .store(in: &self.cancellables)
+        
+        self.viewModel?.useCase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
             })
             .store(in: &self.cancellables)
     }
     
-    private func alert(message: String) {
+    private func alarmSettingAlert(message: String) {
         let controller = UIAlertController()
         let action = UIAlertAction(title: message, style: .cancel, handler: nil)
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
+    }
+    
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
     }
 }
 
@@ -277,7 +293,7 @@ extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
         if let count = Int(String(arriveInfo.relativePosition?.first ?? "0")),
            count <= 1 {
             let arrivingSoonMessage = "버스가 곧 도착합니다"
-            self.alert(message: arrivingSoonMessage)
+            self.alarmSettingAlert(message: arrivingSoonMessage)
             return false
         }
         else {

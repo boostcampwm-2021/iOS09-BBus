@@ -14,6 +14,7 @@ final class MovingStatusUsecase {
     @Published var header: BusRouteDTO?
     @Published var buses: [BusPosByRtidDTO] = []
     @Published var stations: [StationByRouteListDTO] = []
+    @Published var networkError: Error?
 
     private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue(label: "MovingStatus")
@@ -21,49 +22,60 @@ final class MovingStatusUsecase {
     init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
         self.usecases = usecases
         self.cancellables = []
+        self.networkError = nil
     }
 
     func searchHeader(busRouteId: Int) {
         self.usecases.getRouteList()
             .receive(on: Self.queue)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
+            .tryMap({ routeList in
+                let headers = routeList.filter({ $0.routeID == busRouteId })
+                if let header = headers.first {
+                    return header
                 }
-            }, receiveValue: { [weak self] routeList in
-                let headers = routeList.filter { $0.routeID == busRouteId }
-                guard let header = headers.first else { return }
-                self?.header = header
+                else {
+                    throw BBusAPIError.wrongFormatError
+                }
             })
+            .retry({ [weak self] in
+                self?.searchHeader(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.header, on: self)
             .store(in: &self.cancellables)
     }
 
     func fetchRouteList(busRouteId: Int) {
         self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
             .receive(on: Self.queue)
-            .sink { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            } receiveValue: { [weak self] stationsByRouteList in
-                guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { return }
-                self?.stations = result.body.itemList
-            }
+            .tryMap ({ stationsByRouteList -> [StationByRouteListDTO] in
+                guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { throw BBusAPIError.wrongFormatError }
+                return result.body.itemList
+            })
+            .retry ({ [weak self] in
+                self?.fetchRouteList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.stations, on: self)
             .store(in: &self.cancellables)
     }
 
     func fetchBusPosList(busRouteId: Int) {
         self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
             .receive(on: Self.queue)
-            .sink { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            } receiveValue: { [weak self] busPosByRtidList in
-                guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { return }
-                self?.buses = result.body.itemList
-            }
+            .tryMap ({ busPosByRtidList -> [BusPosByRtidDTO] in
+                guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { throw BBusAPIError.wrongFormatError }
+                return result.body.itemList
+            })
+            .retry ({ [weak self] in
+                self?.fetchBusPosList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.buses, on: self)
             .store(in: &self.cancellables)
     }
 }
