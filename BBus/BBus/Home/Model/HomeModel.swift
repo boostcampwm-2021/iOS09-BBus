@@ -18,14 +18,14 @@ struct HomeFavoriteList {
 
     init(dtoList: [FavoriteItemDTO]) {
         var favorites = [HomeFavorite]()
-        dtoList.forEach({ dto in
-            if let index = favorites.firstIndex(where: { $0.stationId == dto.stId }) {
-                favorites[index].append(newElement: dto)
+        dtoList.forEach({ favoriteDTO in
+            if let index = favorites.firstIndex(where: { $0.stationId == favoriteDTO.stId }) {
+                favorites[index].append(newElement: favoriteDTO)
             }
             else {
-                favorites.append(HomeFavorite(stationId: dto.stId,
-                                                   arsId: dto.arsId,
-                                                   buses: [dto]))
+                favorites.append(HomeFavorite(stationId: favoriteDTO.stId,
+                                                   arsId: favoriteDTO.arsId,
+                                                   buses: [favoriteDTO]))
             }
         })
         self.favorites = favorites
