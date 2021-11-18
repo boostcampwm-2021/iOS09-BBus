@@ -29,6 +29,10 @@ enum BBusImage {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large)
         return UIImage(systemName: "info.circle", withConfiguration: largeConfig)
     }()
+    static let navigationBack: UIImage? = {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular, scale: .default)
+        return UIImage(systemName: "chevron.left", withConfiguration: largeConfig)
+    }()
     static let booDuck = UIImage(named: "booDuck")
     static let unfold = UIImage(systemName: "chevron.up")
     static let fold = UIImage(systemName: "chevron.down")
@@ -37,7 +41,6 @@ enum BBusImage {
     static let waypoint = UIImage(named: "stationCenterCircle")
     static let booduckBus = UIImage(named: "busIconWithBooDuck")
     static let speechBubble = UIImage(named: "speechBubble")
-    static let navigationBack = UIImage(systemName: "chevron.left")
     static let headerArrow = UIImage(systemName: "arrow.left.and.right")
     static let stationCenterCircle = UIImage(named: "stationCenterCircle")
     static let stationCenterGetOn = UIImage(named: "getOn")

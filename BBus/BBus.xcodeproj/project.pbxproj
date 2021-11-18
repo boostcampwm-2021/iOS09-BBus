@@ -316,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				049B9CFF2744D2AA004DE66E /* ThrottleButton.swift */,
+				873578822732545D00CC8ECC /* CustomNavigationBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -482,7 +483,6 @@
 				0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */,
 				04AC7D102733AF090095CD4E /* BusRouteTableViewCell.swift */,
 				87359B8C27311BF100F461A7 /* BusTagView.swift */,
-				873578822732545D00CC8ECC /* CustomNavigationBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
