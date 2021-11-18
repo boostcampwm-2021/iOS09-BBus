@@ -131,7 +131,7 @@ extension AppCoordinator: CoordinatorFinishDelegate {
 }
 
 extension AppCoordinator: CoordinatorAlertDelegate {
-    func pushAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
         self.navigationPresenter.present(controller, animated: false, completion: completion)
     }
 }

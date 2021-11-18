@@ -20,7 +20,7 @@ protocol CoordinatorCreateDelegate {
 }
 
 protocol CoordinatorAlertDelegate {
-    func pushAlert(controller: UIAlertController, completion: (() -> Void)?)
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)?)
 }
 
 typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate & CoordinatorAlertDelegate)
