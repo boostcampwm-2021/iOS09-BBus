@@ -31,9 +31,9 @@ class HomeView: UIView {
 
     // MARK: - Configuration
     func configureLayout() {
+        self.addSubviews(self.favoriteCollectionView, self.navigationView)
+
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
-        self.addSubview(self.favoriteCollectionView)
-        self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.favoriteCollectionView.backgroundColor = BBusColor.bbusGray6
         NSLayoutConstraint.activate([
             self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -42,8 +42,6 @@ class HomeView: UIView {
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.addSubview(self.navigationView)
-        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
             self.navigationView.heightAnchor.constraint(equalToConstant: HomeNavigationView.height),

@@ -22,6 +22,7 @@ final class SearchViewController: UIViewController {
         self.configureUI()
         self.configureDelegate()
         self.binding()
+        self.searchView.configureInitialTabStatus(type: .bus)
     }
 
     init(viewModel: SearchViewModel) {
@@ -35,11 +36,6 @@ final class SearchViewController: UIViewController {
     }
 
     // MARK: - Configuration
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.searchView.configureInitialTabStatus(type: .bus)
-    }
-
     private func configureDelegate() {
         self.searchView.configureBackButtonDelegate(self)
         self.searchView.configureDelegate(self)
