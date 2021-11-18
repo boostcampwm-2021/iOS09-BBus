@@ -8,16 +8,18 @@
 import Foundation
 import Combine
 
+typealias HomeUseCases = GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
+
 class HomeUseCase {
 
-    private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
+    private let usecases: HomeUseCases
     private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue.init(label: "Home")
     var stationList: [StationDTO]?
     var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
 
-    init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase) {
+    init(usecases: HomeUseCases) {
         self.usecases = usecases
         self.cancellables = []
         self.startHome()
