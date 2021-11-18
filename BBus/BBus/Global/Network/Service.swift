@@ -16,8 +16,13 @@ enum NetworkError: Error {
 class Service {
     static let shared = Service()
     
-    private let accessKeys = [Bundle.main.infoDictionary?["API_ACCESS_KEY1"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY2"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY3"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY4"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY5"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY6"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY7"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY8"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY9"] as? String]
-    private var order: Int = 3
+    private let accessKeys: [String] = { () -> [String] in
+        let keys = [Bundle.main.infoDictionary?["API_ACCESS_KEY1"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY2"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY3"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY4"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY5"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY6"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY7"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY8"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY9"] as? String]
+        return keys.compactMap({ $0 })
+    }()
+    private lazy var order: Int = {
+        self.accessKeys.count
+    }()
     
     private init() { }
 
@@ -47,15 +52,14 @@ class Service {
     }
     
     private func makeRequest(url: String, params: [String: String]) -> URLRequest? {
-        guard let accessKey = self.accessKeys[self.order],
-              var components = URLComponents(string: url) else { return nil }
+        guard var components = URLComponents(string: url) else { return nil }
         var items: [URLQueryItem] = []
         params.forEach() { item in
             items.append(URLQueryItem(name: item.key, value: item.value))
         }
         components.queryItems = items
         if let query = components.percentEncodedQuery  {
-            components.percentEncodedQuery = query + "&serviceKey=" + accessKey
+            components.percentEncodedQuery = query + "&serviceKey=" + self.accessKeys[self.order]
         }
         else {
             return nil
