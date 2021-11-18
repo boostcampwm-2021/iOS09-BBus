@@ -9,6 +9,7 @@ import UIKit
 
 class EmptySearchResultNoticeView: UIView {
 
+    private var searchType: SearchType = .bus
     private lazy var noticeImage: UIImageView = {
         let imageView = UIImageView(image: BBusImage.exclamationMark)
         imageView.tintColor = BBusColor.bbusGray
@@ -26,12 +27,20 @@ class EmptySearchResultNoticeView: UIView {
         let label = UILabel()
         label.textColor = BBusColor.bbusSearchRed
         label.font = UIFont.systemFont(ofSize: 15)
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(self.onExchangeLabelTapped(_:)))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        label.text = "검색 결과"
         return label
     }()
+    private var busTabButtonDelegate: BusTabButtonDelegate?
+    private var stationTabButtonDelegate: StationTabButtonDelegate?
 
     convenience init(searchType: SearchType) {
         self.init(frame: CGRect())
-        switch searchType {
+        self.searchType = searchType
+        switch self.searchType {
         case .bus:
             self.exchangeAnotherTabLabel.text = "정류장 검색 결과 >"
         case .station:
@@ -47,6 +56,11 @@ class EmptySearchResultNoticeView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.configureLayout()
+    }
+
+    func configureDelegate(_ delegate: BusTabButtonDelegate & StationTabButtonDelegate) {
+        self.busTabButtonDelegate = delegate
+        self.stationTabButtonDelegate = delegate
     }
 
     private func configureLayout() {
@@ -68,6 +82,16 @@ class EmptySearchResultNoticeView: UIView {
             self.exchangeAnotherTabLabel.topAnchor.constraint(equalTo: self.noticeLabel.bottomAnchor, constant: 15),
             self.exchangeAnotherTabLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
+    }
+
+    @objc private func onExchangeLabelTapped(_ sender: UITapGestureRecognizer) {
+
+        switch self.searchType {
+        case .bus:
+            self.stationTabButtonDelegate?.shouldStationTabSelect()
+        case .station:
+            self.busTabButtonDelegate?.shouldBusTabSelect()
+        }
     }
 
 }

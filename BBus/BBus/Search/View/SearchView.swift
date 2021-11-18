@@ -73,6 +73,7 @@ final class SearchView: UIView {
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & SearchBackButtonDelegate & TextFieldDelegate) {
         self.navigationView.configureBackButtonDelegate(delegate)
         self.searchResultScrollView.configureDelegate(delegate)
+        self.searchResultScrollView.configureExchangeLabelDelegate(self)
         self.searchResultScrollView.delegate = self
     }
 

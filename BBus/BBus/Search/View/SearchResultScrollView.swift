@@ -149,6 +149,11 @@ final class SearchResultScrollView: UIScrollView {
         self.stationResultCollectionView.dataSource = delegate
     }
 
+    func configureExchangeLabelDelegate(_ delegate: BusTabButtonDelegate & StationTabButtonDelegate) {
+        self.emptyStationSearchResultNoticeView.configureDelegate(delegate)
+        self.emptyBusSearchResultNoticeView.configureDelegate(delegate)
+    }
+
     func configureIndicator(_ moving: Bool) {
         self.leftFakeIndicatorView.isHidden = moving
         self.rightFakeIndicatorView.isHidden = moving
