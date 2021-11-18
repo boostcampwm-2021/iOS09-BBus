@@ -11,13 +11,18 @@ import Combine
 final class SearchUseCase {
     
     private let usecases: GetRouteListUsecase & GetStationListUsecase
-    @Published var routeList: [BusRouteDTO]?
-    @Published var stationList: [StationDTO]?
-    private var cancellables: Set<AnyCancellable> = []
+    @Published var routeList: [BusRouteDTO]
+    @Published var stationList: [StationDTO]
+    @Published var networkError: Error?
+    private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue(label: "Search")
     
     init(usecases: GetRouteListUsecase & GetStationListUsecase) {
         self.usecases = usecases
+        self.routeList = []
+        self.stationList = []
+        self.networkError = nil
+        self.cancellables = []
         self.startSearch()
     }
     
@@ -31,13 +36,12 @@ final class SearchUseCase {
             self.usecases.getRouteList()
                 .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { routeList in
-                    self.routeList = routeList
+                .retry({ [weak self] in
+                    self?.startRouteSearch()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
+                .assign(to: \.routeList, on: self)
                 .store(in: &self.cancellables)
         }
     }
@@ -47,20 +51,17 @@ final class SearchUseCase {
             self.usecases.getStationList()
                 .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { stationList in
-                    self.stationList = stationList
+                .retry({ [weak self] in
+                    self?.startStationSearch()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
+                .assign(to: \.stationList, on: self)
                 .store(in: &self.cancellables)
         }
     }
     
-    func searchBus(by keyword: String) -> [BusSearchResult]? {
-        guard let routeList = self.routeList else { return nil }
-        
+    func searchBus(by keyword: String) -> [BusSearchResult] {
         if keyword == "" {
             return []
         }
@@ -70,9 +71,7 @@ final class SearchUseCase {
         }
     }
     
-    func searchStation(by keyword: String) -> [StationSearchResult]? {
-        guard let stationList = self.stationList else { return nil }
-        
+    func searchStation(by keyword: String) -> [StationSearchResult] {
         if keyword == "" {
             return []
         }
