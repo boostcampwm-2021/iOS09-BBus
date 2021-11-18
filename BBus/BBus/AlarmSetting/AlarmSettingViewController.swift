@@ -99,11 +99,10 @@ class AlarmSettingViewController: UIViewController {
     
     private func bindingBusArriveInfos() {
         self.viewModel?.$busArriveInfos
-            .throttle(for: .seconds(1), scheduler: AlarmSettingUseCase.queue, latest: true)
+            .filter { !$0.changedByTimer }
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink(receiveValue: { [weak self] data in
-                DispatchQueue.main.async {
-                    self?.alarmSettingView.reloadGetOnSection()
-                }
+                self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
     }
@@ -169,15 +168,22 @@ extension AlarmSettingViewController: UITableViewDataSource {
             }
             else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
+                
                 cell.configure(routeType: self.viewModel?.routeType)
-                cell.configure(order: String(indexPath.row+1),
-                               remainingTime: info.arriveRemainTime?.toString(),
-                               remainingStationCount: info.relativePosition,
-                               busCongestionStatus: info.congestion?.toString(),
-                               arrivalTime: info.estimatedArrivalTime,
-                               currentLocation: info.currentStation,
-                               busNumber: info.plainNumber)
                 cell.configureDelegate(self)
+                cell.cancellable = self.viewModel?.$busArriveInfos
+                    .receive(on: DispatchQueue.main)
+                    .sink { busArriveInfos in
+                        guard let info = busArriveInfos[indexPath.row] else { return }
+                        cell.configure(order: String(indexPath.row+1),
+                                       remainingTime: info.arriveRemainTime?.toString(),
+                                       remainingStationCount: info.relativePosition,
+                                       busCongestionStatus: info.congestion?.toString(),
+                                       arrivalTime: info.estimatedArrivalTime,
+                                       currentLocation: info.currentStation,
+                                       busNumber: info.plainNumber)
+                    }
+                
                 return cell
             }
         case 1:
@@ -214,7 +220,7 @@ extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return 0 }
+            guard let info = self.viewModel?.busArriveInfos.arriveInfos[indexPath.row] else { return 0 }
             switch info.arriveRemainTime {
             case nil :
                 return indexPath.row == 0 ? NoneInfoTableViewCell.height : GetOnStatusCell.singleInfoCellHeight
@@ -266,7 +272,7 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
 extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
     func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool? {
         guard let indexPath = self.alarmSettingView.indexPath(for: cell),
-              let arriveInfo = self.viewModel?.busArriveInfos[indexPath.item],
+              let arriveInfo = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item],
               let remainTime = arriveInfo.arriveRemainTime?.toString() else { return nil }
         if let count = Int(String(arriveInfo.relativePosition?.first ?? "0")),
            count <= 1 {

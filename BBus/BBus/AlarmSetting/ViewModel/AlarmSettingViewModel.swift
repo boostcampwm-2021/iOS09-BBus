@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-typealias AlarmSettingBusStationInfo = (arsId: String, name: String, estimatedTime: Int)
+
 
 class AlarmSettingViewModel {
     
@@ -19,7 +19,7 @@ class AlarmSettingViewModel {
     private let arsId: String
     let routeType: RouteType?
     let busName: String
-    @Published private(set) var busArriveInfos: [AlarmSettingBusArriveInfo]
+    @Published private(set) var busArriveInfos: AlarmSettingBusStationInfos
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
     @Published private(set) var errorMessage: String?
     private var cancellables: Set<AnyCancellable>
@@ -33,7 +33,7 @@ class AlarmSettingViewModel {
         self.routeType = routeType
         self.busName = busName
         self.cancellables = []
-        self.busArriveInfos = []
+        self.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: [], changedByTimer: false)
         self.busStationInfos = []
         self.errorMessage = nil
         self.binding()
@@ -44,18 +44,10 @@ class AlarmSettingViewModel {
     
     private func configureObserver() {
         NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
-            self.descendTime()
+            self.busArriveInfos.desend()
         }
         NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
             self.refresh()
-        }
-    }
-    
-    private func descendTime() {
-        self.busArriveInfos = self.busArriveInfos.map {
-            var arriveInfo = $0
-            arriveInfo.arriveRemainTime?.descend()
-            return arriveInfo
         }
     }
     
@@ -88,7 +80,7 @@ class AlarmSettingViewModel {
                                                              congestion: data.secondBusCongestion,
                                                              currentStation: data.secondBusCurrentStation,
                                                              plainNumber: data.secondBusPlainNumber))
-                self.busArriveInfos = arriveInfos
+                self.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: arriveInfos, changedByTimer: false)
             })
             .store(in: &self.cancellables)
     }

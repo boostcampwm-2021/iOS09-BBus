@@ -35,7 +35,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         label.textColor = BBusColor.black
         return label
     }()
-    private lazy var directionLabel: UILabel = {
+    private lazy var arsIdLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = BBusColor.bbusGray
@@ -57,7 +57,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.stationTitleLabel.text = ""
-        self.directionLabel.text = ""
+        self.arsIdLabel.text = ""
     }
     
     // MARK: - Configuration
@@ -73,11 +73,11 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
             self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: titleBottomInterval)
         ])
 
-        self.addSubview(self.directionLabel)
-        self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.arsIdLabel)
+        self.arsIdLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
-            self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
+            self.arsIdLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
+            self.arsIdLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
         ])
     }
 
@@ -89,8 +89,8 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         self.delegate = delegate
     }
 
-    func configure(title: String, direction: String) {
+    func configure(title: String, arsId: String) {
         self.stationTitleLabel.text = title
-        self.directionLabel.text = direction
+        self.arsIdLabel.text = arsId
     }
 }
