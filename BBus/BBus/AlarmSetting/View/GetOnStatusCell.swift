@@ -278,9 +278,25 @@ class GetOnStatusCell: UITableViewCell {
     }
 
     func configure(order: String, remainingTime: String?, remainingStationCount: String?, busCongestionStatus: String?, arrivalTime: String?, currentLocation: String, busNumber: String) {
-        self.busOrderNumberLabel.text = order
         let isHidden = remainingTime == nil
-        self.noInfoMessageLabel.isHidden = !isHidden
+        self.noInfoCellActivate(by: !isHidden)
+        self.infoCellActivate(by: isHidden)
+        self.busOrderNumberLabel.text = order
+        
+        if isHidden { return }
+        self.remainingTimeLabel.text = remainingTime
+        self.remainingStationCountLabel.text = remainingStationCount
+        self.busCongestionStatusLabel.text = busCongestionStatus
+        self.arrivalTimeLabel.text = arrivalTime
+        self.currentLocationLabel.text = currentLocation
+        self.busNumberLabel.text = busNumber
+    }
+    
+    private func noInfoCellActivate(by isHidden: Bool) {
+        self.noInfoMessageLabel.isHidden = isHidden
+    }
+    
+    private func infoCellActivate(by isHidden: Bool) {
         self.remainingTimeLabel.isHidden = isHidden
         self.remainingStationCountLabel.isHidden = isHidden
         self.busCongestionStatusLabel.isHidden = isHidden
@@ -291,14 +307,6 @@ class GetOnStatusCell: UITableViewCell {
         self.locationIconImageView.isHidden = isHidden
         self.clockIconImageView.isHidden = isHidden
         self.busIconImageView.isHidden = isHidden
-        
-        if isHidden { return }
-        self.remainingTimeLabel.text = remainingTime
-        self.remainingStationCountLabel.text = remainingStationCount
-        self.busCongestionStatusLabel.text = busCongestionStatus
-        self.arrivalTimeLabel.text = arrivalTime
-        self.currentLocationLabel.text = currentLocation
-        self.busNumberLabel.text = busNumber
     }
 
     func configureDelegate(_ delegate: GetOnAlarmButtonDelegate) {
