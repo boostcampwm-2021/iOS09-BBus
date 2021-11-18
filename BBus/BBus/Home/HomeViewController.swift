@@ -161,7 +161,7 @@ extension HomeViewController: UICollectionViewDataSource {
             .filter { $0.changedByTimer }
             .sink(receiveValue: { homeFavoriteList in
                 DispatchQueue.main.async {
-                    guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
                           let busName = self.viewModel?.busName(by: model.0.busRouteId),
                           let busType = self.viewModel?.busType(by: busName) else { return }
                     
