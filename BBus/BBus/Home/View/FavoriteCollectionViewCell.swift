@@ -10,7 +10,7 @@ import Combine
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
-    var cancellable: AnyCancellable?
+    var cancellables = Set<AnyCancellable>()
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
@@ -38,7 +38,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.cancellable?.cancel()
+        self.cancellables.forEach { $0.cancel() }
+        self.cancellables.removeAll()
         self.busNumberLabel.text = ""
         self.trailingView.configure(firstBusTime: nil, firstBusRemaining: nil, firstBusCongestion: nil, secondBusTime: nil, secondBusRemaining: nil, secondBusCongestion: nil)
     }

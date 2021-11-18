@@ -106,9 +106,9 @@ class HomeViewController: UIViewController {
 
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
-            .throttle(for: 1, scheduler: DispatchQueue.main, latest: true)
             .compactMap { $0 }
             .filter { !$0.changedByTimer }
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: true)  // 필터 이후에 해줘야 reload가 씹히지 않습니다.
             .sink(receiveValue: { response in
                 self.homeView.reload()
             })
@@ -157,7 +157,7 @@ extension HomeViewController: UICollectionViewDataSource {
         cell.configureDelegate(self)
         
         // bind RemainTimeLabel and ViewModel
-        cell.cancellable = self.viewModel?.$homeFavoriteList
+        self.viewModel?.$homeFavoriteList
             .sink(receiveValue: { homeFavoriteList in
                 DispatchQueue.main.async {
                     guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
@@ -175,6 +175,7 @@ extension HomeViewController: UICollectionViewDataSource {
                                    secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
                 }
             })
+            .store(in: &cell.cancellables)
         
         return cell
     }
