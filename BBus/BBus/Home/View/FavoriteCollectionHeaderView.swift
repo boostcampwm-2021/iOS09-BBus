@@ -20,13 +20,9 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         didSet {
             self.gestureRecognizers?.forEach() { self.removeGestureRecognizer($0) }
             let tapGesture = UITapGestureRecognizer()
-            tapGesture.addTarget(self, action: #selector(headerViewTapped(_:)))
+            tapGesture.addTarget(self, action: #selector(self.headerViewTapped(_:)))
             self.addGestureRecognizer(tapGesture)
         }
-    }
-    
-    @objc private func headerViewTapped(_ sender: UITapGestureRecognizer) {
-        delegate?.shouldGoToStationScene(headerView: self)
     }
 
     private lazy var stationTitleLabel: UILabel = {
@@ -79,6 +75,10 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
             self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
             self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
         ])
+    }
+
+    @objc private func headerViewTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.shouldGoToStationScene(headerView: self)
     }
 
     private func configureUI() {
