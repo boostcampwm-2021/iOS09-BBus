@@ -15,8 +15,8 @@ class HomeUseCase {
     private let usecases: HomeUseCases
     private var cancellables: Set<AnyCancellable>
     static let queue = DispatchQueue.init(label: "Home")
-    var stationList: [StationDTO]?
-    var busRouteList: [BusRouteDTO]?
+    private(set) var stationList: [StationDTO]?
+    private(set) var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
 
     init(usecases: HomeUseCases) {
