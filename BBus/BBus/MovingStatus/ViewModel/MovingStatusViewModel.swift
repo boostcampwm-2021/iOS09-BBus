@@ -100,10 +100,10 @@ final class MovingStatusViewModel {
         if stationInfos.isEmpty { return }
 
         for bus in buses {
-            if self.onBoard(gpsY: gpsY, gpsX: gpsX, busY: bus.gpsY, busX: bus.gpsX) {
+            if self.isOnBoard(gpsY: gpsY, gpsX: gpsX, busY: bus.gpsY, busX: bus.gpsX) {
                 self.updateRemainingStation(bus: bus)
-                self.updateRemainingTime(bus: bus)
                 self.updateBoardBus(bus: bus)
+                self.updateRemainingTime(bus: bus)
                 break
             }
         }
@@ -117,17 +117,16 @@ final class MovingStatusViewModel {
 
     // 남은 시간 업데이트 로직
     private func updateRemainingTime(bus: BusPosByRtidDTO) {
-        guard let startOrd = self.startOrd else { return }
+        guard let startOrd = self.startOrd,
+              let boardedBus = self.boardedBus else { return }
+
         let currentIdx = (bus.sectionOrder - startOrd)
         var totalRemainTime = 0
         for index in currentIdx...self.stationInfos.count-1 {
             totalRemainTime += self.stationInfos[index].sectTime
         }
 
-        let currentLocation = self.convertBusPos(startOrd: startOrd,
-                                                 order: bus.sectionOrder,
-                                                 sect: bus.sectDist,
-                                                 fullSect: bus.fullSectDist)
+        let currentLocation = boardedBus.location
         let extraPersent = Double(currentLocation) - Double(currentIdx)
         let extraTime = extraPersent * Double(self.stationInfos[currentIdx].sectTime)
         totalRemainTime -= Int(ceil(extraTime))
@@ -149,7 +148,7 @@ final class MovingStatusViewModel {
     }
 
     // Bus - 유저간 거리 측정 로직
-    func onBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
+    func isOnBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
         let userLocation = CLLocation(latitude: gpsX, longitude: gpsY)
         let busLocation = CLLocation(latitude: busX, longitude: busY)
         let distanceInMeters = userLocation.distance(from: busLocation)
