@@ -10,7 +10,7 @@ import Combine
 
 class HomeViewModel {
 
-    private let useCase: HomeUseCase
+    let useCase: HomeUseCase
     private var cancellable: AnyCancellable?
     @Published private(set) var homeFavoriteList: HomeFavoriteList?
 

@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
         return button
     }()
 
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -102,16 +102,35 @@ class HomeViewController: UIViewController {
 
     private func binding() {
         self.bindingFavoriteList()
+        self.bindingNetworkError()
     }
 
     private func bindingFavoriteList() {
-        self.cancellable = self.viewModel?.$homeFavoriteList
+        self.viewModel?.$homeFavoriteList
             .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
             .sink(receiveValue: { response in
                 DispatchQueue.main.async {
                     self.homeView.reload()
                 }
             })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingNetworkError() {
+        self.viewModel?.useCase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
     }
 }
 

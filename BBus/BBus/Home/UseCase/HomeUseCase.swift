@@ -16,10 +16,12 @@ class HomeUseCase {
     var stationList: [StationDTO]?
     var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
+    @Published private(set) var networkError: Error?
 
     init(usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase) {
         self.usecases = usecases
         self.cancellables = []
+        self.networkError = nil
         self.startHome()
     }
 
@@ -33,14 +35,13 @@ class HomeUseCase {
         Self.thread.async {
             self.usecases.getFavoriteItemList()
                 .receive(on: Self.thread)
-                .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { favoriteDTO in
-                    self.favoriteList = favoriteDTO
+                .decode(type: [FavoriteItemDTO]?.self, decoder: PropertyListDecoder())
+                .retry({ [weak self] in
+                    self?.loadFavoriteData()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
+                .assign(to: \.favoriteList, on: self)
                 .store(in: &self.cancellables)
         }
     }
@@ -51,15 +52,19 @@ class HomeUseCase {
                                                 busRouteId: favoriteItem.busRouteId,
                                                 ord: favoriteItem.ord)
                 .receive(on: Self.thread)
-                .sink { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                } receiveValue: { data in
+                .tryMap({ data -> ArrInfoByRouteDTO in
                     guard let dto = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
-                          let item = dto.body.itemList.first else { return }
+                          let item = dto.body.itemList.first else { throw BBusAPIError.wrongFormatError }
+                    return item
+                })
+                .retry({ [weak self] in
+                    self?.loadBusRemainTime(favoriteItem: favoriteItem, completion: completion)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .sink(receiveValue: { item in
                     completion(item)
-                }
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -68,14 +73,13 @@ class HomeUseCase {
         Self.thread.async {
             self.usecases.getStationList()
                 .receive(on: Self.thread)
-                .decode(type: [StationDTO].self, decoder: JSONDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { stationList in
-                    self.stationList = stationList
+                .decode(type: [StationDTO]?.self, decoder: JSONDecoder())
+                .retry({ [weak self] in
+                    self?.loadStation()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
+                .assign(to: \.stationList, on: self)
                 .store(in: &self.cancellables)
         }
     }
@@ -84,14 +88,13 @@ class HomeUseCase {
         Self.thread.async {
             self.usecases.getRouteList()
                 .receive(on: Self.thread)
-                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { busRouteList in
-                    self.busRouteList = busRouteList
+                .decode(type: [BusRouteDTO]?.self, decoder: JSONDecoder())
+                .retry({ [weak self] in
+                    self?.loadRoute()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
+                .assign(to: \.busRouteList, on: self)
                 .store(in: &self.cancellables)
         }
     }
