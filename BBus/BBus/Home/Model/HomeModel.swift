@@ -37,8 +37,8 @@ struct HomeFavoriteList {
 
     mutating func configure(homeArrivalinfo: HomeArriveInfo, indexPath: IndexPath) {
         let section = indexPath.section
-        let row = indexPath.row
-        self.favorites[section].configure(homeArrivalInfo: homeArrivalinfo, row: row)
+        let item = indexPath.item
+        self.favorites[section].configure(homeArrivalInfo: homeArrivalinfo, item: item)
     }
 
     func indexPath(of favoriteItemDTO: FavoriteItemDTO) -> IndexPath? {
@@ -60,7 +60,9 @@ struct HomeFavoriteList {
 
 struct HomeFavorite: Equatable {
 
-    subscript(index: Int) -> (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)? {
+    typealias HomeBusInfo = (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)
+
+    subscript(index: Int) -> HomeBusInfo? {
         guard 0..<self.buses.count ~= index else { return nil }
         return self.buses[index]
     }
@@ -71,7 +73,7 @@ struct HomeFavorite: Equatable {
 
     let stationId: String
     let arsId: String
-    var buses: [(FavoriteItemDTO, HomeArriveInfo?)]
+    var buses: [HomeBusInfo]
 
     init(stationId: String, arsId: String, buses: [FavoriteItemDTO]) {
         self.stationId = stationId
@@ -87,15 +89,15 @@ struct HomeFavorite: Equatable {
         return self.buses.count
     }
 
-    mutating func configure(homeArrivalInfo: HomeArriveInfo, row: Int) {
-        self.buses[row].1 = homeArrivalInfo
+    mutating func configure(homeArrivalInfo: HomeArriveInfo, item: Int) {
+        self.buses[item].arriveInfo = homeArrivalInfo
     }
 
     mutating func descendTime() {
         self.buses = self.buses.map({
-            guard var arriveInfo = $0.1 else { return ($0.0, nil) }
+            guard var arriveInfo = $0.arriveInfo else { return ($0.favoriteItem, nil) }
             arriveInfo.descend()
-            return ($0.0, arriveInfo)
+            return ($0.favoriteItem, arriveInfo)
         })
     }
 }
