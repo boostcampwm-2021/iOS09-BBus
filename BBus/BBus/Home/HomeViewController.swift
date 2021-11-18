@@ -93,7 +93,6 @@ class HomeViewController: UIViewController {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
-
     }
     
     private func configureColor() {
@@ -108,7 +107,7 @@ class HomeViewController: UIViewController {
         self.cancellable = self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { !$0.changedByTimer }
-            .throttle(for: 1, scheduler: DispatchQueue.main, latest: true)  // 필터 이후에 해줘야 reload가 씹히지 않습니다.
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { response in
                 self.homeView.reload()
             })
@@ -158,6 +157,8 @@ extension HomeViewController: UICollectionViewDataSource {
         
         // bind RemainTimeLabel and ViewModel
         self.viewModel?.$homeFavoriteList
+            .compactMap { $0 }
+            .filter { $0.changedByTimer }
             .sink(receiveValue: { homeFavoriteList in
                 DispatchQueue.main.async {
                     guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
@@ -183,10 +184,12 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
         guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
-              let stationName = self.viewModel?.stationName(by: stationId) else { return header }
+              let stationName = self.viewModel?.stationName(by: stationId),
+              let arsId = self.viewModel?.homeFavoriteList?[indexPath.section]?.arsId else { return header }
 
         header.configureDelegate(self)
-        header.configure(title: stationName, direction: "추후 변경해야함")
+        header.configure(title: stationName, arsId: arsId)
+        
         return header
     }
 }
