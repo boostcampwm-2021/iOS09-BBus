@@ -45,11 +45,6 @@ final class MovingStatusViewModel {
     private func configureObserver() {
         NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { _ in
             self.updateAPI()
-            
-            guard let y = self.buses.first?.gpsY,
-                  let x = self.buses.first?.gpsX else { return }
-            
-            self.findBoardBus(gpsY: y, gpsX: x)
         }
     }
 
@@ -80,6 +75,11 @@ final class MovingStatusViewModel {
                       let count = self?.stationInfos.count else { return }
 
                 self?.buses = buses.filter { $0.sectionOrder >= currentOrd && $0.sectionOrder < startOrd + count } // 5
+                // Test 로직
+                guard let y = self?.buses.first?.gpsY,
+                      let x = self?.buses.first?.gpsX else { return }
+
+                self?.findBoardBus(gpsY: y, gpsX: x)
             }
             .store(in: &self.cancellables)
     }
