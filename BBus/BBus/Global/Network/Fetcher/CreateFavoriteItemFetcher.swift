@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 protocol CreateFavoriteItemFetchable {
-    func fetch(param: FavoriteItem, on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error>
 }
 
 class PersistentCreateFavoriteItemFetcher: CreateFavoriteItemFetchable {
-    func fetch(param: FavoriteItem, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
+    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         return Persistent.shared.create(key: "FavoriteItems", param: param, on: queue)
     }
 }

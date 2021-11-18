@@ -48,9 +48,9 @@ protocol GetFavoriteItemListUsecase {
 }
 
 protocol CreateFavoriteItemUsecase {
-    func createFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
+    func createFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
 protocol DeleteFavoriteItemUsecase {
-    func deleteFavoriteItem(param: FavoriteItem) -> AnyPublisher<Data, Error>
+    func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }

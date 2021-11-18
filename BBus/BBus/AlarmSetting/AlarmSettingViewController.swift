@@ -6,22 +6,38 @@
 //
 
 import UIKit
+import Combine
 
 class AlarmSettingViewController: UIViewController {
 
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
     private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var refreshButton: UIButton = {
+    private lazy var refreshButton: ThrottleButton = {
         let radius: CGFloat = 25
 
-        let button = UIButton()
+        let button = ThrottleButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = radius
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
+            self.viewModel?.refresh()
+        }
         return button
     }()
+    private let viewModel: AlarmSettingViewModel?
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init(viewModel: AlarmSettingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +45,8 @@ class AlarmSettingViewController: UIViewController {
         self.configureColor()
         self.configureLayout()
         self.configureDelegate()
-        self.configureMOCKDATA()
+        
+        self.binding()
     }
     
     // MARK: - Configure
@@ -74,9 +91,67 @@ class AlarmSettingViewController: UIViewController {
         self.customNavigationBar.configureTintColor(color: BBusColor.black)
         self.customNavigationBar.configureAlpha(alpha: 1)
     }
-
-    private func configureMOCKDATA() {
-        self.customNavigationBar.configureTitle(NSAttributedString(string: "461 ∙ 예술인마을.사당초등학교"))
+    
+    private func binding() {
+        self.bindingBusArriveInfos()
+        self.bindingBusStationInfos()
+        self.bindingErrorMessage()
+    }
+    
+    private func bindingBusArriveInfos() {
+        self.viewModel?.$busArriveInfos
+            .filter { !$0.changedByTimer }
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
+            .sink(receiveValue: { [weak self] data in
+                self?.alarmSettingView.reload()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingBusStationInfos() {
+        self.viewModel?.$busStationInfos
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] infos in
+                guard let self = self else { return }
+                self.alarmSettingView.reload()
+                if let viewModel = self.viewModel,
+                   let stationName = infos.first?.name {
+                    self.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingErrorMessage() {
+        self.viewModel?.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                guard let message = message else { return }
+                self?.alarmSettingAlert(message: message)
+            })
+            .store(in: &self.cancellables)
+        
+        self.viewModel?.useCase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func alarmSettingAlert(message: String) {
+        let controller = UIAlertController()
+        let action = UIAlertAction(title: message, style: .cancel, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
+    }
+    
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
 }
 
@@ -89,9 +164,11 @@ extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            guard let info = self.viewModel?.busArriveInfos.first else { return 0 }
+            return info.arriveRemainTime != nil ? (self.viewModel?.busArriveInfos.count ?? 0) : 1
         case 1:
-            return 10
+            guard let info = self.viewModel?.busStationInfos else { return 0 }
+            return info.count
         default:
             return 0
         }
@@ -100,25 +177,40 @@ extension AlarmSettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
-
-            cell.configure(busColor: BBusColor.bbusTypeBlue)
-            cell.configure(order: String(indexPath.row+1),
-                           remainingTime: "2분 18초",
-                           remainingStationCount: "2번째전",
-                           busCongestionStatus: "여유",
-                           arrivalTime: "오후 04시 11분 도착 예정",
-                           currentLocation: "낙성대입구",
-                           busNumber: "서울74사3082")
-            cell.configureDelegate(self)
-            return cell
+            guard let info = self.viewModel?.busArriveInfos[indexPath.row] else { return UITableViewCell() }
+            if (info.arriveRemainTime == nil && indexPath.row == 0) {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: NoneInfoTableViewCell.reusableID, for: indexPath) as? NoneInfoTableViewCell else { return UITableViewCell() }
+                return cell
+            }
+            else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOnStatusCell.reusableID, for: indexPath) as? GetOnStatusCell else { return UITableViewCell() }
+                
+                cell.configure(routeType: self.viewModel?.routeType)
+                cell.configureDelegate(self)
+                cell.cancellable = self.viewModel?.$busArriveInfos
+                    .receive(on: DispatchQueue.main)
+                    .sink { busArriveInfos in
+                        guard let info = busArriveInfos[indexPath.row] else { return }
+                        cell.configure(order: String(indexPath.row+1),
+                                       remainingTime: info.arriveRemainTime?.toString(),
+                                       remainingStationCount: info.relativePosition,
+                                       busCongestionStatus: info.congestion?.toString(),
+                                       arrivalTime: info.estimatedArrivalTime,
+                                       currentLocation: info.currentStation,
+                                       busNumber: info.plainNumber)
+                    }
+                
+                return cell
+            }
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GetOffTableViewCell.reusableID, for: indexPath) as? GetOffTableViewCell else { return UITableViewCell() }
-
+            guard let infos = self.viewModel?.busStationInfos else { return cell }
+            let info = infos[indexPath.item]
+            
             cell.configure(beforeColor: indexPath.item == 0 ? .clear : BBusColor.bbusGray,
-                           afterColor: indexPath.item == 9 ? .clear : BBusColor.bbusGray,
-                           title: "신촌오거리.현대백화점",
-                           description: "14062 | 2분 소요",
+                           afterColor: indexPath.item == infos.count - 1 ? .clear : BBusColor.bbusGray,
+                           title: info.name,
+                           description: indexPath.item == 0 ? "\(info.arsId)" : "\(info.arsId) | \(info.estimatedTime)분 소요",
                            type: indexPath.item == 0 ? .getOn : .waypoint)
             cell.configureDelegate(self)
             return cell
@@ -144,7 +236,13 @@ extension AlarmSettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return GetOnStatusCell.cellHeight
+            guard let info = self.viewModel?.busArriveInfos.arriveInfos[indexPath.row] else { return 0 }
+            switch info.arriveRemainTime {
+            case nil :
+                return indexPath.row == 0 ? NoneInfoTableViewCell.height : GetOnStatusCell.singleInfoCellHeight
+            default :
+                return GetOnStatusCell.infoCellHeight
+            }
         case 1:
             return GetOffTableViewCell.cellHeight
         default:
@@ -174,16 +272,34 @@ extension AlarmSettingViewController: BackButtonDelegate {
 
 // MARK: - Delegate: GetOffAlarmButton
 extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
-    func shouldGoToMovingStatusScene() {
+    func shouldGoToMovingStatusScene(from cell: UITableViewCell) {
+        guard let busRouteId = self.viewModel?.busRouteId,
+              let indexPath = self.alarmSettingView.indexPath(for: cell),
+              let startStationArsId = self.viewModel?.busStationInfos.first?.arsId,
+              let endStationArsId = self.viewModel?.busStationInfos[indexPath.item].arsId else { return }
+        
         UIView.animate(withDuration: 0.3) {
-            self.coordinator?.openMovingStatus()
+            self.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
         }
     }
 }
 
 // MARK: - Delegate: GetOnAlarmButton
 extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
-    func toggleGetOnAlarmSetting() {
-        print("toggle Alarm")
+    func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool? {
+        guard let indexPath = self.alarmSettingView.indexPath(for: cell),
+              let arriveInfo = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item],
+              let remainTime = arriveInfo.arriveRemainTime?.toString() else { return nil }
+        if let count = Int(String(arriveInfo.relativePosition?.first ?? "0")),
+           count <= 1 {
+            let arrivingSoonMessage = "버스가 곧 도착합니다"
+            self.alarmSettingAlert(message: arrivingSoonMessage)
+            return false
+        }
+        else {
+            print("\(arriveInfo.plainNumber) 버스 승차알람을 \(cancel ? "취소" : "설정")하였습니다.")
+            if !cancel { print("약 \(remainTime) 후 도착 예정입니다.") }
+            return true
+        }
     }
 }

@@ -8,16 +8,21 @@
 import Foundation
 import Combine
 
-class SearchUseCase {
+final class SearchUseCase {
     
     private let usecases: GetRouteListUsecase & GetStationListUsecase
-    @Published var routeList: [BusRouteDTO]?
-    @Published var stationList: [StationDTO]?
-    private var cancellables: Set<AnyCancellable> = []
-    static let thread = DispatchQueue(label: "Search")
+    @Published var routeList: [BusRouteDTO]
+    @Published var stationList: [StationDTO]
+    @Published var networkError: Error?
+    private var cancellables: Set<AnyCancellable>
+    static let queue = DispatchQueue(label: "Search")
     
     init(usecases: GetRouteListUsecase & GetStationListUsecase) {
         self.usecases = usecases
+        self.routeList = []
+        self.stationList = []
+        self.networkError = nil
+        self.cancellables = []
         self.startSearch()
     }
     
@@ -27,54 +32,55 @@ class SearchUseCase {
     }
     
     private func startRouteSearch() {
-        usecases.getRouteList()
-            .receive(on: Self.thread)
-            .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            }, receiveValue: { routeList in
-                self.routeList = routeList
-            })
-            .store(in: &self.cancellables)
+        Self.queue.async {
+            self.usecases.getRouteList()
+                .receive(on: Self.queue)
+                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+                .retry({ [weak self] in
+                    self?.startRouteSearch()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .assign(to: \.routeList, on: self)
+                .store(in: &self.cancellables)
+        }
     }
     
     private func startStationSearch() {
-        usecases.getStationList()
-            .receive(on: Self.thread)
-            .decode(type: [StationDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            }, receiveValue: { stationList in
-                self.stationList = stationList
-            })
-            .store(in: &self.cancellables)
+        Self.queue.async {
+            self.usecases.getStationList()
+                .receive(on: Self.queue)
+                .decode(type: [StationDTO].self, decoder: JSONDecoder())
+                .retry({ [weak self] in
+                    self?.startStationSearch()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .assign(to: \.stationList, on: self)
+                .store(in: &self.cancellables)
+        }
     }
     
-    func searchBus(by keyword: String) -> [BusRouteDTO]? {
-        guard let routeList = self.routeList else { return nil }
+    func searchBus(by keyword: String) -> [BusSearchResult] {
         if keyword == "" {
             return []
         }
         else {
             return routeList.filter { $0.busRouteName.hasPrefix(keyword) }
+                            .map { BusSearchResult(busRouteDTO: $0) }
         }
     }
     
-    func searchStation(by keyword: String) -> [StationSearchResult]? {
-        guard let stationList = self.stationList else { return nil }
-        
+    func searchStation(by keyword: String) -> [StationSearchResult] {
         if keyword == "" {
             return []
         }
         else {
-            return stationList.map { StationSearchResult(stationDTO: $0,
-                                                         arsIdMatchRange: $0.arsID.ranges(of: keyword),
-                                                         stationNameMatchRange: $0.stationName.ranges(of: keyword)) }
-                              .filter { !($0.arsIdMatchRange.isEmpty && $0.stationNameMatchRange.isEmpty) }
+            return stationList.map { StationSearchResult(stationName: $0.stationName,
+                                                         arsId: $0.arsID,
+                                                         stationNameMatchRanges: $0.stationName.ranges(of: keyword),
+                                                         arsIdMatchRanges: $0.arsID.ranges(of: keyword)) }
+                              .filter { !($0.arsIdMatchRanges.isEmpty && $0.stationNameMatchRanges.isEmpty) }
         }
     }
 }

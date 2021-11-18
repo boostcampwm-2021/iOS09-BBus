@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "busIcon.png",
+      "filename" : "blueBusIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "busIcon-1.png",
+      "filename" : "blueBusIcon-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "busIcon-2.png",
+      "filename" : "blueBusIcon-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -42,6 +42,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 }
 
+// MARK: - Delegate : MovingStatusFoldUnfoldDelegate
 extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
     func fold() {
         self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
@@ -52,9 +53,13 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
     }
 }
 
+// MARK: - Delegate : MovingStatusOpenCloseDelegate
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
-    func open() {
-        let viewController = MovingStatusViewController()
+    func open(busRouteId: Int, fromArsId: String, toArsId: String) {
+
+        let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
+        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController
         self.movingStatusWindow.rootViewController = self.movingStatusPresenter
@@ -76,6 +81,14 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
     }
 }
 
+// MARK: - Delegate : AlertCreateDelegate
+extension AppCoordinator: AlertCreateDelegate {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.navigationPresenter.present(controller, animated: false, completion: completion)
+    }
+}
+
+// MARK: - Delegate : CoordinatorCreateDelegate
 extension AppCoordinator: CoordinatorCreateDelegate {
     func pushSearch() {
         let coordinator = SearchCoordinator(presenter: self.navigationPresenter)
@@ -93,13 +106,18 @@ extension AppCoordinator: CoordinatorCreateDelegate {
         coordinator.start(busRouteId: busRouteId)
     }
 
-    func pushAlarmSetting() {
+    func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
         let coordinator = AlarmSettingCoordinator(presenter: self.navigationPresenter)
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
         coordinator.movingStatusDelegate = self
-        coordinator.start()
+        coordinator.start(stationId: stationId,
+                          busRouteId: busRouteId,
+                          stationOrd: stationOrd,
+                          arsId: arsId,
+                          routeType: routeType,
+                          busName: busName)
     }
 
     func pushStation(arsId: String) {
@@ -111,6 +129,7 @@ extension AppCoordinator: CoordinatorCreateDelegate {
     }
 }
 
+// MARK: - Delegate : CoordinatorFinishDelegate
 extension AppCoordinator: CoordinatorFinishDelegate {
     func removeChildCoordinator(_ coordinator: Coordinator) {
         for (index, child) in self.childCoordinators.enumerated() {
@@ -121,3 +140,4 @@ extension AppCoordinator: CoordinatorFinishDelegate {
         }
     }
 }
+

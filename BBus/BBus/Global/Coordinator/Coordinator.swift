@@ -15,11 +15,15 @@ protocol CoordinatorFinishDelegate: AnyObject {
 protocol CoordinatorCreateDelegate {
     func pushSearch()
     func pushBusRoute(busRouteId: Int)
-    func pushAlarmSetting()
+    func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String)
     func pushStation(arsId: String)
 }
 
-typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate)
+protocol AlertCreateDelegate {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)?)
+}
+
+typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate & AlertCreateDelegate)
 
 protocol Coordinator: AnyObject {
     var navigationPresenter: UINavigationController { get set }

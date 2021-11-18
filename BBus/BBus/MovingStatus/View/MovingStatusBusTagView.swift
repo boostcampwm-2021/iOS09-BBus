@@ -9,15 +9,10 @@ import UIKit
 
 class MovingStatusBusTagView: UIView {
 
-    private lazy var booduckBusImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = BBusImage.booduckBus
-        return imageView
-    }()
+    private lazy var booduckBusImageView = UIImageView()
     private lazy var speechBubbleImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = BBusImage.speechBubble
-        imageView.tintColor = BBusColor.bbusTypeBlue
+        imageView.image = BBusImage.speechBubble?.withRenderingMode(.alwaysTemplate)
         return imageView
     }()
     private lazy var movingStatusLabel: UILabel = {
@@ -28,7 +23,6 @@ class MovingStatusBusTagView: UIView {
         label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
         label.numberOfLines = numberOfLines
-        label.text = "4정류장 남음"
         return label
     }()
     
@@ -36,12 +30,14 @@ class MovingStatusBusTagView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
+        self.configureInfo(color: BBusColor.gray, remainStation: nil)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
+        self.configureInfo(color: BBusColor.gray, remainStation: nil)
     }
     
     private func configureLayout() {
@@ -83,5 +79,15 @@ class MovingStatusBusTagView: UIView {
             self.booduckBusImageView.leadingAnchor.constraint(equalTo: self.speechBubbleImageView.trailingAnchor, constant: booduckBusImageLeftMargin),
             self.booduckBusImageView.widthAnchor.constraint(equalTo: self.booduckBusImageView.heightAnchor, multiplier: booduckBusImageRatio)
         ])
+    }
+
+    func configureInfo(color: UIColor?, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) {
+        self.speechBubbleImageView.tintColor = color
+        self.booduckBusImageView.image = busIcon
+        if let remainStation = remainStation {
+            self.movingStatusLabel.text = remainStation > 1 ? "\(remainStation)정거장 남음" : "이번에 내리세요!"
+        } else {
+            self.movingStatusLabel.text = "현위치 탐색중"
+        }
     }
 }

@@ -16,11 +16,10 @@ class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, S
     }
 
     func start() {
-        let useCase = HomeUseCase()
+        let useCase = HomeUseCase(usecases: BBusAPIUsecases(on: HomeUseCase.queue))
         let viewModel = HomeViewModel(useCase: useCase)
         let viewController = HomeViewController(viewModel: viewModel)
         viewController.coordinator = self
         navigationPresenter.pushViewController(viewController, animated: false) // present
     }
 }
-

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FavoriteHeaderViewDelegate {
-    func shouldGoToStationScene()
+    func shouldGoToStationScene(headerView: UICollectionReusableView)
 }
 
 class FavoriteCollectionHeaderView: UICollectionReusableView {
@@ -20,25 +20,19 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         didSet {
             self.gestureRecognizers?.forEach() { self.removeGestureRecognizer($0) }
             let tapGesture = UITapGestureRecognizer()
-            tapGesture.addTarget(self, action: #selector(headerViewTapped(_:)))
+            tapGesture.addTarget(self, action: #selector(self.headerViewTapped(_:)))
             self.addGestureRecognizer(tapGesture)
         }
-    }
-    
-    @objc private func headerViewTapped(_ sender: UICollectionReusableView) {
-        delegate?.shouldGoToStationScene()
     }
 
     private lazy var stationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "여의도환승센터(4번승강장)"
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = BBusColor.black
         return label
     }()
-    private lazy var directionLabel: UILabel = {
+    private lazy var arsIdLabel: UILabel = {
         let label = UILabel()
-        label.text = "여의도 공원 방면"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = BBusColor.bbusGray
         return label
@@ -55,6 +49,12 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         self.configureLayout()
         self.configureUI()
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.stationTitleLabel.text = ""
+        self.arsIdLabel.text = ""
+    }
     
     // MARK: - Configuration
     private func configureLayout() {
@@ -69,12 +69,16 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
             self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: titleBottomInterval)
         ])
 
-        self.addSubview(self.directionLabel)
-        self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.arsIdLabel)
+        self.arsIdLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
-            self.directionLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
+            self.arsIdLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
+            self.arsIdLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)
         ])
+    }
+
+    @objc private func headerViewTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.shouldGoToStationScene(headerView: self)
     }
 
     private func configureUI() {
@@ -83,5 +87,10 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     
     func configureDelegate(_ delegate: FavoriteHeaderViewDelegate) {
         self.delegate = delegate
+    }
+
+    func configure(title: String, arsId: String) {
+        self.stationTitleLabel.text = title
+        self.arsIdLabel.text = arsId
     }
 }

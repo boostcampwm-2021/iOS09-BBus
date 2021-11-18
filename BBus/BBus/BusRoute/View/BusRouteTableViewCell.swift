@@ -38,6 +38,7 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 super.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 super.centerImageView.centerXAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor)
             ])
+            super.backgroundColor = BBusColor.bbusLightGray
         case .uturn:
             self.centerImageView.image = BBusImage.stationCenterUturn
             NSLayoutConstraint.activate([
@@ -46,15 +47,58 @@ class BusRouteTableViewCell: BusStationTableViewCell {
                 super.centerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 super.centerImageView.trailingAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor, constant: uturmImageXaxisMargin)
             ])
+            super.backgroundColor = BBusColor.white
         }
     }
     
-    func configure(beforeColor: UIColor, afterColor: UIColor, title: String, description: String, type: BusRootCenterImageType) {
-        super.configure(beforeColor: beforeColor,
-                        afterColor: afterColor,
+    func configure(speed: Int, afterSpeed: Int?, index: Int, count: Int, title: String, description: String, type: BusRootCenterImageType) {
+        let lineColors = self.configureLineColors(speed: speed,
+                                                  afterSpeed: afterSpeed,
+                                                  index: index,
+                                                  count: count)
+        super.configure(beforeColor: lineColors.beforeColor,
+                        afterColor: lineColors.afterColor,
                         title: title,
                         description: description)
         
         self.configureCenterImage(type: type)
+    }
+
+    func configureLineColors(speed: Int, afterSpeed: Int?, index: Int, count: Int) -> (beforeColor:  UIColor?, afterColor:  UIColor?) {
+        var beforeColor: UIColor?
+        var afterColor: UIColor?
+        if afterSpeed == nil {
+            beforeColor = self.configureLineColor(speed: speed)
+            afterColor = BBusColor.clear
+        }
+        else {
+            guard let afterSpeed = afterSpeed else { return (nil, nil)}
+            if index == 0 {
+                beforeColor = BBusColor.clear
+                afterColor = self.configureLineColor(speed: afterSpeed)
+            } else {
+                beforeColor = self.configureLineColor(speed: speed)
+                afterColor = self.configureLineColor(speed: afterSpeed)
+            }
+        }
+        
+        return (beforeColor, afterColor)
+    }
+
+    func configureLineColor(speed: Int) -> UIColor? {
+        let maxHeightCongestionSpped = 9
+        let maxNormalCongestionSpeed = 20
+        let color: UIColor?
+
+        if speed <= maxHeightCongestionSpped {
+            color = BBusColor.bbusCongestionHigh
+        }
+        else if speed <= maxNormalCongestionSpeed {
+            color = BBusColor.bbusCongestionMedium
+        }
+        else {
+            color = BBusColor.bbusCongestionLow
+        }
+        return color
     }
 }

@@ -94,14 +94,18 @@ class StationView: UIView {
         self.stationScrollView.delegate = delegate
     }
 
-    func configureTableViewHeight(height: CGFloat) -> NSLayoutConstraint {
-        let constraint = self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: height)
-        constraint.isActive = true
-        return constraint
+    func configureTableViewHeight(height: CGFloat?) -> NSLayoutConstraint {
+        let layoutConstraint: NSLayoutConstraint = height == nil ? self.stationBodyCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor) : self.stationBodyCollectionView.heightAnchor.constraint(equalToConstant: height ?? 0)
+        layoutConstraint.isActive = true
+        return layoutConstraint
     }
 
-    func configureHeaderView(stationId: String, stationName: String, direction: String) {
-        self.stationHeaderView.configure(stationId: stationId, stationName: stationName, direction: direction)
+    func configureHeaderView(stationId: String, stationName: String) {
+        self.stationHeaderView.configureStationInfo(stationId: stationId, stationName: stationName)
+    }
+    
+    func configureNextStation(direction: String) {
+        self.stationHeaderView.configure(nextStationName: direction)
     }
 
     private func collectionViewLayout() -> UICollectionViewLayout {
@@ -116,5 +120,9 @@ class StationView: UIView {
     
     func reload() {
         self.stationBodyCollectionView.reloadData()
+    }
+    
+    func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.stationBodyCollectionView.indexPath(for: cell)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCoordinator: BusRoutePushable, StationPushable {
+final class SearchCoordinator: BusRoutePushable, StationPushable {
     var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
 
@@ -16,7 +16,7 @@ class SearchCoordinator: BusRoutePushable, StationPushable {
     }
 
     func start() {
-        let usecase = SearchUseCase(usecases: BBusAPIUsecases(on: SearchUseCase.thread))
+        let usecase = SearchUseCase(usecases: BBusAPIUsecases(on: SearchUseCase.queue))
         let viewModel = SearchViewModel(usecase: usecase)
         let viewController = SearchViewController(viewModel: viewModel)
         viewController.coordinator = self

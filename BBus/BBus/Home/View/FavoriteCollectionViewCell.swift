@@ -6,9 +6,20 @@
 //
 
 import UIKit
+import Combine
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    var cancellables = Set<AnyCancellable>()
+    private var alarmButtonDelegate: AlarmButtonDelegate? {
+        didSet {
+            self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
+            self.trailingView.alarmButton.addAction(UIAction(handler: { _ in
+                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: self)
+            }), for: .touchUpInside)
+
+        }
+    }
     class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
     var busNumberYAxisMargin: CGFloat { return 0 }
@@ -24,8 +35,23 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var trailingView = BusCellTrailingView()
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.cancellables.forEach { $0.cancel() }
+        self.cancellables.removeAll()
+        self.busNumberLabel.text = ""
+        self.trailingView.configure(firstBusTime: nil,
+                                    firstBusRemaining: nil,
+                                    firstBusCongestion: nil,
+                                    secondBusTime: nil,
+                                    secondBusRemaining: nil,
+                                    secondBusCongestion: nil)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         self.trailingView.configureLayout()
         self.configureLayout()
         self.configureUI()
@@ -33,6 +59,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.trailingView.configureLayout()
         self.configureLayout()
         self.configureUI()
@@ -63,15 +90,32 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     func configureDelegate(_ delegate: AlarmButtonDelegate) {
-        self.trailingView.configureDelegate(delegate)
+        self.alarmButtonDelegate = delegate
     }
 
     private func configureUI() {
         self.backgroundColor = BBusColor.white
     }
     
-    func configure(busNumber: String, firstBusTime: String, firstBusRelativePosition: String, firstBusCongestion: String, secondBusTime: String, secondBusRelativePosition: String, secondBusCongsetion: String) {
+    func configure(busNumber: String, routeType: RouteType?, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
         self.busNumberLabel.text = busNumber
+
+        switch routeType {
+        case .mainLine:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
+        case .broadArea:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeRed
+        case .customized:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .circulation:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeCirculation
+        case .lateNight:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
+        case .localLine:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        default:
+            self.busNumberLabel.textColor = BBusColor.bbusGray
+        }
         self.trailingView.configure(firstBusTime: firstBusTime,
                                     firstBusRemaining: firstBusRelativePosition,
                                     firstBusCongestion: firstBusCongestion,

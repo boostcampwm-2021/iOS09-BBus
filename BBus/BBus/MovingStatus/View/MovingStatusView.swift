@@ -22,6 +22,7 @@ protocol EndAlarmButtonDelegate: AnyObject {
 class MovingStatusView: UIView {
     
     static let bottomIndicatorHeight: CGFloat = 80
+    static let endAlarmViewHeight: CGFloat = 80
     
     private weak var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
         didSet {
@@ -47,7 +48,6 @@ class MovingStatusView: UIView {
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.bbusTypeBlue
         return button
     }()
     private lazy var bottomIndicatorImageView: UIImageView = {
@@ -61,7 +61,6 @@ class MovingStatusView: UIView {
         let label = UILabel()
         label.textColor = BBusColor.white
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .semibold)
-        label.text = "현위치 탐색중, 19분 소요예정"
         return label
     }()
     private lazy var unfoldImageView: UIImageView = {
@@ -70,7 +69,11 @@ class MovingStatusView: UIView {
         imageView.image = BBusImage.unfold
         return imageView
     }()
-    private lazy var headerView = UIView()
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = BBusColor.white
+        return view
+    }()
     private lazy var headerBottomBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = BBusColor.bbusLightGray
@@ -80,9 +83,7 @@ class MovingStatusView: UIView {
         let labelFontSize: CGFloat = 27
         
         let label = UILabel()
-        label.textColor = BBusColor.bbusTypeBlue
         label.font = UIFont.systemFont(ofSize: labelFontSize, weight: .medium)
-        label.text = "700"
         return label
     }()
     private lazy var alarmStatusLabel: UILabel = {
@@ -90,7 +91,6 @@ class MovingStatusView: UIView {
         
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: labelFontSize)
-        label.text = "현위치 탐색중, 19분 소요예정"
         label.textColor = BBusColor.black
         return label
     }()
@@ -117,7 +117,6 @@ class MovingStatusView: UIView {
     }()
     private lazy var endAlarmButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = BBusColor.bbusTypeBlue
         button.tintColor = BBusColor.white
         button.setTitle("알람 종료", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
@@ -133,18 +132,18 @@ class MovingStatusView: UIView {
         super.init(coder: coder)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
-        self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.configureColor(to: BBusColor.gray)
+        self.configureBusName(to: "탐색중")
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.configureLayout()
-        self.bottomIndicatorButton.backgroundColor = BBusColor.bbusTypeBlue
-        self.headerView.backgroundColor = BBusColor.white
-        self.endAlarmButton.backgroundColor = BBusColor.bbusTypeBlue
+        self.configureColor(to: BBusColor.gray)
+        self.configureBusName(to: "탐색중")
+        self.configureHeaderInfo(remainStation: nil, remainTime: nil)
     }
 
     // MARK: - Configure
@@ -264,15 +263,13 @@ class MovingStatusView: UIView {
             self.alarmStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmStatusLabelRightMargin)
         ])
         
-        let endAlarmViewHeight: CGFloat = 80
-        
         self.addSubview(self.endAlarmButton)
         self.endAlarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.endAlarmButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.endAlarmButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.endAlarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.endAlarmButton.heightAnchor.constraint(equalToConstant: endAlarmViewHeight)
+            self.endAlarmButton.heightAnchor.constraint(equalToConstant: Self.endAlarmViewHeight)
         ])
         
         self.addSubview(self.stationsTableView)
@@ -293,15 +290,55 @@ class MovingStatusView: UIView {
         self.endAlarmButtonDelegate = delegate
     }
     
-    func addBusTag() {
+    func createBusTag(location: CGFloat = 0, color: UIColor? = BBusColor.gray, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) -> MovingStatusBusTagView {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
+        busTag.configureInfo(color: color,
+                         busIcon: busIcon,
+                         remainStation: remainStation)
+        
         self.stationsTableView.addSubview(busTag)
         busTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
-            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + 2*MovingStatusTableViewCell.cellHeight)
+            busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + location*MovingStatusTableViewCell.cellHeight)
         ])
+
+        return busTag
+    }
+
+    func configureColor(to color: UIColor?) {
+        self.bottomIndicatorButton.backgroundColor = color
+        self.busNumberLabel.textColor = color
+        self.endAlarmButton.backgroundColor = color
+    }
+
+    func configureBusName(to: String) {
+        self.busNumberLabel.text = to
+    }
+
+    func configureHeaderInfo(remainStation: Int? = nil, remainTime: Int?) {
+        var headerInfoResult: String = ""
+        let currentInfo: String
+
+        if let remainStation = remainStation {
+            currentInfo = remainStation > 1 ? "\(remainStation)정거장 남음" : "이번에 내리세요!"
+        } else {
+            currentInfo = "현위치 탐색중"
+        }
+        if let remainTime = remainTime,
+           let remainStation = remainStation {
+            headerInfoResult = remainStation > 1 ? "\(currentInfo), \(remainTime)분 소요예정" : currentInfo
+        } else {
+            headerInfoResult = currentInfo
+        }
+
+        self.bottomIndicatorLabel.text = headerInfoResult
+        self.alarmStatusLabel.text = headerInfoResult
+    }
+
+    func reload() {
+        self.stationsTableView.reloadData()
     }
 }

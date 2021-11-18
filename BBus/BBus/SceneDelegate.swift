@@ -12,11 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var movingStatusWindow: UIWindow?
     var appCoordinator: AppCoordinator?
+    private var second = 0
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        usleep(700)
+        sleep(1)
         self.window = UIWindow(windowScene: windowScene)
         self.movingStatusWindow = UIWindow(windowScene: windowScene)
         
@@ -24,8 +25,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
               let movingStatusWindow = self.movingStatusWindow else { return }
         self.movingStatusWindow?.frame.size = CGSize(width: movingStatusWindow.frame.width, height: movingStatusWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
         self.appCoordinator = AppCoordinator(navigationWindow: navigationWindow, movingStatusWindow: movingStatusWindow)
-        
         appCoordinator?.start()
+
+        self.fireTimer()
+    }
+
+    private func fireTimer() {
+        let timer = Timer.init(timeInterval: 1, repeats: true) { _ in
+            self.second += 1
+            
+            if self.second % 30 == 0 {
+                NotificationCenter.default.post(name: .thirtySecondPassed, object: self)
+                self.second = 0
+            }
+            if self.second % 15 == 0 {
+                NotificationCenter.default.post(name: .fifteenSecondsPassed, object: self)
+            }
+            NotificationCenter.default.post(name: .oneSecondPassed, object: self)
+        }
+        
+        RunLoop.current.add(timer, forMode: .common)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -55,7 +74,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
 
 }
 

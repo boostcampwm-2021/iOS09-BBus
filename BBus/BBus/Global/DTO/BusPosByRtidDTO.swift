@@ -8,7 +8,7 @@
 import Foundation
 
 struct BusPosByRtidBody: BBusXMLDTO {
-    private let itemList: [BusPosByRtidDTO]
+    let itemList: [BusPosByRtidDTO]
 
     init?(dict: [String : [Any]]) {
         guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ BusPosByRtidDTO(dict: $0) }),
@@ -38,19 +38,33 @@ struct BusPosByRtidDTO: BBusXMLDTO {
     let congestion: Int
     let plainNumber: String
     let sectionOrder: Int
+    let fullSectDist: String
+    let sectDist: String
+    let gpsY: Double
+    let gpsX: Double
     
     init?(dict: [String : [Any]]) {
-        guard let busTypeString = ((dict["busType"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+        guard let busTypeString = ((dict["busType"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let busType = Int(busTypeString),
-              let congestionString = ((dict["congetion"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
+              let congestionString = ((dict["congetion"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let congestion = Int(congestionString),
-              let plainNumber = ((dict["plainNo"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let sectOrd = ((dict["sectOrd"]?[0] as? [String:[Any]])?["bbus"] as? [String])?.reduce("", { $0 + $1 }),
-              let sectionOrder = Int(sectOrd) else { return nil }
+              let plainNumber = ((dict["plainNo"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let sectOrd = ((dict["sectOrd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let sectionOrder = Int(sectOrd),
+              let fullSectDist = ((dict["fullSectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let sectDist = ((dict["sectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let stringGpsY = ((dict["gpsY"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
+              let gpsY = Double(stringGpsY),
+              let stringGpsX = ((dict["gpsX"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
+              let gpsX = Double(stringGpsX) else { return nil }
         
         self.busType = busType
         self.congestion = congestion
         self.plainNumber = plainNumber
         self.sectionOrder = sectionOrder
+        self.fullSectDist = fullSectDist
+        self.sectDist = sectDist
+        self.gpsY = gpsY
+        self.gpsX = gpsX
     }
 }

@@ -9,8 +9,6 @@ import UIKit
 
 class HomeView: UIView {
 
-    private let refreshButtonWidth: CGFloat = 50
-    
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
         collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
@@ -25,13 +23,7 @@ class HomeView: UIView {
         view.backgroundColor = BBusColor.white
         return view
     }()
-    lazy var refreshButton: UIButton = {
-        let button = UIButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = self.refreshButtonWidth / 2
-        button.tintColor = BBusColor.white
-        return button
-    }()
+    private lazy var emptyFavoriteNotice = EmptyFavoriteNoticeView()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -39,9 +31,9 @@ class HomeView: UIView {
 
     // MARK: - Configuration
     func configureLayout() {
+        self.addSubviews(self.favoriteCollectionView, self.emptyFavoriteNotice, self.navigationView)
+
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
-        self.addSubview(self.favoriteCollectionView)
-        self.favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         self.favoriteCollectionView.backgroundColor = BBusColor.bbusGray6
         NSLayoutConstraint.activate([
             self.favoriteCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -50,19 +42,13 @@ class HomeView: UIView {
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        self.refreshButton.backgroundColor = BBusColor.darkGray
-        let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
-            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshTrailingBottomInterval)
+            self.emptyFavoriteNotice.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            self.emptyFavoriteNotice.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            self.emptyFavoriteNotice.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            self.emptyFavoriteNotice.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor)
         ])
-        
-        self.addSubview(self.navigationView)
-        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.topAnchor),
             self.navigationView.heightAnchor.constraint(equalToConstant: HomeNavigationView.height),
@@ -84,6 +70,22 @@ class HomeView: UIView {
             self.navigationView.transform = CGAffineTransform(translationX: 0, y: direction ? 0 : -HomeNavigationView.height + 1)
         })
     }
+
+    func reload() {
+        self.favoriteCollectionView.reloadData()
+    }
+
+    func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
+        return self.favoriteCollectionView.indexPath(for: cell)
+    }
+
+    func getSectionByHeaderView(header: UICollectionReusableView) -> Int? {
+        guard let section = self.favoriteCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader)
+                .first(where: { header == self.favoriteCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: $0) })?
+                .section else { return nil }
+        
+        return section
+    }
     
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -95,5 +97,9 @@ class HomeView: UIView {
         layout.minimumInteritemSpacing = bottomLineHeight
         layout.minimumLineSpacing = bottomLineHeight
         return layout
+    }
+
+    func emptyNoticeActivate(by onOff: Bool) {
+        self.emptyFavoriteNotice.isHidden = !onOff
     }
 }

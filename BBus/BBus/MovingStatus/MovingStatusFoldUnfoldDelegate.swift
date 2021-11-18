@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MovingStatusOpenCloseDelegate: AnyObject {
-    func open()
+    func open(busRouteId: Int, fromArsId: String, toArsId: String)
     func close()
 }
 

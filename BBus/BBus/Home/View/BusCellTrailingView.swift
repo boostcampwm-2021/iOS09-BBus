@@ -8,39 +8,40 @@
 import UIKit
 
 protocol AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene()
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell)
 }
 
 class BusCellTrailingView: UIView {
+    
+    static let noInfoMessage = "도착 정보 없음"
 
-    private var alarmButtonDelegate: AlarmButtonDelegate? {
-        didSet {
-            let action = UIAction(handler: {_ in
-                self.alarmButtonDelegate?.shouldGoToAlarmSettingScene()
-            })
-            self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
-            self.alarmButton.addAction(action, for: .touchUpInside)
-        }
-    }
     private lazy var firstBusTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = BBusColor.black
         return label
     }()
     private lazy var secondBusTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = BBusColor.black
         return label
     }()
     private lazy var firstBusTimeRightLabel = RemainCongestionBadgeLabel()
     private lazy var secondBusTimeRightLabel = RemainCongestionBadgeLabel()
-    private lazy var alarmButton: UIButton = {
+    private(set) lazy var alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(BBusImage.alarm, for: .normal)
         button.tintColor = BBusColor.bbusGray
         return button
+    }()
+    private lazy var busTimeMessageLabel: UILabel = {
+        let label = UILabel()
+        label.text = Self.noInfoMessage
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = BBusColor.bbusGray
+        label.isHidden = true
+        return label
     }()
 
     // MARK: - Configuration
@@ -59,6 +60,13 @@ class BusCellTrailingView: UIView {
         NSLayoutConstraint.activate([
             self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: centerYInterval),
             self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        ])
+        
+        self.addSubview(self.busTimeMessageLabel)
+        self.busTimeMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.busTimeMessageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.busTimeMessageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
         let trailingViewLabelsInterval: CGFloat = 4
@@ -88,15 +96,20 @@ class BusCellTrailingView: UIView {
         ])
     }
 
-    func configureDelegate(_ delegate: AlarmButtonDelegate) {
-        self.alarmButtonDelegate = delegate
-    }
-    
-    func configure(firstBusTime: String, firstBusRemaining: String, firstBusCongestion: String, secondBusTime: String, secondBusRemaining: String, secondBusCongestion: String) {
+    func configure(firstBusTime: String?, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRemaining: String?, secondBusCongestion: String?) {
+        
+        let isHidden = firstBusTime == nil
+        self.busTimeMessageLabel.isHidden = !isHidden
+        self.firstBusTimeLabel.isHidden = isHidden
+        self.firstBusTimeRightLabel.isHidden = isHidden
+        self.secondBusTimeLabel.isHidden = isHidden
+        self.secondBusTimeRightLabel.isHidden = isHidden
+        
         self.firstBusTimeLabel.text = firstBusTime
         self.firstBusTimeLabel.sizeToFit()
         
-        self.secondBusTimeLabel.text = secondBusTime
+        self.secondBusTimeLabel.text = secondBusTime == nil ? Self.noInfoMessage : secondBusTime
+        self.secondBusTimeLabel.textColor = secondBusTime == nil ? BBusColor.bbusGray : BBusColor.black
         self.secondBusTimeLabel.sizeToFit()
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)

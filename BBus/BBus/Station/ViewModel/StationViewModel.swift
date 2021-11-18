@@ -7,54 +7,80 @@
 
 import Foundation
 import Combine
+import UIKit
 
-enum BusCongestion: Int {
-    case relaxed = 3, normal, confusion, veryCrowded
-    
-    func toString() -> String {
-        switch self {
-        case .relaxed : return "여유"
-        case .normal : return "보통"
-        case .confusion : return "혼잡"
-        case .veryCrowded : return "매우 혼잡"
-        }
-    }
-}
+typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, stationOrd: Int, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
+
 
 class StationViewModel {
     
-    typealias BusArriveInfo = (firstBusArriveRemainTime: String, firstBusRelativePosition: String?, secondBusArriveRemainTime: String, secondBusRelativePosition: String?, arsId: String, busRouteId: Int, congestion: BusCongestion, nextStation: String, busNumber: String, routeType: BBusRouteType)
-    
     let usecase: StationUsecase
-    private let arsId: String
+    let arsId: String
     private var cancellables: Set<AnyCancellable>
+    @Published private(set) var busKeys: [BBusRouteType]
     @Published private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
-    @Published private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
+    private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
+    @Published private(set) var favoriteItems = [FavoriteItemDTO]()
+    @Published private(set) var nextStation: String? = nil
     
     init(usecase: StationUsecase, arsId: String) {
         self.usecase = usecase
         self.arsId = arsId
         self.cancellables = []
-        self.bindingBusArriveInfo()
+        self.busKeys = []
+        self.binding()
+        self.refresh()
+        self.configureObserver()
+    }
+
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
+            self.descendTime()
+        }
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
+            self.refresh()
+        }
+    }
+    
+    func refresh() {
         self.usecase.stationInfoWillLoad(with: arsId)
         self.usecase.refreshInfo(about: arsId)
     }
+
+    private func descendTime() {
+        self.infoBuses.forEach({
+            self.infoBuses[$0.key] = $0.value.map { result in
+                var remainTime = result
+                remainTime.firstBusArriveRemainTime?.descend()
+                remainTime.secondBusArriveRemainTime?.descend()
+                return remainTime
+            }
+        })
+    }
     
-    func bindingBusArriveInfo() {
+    private func binding() {
+        self.bindingFavoriteItems()
+        self.bindingBusArriveInfo()
+    }
+    
+    private func bindingBusArriveInfo() {
         self.usecase.$busArriveInfo
-            .receive(on: StationUsecase.thread)
+            .receive(on: StationUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { arriveInfo in
+                guard arriveInfo.count > 0 else { return }
+                self.nextStation = arriveInfo[0].nextStation
                 self.classifyByRouteType(with: arriveInfo)
-//                self.infoBuses.forEach({ key, value in
-//                    print(key.rawValue)
-//                    print(value)
-//                })
-//                self.noInfoBuses.forEach({ key, value in
-//                    print(key.rawValue)
-//                    print(value)
-//                })
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingFavoriteItems() {
+        self.usecase.$favoriteItems
+            .receive(on: StationUsecase.queue)
+            .sink(receiveValue: { items in
+                self.favoriteItems = items.filter() { $0.arsId == self.arsId }
             })
             .store(in: &self.cancellables)
     }
@@ -63,45 +89,50 @@ class StationViewModel {
         var infoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
         var noInfoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
         buses.forEach() { bus in
-            guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0),
-                  let congestion = BusCongestion(rawValue: bus.congestion) else { return print(bus.routeType) }
+            guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0) else { return print(bus.routeType) }
+            
             let info: BusArriveInfo
             info.routeType = routeType
-            info.congestion = congestion
-            let timeAndPositionInfo1 = self.separateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
-            info.firstBusArriveRemainTime = timeAndPositionInfo1.time
-            info.firstBusRelativePosition = timeAndPositionInfo1.position
-            let timeAndPositionInfo2 = self.separateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
-            info.secondBusArriveRemainTime = timeAndPositionInfo2.time
-            info.secondBusRelativePosition = timeAndPositionInfo2.position
+            info.congestion = BusCongestion(rawValue: bus.congestion)
+            
             info.nextStation = bus.nextStation
             info.busNumber = bus.busNumber
             info.arsId = bus.arsId
+            info.stationOrd = bus.stationOrd
             info.busRouteId = bus.busRouteId
             
-            if checkInfo(with: bus) {
+            let timeAndPositionInfo1 = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: bus.firstBusArriveRemainTime)
+            if timeAndPositionInfo1.time.checkInfo() {
+                info.firstBusArriveRemainTime = timeAndPositionInfo1.time
+                info.firstBusRelativePosition = timeAndPositionInfo1.position
+                
+                let timeAndPositionInfo2 = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
+                info.secondBusArriveRemainTime = timeAndPositionInfo2.time
+                info.secondBusRelativePosition = timeAndPositionInfo2.position
+                
                 infoBuses.updateValue((infoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
             else {
+                info.firstBusArriveRemainTime = nil
+                info.firstBusRelativePosition = nil
+                info.secondBusArriveRemainTime = nil
+                info.secondBusRelativePosition = nil
+                
                 noInfoBuses.updateValue((noInfoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
         }
         self.infoBuses = infoBuses
         self.noInfoBuses = noInfoBuses
+        
+        let keys = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue }) + Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
+        self.busKeys = keys
     }
     
-    private func checkInfo(with bus: StationByUidItemDTO) -> Bool {
-        let noInfoMessages = ["운행종료", "출발대기"]
-        return !noInfoMessages.contains(bus.firstBusArriveRemainTime)
+    func add(favoriteItem: FavoriteItemDTO) {
+        self.usecase.add(favoriteItem: favoriteItem)
     }
     
-    private func separateTimeAndPositionInfo(with info: String) -> (time: String, position: String?) {
-        let components = info.components(separatedBy: ["[", "]"])
-        if components.count > 1 {
-            return (time: components.first ?? "", position: components[1])
-        }
-        else {
-            return (time: components.first ?? "", position: nil)
-        }
+    func remove(favoriteItem: FavoriteItemDTO) {
+        self.usecase.remove(favoriteItem: favoriteItem)
     }
 }

@@ -9,11 +9,25 @@ import UIKit
 import Combine
 
 class HomeViewController: UIViewController {
-    
+
+    private var lastContentOffset: CGFloat = 0
+    private let refreshButtonWidth: CGFloat = 50
+
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
+
     private lazy var homeView = HomeView()
-    private var lastContentOffset: CGFloat = 0
+    lazy var refreshButton: ThrottleButton = {
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = self.refreshButtonWidth / 2
+        button.tintColor = BBusColor.white
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
+            self.viewModel?.reloadFavoriteData()
+        }
+        return button
+    }()
+
     private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: HomeViewModel) {
@@ -31,6 +45,7 @@ class HomeViewController: UIViewController {
         self.title = "Home"
         self.configureColor()
         self.configureLayout()
+        self.binding()
         self.homeView.configureLayout()
         self.homeView.configureDelegate(self)
         
@@ -52,20 +67,70 @@ class HomeViewController: UIViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.reloadFavoriteData()
+    }
+
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.addSubview(self.homeView)
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.homeView, self.refreshButton)
+
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
+
+        self.refreshButton.backgroundColor = BBusColor.darkGray
+        let refreshTrailingBottomInterval: CGFloat = -16
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
+            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+        ])
     }
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
+    }
+
+    private func binding() {
+        self.bindingFavoriteList()
+        self.bindingNetworkError()
+    }
+
+    private func bindingFavoriteList() {
+
+        self.viewModel?.$homeFavoriteList
+            .compactMap { $0 }
+            .filter { !$0.changedByTimer }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { response in
+                let isFavoriteEmpty = response.count() == 0
+                self.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
+                self.homeView.reload()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindingNetworkError() {
+        self.viewModel?.useCase.$networkError
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func networkAlert() {
+        let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
 }
 
@@ -73,9 +138,10 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Model binding Logic needed
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.favoriteItem.busRouteId,
+              let busRouteId = Int(busRouteIdString) else { return }
 
-        self.coordinator?.pushToBusRoute(busRouteId: 100100048)
+        self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -95,30 +161,54 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - DataSource : UICollectionView
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return self.viewModel?.homeFavoriteList?.count() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.viewModel?.homeFavoriteList?[section]?.count() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
-                        as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
+                as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
+      
         cell.configureDelegate(self)
-        cell.configure(busNumber: "272",
-                       firstBusTime: "1분 29초",
-                       firstBusRelativePosition: "2번째전",
-                       firstBusCongestion: "여유",
-                       secondBusTime: "9분 51초",
-                       secondBusRelativePosition: "6번째전",
-                       secondBusCongsetion: "여유")
+        
+        // bind RemainTimeLabel and ViewModel
+        self.viewModel?.$homeFavoriteList
+            .compactMap { $0 }
+            .filter { $0.changedByTimer }
+            .sink(receiveValue: { homeFavoriteList in
+                DispatchQueue.main.async {
+                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                          let busName = self.viewModel?.busName(by: model.0.busRouteId),
+                          let busType = self.viewModel?.busType(by: busName) else { return }
+                    
+                    let busArrivalInfo = model.1
+                    cell.configure(busNumber: busName,
+                                   routeType: busType,
+                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
+                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
+                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+                }
+            })
+            .store(in: &cell.cancellables)
+        
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
+        guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
+              let stationName = self.viewModel?.stationName(by: stationId),
+              let arsId = self.viewModel?.homeFavoriteList?[indexPath.section]?.arsId else { return header }
+
         header.configureDelegate(self)
+        header.configure(title: stationName, arsId: arsId)
+        
         return header
     }
 }
@@ -148,18 +238,32 @@ extension HomeViewController: HomeSearchButtonDelegate {
 
 // MARK: - AlarmButtonDelegate : UICollectionView
 extension HomeViewController: AlarmButtonDelegate {
-    func shouldGoToAlarmSettingScene() {
-        // TODO: Model binding Logic needed
+    func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
+      
+        guard let indexPath = self.homeView.indexPath(for: cell),
+              let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+              let stationId = Int(model.favoriteItem.stId),
+              let busRouteId = Int(model.favoriteItem.busRouteId),
+              let ord = Int(model.favoriteItem.ord),
+              let busName = self.viewModel?.busName(by: "\(busRouteId)"),
+              let routeType = self.viewModel?.busType(by: busName) else { return }
+        let arsId = model.favoriteItem.arsId
 
-        self.coordinator?.pushToAlarmSetting()
+        self.coordinator?.pushToAlarmSetting(stationId: stationId,
+                                             busRouteId: busRouteId,
+                                             stationOrd: ord,
+                                             arsId: arsId,
+                                             routeType: routeType,
+                                             busName: busName)
     }
 }
 
 // MARK: - FavoriteHeaderViewDelegate : UICollectionView
 extension HomeViewController: FavoriteHeaderViewDelegate {
-    func shouldGoToStationScene() {
-        // TODO: Model binding Logic needed
-        
-        self.coordinator?.pushToStation(arsId: "19007")
+    func shouldGoToStationScene(headerView: UICollectionReusableView) {
+        guard let section = self.homeView.getSectionByHeaderView(header: headerView),
+              let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
+
+        self.coordinator?.pushToStation(arsId: arsId)
     }
 }

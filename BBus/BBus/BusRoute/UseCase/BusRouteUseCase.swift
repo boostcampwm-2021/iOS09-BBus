@@ -8,29 +8,69 @@
 import Foundation
 import Combine
 
-class BusRouteUsecase {
+final class BusRouteUsecase {
 
-    private let busRouteId: Int
-    private let usecases: GetRouteListUsecase
+    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var header: BusRouteDTO?
-    private var cancellable: AnyCancellable?
-    static let thread = DispatchQueue(label: "BusRoute")
+    @Published var bodys: [StationByRouteListDTO] = []
+    @Published var buses: [BusPosByRtidDTO] = []
+    @Published var networkError: Error?
+    private var cancellables: Set<AnyCancellable>
+    static let queue = DispatchQueue(label: "BusRoute")
 
-    init(usecases: GetRouteListUsecase, busRouteId: Int) {
-        self.busRouteId = busRouteId
+    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
         self.usecases = usecases
+        self.cancellables = []
+        self.networkError = nil
     }
 
-    func searchHeader() {
-        self.cancellable = usecases.getRouteList()
-            .receive(on: Self.thread)
+    func searchHeader(busRouteId: Int) {
+        self.usecases.getRouteList()
+            .receive(on: Self.queue)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { error in
-                if case .failure(let error) = error {
-                    print(error)
-                }
-            }, receiveValue: { routeList in
-                self.header = routeList.filter { $0.routeID == self.busRouteId }[0]
+            .tryMap({ routeList -> BusRouteDTO in
+                let headers = routeList.filter { $0.routeID == busRouteId }
+                guard let header = headers.first else { throw BBusAPIError.wrongFormatError }
+                return header
             })
+            .retry({ [weak self] in
+                self?.searchHeader(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.header, on: self)
+            .store(in: &self.cancellables)
+    }
+
+    func fetchRouteList(busRouteId: Int) {
+        self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
+            .receive(on: Self.queue)
+            .tryMap({ stationsByRouteList -> [StationByRouteListDTO] in
+                guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { throw BBusAPIError.wrongFormatError }
+                return result.body.itemList
+            })
+            .retry({ [weak self] in
+                self?.fetchRouteList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.bodys, on: self)
+            .store(in: &self.cancellables)
+    }
+
+    func fetchBusPosList(busRouteId: Int) {
+        self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
+            .receive(on: Self.queue)
+            .tryMap({ busPosByRtidList in
+                guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { throw BBusAPIError.wrongFormatError }
+                return result.body.itemList
+            })
+            .retry({ [weak self] in
+                self?.fetchBusPosList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: \.buses, on: self)
+            .store(in: &self.cancellables)
     }
 }

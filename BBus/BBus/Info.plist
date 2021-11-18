@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDarkContent</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>하차 알람을 사용하기 위해서는 위치 정보가 필요합니다.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -15,8 +21,24 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>API_ACCESS_KEY</key>
-	<string>${API_ACCESS_KEY}</string>
+	<key>API_ACCESS_KEY1</key>
+	<string>${API_ACCESS_KEY1}</string>
+	<key>API_ACCESS_KEY2</key>
+	<string>${API_ACCESS_KEY2}</string>
+	<key>API_ACCESS_KEY3</key>
+	<string>${API_ACCESS_KEY3}</string>
+	<key>API_ACCESS_KEY4</key>
+	<string>${API_ACCESS_KEY4}</string>
+	<key>API_ACCESS_KEY5</key>
+	<string>${API_ACCESS_KEY5}</string>
+	<key>API_ACCESS_KEY6</key>
+	<string>${API_ACCESS_KEY6}</string>
+	<key>API_ACCESS_KEY7</key>
+	<string>${API_ACCESS_KEY7}</string>
+	<key>API_ACCESS_KEY8</key>
+	<string>${API_ACCESS_KEY8}</string>
+	<key>API_ACCESS_KEY9</key>
+	<string>${API_ACCESS_KEY9}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
