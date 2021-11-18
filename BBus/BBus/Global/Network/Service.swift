@@ -28,7 +28,6 @@ class Service {
     }
     
     static func removeAccessKey(at order: Int) {
-        print(order)
         Self.keys = Self.keys.filter({ $0 != order })
     }
 
