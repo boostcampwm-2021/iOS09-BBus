@@ -21,7 +21,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
@@ -29,7 +28,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
@@ -37,7 +35,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
@@ -45,7 +42,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
@@ -53,7 +49,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error> {
@@ -61,7 +56,6 @@ class BBusAPIUsecases: RequestUsecases {
         let fetcher: GetStationsByPosListFetchable = ServiceGetStationsByPosListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
-            .mapBBusAPIError()
     }
 
     func getRouteList() -> AnyPublisher<Data, Error> {
