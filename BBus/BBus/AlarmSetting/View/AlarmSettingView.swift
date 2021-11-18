@@ -50,10 +50,6 @@ class AlarmSettingView: UIView {
         self.alarmTableView.dataSource = delegate
     }
     
-    func reloadGetOnSection() {
-        self.alarmTableView.reloadSections(IndexSet(integer: .zero), with: .none)
-    }
-    
     func reload() {
         self.alarmTableView.reloadData()
     }

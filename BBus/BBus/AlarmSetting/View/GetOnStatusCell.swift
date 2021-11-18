@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol GetOnAlarmButtonDelegate {
     func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool?
@@ -16,6 +17,8 @@ class GetOnStatusCell: UITableViewCell {
     static let reusableID = "GetOnStatusCell"
     static let infoCellHeight: CGFloat = 115
     static let singleInfoCellHeight: CGFloat = 50
+    
+    var cancellable: AnyCancellable?
 
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
@@ -162,6 +165,14 @@ class GetOnStatusCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        self.cancellable?.cancel()
+        self.configure(order: "",
+                       remainingTime: nil,
+                       remainingStationCount: nil,
+                       busCongestionStatus: nil,
+                       arrivalTime: nil,
+                       currentLocation: "",
+                       busNumber: "")
         self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
     }
 

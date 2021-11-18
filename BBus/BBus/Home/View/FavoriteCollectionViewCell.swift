@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
+    var cancellables = Set<AnyCancellable>()
     private var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
@@ -35,6 +37,9 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        self.cancellables.forEach { $0.cancel() }
+        self.cancellables.removeAll()
         self.busNumberLabel.text = ""
         self.trailingView.configure(firstBusTime: nil,
                                     firstBusRemaining: nil,
@@ -46,6 +51,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         self.trailingView.configureLayout()
         self.configureLayout()
         self.configureUI()
@@ -53,6 +59,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.trailingView.configureLayout()
         self.configureLayout()
         self.configureUI()

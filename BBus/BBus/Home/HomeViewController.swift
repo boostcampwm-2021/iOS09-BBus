@@ -93,7 +93,6 @@ class HomeViewController: UIViewController {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
-
     }
     
     private func configureColor() {
@@ -106,11 +105,11 @@ class HomeViewController: UIViewController {
 
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
-            .throttle(for: .seconds(1), scheduler: HomeUseCase.queue, latest: true)
+            .compactMap { $0 }
+            .filter { !$0.changedByTimer }
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { response in
-                DispatchQueue.main.async {
-                    self.homeView.reload()
-                }
+                self.homeView.reload()
             })
     }
 }
@@ -153,29 +152,44 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
-        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.favoriteItem.busRouteId),
-              let busType = self.viewModel?.busType(by: busName) else { return cell }
-        let busArrivalInfo = model.arriveInfo
+      
         cell.configureDelegate(self)
-        cell.configure(busNumber: busName,
-                       routeType: busType,
-                       firstBusTime: busArrivalInfo?.firstTime.toString(),
-                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                       secondBusTime: busArrivalInfo?.secondTime.toString(),
-                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+        
+        // bind RemainTimeLabel and ViewModel
+        self.viewModel?.$homeFavoriteList
+            .compactMap { $0 }
+            .filter { $0.changedByTimer }
+            .sink(receiveValue: { homeFavoriteList in
+                DispatchQueue.main.async {
+                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                          let busName = self.viewModel?.busName(by: model.0.busRouteId),
+                          let busType = self.viewModel?.busType(by: busName) else { return }
+                    
+                    let busArrivalInfo = model.1
+                    cell.configure(busNumber: busName,
+                                   routeType: busType,
+                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
+                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
+                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+                }
+            })
+            .store(in: &cell.cancellables)
+        
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
         guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
-              let stationName = self.viewModel?.stationName(by: stationId) else { return header }
+              let stationName = self.viewModel?.stationName(by: stationId),
+              let arsId = self.viewModel?.homeFavoriteList?[indexPath.section]?.arsId else { return header }
 
         header.configureDelegate(self)
-        header.configure(title: stationName, direction: "추후 변경해야함")
+        header.configure(title: stationName, arsId: arsId)
+        
         return header
     }
 }

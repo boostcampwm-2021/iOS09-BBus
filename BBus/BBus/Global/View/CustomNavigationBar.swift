@@ -13,7 +13,7 @@ protocol BackButtonDelegate: AnyObject {
 
 class CustomNavigationBar: UIView {
 
-    static let height: CGFloat = 43
+    static let height: CGFloat = 45
     
     private var delegate: BackButtonDelegate? {
         didSet {
@@ -26,8 +26,8 @@ class CustomNavigationBar: UIView {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = BBusColor.white
-        button.setBackgroundImage(BBusImage.navigationBack, for: .normal)
-        button.contentMode = .scaleAspectFit
+        button.setImage(BBusImage.navigationBack, for: .normal)
+        
         return button
     }()
     private lazy var backButtonTitleLabel: UILabel = {
@@ -57,10 +57,8 @@ class CustomNavigationBar: UIView {
 
     // MARK: - Configure
     func configureLayout() {
-        let backButtonWidthAnchor: CGFloat = 22
-        let backButtonHeightAnchor: CGFloat = 30
-        let backButtonLeadingAnchor: CGFloat = 16
-        let termBackButtonToBackButtonTitle: CGFloat = 12
+        let backButtonWidthAnchor: CGFloat = 50
+        let backButtonHeightAnchor: CGFloat = 45
 
         self.heightAnchor.constraint(equalToConstant: Self.height).isActive = true
 
@@ -70,14 +68,14 @@ class CustomNavigationBar: UIView {
             self.backButton.widthAnchor.constraint(equalToConstant: backButtonWidthAnchor),
             self.backButton.heightAnchor.constraint(equalToConstant: backButtonHeightAnchor),
             self.backButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: backButtonLeadingAnchor),
+            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
         ])
 
         self.addSubview(self.backButtonTitleLabel)
         self.backButtonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.backButtonTitleLabel.centerYAnchor.constraint(equalTo: self.backButton.centerYAnchor),
-            self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor, constant: termBackButtonToBackButtonTitle)
+            self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor)
         ])
 
         self.addSubview(self.titleLabel)

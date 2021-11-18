@@ -36,24 +36,19 @@ final class MovingStatusViewModel {
         self.fromArsId = fromArsId
         self.toArsId = toArsId
         self.cancellables = []
-        self.bindingHeaderInfo()
-        self.bindingStationsInfo()
-        self.bindingBusesPosInfo()
+        self.bindHeaderInfo()
+        self.bindStationsInfo()
+        self.bindBusesPosInfo()
         self.configureObserver()
     }
     
     private func configureObserver() {
         NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { _ in
             self.updateAPI()
-            
-            guard let y = self.buses.first?.gpsY,
-                  let x = self.buses.first?.gpsX else { return }
-            
-            self.findBoardBus(gpsY: y, gpsX: x)
         }
     }
 
-    private func bindingHeaderInfo() {
+    private func bindHeaderInfo() {
         self.usecase.$header
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] header in
@@ -62,7 +57,7 @@ final class MovingStatusViewModel {
             .store(in: &self.cancellables)
     }
 
-    private func bindingStationsInfo() {
+    private func bindStationsInfo() {
         self.usecase.$stations
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] stations in
@@ -71,7 +66,7 @@ final class MovingStatusViewModel {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusesPosInfo() {
+    private func bindBusesPosInfo() {
         self.usecase.$buses
             .receive(on: MovingStatusUsecase.queue)
             .sink { [weak self] buses in
@@ -80,6 +75,11 @@ final class MovingStatusViewModel {
                       let count = self?.stationInfos.count else { return }
 
                 self?.buses = buses.filter { $0.sectionOrder >= currentOrd && $0.sectionOrder < startOrd + count } // 5
+                // Test 로직
+                guard let y = self?.buses.first?.gpsY,
+                      let x = self?.buses.first?.gpsX else { return }
+
+                self?.findBoardBus(gpsY: y, gpsX: x)
             }
             .store(in: &self.cancellables)
     }
@@ -100,10 +100,10 @@ final class MovingStatusViewModel {
         if stationInfos.isEmpty { return }
 
         for bus in buses {
-            if self.onBoard(gpsY: gpsY, gpsX: gpsX, busY: bus.gpsY, busX: bus.gpsX) {
+            if self.isOnBoard(gpsY: gpsY, gpsX: gpsX, busY: bus.gpsY, busX: bus.gpsX) {
                 self.updateRemainingStation(bus: bus)
-                self.updateRemainingTime(bus: bus)
                 self.updateBoardBus(bus: bus)
+                self.updateRemainingTime(bus: bus)
                 break
             }
         }
@@ -117,17 +117,16 @@ final class MovingStatusViewModel {
 
     // 남은 시간 업데이트 로직
     private func updateRemainingTime(bus: BusPosByRtidDTO) {
-        guard let startOrd = self.startOrd else { return }
+        guard let startOrd = self.startOrd,
+              let boardedBus = self.boardedBus else { return }
+
         let currentIdx = (bus.sectionOrder - startOrd)
         var totalRemainTime = 0
         for index in currentIdx...self.stationInfos.count-1 {
             totalRemainTime += self.stationInfos[index].sectTime
         }
 
-        let currentLocation = self.convertBusPos(startOrd: startOrd,
-                                                 order: bus.sectionOrder,
-                                                 sect: bus.sectDist,
-                                                 fullSect: bus.fullSectDist)
+        let currentLocation = boardedBus.location
         let extraPersent = Double(currentLocation) - Double(currentIdx)
         let extraTime = extraPersent * Double(self.stationInfos[currentIdx].sectTime)
         totalRemainTime -= Int(ceil(extraTime))
@@ -149,7 +148,7 @@ final class MovingStatusViewModel {
     }
 
     // Bus - 유저간 거리 측정 로직
-    func onBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
+    func isOnBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool {
         let userLocation = CLLocation(latitude: gpsX, longitude: gpsY)
         let busLocation = CLLocation(latitude: busX, longitude: busY)
         let distanceInMeters = userLocation.distance(from: busLocation)
