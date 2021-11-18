@@ -16,12 +16,14 @@ class AlarmSettingUseCase {
     private let useCases: AlarmSettingUseCases
     @Published private(set) var busArriveInfo: ArrInfoByRouteDTO?
     @Published private(set) var busStationsInfo: [StationByRouteListDTO]
+    @Published private(set) var networkError: Error?
     private var cancellables: Set<AnyCancellable>
     
     init(useCases: AlarmSettingUseCases) {
         self.useCases = useCases
         self.busArriveInfo = nil
         self.busStationsInfo = []
+        self.networkError = nil
         self.cancellables = []
     }
     
@@ -31,15 +33,17 @@ class AlarmSettingUseCase {
                                                 busRouteId: busRouteId,
                                                 ord: ord)
                 .receive(on: Self.queue)
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { data in
-                    guard let result = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
-                          let item = result.body.itemList.first else { return }
-                    self.busArriveInfo = item
+                .tryMap ({ info -> ArrInfoByRouteDTO in
+                    guard let result = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: info),
+                          let item = result.body.itemList.first else { throw BBusAPIError.wrongFormatError }
+                    return item
                 })
+                .retry ({ [weak self] in
+                    self?.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .assign(to: \.busArriveInfo, on: self)
                 .store(in: &self.cancellables)
         }
     }
@@ -48,16 +52,17 @@ class AlarmSettingUseCase {
         Self.queue.async {
             self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
                 .receive(on: Self.queue)
-                .sink(receiveCompletion: { error in
-                    if case .failure(let error) = error {
-                        print(error)
-                    }
-                }, receiveValue: { [weak self] data in
+                .tryMap({ data in
                     guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: data)?.body.itemList,
-                          let index = result.firstIndex(where: { $0.arsId == arsId }) else { return }
-                    self?.busStationsInfo = Array(result[index..<result.count])
-                    
+                          let index = result.firstIndex(where: { $0.arsId == arsId }) else { throw BBusAPIError.wrongFormatError }
+                    return Array(result[index..<result.count])
                 })
+                .retry({ [weak self] in
+                    self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .assign(to: \.busStationsInfo, on: self)
                 .store(in: &self.cancellables)
         }
     }
