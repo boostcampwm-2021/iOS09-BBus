@@ -12,7 +12,7 @@ class HomeUseCase {
 
     private let usecases: GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
     private var cancellables: Set<AnyCancellable>
-    static let thread = DispatchQueue.init(label: "Home")
+    static let queue = DispatchQueue.init(label: "Home")
     var stationList: [StationDTO]?
     var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
@@ -30,9 +30,9 @@ class HomeUseCase {
     }
 
     func loadFavoriteData() {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getFavoriteItemList()
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {
@@ -46,11 +46,11 @@ class HomeUseCase {
     }
 
     func loadBusRemainTime(favoriteItem: FavoriteItemDTO, completion: @escaping (ArrInfoByRouteDTO) -> Void) {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
                                                 busRouteId: favoriteItem.busRouteId,
                                                 ord: favoriteItem.ord)
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .sink { error in
                     if case .failure(let error) = error {
                         print(error)
@@ -65,9 +65,9 @@ class HomeUseCase {
     }
 
     private func loadStation() {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getStationList()
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {
@@ -81,9 +81,9 @@ class HomeUseCase {
     }
 
     private func loadRoute() {
-        Self.thread.async {
+        Self.queue.async {
             self.usecases.getRouteList()
-                .receive(on: Self.thread)
+                .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
                 .sink(receiveCompletion: { error in
                     if case .failure(let error) = error {

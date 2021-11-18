@@ -35,7 +35,7 @@ class HomeViewModel {
 
     private func bindFavoriteData() {
         self.cancellable = self.useCase.$favoriteList
-            .receive(on: HomeUseCase.thread)
+            .receive(on: HomeUseCase.queue)
             .sink(receiveValue: { favoriteItems in
                 guard let favoriteItems = favoriteItems else { return }
                 self.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)

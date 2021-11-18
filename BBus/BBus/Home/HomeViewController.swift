@@ -106,7 +106,7 @@ class HomeViewController: UIViewController {
 
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
-            .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
+            .throttle(for: .seconds(1), scheduler: HomeUseCase.queue, latest: true)
             .sink(receiveValue: { response in
                 DispatchQueue.main.async {
                     self.homeView.reload()
