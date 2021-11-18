@@ -106,11 +106,11 @@ class HomeViewController: UIViewController {
 
     private func bindingFavoriteList() {
         self.cancellable = self.viewModel?.$homeFavoriteList
-            .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
+            .throttle(for: 1, scheduler: DispatchQueue.main, latest: true)
+            .compactMap { $0 }
+            .filter { !$0.changedByTimer }
             .sink(receiveValue: { response in
-                DispatchQueue.main.async {
-                    self.homeView.reload()
-                }
+                self.homeView.reload()
             })
     }
 }
@@ -153,19 +153,29 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
-        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.0.busRouteId),
-              let busType = self.viewModel?.busType(by: busName) else { return cell }
-        let busArrivalInfo = model.1
+
         cell.configureDelegate(self)
-        cell.configure(busNumber: busName,
-                       routeType: busType,
-                       firstBusTime: busArrivalInfo?.firstTime.toString(),
-                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                       secondBusTime: busArrivalInfo?.secondTime.toString(),
-                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+        
+        // bind RemainTimeLabel and ViewModel
+        cell.cancellable = self.viewModel?.$homeFavoriteList
+            .sink(receiveValue: { homeFavoriteList in
+                DispatchQueue.main.async {
+                    guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+                          let busName = self.viewModel?.busName(by: model.0.busRouteId),
+                          let busType = self.viewModel?.busType(by: busName) else { return }
+                    
+                    let busArrivalInfo = model.1
+                    cell.configure(busNumber: busName,
+                                   routeType: busType,
+                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
+                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
+                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+                }
+            })
+        
         return cell
     }
 

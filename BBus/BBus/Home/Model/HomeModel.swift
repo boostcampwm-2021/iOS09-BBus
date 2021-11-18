@@ -10,6 +10,7 @@ import Foundation
 struct HomeFavoriteList {
 
     private var favorites: [HomeFavorite]
+    var changedByTimer: Bool
 
     subscript (index: Int) -> HomeFavorite? {
         guard 0..<self.favorites.count ~= index else { return nil }
@@ -29,6 +30,7 @@ struct HomeFavoriteList {
             }
         })
         self.favorites = favorites
+        self.changedByTimer = false
     }
 
     func count() -> Int {
@@ -50,6 +52,7 @@ struct HomeFavoriteList {
     }
 
     mutating func descendAllTime() {
+        self.changedByTimer = true
         self.favorites = self.favorites.map({
             var favorite = $0
             favorite.descendTime()
