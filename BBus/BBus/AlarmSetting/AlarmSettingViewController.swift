@@ -135,7 +135,7 @@ class AlarmSettingViewController: UIViewController {
         let controller = UIAlertController()
         let action = UIAlertAction(title: message, style: .cancel, handler: nil)
         controller.addAction(action)
-        self.coordinator?.delegate?.pushAlert(controller: controller, completion: nil)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
 }
 
