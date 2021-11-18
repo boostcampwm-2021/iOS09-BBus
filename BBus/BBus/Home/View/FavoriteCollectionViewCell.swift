@@ -36,7 +36,12 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.busNumberLabel.text = ""
-        self.trailingView.configure(firstBusTime: nil, firstBusRemaining: nil, firstBusCongestion: nil, secondBusTime: nil, secondBusRemaining: nil, secondBusCongestion: nil)
+        self.trailingView.configure(firstBusTime: nil,
+                                    firstBusRemaining: nil,
+                                    firstBusCongestion: nil,
+                                    secondBusTime: nil,
+                                    secondBusRemaining: nil,
+                                    secondBusCongestion: nil)
     }
 
     required init?(coder: NSCoder) {
