@@ -17,8 +17,24 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>API_ACCESS_KEY</key>
-	<string>${API_ACCESS_KEY}</string>
+	<key>API_ACCESS_KEY1</key>
+	<string>${API_ACCESS_KEY1}</string>
+	<key>API_ACCESS_KEY2</key>
+	<string>${API_ACCESS_KEY2}</string>
+	<key>API_ACCESS_KEY3</key>
+	<string>${API_ACCESS_KEY3}</string>
+	<key>API_ACCESS_KEY4</key>
+	<string>${API_ACCESS_KEY4}</string>
+	<key>API_ACCESS_KEY5</key>
+	<string>${API_ACCESS_KEY5}</string>
+	<key>API_ACCESS_KEY6</key>
+	<string>${API_ACCESS_KEY6}</string>
+	<key>API_ACCESS_KEY7</key>
+	<string>${API_ACCESS_KEY7}</string>
+	<key>API_ACCESS_KEY8</key>
+	<string>${API_ACCESS_KEY8}</string>
+	<key>API_ACCESS_KEY9</key>
+	<string>${API_ACCESS_KEY9}</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
