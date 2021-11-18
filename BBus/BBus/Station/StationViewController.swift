@@ -153,16 +153,6 @@ class StationViewController: UIViewController {
                 }
             })
             .store(in: &self.cancellables)
-
-        self.viewModel?.$infoBuses
-            .receive(on: StationUsecase.queue)
-            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
-            .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.stationView.reload()
-                }
-            })
-            .store(in: &self.cancellables)
         
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
@@ -255,12 +245,14 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         // InfoBus인 경우: 바인딩
+        // TODO: maxCount 임시 조치, 추후 수정 필요
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             self.viewModel?.$infoBuses
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak self] infoBuses in
                     guard let key = self?.viewModel?.busKeys[indexPath.section],
-                          let busInfo = infoBuses[key]?[indexPath.item] else { return }
+                          let maxCount = infoBuses[key]?.count,
+                          let busInfo = maxCount > indexPath.item ? infoBuses[key]?[indexPath.item] : nil else { return }
                     configureCell(busInfo)
                 })
                 .store(in: &cell.cancellables)
