@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import CoreLocation
 
-typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
+typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate & AlertCreateDelegate
 
 final class MovingStatusViewController: UIViewController {
 
@@ -21,6 +21,21 @@ final class MovingStatusViewController: UIViewController {
     private var color: UIColor?
     private var busIcon: UIImage?
     private var locationManager: CLLocationManager?
+
+    private lazy var refreshButton: ThrottleButton = {
+        let radius: CGFloat = 25
+
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
+
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
+            self.viewModel?.updateAPI()
+        }
+        return button
+    }()
 
     init(viewModel: MovingStatusViewModel) {
         self.viewModel = viewModel
@@ -72,6 +87,19 @@ final class MovingStatusViewController: UIViewController {
             self.movingStatusView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.movingStatusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
+
+        let refreshButtonWidthAnchor: CGFloat = 50
+        let refreshBottomInterval: CGFloat = -MovingStatusView.endAlarmViewHeight
+        let refreshTrailingInterval: CGFloat = -16
+
+        self.view.addSubview(self.refreshButton)
+        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshBottomInterval)
+        ])
     }
     
     private func configureDelegate() {
@@ -99,14 +127,14 @@ final class MovingStatusViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingHeaderBusInfo()
-        self.bindingRemainTime()
-        self.bindingCurrentStation()
-        self.bindingStationInfos()
-        self.bindingBoardedBus()
+        self.bindHeaderBusInfo()
+        self.bindRemainTime()
+        self.bindCurrentStation()
+        self.bindStationInfos()
+        self.bindBoardedBus()
     }
 
-    private func bindingHeaderBusInfo() {
+    private func bindHeaderBusInfo() {
         self.viewModel?.$busInfo
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] busInfo in
@@ -120,7 +148,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingRemainTime() {
+    private func bindRemainTime() {
         self.viewModel?.$remainingTime
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] remainingTime in
@@ -131,7 +159,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingCurrentStation() {
+    private func bindCurrentStation() {
         self.viewModel?.$remainingStation
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] currentStation in
@@ -142,7 +170,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingStationInfos() {
+    private func bindStationInfos() {
         self.viewModel?.$stationInfos
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] _ in
@@ -153,7 +181,7 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBoardedBus() {
+    private func bindBoardedBus() {
         self.viewModel?.$boardedBus
             .receive(on: MovingStatusUsecase.queue)
             .sink(receiveValue: { [weak self] boardedBus in
@@ -168,22 +196,22 @@ final class MovingStatusViewController: UIViewController {
         switch type {
         case .mainLine:
             self.color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
+            self.busIcon = BBusImage.blueBooduckBus
         case .broadArea:
             self.color = BBusColor.bbusTypeRed
-            self.busIcon = BBusImage.redBusIcon
+            self.busIcon = BBusImage.redBooduckBus
         case .customized:
             self.color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
+            self.busIcon = BBusImage.greenBooduckBus
         case .circulation:
             self.color = BBusColor.bbusTypeCirculation
-            self.busIcon = BBusImage.circulationBusIcon
+            self.busIcon = BBusImage.circulationBooduckBus
         case .lateNight:
             self.color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
+            self.busIcon = BBusImage.blueBooduckBus
         case .localLine:
             self.color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
+            self.busIcon = BBusImage.greenBooduckBus
         }
 
         self.movingStatusView.configureColor(to: color)

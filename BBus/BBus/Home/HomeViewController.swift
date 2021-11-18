@@ -74,8 +74,8 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.addSubview(self.homeView)
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.homeView, self.refreshButton)
+
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -83,8 +83,6 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         self.refreshButton.backgroundColor = BBusColor.darkGray
         let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
@@ -93,7 +91,6 @@ class HomeViewController: UIViewController {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
-
     }
     
     private func configureColor() {
@@ -106,12 +103,15 @@ class HomeViewController: UIViewController {
     }
 
     private func bindingFavoriteList() {
+
         self.viewModel?.$homeFavoriteList
-            .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
+            .compactMap { $0 }
+            .filter { !$0.changedByTimer }
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { response in
-                DispatchQueue.main.async {
-                    self.homeView.reload()
-                }
+                let isFavoriteEmpty = response?.count() == 0
+                self.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
+                self.homeView.reload()
             })
             .store(in: &self.cancellables)
     }
@@ -138,9 +138,8 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.0.busRouteId,
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.favoriteItem.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
-
 
         self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
@@ -172,29 +171,44 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
-        guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.0.busRouteId),
-              let busType = self.viewModel?.busType(by: busName) else { return cell }
-        let busArrivalInfo = model.1
+      
         cell.configureDelegate(self)
-        cell.configure(busNumber: busName,
-                       routeType: busType,
-                       firstBusTime: busArrivalInfo?.firstTime.toString(),
-                       firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                       firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                       secondBusTime: busArrivalInfo?.secondTime.toString(),
-                       secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                       secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+        
+        // bind RemainTimeLabel and ViewModel
+        self.viewModel?.$homeFavoriteList
+            .compactMap { $0 }
+            .filter { $0.changedByTimer }
+            .sink(receiveValue: { homeFavoriteList in
+                DispatchQueue.main.async {
+                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                          let busName = self.viewModel?.busName(by: model.0.busRouteId),
+                          let busType = self.viewModel?.busType(by: busName) else { return }
+                    
+                    let busArrivalInfo = model.1
+                    cell.configure(busNumber: busName,
+                                   routeType: busType,
+                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
+                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
+                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+                }
+            })
+            .store(in: &cell.cancellables)
+        
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
         guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
-              let stationName = self.viewModel?.stationName(by: stationId) else { return header }
+              let stationName = self.viewModel?.stationName(by: stationId),
+              let arsId = self.viewModel?.homeFavoriteList?[indexPath.section]?.arsId else { return header }
 
         header.configureDelegate(self)
-        header.configure(title: stationName, direction: "추후 변경해야함")
+        header.configure(title: stationName, arsId: arsId)
+        
         return header
     }
 }
@@ -228,12 +242,12 @@ extension HomeViewController: AlarmButtonDelegate {
       
         guard let indexPath = self.homeView.indexPath(for: cell),
               let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let stationId = Int(model.0.stId),
-              let busRouteId = Int(model.0.busRouteId),
-              let ord = Int(model.0.ord),
+              let stationId = Int(model.favoriteItem.stId),
+              let busRouteId = Int(model.favoriteItem.busRouteId),
+              let ord = Int(model.favoriteItem.ord),
               let busName = self.viewModel?.busName(by: "\(busRouteId)"),
               let routeType = self.viewModel?.busType(by: busName) else { return }
-        let arsId = model.0.arsId
+        let arsId = model.favoriteItem.arsId
 
         self.coordinator?.pushToAlarmSetting(stationId: stationId,
                                              busRouteId: busRouteId,

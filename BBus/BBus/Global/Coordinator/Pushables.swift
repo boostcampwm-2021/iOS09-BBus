@@ -53,12 +53,12 @@ extension StationPushable {
     }
 }
 
-protocol AlertPushable: Coordinator {
-    func pushAlert(controller: UIAlertController, completion: (() -> Void)?)
+protocol AlertPresentable: Coordinator {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)?)
 }
 
-extension AlertPushable {
-    func pushAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
-        self.delegate?.pushAlert(controller: controller, completion: completion)
+extension AlertPresentable {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.delegate?.presentAlert(controller: controller, completion: completion)
     }
 }

@@ -28,6 +28,13 @@ final class BusRouteViewModel {
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
+        self.configureObserver()
+    }
+
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .none) { [weak self] _ in
+            self?.refreshBusPos()
+        }
     }
 
     private func bindingHeaderInfo() {

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 enum NetworkError: Error {
-    case accessKeyError, urlError, unknownError, noDataError, noResponseError, responseError
+    case accessKeyError, urlError, unknownError, noDataError, noResponseError, responseError, trafficExceed
 }
 
 // TODO: - Service Return Type 수정 필요
@@ -32,6 +32,13 @@ class Service {
     }
 
     func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<(Data, Int), Error> {
+        let userDefaultKey = "APIRequestCount"
+        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
+        if apiRequestCount > 300 {
+            queue.async { [weak publisher] in publisher?.send(completion: .failure(NetworkError.trafficExceed)) }
+            return publisher.eraseToAnyPublisher()
+        }
+        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
         guard Self.keys.count != 0,
               let order = Self.keys.randomElement() else {
                   let publisher = PassthroughSubject<(Data, Int), Error>()
