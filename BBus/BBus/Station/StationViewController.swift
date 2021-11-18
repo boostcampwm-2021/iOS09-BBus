@@ -144,25 +144,6 @@ class StationViewController: UIViewController {
                 }
             })
             .store(in: &self.cancellables)
-        
-        self.viewModel?.$favoriteItems
-            .receive(on: StationUsecase.queue)
-            .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.stationView.reload()
-                }
-            })
-            .store(in: &self.cancellables)
-
-        self.viewModel?.$infoBuses
-            .receive(on: StationUsecase.queue)
-            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
-            .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.stationView.reload()
-                }
-            })
-            .store(in: &self.cancellables)
     }
 
     private func configureColor() {
@@ -208,23 +189,26 @@ extension StationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StationBodyCollectionViewCell.identifier, for: indexPath) as? StationBodyCollectionViewCell,
               let viewModel = self.viewModel else { return UICollectionViewCell() }
+        
         // height 재설정
         if collectionView.contentSize.height > self.collectionViewMinHeight {
             self.stationBusInfoHeight = collectionView.contentSize.height
         }
         
-        var busInfo: BusArriveInfo?
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            let key = viewModel.busKeys[indexPath.section]
-            busInfo = viewModel.infoBuses[key]?[indexPath.item]
+        // configure delegate and button
+        if let item = self.makeFavoriteItem(at: indexPath) {
+            cell.configure(delegate: self)
+            cell.configureButton(status: viewModel.favoriteItems.contains(item))
+            // 즐겨찾기 버튼 터치 시에도 reload 대신 버튼 색상만 다시 configure하도록 바인딩
+            self.viewModel?.$favoriteItems
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { favoriteItems in
+                    cell.configureButton(status: favoriteItems.contains(item))
+                })
+                .store(in: &cell.cancellables)
         }
-        else {
-            let key = viewModel.busKeys[indexPath.section]
-            busInfo = viewModel.noInfoBuses[key]?[indexPath.item]
-        }
-
-        if let busInfo = busInfo,
-           let item = self.makeFavoriteItem(at: indexPath) {
+        
+        let configureCell: (BusArriveInfo) -> Void = { busInfo in
             cell.configure(busNumber: busInfo.busNumber,
                            routeType: busInfo.routeType.toRouteType(),
                            direction: busInfo.nextStation,
@@ -234,9 +218,27 @@ extension StationViewController: UICollectionViewDataSource {
                            secondBusTime: busInfo.secondBusArriveRemainTime?.toString(),
                            secondBusRelativePosition: busInfo.secondBusRelativePosition,
                            secondBusCongsetion: busInfo.congestion?.toString())
-            cell.configure(delegate: self)
-            cell.configureButton(status: viewModel.favoriteItems.contains(item))
         }
+        
+        // InfoBus인 경우: 바인딩
+        if viewModel.infoBuses.count - 1 >= indexPath.section {
+            self.viewModel?.$infoBuses
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] infoBuses in
+                    guard let key = self?.viewModel?.busKeys[indexPath.section],
+                          let busInfo = infoBuses[key]?[indexPath.item] else { return }
+                    configureCell(busInfo)
+                })
+                .store(in: &cell.cancellables)
+        }
+        // NoInfoBus인 경우: 바로 configure
+        else {
+            let key = viewModel.busKeys[indexPath.section]
+            if let busInfo = viewModel.noInfoBuses[key]?[indexPath.item] {
+                configureCell(busInfo)
+            }
+        }
+        
         return cell
     }
 

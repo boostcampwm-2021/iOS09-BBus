@@ -22,6 +22,7 @@ protocol EndAlarmButtonDelegate: AnyObject {
 class MovingStatusView: UIView {
     
     static let bottomIndicatorHeight: CGFloat = 80
+    static let endAlarmViewHeight: CGFloat = 80
     
     private weak var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
         didSet {
@@ -262,15 +263,13 @@ class MovingStatusView: UIView {
             self.alarmStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmStatusLabelRightMargin)
         ])
         
-        let endAlarmViewHeight: CGFloat = 80
-        
         self.addSubview(self.endAlarmButton)
         self.endAlarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.endAlarmButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.endAlarmButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.endAlarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.endAlarmButton.heightAnchor.constraint(equalToConstant: endAlarmViewHeight)
+            self.endAlarmButton.heightAnchor.constraint(equalToConstant: Self.endAlarmViewHeight)
         ])
         
         self.addSubview(self.stationsTableView)
@@ -295,7 +294,7 @@ class MovingStatusView: UIView {
         let busTagLeftMargin: CGFloat = 5
         
         let busTag = MovingStatusBusTagView()
-        busTag.configure(color: color,
+        busTag.configureInfo(color: color,
                          busIcon: busIcon,
                          remainStation: remainStation)
         

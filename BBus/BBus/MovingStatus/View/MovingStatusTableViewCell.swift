@@ -48,7 +48,7 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
     }
     
     func configure(speed: Int, afterSpeed: Int?, index: Int, count: Int, title: String) {
-        let lineColors = self.configureLineColors(speed: speed,
+        let lineColors = self.configureLineColors(currentSpeed: speed,
                                                   afterSpeed: afterSpeed,
                                                   index: index,
                                                   count: count)
@@ -61,7 +61,7 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
 
         if index == 0 {
             type = .getOn
-        } else if afterSpeed == nil {
+        } else if index == count-1 {
             type = .getOff
         } else {
             type = .waypoint
@@ -70,11 +70,11 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
         self.configureCenterImage(type: type)
     }
 
-    func configureLineColors(speed: Int, afterSpeed: Int?, index: Int, count: Int) -> (beforeColor:  UIColor?, afterColor:  UIColor?) {
+    func configureLineColors(currentSpeed: Int, afterSpeed: Int?, index: Int, count: Int) -> (beforeColor:  UIColor?, afterColor:  UIColor?) {
         var beforeColor: UIColor?
         var afterColor: UIColor?
-        if afterSpeed == nil {
-            beforeColor = self.configureLineColor(speed: speed)
+        if index == count-1 {
+            beforeColor = self.configureLineColor(speed: currentSpeed)
             afterColor = BBusColor.clear
         }
         else {
@@ -83,7 +83,7 @@ class MovingStatusTableViewCell: BusStationTableViewCell {
                 beforeColor = BBusColor.clear
                 afterColor = self.configureLineColor(speed: afterSpeed)
             } else {
-                beforeColor = self.configureLineColor(speed: speed)
+                beforeColor = self.configureLineColor(speed: currentSpeed)
                 afterColor = self.configureLineColor(speed: afterSpeed)
             }
         }
