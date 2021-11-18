@@ -16,7 +16,7 @@ typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String
 
 final class MovingStatusViewModel {
 
-    private let usecase: MovingStatusUsecase
+    let usecase: MovingStatusUsecase
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     private let fromArsId: String
