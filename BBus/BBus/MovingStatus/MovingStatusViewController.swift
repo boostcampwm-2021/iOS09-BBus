@@ -168,22 +168,22 @@ final class MovingStatusViewController: UIViewController {
         switch type {
         case .mainLine:
             self.color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
+            self.busIcon = BBusImage.blueBooduckBus
         case .broadArea:
             self.color = BBusColor.bbusTypeRed
-            self.busIcon = BBusImage.redBusIcon
+            self.busIcon = BBusImage.redBooduckBus
         case .customized:
             self.color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
+            self.busIcon = BBusImage.greenBooduckBus
         case .circulation:
             self.color = BBusColor.bbusTypeCirculation
-            self.busIcon = BBusImage.circulationBusIcon
+            self.busIcon = BBusImage.circulationBooduckBus
         case .lateNight:
             self.color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
+            self.busIcon = BBusImage.blueBooduckBus
         case .localLine:
             self.color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
+            self.busIcon = BBusImage.greenBooduckBus
         }
 
         self.movingStatusView.configureColor(to: color)
