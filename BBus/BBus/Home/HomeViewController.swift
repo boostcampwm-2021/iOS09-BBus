@@ -119,7 +119,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.0.busRouteId,
+        guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.favoriteItem.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
 
 
@@ -154,9 +154,9 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath)
                 as? FavoriteCollectionViewCell else { return UICollectionViewCell() }
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let busName = self.viewModel?.busName(by: model.0.busRouteId),
+              let busName = self.viewModel?.busName(by: model.favoriteItem.busRouteId),
               let busType = self.viewModel?.busType(by: busName) else { return cell }
-        let busArrivalInfo = model.1
+        let busArrivalInfo = model.arriveInfo
         cell.configureDelegate(self)
         cell.configure(busNumber: busName,
                        routeType: busType,
@@ -209,12 +209,12 @@ extension HomeViewController: AlarmButtonDelegate {
       
         guard let indexPath = self.homeView.indexPath(for: cell),
               let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
-              let stationId = Int(model.0.stId),
-              let busRouteId = Int(model.0.busRouteId),
-              let ord = Int(model.0.ord),
+              let stationId = Int(model.favoriteItem.stId),
+              let busRouteId = Int(model.favoriteItem.busRouteId),
+              let ord = Int(model.favoriteItem.ord),
               let busName = self.viewModel?.busName(by: "\(busRouteId)"),
               let routeType = self.viewModel?.busType(by: busName) else { return }
-        let arsId = model.0.arsId
+        let arsId = model.favoriteItem.arsId
 
         self.coordinator?.pushToAlarmSetting(stationId: stationId,
                                              busRouteId: busRouteId,

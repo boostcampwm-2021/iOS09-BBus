@@ -60,7 +60,7 @@ struct HomeFavoriteList {
 
 struct HomeFavorite: Equatable {
 
-    subscript(index: Int) -> (FavoriteItemDTO, HomeArriveInfo?)? {
+    subscript(index: Int) -> (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)? {
         guard 0..<self.buses.count ~= index else { return nil }
         return self.buses[index]
     }
