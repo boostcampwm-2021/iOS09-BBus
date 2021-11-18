@@ -44,6 +44,8 @@ final class SearchResultScrollView: UIScrollView {
         view.backgroundColor = BBusColor.darkGray
         return view
     }()
+    private lazy var emptyBusSearchResultNoticeView = EmptySearchResultNoticeView(searchType: .bus)
+    private lazy var emptyStationSearchResultNoticeView = EmptySearchResultNoticeView(searchType: .station)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -119,6 +121,25 @@ final class SearchResultScrollView: UIScrollView {
             self.collectionViewSeparateView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             self.collectionViewSeparateView.heightAnchor.constraint(equalToConstant: separatorHeight)
         ])
+
+        self.addSubview(self.emptyBusSearchResultNoticeView)
+        self.emptyBusSearchResultNoticeView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.emptyBusSearchResultNoticeView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            self.emptyBusSearchResultNoticeView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),
+            self.emptyBusSearchResultNoticeView.bottomAnchor.constraint(equalTo: contentView.centerYAnchor),
+            self.emptyBusSearchResultNoticeView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
+        ])
+
+        self.addSubview(self.emptyStationSearchResultNoticeView)
+        self.emptyStationSearchResultNoticeView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.emptyStationSearchResultNoticeView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.emptyStationSearchResultNoticeView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),
+            self.emptyStationSearchResultNoticeView.bottomAnchor.constraint(equalTo: contentView.centerYAnchor),
+            self.emptyStationSearchResultNoticeView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
+            ])
+
     }
 
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
@@ -126,6 +147,11 @@ final class SearchResultScrollView: UIScrollView {
         self.busResultCollectionView.dataSource = delegate
         self.stationResultCollectionView.delegate = delegate
         self.stationResultCollectionView.dataSource = delegate
+    }
+
+    func configureExchangeLabelDelegate(_ delegate: BusTabButtonDelegate & StationTabButtonDelegate) {
+        self.emptyStationSearchResultNoticeView.configureDelegate(delegate)
+        self.emptyBusSearchResultNoticeView.configureDelegate(delegate)
     }
 
     func configureIndicator(_ moving: Bool) {
@@ -176,5 +202,14 @@ final class SearchResultScrollView: UIScrollView {
     func reload() {
         self.busResultCollectionView.reloadData()
         self.stationResultCollectionView.reloadData()
+    }
+
+    func emptyNoticeActivate(type: SearchType, by onOff: Bool) {
+        switch type {
+        case .bus:
+            self.emptyBusSearchResultNoticeView.isHidden = !onOff
+        case .station:
+            self.emptyStationSearchResultNoticeView.isHidden = !onOff
+        }
     }
 }

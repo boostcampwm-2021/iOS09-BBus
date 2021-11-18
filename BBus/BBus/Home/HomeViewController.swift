@@ -74,8 +74,8 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.addSubview(self.homeView)
-        self.homeView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.homeView, self.refreshButton)
+
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -83,8 +83,6 @@ class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         self.refreshButton.backgroundColor = BBusColor.darkGray
         let refreshTrailingBottomInterval: CGFloat = -16
         NSLayoutConstraint.activate([
@@ -109,6 +107,8 @@ class HomeViewController: UIViewController {
             .filter { !$0.changedByTimer }
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { response in
+                let isFavoriteEmpty = response?.count() == 0
+                self.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
                 self.homeView.reload()
             })
     }
@@ -120,7 +120,6 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let busRouteIdString = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item]?.favoriteItem.busRouteId,
               let busRouteId = Int(busRouteIdString) else { return }
-
 
         self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
