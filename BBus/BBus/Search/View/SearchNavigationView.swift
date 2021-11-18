@@ -25,6 +25,8 @@ protocol TextFieldDelegate {
 
 final class SearchNavigationView: UIView {
 
+    static let height: CGFloat = 100
+
     private var backButtonDelegate: SearchBackButtonDelegate?
     private var busTabButtonDelegate: BusTabButtonDelegate?
     private var stationTabButtonDelegate: StationTabButtonDelegate?

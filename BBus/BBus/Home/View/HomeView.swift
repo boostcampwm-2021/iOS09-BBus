@@ -9,7 +9,6 @@ import UIKit
 
 class HomeView: UIView {
 
-
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
         collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
@@ -24,6 +23,7 @@ class HomeView: UIView {
         view.backgroundColor = BBusColor.white
         return view
     }()
+    private lazy var emptyFavoriteNotice = EmptyFavoriteNoticeView()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -31,7 +31,7 @@ class HomeView: UIView {
 
     // MARK: - Configuration
     func configureLayout() {
-        self.addSubviews(self.favoriteCollectionView, self.navigationView)
+        self.addSubviews(self.favoriteCollectionView, self.emptyFavoriteNotice, self.navigationView)
 
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.favoriteCollectionView.backgroundColor = BBusColor.bbusGray6
@@ -40,6 +40,13 @@ class HomeView: UIView {
             self.favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            self.emptyFavoriteNotice.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            self.emptyFavoriteNotice.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            self.emptyFavoriteNotice.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            self.emptyFavoriteNotice.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor)
         ])
 
         NSLayoutConstraint.activate([
@@ -90,5 +97,9 @@ class HomeView: UIView {
         layout.minimumInteritemSpacing = bottomLineHeight
         layout.minimumLineSpacing = bottomLineHeight
         return layout
+    }
+
+    func emptyNoticeActivate(by onOff: Bool) {
+        self.emptyFavoriteNotice.isHidden = !onOff
     }
 }

@@ -27,7 +27,6 @@ class HomeViewController: UIViewController {
         }
         return button
     }()
-    private lazy var emptyFavoriteNotice = EmptyFavoriteNoticeView()
 
     private var cancellable: AnyCancellable?
 
@@ -75,20 +74,13 @@ class HomeViewController: UIViewController {
 
     // MARK: - Configuration
     private func configureLayout() {
-        self.view.addSubviews(self.homeView, self.emptyFavoriteNotice, self.refreshButton)
+        self.view.addSubviews(self.homeView, self.refreshButton)
 
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            self.emptyFavoriteNotice.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: HomeNavigationView.height),
-            self.emptyFavoriteNotice.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            self.emptyFavoriteNotice.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.emptyFavoriteNotice.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
         self.refreshButton.backgroundColor = BBusColor.darkGray
@@ -114,13 +106,9 @@ class HomeViewController: UIViewController {
             .throttle(for: .seconds(1), scheduler: HomeUseCase.thread, latest: true)
             .sink(receiveValue: { response in
                 DispatchQueue.main.async {
-                    if response?.count() == 0 {
-                        self.emptyFavoriteNotice.isHidden = false
-                    }
-                    else {
-                        self.homeView.reload()
-                        self.emptyFavoriteNotice.isHidden = true
-                    }
+                    let isFavoriteEmpty = response?.count() == 0
+                    self.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
+                    self.homeView.reload()
                 }
             })
     }

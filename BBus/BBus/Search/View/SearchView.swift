@@ -50,13 +50,12 @@ final class SearchView: UIView {
 
     // MARK: - Configuration
     private func configureLayout() {
-        let navigationViewHeight: CGFloat = 100
 
         self.addSubview(self.navigationView)
         self.navigationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            self.navigationView.heightAnchor.constraint(equalToConstant: navigationViewHeight),
+            self.navigationView.heightAnchor.constraint(equalToConstant: SearchNavigationView.height),
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
@@ -99,6 +98,10 @@ final class SearchView: UIView {
     
     func reload() {
         self.searchResultScrollView.reload()
+    }
+
+    func emptyNoticeActivate(type: SearchType, by onOff: Bool) {
+        self.searchResultScrollView.emptyNoticeActivate(type: type, by: onOff)
     }
 }
 
