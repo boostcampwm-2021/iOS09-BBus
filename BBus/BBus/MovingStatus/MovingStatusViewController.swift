@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import CoreLocation
 
-typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate
+typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate & AlertCreateDelegate
 
 final class MovingStatusViewController: UIViewController {
 

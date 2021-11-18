@@ -42,6 +42,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 }
 
+// MARK: - Delegate : MovingStatusFoldUnfoldDelegate
 extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
     func fold() {
         self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
@@ -52,6 +53,7 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
     }
 }
 
+// MARK: - Delegate : MovingStatusOpenCloseDelegate
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
     func open(busRouteId: Int, fromArsId: String, toArsId: String) {
 
@@ -79,6 +81,14 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
     }
 }
 
+// MARK: - Delegate : AlertCreateDelegate
+extension AppCoordinator: AlertCreateDelegate {
+    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.navigationPresenter.present(controller, animated: false, completion: completion)
+    }
+}
+
+// MARK: - Delegate : CoordinatorCreateDelegate
 extension AppCoordinator: CoordinatorCreateDelegate {
     func pushSearch() {
         let coordinator = SearchCoordinator(presenter: self.navigationPresenter)
@@ -119,6 +129,7 @@ extension AppCoordinator: CoordinatorCreateDelegate {
     }
 }
 
+// MARK: - Delegate : CoordinatorFinishDelegate
 extension AppCoordinator: CoordinatorFinishDelegate {
     func removeChildCoordinator(_ coordinator: Coordinator) {
         for (index, child) in self.childCoordinators.enumerated() {
@@ -130,8 +141,3 @@ extension AppCoordinator: CoordinatorFinishDelegate {
     }
 }
 
-extension AppCoordinator: CoordinatorAlertDelegate {
-    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
-        self.navigationPresenter.present(controller, animated: false, completion: completion)
-    }
-}
