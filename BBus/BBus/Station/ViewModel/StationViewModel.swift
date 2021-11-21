@@ -89,7 +89,7 @@ class StationViewModel {
         var infoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
         var noInfoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
         buses.forEach() { bus in
-            guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0) else { return print(bus.routeType) }
+            guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0) else { return }
             
             let info: BusArriveInfo
             info.routeType = routeType
