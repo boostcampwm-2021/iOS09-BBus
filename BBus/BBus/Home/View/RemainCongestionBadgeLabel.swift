@@ -47,8 +47,12 @@ class RemainCongestionBadgeLabel: UILabel {
     }
 
     func configure(remaining: String?, congestion: String?) {
-        if let congestion = congestion,
-           let remaining = remaining {
+        if remaining == nil && congestion == nil {
+            self.isHidden = true
+        }
+        else {
+            let remaining = remaining ?? ""
+            let congestion = congestion ?? ""
             let description = remaining + " " + congestion
             let redRange = (description as NSString).range(of: congestion)
             let attributedString = NSMutableAttributedString(string: description)
@@ -57,9 +61,6 @@ class RemainCongestionBadgeLabel: UILabel {
                                           range: redRange)
             self.attributedText = attributedString
             self.isHidden = false
-        }
-        else {
-            self.isHidden = true
         }
         self.sizeToFit()
     }

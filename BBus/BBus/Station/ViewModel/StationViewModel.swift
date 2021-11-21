@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, arsId: String, stationOrd: Int, busRouteId: Int, congestion: BusCongestion?, nextStation: String, busNumber: String, routeType: BBusRouteType)
+typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, firstBusCongestion: BusCongestion?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, secondBusCongestion: BusCongestion?, arsId: String, stationOrd: Int, busRouteId: Int, nextStation: String, busNumber: String, routeType: BBusRouteType)
 
 
 class StationViewModel {
@@ -93,7 +93,7 @@ class StationViewModel {
             
             let info: BusArriveInfo
             info.routeType = routeType
-            info.congestion = BusCongestion(rawValue: bus.congestion)
+            info.firstBusCongestion = BusCongestion(rawValue: bus.congestion)
             
             info.nextStation = bus.nextStation
             info.busNumber = bus.busNumber
@@ -109,6 +109,7 @@ class StationViewModel {
                 let timeAndPositionInfo2 = AlarmSettingBusArriveInfo.seperateTimeAndPositionInfo(with: bus.secondBusArriveRemainTime)
                 info.secondBusArriveRemainTime = timeAndPositionInfo2.time
                 info.secondBusRelativePosition = timeAndPositionInfo2.position
+                info.secondBusCongestion = timeAndPositionInfo2.time.checkInfo() ? info.firstBusCongestion : nil
                 
                 infoBuses.updateValue((infoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
@@ -117,6 +118,7 @@ class StationViewModel {
                 info.firstBusRelativePosition = nil
                 info.secondBusArriveRemainTime = nil
                 info.secondBusRelativePosition = nil
+                info.secondBusCongestion = nil
                 
                 noInfoBuses.updateValue((noInfoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
