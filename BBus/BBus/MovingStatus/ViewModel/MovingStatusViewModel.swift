@@ -76,10 +76,10 @@ final class MovingStatusViewModel {
 
                 self?.buses = buses.filter { $0.sectionOrder >= currentOrd && $0.sectionOrder < startOrd + count } // 5
                 // Test 로직
-                guard let y = self?.buses.first?.gpsY,
-                      let x = self?.buses.first?.gpsX else { return }
-
-                self?.findBoardBus(gpsY: y, gpsX: x)
+//                guard let y = self?.buses.first?.gpsY,
+//                      let x = self?.buses.first?.gpsX else { return }
+//
+//                self?.findBoardBus(gpsY: y, gpsX: x)
             }
             .store(in: &self.cancellables)
     }
@@ -94,7 +94,7 @@ final class MovingStatusViewModel {
         self.busInfo = busInfo // 1
     }
 
-    // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
+    // Background 내에서 GPS 변화시 불리는 함수
     func findBoardBus(gpsY: Double, gpsX: Double) {
         if buses.isEmpty { return }
         if stationInfos.isEmpty { return }

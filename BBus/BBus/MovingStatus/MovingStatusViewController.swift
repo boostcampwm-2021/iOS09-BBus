@@ -69,7 +69,7 @@ final class MovingStatusViewController: UIViewController {
         self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
         // 백그라운드에서 위치 업데이트
-//        self.locationManager?.allowsBackgroundLocationUpdates = true
+        self.locationManager?.allowsBackgroundLocationUpdates = true
 
         // 위치 정보를 지속적으로 받고 싶은 경우 이벤트를 시작
         self.locationManager?.startUpdatingLocation()
