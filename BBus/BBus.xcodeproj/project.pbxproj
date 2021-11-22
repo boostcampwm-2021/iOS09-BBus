@@ -94,6 +94,14 @@
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
 		4AD47072273B9EE100F7EBFF /* BBusXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD47071273B9EE000F7EBFF /* BBusXMLParser.swift */; };
+		4ADB29B9274B68CE00554A4E /* GetOnAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */; };
+		4ADB29BB274B6C8300554A4E /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
+		4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */; };
+		4ADB29C7274B7A7F00554A4E /* GetOnAlarmStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */; };
+		4ADB29C9274B7AA200554A4E /* GetOnAlarmUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C8274B7AA200554A4E /* GetOnAlarmUsecase.swift */; };
+		4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */; };
+		4ADB29CD274B880C00554A4E /* BusApproachCheckUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CC274B880C00554A4E /* BusApproachCheckUsecase.swift */; };
+		4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CE274B890800554A4E /* BusApproachStatus.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */; };
 		87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A84273B90D10078EAE3 /* RequestUsecases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
@@ -219,6 +227,14 @@
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
 		4AD47071273B9EE000F7EBFF /* BBusXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusXMLParser.swift; sourceTree = "<group>"; };
+		4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmController.swift; sourceTree = "<group>"; };
+		4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPosByVehicleIdDTO.swift; sourceTree = "<group>"; };
+		4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBusPosByVehIdFetcher.swift; sourceTree = "<group>"; };
+		4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmStatus.swift; sourceTree = "<group>"; };
+		4ADB29C8274B7AA200554A4E /* GetOnAlarmUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmUsecase.swift; sourceTree = "<group>"; };
+		4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmViewModel.swift; sourceTree = "<group>"; };
+		4ADB29CC274B880C00554A4E /* BusApproachCheckUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachCheckUsecase.swift; sourceTree = "<group>"; };
+		4ADB29CE274B890800554A4E /* BusApproachStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachStatus.swift; sourceTree = "<group>"; };
 		87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIUsecases.swift; sourceTree = "<group>"; };
 		87038A84273B90D10078EAE3 /* RequestUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestUsecases.swift; sourceTree = "<group>"; };
 		87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArrInfoByRouteListFetcher.swift; sourceTree = "<group>"; };
@@ -322,6 +338,7 @@
 				049375AA273B9F330061ACDA /* BusRouteDTO.swift */,
 				049375AE273BAA130061ACDA /* StationDTO.swift */,
 				4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */,
+				4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -649,6 +666,64 @@
 			path = XMLParser;
 			sourceTree = "<group>";
 		};
+		4ADB29BF274B77D800554A4E /* Foreground */ = {
+			isa = PBXGroup;
+			children = (
+				4ACA51D7272FCC4E00EC0531 /* Home */,
+				4ACA51D8272FCC5A00EC0531 /* Search */,
+				4ACA51DA272FCCA600EC0531 /* BusRoute */,
+				4ACA51DB272FCCB300EC0531 /* Station */,
+				4ACA51DC272FCCC100EC0531 /* AlarmSetting */,
+				4ACA51DD272FCCCC00EC0531 /* MovingStatus */,
+			);
+			path = Foreground;
+			sourceTree = "<group>";
+		};
+		4ADB29C1274B77E900554A4E /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB29C5274B7A5500554A4E /* GetOnAlarm */,
+			);
+			path = Background;
+			sourceTree = "<group>";
+		};
+		4ADB29C2274B79E500554A4E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4ADB29C3274B7A1D00554A4E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */,
+				4ADB29CE274B890800554A4E /* BusApproachStatus.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4ADB29C4274B7A3000554A4E /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB29C8274B7AA200554A4E /* GetOnAlarmUsecase.swift */,
+				4ADB29CC274B880C00554A4E /* BusApproachCheckUsecase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		4ADB29C5274B7A5500554A4E /* GetOnAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */,
+				4ADB29C3274B7A1D00554A4E /* Model */,
+				4ADB29C4274B7A3000554A4E /* UseCase */,
+				4ADB29C2274B79E500554A4E /* ViewModel */,
+			);
+			path = GetOnAlarm;
+			sourceTree = "<group>";
+		};
 		87038A80273B90810078EAE3 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,6 +752,7 @@
 				87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */,
 				87038A93273C12E20078EAE3 /* GetStationByUidItemFetcher.swift */,
 				87038A95273C13F10078EAE3 /* GetStationsByPosListFetcher.swift */,
+				4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */,
 			);
 			path = Fetcher;
 			sourceTree = "<group>";
@@ -713,12 +789,8 @@
 			isa = PBXGroup;
 			children = (
 				047C30FF273A06980075EA14 /* Global */,
-				4ACA51D7272FCC4E00EC0531 /* Home */,
-				4ACA51D8272FCC5A00EC0531 /* Search */,
-				4ACA51DA272FCCA600EC0531 /* BusRoute */,
-				4ACA51DB272FCCB300EC0531 /* Station */,
-				4ACA51DC272FCCC100EC0531 /* AlarmSetting */,
-				4ACA51DD272FCCCC00EC0531 /* MovingStatus */,
+				4ADB29BF274B77D800554A4E /* Foreground */,
+				4ADB29C1274B77E900554A4E /* Background */,
 				87A5556B2728116400A9B5E3 /* AppDelegate.swift */,
 				87A5556D2728116400A9B5E3 /* SceneDelegate.swift */,
 				87A555742728116600A9B5E3 /* Assets.xcassets */,
@@ -849,17 +921,22 @@
 				4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */,
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
+				4ADB29C9274B7AA200554A4E /* GetOnAlarmUsecase.swift in Sources */,
 				049375C3273C36880061ACDA /* BBusXMLDTO.swift in Sources */,
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */,
 				87038A8C273B96DF0078EAE3 /* Persistent.swift in Sources */,
+				4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,
 				4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */,
 				4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */,
 				04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */,
 				049375B9273BE2640061ACDA /* StationByUidItemDTO.swift in Sources */,
 				87038A96273C13F10078EAE3 /* GetStationsByPosListFetcher.swift in Sources */,
+				4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */,
+				4ADB29CD274B880C00554A4E /* BusApproachCheckUsecase.swift in Sources */,
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
+				4ADB29B9274B68CE00554A4E /* GetOnAlarmController.swift in Sources */,
 				87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */,
 				87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */,
 				4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */,
@@ -885,8 +962,10 @@
 				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
 				04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */,
 				4A992C4727311F1C0006FB8C /* FavoriteCollectionHeaderView.swift in Sources */,
+				4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */,
 				049375B7273BE08F0061ACDA /* BusPosByRtidDTO.swift in Sources */,
 				4A992C49273124AF0006FB8C /* FavoriteCollectionViewCell.swift in Sources */,
+				4ADB29C7274B7A7F00554A4E /* GetOnAlarmStatus.swift in Sources */,
 				4A917DF227462E36002489FE /* EmptyFavoriteNoticeView.swift in Sources */,
 				04AC7D1B2733E7270095CD4E /* AlarmSettingButton.swift in Sources */,
 				4A97C4D4273A822D00F1A765 /* Pushables.swift in Sources */,
@@ -912,6 +991,7 @@
 				4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */,
 				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
 				4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */,
+				4ADB29BB274B6C8300554A4E /* BusPosByVehicleIdDTO.swift in Sources */,
 				049B9D002744D2AA004DE66E /* ThrottleButton.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */,

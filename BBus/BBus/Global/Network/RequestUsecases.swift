@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationListUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase)
+typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetRouteInfoItemUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetStationsByPosListUsecase & GetRouteListUsecase & GetStationListUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetBusPosByVehIdUsecase)
 
 // MARK: - API Protocol
 protocol GetArrInfoByRouteListUsecase {
@@ -53,4 +53,8 @@ protocol CreateFavoriteItemUsecase {
 
 protocol DeleteFavoriteItemUsecase {
     func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
+}
+
+protocol GetBusPosByVehIdUsecase {
+    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error>
 }

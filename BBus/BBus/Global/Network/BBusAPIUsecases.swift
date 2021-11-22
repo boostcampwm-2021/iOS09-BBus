@@ -87,4 +87,11 @@ class BBusAPIUsecases: RequestUsecases {
         return fetcher
             .fetch(param: param, on: self.queue)
     }
+
+    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
+        let param = ["vehId": vehId, "resultType": "json"]
+        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
+        return fetcher
+            .fetch(param: param, on: self.queue)
+    }
 }

@@ -17,6 +17,13 @@ extension Publisher where Output == (Data, Int), Failure == Error {
             throw error
         }).eraseToAnyPublisher()
     }
+
+    func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
+        self.tryMap({ data, order -> Data in
+            // TODO: JSON BBUSAPIError map 로직 필요
+            return data
+        }).eraseToAnyPublisher()
+    }
 }
 
 extension Publisher where Failure == Error {
