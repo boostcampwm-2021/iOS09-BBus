@@ -166,14 +166,7 @@ final class BusRouteViewController: UIViewController {
                     self?.configureBusColor(type: header.routeType)
                 }
                 else {
-                    let controller = UIAlertController(title: "정보가 제공되지 않는 버스",
-                                                       message: "죄송합니다. 현재 정보가 제공되지 않는 버스입니다.",
-                                                       preferredStyle: .alert)
-                    let action = UIAlertAction(title: "확인",
-                                               style: .default,
-                                               handler: { [weak self] _ in self?.coordinator?.terminate() })
-                    controller.addAction(action)
-                    self?.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
+                    self?.noInfoAlert()
                 }
             })
             .store(in: &self.cancellables)
@@ -215,6 +208,17 @@ final class BusRouteViewController: UIViewController {
     private func networkAlert() {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
+    }
+    
+    private func noInfoAlert() {
+        let controller = UIAlertController(title: "버스 에러",
+                                           message: "죄송합니다. 현재 정보가 제공되지 않는 버스입니다.",
+                                           preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인",
+                                   style: .default,
+                                   handler: { [weak self] _ in self?.coordinator?.terminate() })
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
