@@ -154,16 +154,26 @@ final class BusRouteViewController: UIViewController {
 
     private func bindingBusRouteHeaderResult() {
         self.viewModel?.$header
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.main)
+            .dropFirst()
             .sink(receiveValue: { [weak self] header in
-                guard let header = header else { return }
-                DispatchQueue.main.async {
+                if let header = header {
                     self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
                     self?.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
                                                           busNumber: header.busRouteName,
                                                           fromStation: header.startStation,
                                                           toStation: header.endStation)
                     self?.configureBusColor(type: header.routeType)
+                }
+                else {
+                    let controller = UIAlertController(title: "정보가 제공되지 않는 버스",
+                                                       message: "죄송합니다. 현재 정보가 제공되지 않는 버스입니다.",
+                                                       preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인",
+                                               style: .default,
+                                               handler: { [weak self] _ in self?.coordinator?.terminate() })
+                    controller.addAction(action)
+                    self?.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
                 }
             })
             .store(in: &self.cancellables)

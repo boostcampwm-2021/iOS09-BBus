@@ -28,9 +28,8 @@ final class BusRouteUsecase {
         self.usecases.getRouteList()
             .receive(on: Self.queue)
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-            .tryMap({ routeList -> BusRouteDTO in
-                let headers = routeList.filter { $0.routeID == busRouteId }
-                guard let header = headers.first else { throw BBusAPIError.wrongFormatError }
+            .tryMap({ routeList -> BusRouteDTO? in
+                let header = routeList.filter { $0.routeID == busRouteId }.first
                 return header
             })
             .retry({ [weak self] in
