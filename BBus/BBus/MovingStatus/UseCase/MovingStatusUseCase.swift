@@ -26,9 +26,7 @@ final class MovingStatusUsecase {
     }
 
     func searchHeader(busRouteId: Int) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.getRouteList()
                 .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
@@ -41,32 +39,34 @@ final class MovingStatusUsecase {
                         throw BBusAPIError.wrongFormatError
                     }
                 })
-                .retry({
-                    self.searchHeader(busRouteId: busRouteId)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.searchHeader(busRouteId: busRouteId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.header, on: self)
+                .sink(receiveValue: { [weak self] header in
+                    self?.header = header
+                })
                 .store(in: &self.cancellables)
         }
     }
 
     func fetchRouteList(busRouteId: Int) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
                 .receive(on: Self.queue)
                 .tryMap ({ stationsByRouteList -> [StationByRouteListDTO] in
                     guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { throw BBusAPIError.wrongFormatError }
                     return result.body.itemList
                 })
-                .retry ({
-                    self.fetchRouteList(busRouteId: busRouteId)
-                }, handler: { error in
-                    self.networkError = error
+                .retry ({ [weak self] in
+                    self?.fetchRouteList(busRouteId: busRouteId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.stations, on: self)
+                .sink(receiveValue: { [weak self] stations in
+                    self?.stations = stations
+                })
                 .store(in: &self.cancellables)
         }
     }

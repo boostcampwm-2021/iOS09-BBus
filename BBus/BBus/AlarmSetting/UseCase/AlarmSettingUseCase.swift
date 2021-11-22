@@ -28,9 +28,7 @@ class AlarmSettingUseCase {
     }
     
     func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.useCases.getArrInfoByRouteList(stId: stId,
                                                 busRouteId: busRouteId,
                                                 ord: ord)
@@ -40,20 +38,20 @@ class AlarmSettingUseCase {
                           let item = result.body.itemList.first else { throw BBusAPIError.wrongFormatError }
                     return item
                 })
-                .retry ({
-                    self.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
-                }, handler: { error in
-                    self.networkError = error
+                .retry ({ [weak self] in
+                    self?.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.busArriveInfo, on: self)
+                .sink(receiveValue: { [weak self] busArriveInfo in
+                    self?.busArriveInfo = busArriveInfo
+                })
                 .store(in: &self.cancellables)
         }
     }
     
     func busStationsInfoWillLoaded(busRouetId: String, arsId: String) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
                 .receive(on: Self.queue)
                 .tryMap({ data in
@@ -61,12 +59,14 @@ class AlarmSettingUseCase {
                           let index = result.firstIndex(where: { $0.arsId == arsId }) else { throw BBusAPIError.wrongFormatError }
                     return Array(result[index..<result.count])
                 })
-                .retry({
-                    self.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.busStationsInfo, on: self)
+                .sink(receiveValue: { [weak self] busStationsInfo in
+                    self?.busStationsInfo = busStationsInfo
+                })
                 .store(in: &self.cancellables)
         }
     }

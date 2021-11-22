@@ -31,9 +31,7 @@ class StationUsecase {
     }
     
     func stationInfoWillLoad(with arsId: String) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.getStationList()
                 .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
@@ -41,12 +39,14 @@ class StationUsecase {
                     guard let result = self.findStation(in: stations, with: arsId) else { throw BBusAPIError.wrongFormatError }
                     return result
                 })
-                .retry({
-                    self.stationInfoWillLoad(with: arsId)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.stationInfoWillLoad(with: arsId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.stationInfo, on: self)
+                .sink(receiveValue: { [weak self] stationInfo in
+                    self?.stationInfo = stationInfo
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -57,74 +57,70 @@ class StationUsecase {
     }
     
     func refreshInfo(about arsId: String) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.getStationByUidItem(arsId: arsId)
                 .receive(on: Self.queue)
                 .tryMap({ data -> [StationByUidItemDTO] in
                     guard let result = BBusXMLParser().parse(dtoType: StationByUidItemResult.self, xml: data) else { throw BBusAPIError.wrongFormatError }
                     return result.body.itemList
                 })
-                .retry({
-                    self.refreshInfo(about: arsId)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.refreshInfo(about: arsId)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.busArriveInfo, on: self)
+                .sink(receiveValue: { [weak self] busArriveInfo in
+                    self?.busArriveInfo = busArriveInfo
+                })
                 .store(in: &self.cancellables)
         }
     }
     
     func add(favoriteItem: FavoriteItemDTO) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.createFavoriteItem(param: favoriteItem)
                 .receive(on: Self.queue)
-                .retry({
-                    self.add(favoriteItem: favoriteItem)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.add(favoriteItem: favoriteItem)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .sink(receiveValue: { _ in
-                    self.getFavoriteItems()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.getFavoriteItems()
                 })
                 .store(in: &self.cancellables)
         }
     }
     
     func remove(favoriteItem: FavoriteItemDTO) {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.deleteFavoriteItem(param: favoriteItem)
                 .receive(on: Self.queue)
-                .retry({
-                    self.remove(favoriteItem: favoriteItem)
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.remove(favoriteItem: favoriteItem)
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .sink(receiveValue: { _ in
-                    self.getFavoriteItems()
+                .sink(receiveValue: { [weak self] _ in
+                    self?.getFavoriteItems()
                 })
                 .store(in: &self.cancellables)
         }
     }
     
     private func getFavoriteItems() {
-        Self.queue.async { [weak self] in
-            guard let self = self else { return }
-
+        Self.queue.async {
             self.usecases.getFavoriteItemList()
                 .receive(on: Self.queue)
                 .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
-                .retry({
-                    self.getFavoriteItems()
-                }, handler: { error in
-                    self.networkError = error
+                .retry({ [weak self] in
+                    self?.getFavoriteItems()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
                 })
-                .assign(to: \.favoriteItems, on: self)
+                .sink(receiveValue: { [weak self] favoriteItems in
+                    self?.favoriteItems = favoriteItems
+                })
                 .store(in: &self.cancellables)
         }
     }
