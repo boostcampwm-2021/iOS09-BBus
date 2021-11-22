@@ -58,6 +58,10 @@ final class MovingStatusViewController: UIViewController {
         self.configureLocationManager()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
     private func configureLocationManager() {
         // locationManager 인스턴스를 생성
         self.locationManager = CLLocationManager()
@@ -132,6 +136,7 @@ final class MovingStatusViewController: UIViewController {
         self.bindCurrentStation()
         self.bindStationInfos()
         self.bindBoardedBus()
+        self.bindIsTerminated()
     }
 
     private func bindHeaderBusInfo() {
@@ -192,6 +197,17 @@ final class MovingStatusViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
+    private func bindIsTerminated() {
+        self.viewModel?.$isterminated
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isTerminated in
+                if isTerminated {
+                    self?.terminateAlert()
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
     private func configureBusColor(type: RouteType) {
         switch type {
         case .mainLine:
@@ -235,7 +251,16 @@ final class MovingStatusViewController: UIViewController {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
         controller.addAction(action)
-        self.coordinator?.presentAlert(controller: controller, completion: nil)
+        self.coordinator?.presentAlertToNavigation(controller: controller, completion: nil)
+    }
+
+    private func terminateAlert() {
+        let controller = UIAlertController(title: "하차 종료", message: "하차 정거장에 도착하여 알람이 종료되었습니다.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: { [weak self] _ in
+            self?.coordinator?.close()
+        })
+        controller.addAction(action)
+        self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
     }
 }
 
