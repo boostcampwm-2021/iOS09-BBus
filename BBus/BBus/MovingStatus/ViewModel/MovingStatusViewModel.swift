@@ -43,8 +43,8 @@ final class MovingStatusViewModel {
     }
     
     private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { _ in
-            self.updateAPI()
+        NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { [weak self] _ in
+            self?.updateAPI()
         }
     }
 

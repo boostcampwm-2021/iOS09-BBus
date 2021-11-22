@@ -98,7 +98,8 @@ final class BusRouteViewModel {
 
     private func convertBusPosInfo(with buses: [BusPosByRtidDTO]) {
         var busesResult: [BusPosInfo] = []
-        buses.forEach { bus in
+        buses.forEach { [weak self] bus in
+            guard let self = self else { return }
             let info: BusPosInfo
             info.location = self.convertBusPos(order: bus.sectionOrder,
                                                sect: bus.sectDist,

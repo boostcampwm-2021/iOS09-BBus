@@ -34,11 +34,11 @@ class StationViewModel {
     }
 
     private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
-            self.descendTime()
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.descendTime()
         }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
-            self.refresh()
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.refresh()
         }
     }
     
@@ -48,8 +48,8 @@ class StationViewModel {
     }
 
     private func descendTime() {
-        self.infoBuses.forEach({
-            self.infoBuses[$0.key] = $0.value.map { result in
+        self.infoBuses.forEach({ [weak self] in
+            self?.infoBuses[$0.key] = $0.value.map { result in
                 var remainTime = result
                 remainTime.firstBusArriveRemainTime?.descend()
                 remainTime.secondBusArriveRemainTime?.descend()
@@ -68,10 +68,10 @@ class StationViewModel {
             .receive(on: StationUsecase.queue)
             .sink(receiveCompletion: { error in
                 print(error)
-            }, receiveValue: { arriveInfo in
+            }, receiveValue: { [weak self] arriveInfo in
                 guard arriveInfo.count > 0 else { return }
-                self.nextStation = arriveInfo[0].nextStation
-                self.classifyByRouteType(with: arriveInfo)
+                self?.nextStation = arriveInfo[0].nextStation
+                self?.classifyByRouteType(with: arriveInfo)
             })
             .store(in: &self.cancellables)
     }
@@ -79,8 +79,8 @@ class StationViewModel {
     private func bindingFavoriteItems() {
         self.usecase.$favoriteItems
             .receive(on: StationUsecase.queue)
-            .sink(receiveValue: { items in
-                self.favoriteItems = items.filter() { $0.arsId == self.arsId }
+            .sink(receiveValue: { [weak self] items in
+                self?.favoriteItems = items.filter() { $0.arsId == self?.arsId }
             })
             .store(in: &self.cancellables)
     }

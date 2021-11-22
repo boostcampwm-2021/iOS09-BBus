@@ -40,8 +40,8 @@ class StationViewController: UIViewController {
         button.layer.cornerRadius = radius
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
-            self.viewModel?.refresh()
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+            self?.viewModel?.refresh()
         }
         return button
     }()
