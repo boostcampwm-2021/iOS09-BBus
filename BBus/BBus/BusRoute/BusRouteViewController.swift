@@ -27,8 +27,8 @@ final class BusRouteViewController: UIViewController {
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
 
-        button.addAction(UIAction(handler: { _ in
-            self.viewModel?.refreshBusPos()
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.viewModel?.refreshBusPos()
         }), for: .touchUpInside)
         return button
     }()
@@ -135,7 +135,8 @@ final class BusRouteViewController: UIViewController {
         self.busTags.forEach { $0.removeFromSuperview() }
         self.busTags.removeAll()
 
-        buses.forEach { bus in
+        buses.forEach { [weak self] bus in
+            guard let self = self else { return }
             let tag = self.busRouteView.createBusTag(location: bus.location,
                                                      busIcon: self.busIcon,
                                                      busNumber: bus.number,

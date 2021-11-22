@@ -21,8 +21,8 @@ class AlarmSettingViewController: UIViewController {
         button.layer.cornerRadius = radius
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
-            self.viewModel?.refresh()
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+            self?.viewModel?.refresh()
         }
         return button
     }()
@@ -278,8 +278,8 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
               let startStationArsId = self.viewModel?.busStationInfos.first?.arsId,
               let endStationArsId = self.viewModel?.busStationInfos[indexPath.item].arsId else { return }
         
-        UIView.animate(withDuration: 0.3) {
-            self.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
         }
     }
 }
