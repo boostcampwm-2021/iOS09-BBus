@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol FavoriteHeaderViewDelegate {
+protocol FavoriteHeaderViewDelegate: AnyObject {
     func shouldGoToStationScene(headerView: UICollectionReusableView)
 }
 
@@ -16,7 +16,7 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
     static let identifier = "FavoriteHeaderView"
     static let height: CGFloat = 70
     
-    private var delegate: FavoriteHeaderViewDelegate? {
+    private weak var delegate: FavoriteHeaderViewDelegate? {
         didSet {
             self.gestureRecognizers?.forEach() { self.removeGestureRecognizer($0) }
             let tapGesture = UITapGestureRecognizer()

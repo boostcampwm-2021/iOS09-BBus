@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol HomeSearchButtonDelegate {
+protocol HomeSearchButtonDelegate: AnyObject {
     func shouldGoToSearchScene()
 }
 
@@ -15,7 +15,7 @@ class HomeNavigationView: UIView {
 
     static let height: CGFloat = 50.0
 
-    private var searchButtonDelegate: HomeSearchButtonDelegate? {
+    private weak var searchButtonDelegate: HomeSearchButtonDelegate? {
         didSet {
             self.searchButton.addAction(UIAction(handler: { _ in
                 self.searchButtonDelegate?.shouldGoToSearchScene()

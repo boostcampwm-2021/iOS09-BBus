@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol GetOffAlarmButtonDelegate {
+protocol GetOffAlarmButtonDelegate: AnyObject {
     func shouldGoToMovingStatusScene(from cell: UITableViewCell)
 }
 
@@ -26,7 +26,7 @@ class GetOffTableViewCell: BusStationTableViewCell {
     override var stackViewSpacing: CGFloat { return 4 }
     override var labelStackViewRightMargin: CGFloat { return -70 }
     
-    private var alarmButtonDelegate: GetOffAlarmButtonDelegate? {
+    private weak var alarmButtonDelegate: GetOffAlarmButtonDelegate? {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { _ in
                 self.alarmButton.isSelected.toggle()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol AlarmButtonDelegate {
+protocol AlarmButtonDelegate: AnyObject {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell)
 }
 

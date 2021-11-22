@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol LikeButtonDelegate {
+protocol LikeButtonDelegate: AnyObject {
     func likeStationBus(at: UICollectionViewCell)
     func cancelLikeStationBus(at: UICollectionViewCell)
 }
 
 class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
 
-    private var likeButtonDelegate: LikeButtonDelegate? {
+    private weak var likeButtonDelegate: LikeButtonDelegate? {
         didSet {
             let action = UIAction(handler: {[weak self] _ in
                 guard let self = self,

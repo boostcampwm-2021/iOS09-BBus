@@ -34,8 +34,8 @@ class EmptySearchResultNoticeView: UIView {
         label.text = "검색 결과"
         return label
     }()
-    private var busTabButtonDelegate: BusTabButtonDelegate?
-    private var stationTabButtonDelegate: StationTabButtonDelegate?
+    private weak var busTabButtonDelegate: BusTabButtonDelegate?
+    private weak var stationTabButtonDelegate: StationTabButtonDelegate?
 
     convenience init(searchType: SearchType) {
         self.init(frame: CGRect())
