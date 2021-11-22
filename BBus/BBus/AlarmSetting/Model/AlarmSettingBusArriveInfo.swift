@@ -40,8 +40,15 @@ struct AlarmSettingBusArriveInfo {
     }
     
     static func seperateTimeAndPositionInfo(with info: String) -> (time: BusRemainTime, position: String?) {
-        let components = info.components(separatedBy: ["[", "]"])
-        if components.count > 1 {
+        let components = info.replacingOccurrences(of: " ", with: "").components(separatedBy: ["[", "]"])
+        let exceptions = ["차고지출발"]
+        if components.count > 4 { // 막차
+            return (time: BusRemainTime(arriveRemainTime: components[2]), position: components[3])
+        }
+        else if components.count > 1 {
+            if exceptions.contains(components[1]) {
+                return (time: BusRemainTime(arriveRemainTime: components[1]), position: nil)
+            }
             return (time: BusRemainTime(arriveRemainTime: components[0]), position: components[1])
         }
         else {

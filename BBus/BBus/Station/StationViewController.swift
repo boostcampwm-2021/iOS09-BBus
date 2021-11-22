@@ -238,10 +238,10 @@ extension StationViewController: UICollectionViewDataSource {
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
                            firstBusRelativePosition: busInfo.firstBusRelativePosition,
-                           firstBusCongestion: busInfo.congestion?.toString(),
+                           firstBusCongestion: busInfo.firstBusCongestion?.toString(),
                            secondBusTime: busInfo.secondBusArriveRemainTime?.toString(),
                            secondBusRelativePosition: busInfo.secondBusRelativePosition,
-                           secondBusCongsetion: busInfo.congestion?.toString())
+                           secondBusCongsetion: busInfo.secondBusCongestion?.toString())
         }
         
         // InfoBus인 경우: 바인딩

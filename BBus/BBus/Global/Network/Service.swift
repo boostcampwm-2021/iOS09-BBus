@@ -32,16 +32,16 @@ class Service {
     }
 
     func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<(Data, Int), Error> {
-        let userDefaultKey = "APIRequestCount"
-        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
-        if apiRequestCount > 300 {
-            let publisher = PassthroughSubject<(Data, Int), Error>()
-            queue.async {
-                publisher.send(completion: .failure(BBusAPIError.trafficExceed))
-            }
-            return publisher.eraseToAnyPublisher()
-        }
-        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
+//        let userDefaultKey = "APIRequestCount"
+//        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
+//        if apiRequestCount > 300 {
+//            let publisher = PassthroughSubject<(Data, Int), Error>()
+//            queue.async {
+//                publisher.send(completion: .failure(BBusAPIError.trafficExceed))
+//            }
+//            return publisher.eraseToAnyPublisher()
+//        }
+//        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
         guard Self.keys.count != 0,
               let order = Self.keys.randomElement() else {
                   let publisher = PassthroughSubject<(Data, Int), Error>()
