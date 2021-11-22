@@ -32,14 +32,16 @@ final class SearchUseCase {
     }
     
     private func startRouteSearch() {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getRouteList()
                 .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.startRouteSearch()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.startRouteSearch()
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .assign(to: \.routeList, on: self)
                 .store(in: &self.cancellables)
@@ -47,14 +49,16 @@ final class SearchUseCase {
     }
     
     private func startStationSearch() {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getStationList()
                 .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.startStationSearch()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.startStationSearch()
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .assign(to: \.stationList, on: self)
                 .store(in: &self.cancellables)

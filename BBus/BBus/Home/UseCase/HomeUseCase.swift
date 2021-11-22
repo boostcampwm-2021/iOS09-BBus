@@ -34,14 +34,16 @@ class HomeUseCase {
     }
 
     func loadFavoriteData() {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getFavoriteItemList()
                 .receive(on: Self.queue)
                 .decode(type: [FavoriteItemDTO]?.self, decoder: PropertyListDecoder())
-                .retry({ [weak self] in
-                    self?.loadFavoriteData()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.loadFavoriteData()
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .assign(to: \.favoriteList, on: self)
                 .store(in: &self.cancellables)
@@ -49,7 +51,9 @@ class HomeUseCase {
     }
 
     func loadBusRemainTime(favoriteItem: FavoriteItemDTO, completion: @escaping (ArrInfoByRouteDTO) -> Void) {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
                                                 busRouteId: favoriteItem.busRouteId,
                                                 ord: favoriteItem.ord)
@@ -59,10 +63,10 @@ class HomeUseCase {
                           let item = dto.body.itemList.first else { throw BBusAPIError.wrongFormatError }
                     return item
                 })
-                .retry({ [weak self] in
-                    self?.loadBusRemainTime(favoriteItem: favoriteItem, completion: completion)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.loadBusRemainTime(favoriteItem: favoriteItem, completion: completion)
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .sink(receiveValue: { item in
                     completion(item)
@@ -72,14 +76,16 @@ class HomeUseCase {
     }
 
     private func loadStation() {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getStationList()
                 .receive(on: Self.queue)
                 .decode(type: [StationDTO]?.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.loadStation()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.loadStation()
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .assign(to: \.stationList, on: self)
                 .store(in: &self.cancellables)
@@ -87,14 +93,16 @@ class HomeUseCase {
     }
 
     private func loadRoute() {
-        Self.queue.async {
+        Self.queue.async { [weak self] in
+            guard let self = self else { return }
+
             self.usecases.getRouteList()
                 .receive(on: Self.queue)
                 .decode(type: [BusRouteDTO]?.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.loadRoute()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
+                .retry({
+                    self.loadRoute()
+                }, handler: { error in
+                    self.networkError = error
                 })
                 .assign(to: \.busRouteList, on: self)
                 .store(in: &self.cancellables)
