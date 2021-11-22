@@ -52,7 +52,13 @@ class Persistent {
             if let data = UserDefaults.standard.data(forKey: key) {
                 publisher?.send(data)
             } else {
-                publisher?.send(completion: .failure(PersistentError.noneError))
+                let emptyFavoriteList = [FavoriteItemDTO]()
+                
+                if let data = try? PropertyListEncoder().encode(emptyFavoriteList) {
+                    publisher?.send(data)
+                } else {
+                    publisher?.send(completion: .failure(PersistentError.noneError))
+                }
             }
         }
         return publisher.eraseToAnyPublisher()
