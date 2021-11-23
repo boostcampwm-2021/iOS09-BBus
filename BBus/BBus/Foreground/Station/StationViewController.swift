@@ -67,6 +67,17 @@ class StationViewController: UIViewController {
         self.configureDelegate()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.configureObserver()
+        self.viewModel?.refresh()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
+    }
+
     // MARK: - Configure
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
