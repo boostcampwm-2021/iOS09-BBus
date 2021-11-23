@@ -33,6 +33,16 @@ final class BusRouteViewController: UIViewController {
         return button
     }()
 
+    init(viewModel: BusRouteViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = nil
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,14 +53,15 @@ final class BusRouteViewController: UIViewController {
         self.fetch()
     }
 
-    init(viewModel: BusRouteViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.configureObserver()
+        self.viewModel?.refreshBusPos()
     }
 
-    required init?(coder: NSCoder) {
-        self.viewModel = nil
-        super.init(coder: coder)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
     }
 
     // MARK: - Configure

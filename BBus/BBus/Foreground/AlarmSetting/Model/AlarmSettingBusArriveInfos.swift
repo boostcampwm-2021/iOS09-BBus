@@ -18,7 +18,7 @@ struct AlarmSettingBusArriveInfos {
     }
     
     var first: AlarmSettingBusArriveInfo? {
-        return self.count > 0 ? arriveInfos[0] : nil
+        return self.arriveInfos.first
     }
     
     subscript(index: Int) -> AlarmSettingBusArriveInfo? {

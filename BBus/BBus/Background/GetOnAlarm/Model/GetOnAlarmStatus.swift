@@ -12,18 +12,24 @@ struct GetOnAlarmStatus {
     let targetOrd: Int
     let vehicleId: Int
     let busName: String
+    let busRouteId: Int
+    let stationId: Int
 
-    init(currentBusOrd: Int?, targetOrd: Int, vehicleId: Int, busName: String) {
+    init(currentBusOrd: Int?, targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) {
         self.currentBusOrd = currentBusOrd
         self.targetOrd = targetOrd
         self.vehicleId = vehicleId
         self.busName = busName
+        self.busRouteId = busRouteId
+        self.stationId = stationId
     }
 
-    init(getOnAlarmStatus: GetOnAlarmStatus, currentBusOrd: Int) {
-        self.vehicleId = getOnAlarmStatus.vehicleId
-        self.targetOrd = getOnAlarmStatus.targetOrd
-        self.busName = getOnAlarmStatus.busName
-        self.currentBusOrd = currentBusOrd
+    func withCurrentBusOrd(_ ord: Int) -> GetOnAlarmStatus {
+        return GetOnAlarmStatus(currentBusOrd: ord,
+                                targetOrd: self.targetOrd,
+                                vehicleId: self.vehicleId,
+                                busName: self.busName,
+                                busRouteId: self.busRouteId,
+                                stationId: self.stationId)
     }
 }

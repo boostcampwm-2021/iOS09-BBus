@@ -26,22 +26,22 @@ class MovingStatusView: UIView {
     
     private weak var bottomIndicatorButtondelegate: BottomIndicatorButtonDelegate? {
         didSet {
-            self.bottomIndicatorButton.addAction(UIAction(handler: { _ in
-                self.bottomIndicatorButtondelegate?.shouldUnfoldMovingStatusView()
+            self.bottomIndicatorButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.bottomIndicatorButtondelegate?.shouldUnfoldMovingStatusView()
             }), for: .touchUpInside)
         }
     }
     private weak var foldButtonDelegate: FoldButtonDelegate? {
         didSet {
-            self.foldButton.addAction(UIAction(handler: { _ in
-                self.foldButtonDelegate?.shouldFoldMovingStatusView()
+            self.foldButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.foldButtonDelegate?.shouldFoldMovingStatusView()
             }), for: .touchUpInside)
         }
     }
     private weak var endAlarmButtonDelegate: EndAlarmButtonDelegate? {
         didSet {
-            self.endAlarmButton.addAction(UIAction(handler: { _ in
-                self.endAlarmButtonDelegate?.shouldEndAlarm()
+            self.endAlarmButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.endAlarmButtonDelegate?.shouldEndAlarm()
             }), for: .touchUpInside)
         }
     }

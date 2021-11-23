@@ -22,14 +22,16 @@ struct AlarmSettingBusArriveInfo {
     let congestion: BusCongestion?
     let currentStation: String
     let plainNumber: String
-    
-    init(busArriveRemainTime: String, congestion: Int, currentStation: String, plainNumber: String) {
+    let vehicleId: Int
+
+    init(busArriveRemainTime: String, congestion: Int, currentStation: String, plainNumber: String, vehicleId: Int) {
         let timeAndPositionInfo = Self.seperateTimeAndPositionInfo(with: busArriveRemainTime)
         self.arriveRemainTime = timeAndPositionInfo.time.checkInfo() ? timeAndPositionInfo.time : nil
         self.relativePosition = timeAndPositionInfo.position
         self.congestion = BusCongestion(rawValue: congestion)
         self.currentStation = currentStation
         self.plainNumber = plainNumber
+        self.vehicleId = vehicleId
         
         if let estimatedTime = timeAndPositionInfo.time.estimateArrivalTime() {
             self.estimatedArrivalTime = Self.estimatedTimeFormatter.string(from: estimatedTime)

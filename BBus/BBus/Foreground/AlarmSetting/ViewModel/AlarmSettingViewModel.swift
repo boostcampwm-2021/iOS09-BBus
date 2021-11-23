@@ -13,9 +13,9 @@ import Combine
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
-    private let stationId: Int
+    let stationId: Int
     let busRouteId: Int
-    private let stationOrd: Int
+    let stationOrd: Int
     private let arsId: String
     let routeType: RouteType?
     let busName: String
@@ -23,6 +23,7 @@ class AlarmSettingViewModel {
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]?
     @Published private(set) var errorMessage: String?
     private var cancellables: Set<AnyCancellable>
+    private var observer: NSObjectProtocol?
     
     init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
         self.useCase = useCase
@@ -38,20 +39,23 @@ class AlarmSettingViewModel {
         self.errorMessage = nil
         self.binding()
         self.refresh()
-        self.configureObserver()
         self.showBusStations()
     }
     
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
+    func configureObserver() {
+        self.observer = NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
             self?.busArriveInfos.desend()
         }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
-            self?.refresh()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .thirtySecondPassed, object: nil)
+    }
+
+    func cancleObserver() {
+        guard let observer = self.observer else { return }
+        NotificationCenter.default.removeObserver(observer)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    func refresh() {
+    @objc func refresh() {
         self.useCase.busArriveInfoWillLoaded(stId: "\(self.stationId)",
                                              busRouteId: "\(self.busRouteId)",
                                              ord: "\(self.stationOrd)")
@@ -75,11 +79,14 @@ class AlarmSettingViewModel {
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.firstBusArriveRemainTime,
                                                              congestion: data.firstBusCongestion,
                                                              currentStation: data.firstBusCurrentStation,
-                                                             plainNumber: data.firstBusPlainNumber))
+                                                             plainNumber: data.firstBusPlainNumber,
+                                                             vehicleId: data.firstBusVehicleId))
+
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.secondBusArriveRemainTime,
                                                              congestion: data.secondBusCongestion,
                                                              currentStation: data.secondBusCurrentStation,
-                                                             plainNumber: data.secondBusPlainNumber))
+                                                             plainNumber: data.secondBusPlainNumber,
+                                                             vehicleId: data.secondBusVehicleId))
                 self?.busArriveInfos = AlarmSettingBusArriveInfos(arriveInfos: arriveInfos, changedByTimer: false)
             })
             .store(in: &self.cancellables)
@@ -99,7 +106,7 @@ class AlarmSettingViewModel {
         initInfo.estimatedTime = 0
         initInfo.arsId = ""
         initInfo.name = ""
-        
+
         if let busStationsInfo = self.useCase.busStationsInfo {
             busStationsInfo.publisher
                 .scan(initInfo, { before, info in
@@ -111,8 +118,7 @@ class AlarmSettingViewModel {
                 })
                 .collect()
                 .map { $0 as [AlarmSettingBusStationInfo]? }
-                .assign(to: \.busStationInfos, on: self)
-                .store(in: &self.cancellables)
+                .assign(to: &self.$busStationInfos)
         }
         else {
             self.busStationInfos = nil

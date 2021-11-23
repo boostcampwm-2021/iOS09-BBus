@@ -48,6 +48,17 @@ class AlarmSettingViewController: UIViewController {
         
         self.binding()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.configureObserver()
+        self.viewModel?.refresh()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
+    }
     
     // MARK: - Configure
     private func configureLayout() {
@@ -102,7 +113,7 @@ class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busArriveInfos
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink(receiveValue: { [weak self] data in
+            .sink(receiveValue: { [weak self] _ in
                 self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
@@ -148,6 +159,18 @@ class AlarmSettingViewController: UIViewController {
         let controller = UIAlertController()
         let action = UIAlertAction(title: message, style: .cancel, handler: nil)
         controller.addAction(action)
+        self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
+    }
+
+    private func alarmSettingActionSheet(titleMessage: String, buttonMessage: String, yes: @escaping () -> Void) {
+        let controller = UIAlertController(title: nil, message: titleMessage, preferredStyle: .actionSheet)
+
+        let OKAction = UIAlertAction(title: buttonMessage, style: .destructive) { _ in
+            yes()
+        }
+        let CancelAction = UIAlertAction(title: "취소", style: .cancel)
+        controller.addAction(OKAction)
+        controller.addAction(CancelAction)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
     
@@ -202,10 +225,12 @@ extension AlarmSettingViewController: UITableViewDataSource {
                 
                 cell.configure(routeType: self.viewModel?.routeType)
                 cell.configureDelegate(self)
-                cell.cancellable = self.viewModel?.$busArriveInfos
+                self.viewModel?.$busArriveInfos
                     .receive(on: DispatchQueue.main)
-                    .sink { busArriveInfos in
-                        guard let info = busArriveInfos[indexPath.row] else { return }
+                    .sink { [weak cell] busArriveInfos in
+                        guard let info = busArriveInfos[indexPath.row],
+                              let cell = cell else { return }
+                        
                         cell.configure(order: String(indexPath.row+1),
                                        remainingTime: info.arriveRemainTime?.toString(),
                                        remainingStationCount: info.relativePosition,
@@ -214,6 +239,20 @@ extension AlarmSettingViewController: UITableViewDataSource {
                                        currentLocation: info.currentStation,
                                        busNumber: info.plainNumber)
                     }
+                    .store(in: &cell.cancellables)
+                GetOnAlarmController.shared.$viewModel
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] getOnAlarmViewModel in
+                        if let getOnAlarmViewModel = getOnAlarmViewModel,
+                           info.vehicleId == getOnAlarmViewModel.getOnAlarmStatus.vehicleId,
+                           self?.viewModel?.stationOrd == getOnAlarmViewModel.getOnAlarmStatus.targetOrd {
+                            cell.configure(alarmButtonActive: true)
+                        }
+                        else {
+                            cell.configure(alarmButtonActive: false)
+                        }
+                    }
+                    .store(in: &cell.cancellables)
                 
                 return cell
             }
@@ -301,20 +340,41 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
 
 // MARK: - Delegate: GetOnAlarmButton
 extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
-    func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool? {
+    func buttonTapped(for cell: UITableViewCell) {
         guard let indexPath = self.alarmSettingView.indexPath(for: cell),
               let arriveInfo = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item],
-              let remainTime = arriveInfo.arriveRemainTime?.toString() else { return nil }
-        if let count = Int(String(arriveInfo.relativePosition?.first ?? "0")),
+              let busRouteId = self.viewModel?.busRouteId,
+              let stationId = self.viewModel?.stationId,
+              let targetOrd = self.viewModel?.stationOrd,
+              let vehicleId = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item].vehicleId,
+              let busName = self.viewModel?.busName else { return }
+        if let count = Int(String(arriveInfo.relativePosition?.prefixNumber() ?? "0")),
            count <= 1 {
             let arrivingSoonMessage = "버스가 곧 도착합니다"
             self.alarmSettingAlert(message: arrivingSoonMessage)
-            return false
         }
         else {
-            print("\(arriveInfo.plainNumber) 버스 승차알람을 \(cancel ? "취소" : "설정")하였습니다.")
-            if !cancel { print("약 \(remainTime) 후 도착 예정입니다.") }
-            return true
+            let result = GetOnAlarmController.shared.start(targetOrd: targetOrd,
+                                                           vehicleId: vehicleId,
+                                                           busName: busName,
+                                                           busRouteId: busRouteId,
+                                                           stationId: stationId)
+            switch result {
+            case .success: break
+            case .sameAlarm:
+                self.alarmSettingActionSheet(titleMessage: "승차 알람을 종료하시겠습니까?", buttonMessage: "종료") {
+                    GetOnAlarmController.shared.stop()
+                }
+            case .duplicated:
+                self.alarmSettingActionSheet(titleMessage: "이미 설정되어있는 승차알람이 있습니다.\n 재설정 하시겠습니까?", buttonMessage: "재설정") {
+                    GetOnAlarmController.shared.stop()
+                    let _ = GetOnAlarmController.shared.start(targetOrd: targetOrd,
+                                                                   vehicleId: vehicleId,
+                                                                   busName: busName,
+                                                                   busRouteId: busRouteId,
+                                                                   stationId: stationId)
+                }
+            }
         }
     }
 }

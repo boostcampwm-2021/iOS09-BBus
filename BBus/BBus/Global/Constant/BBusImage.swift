@@ -62,6 +62,7 @@ enum BBusImage {
     static let circulationBusIcon = UIImage(named: "circulationBusIcon")
     static let alarmOffIcon = UIImage(named: "alarmOff")
     static let alarmOnIcon = UIImage(named: "alarmOn")
+    static let alarmOnTintIcon = UIImage(named: "alarmOnTint")
     static let homeFavoriteEmpty = UIImage(named: "homeFavoriteEmpty")
     static let exclamationMark = UIImage(systemName: "exclamationmark.circle")
 }

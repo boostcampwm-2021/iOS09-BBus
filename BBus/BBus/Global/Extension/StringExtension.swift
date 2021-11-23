@@ -22,4 +22,17 @@ extension String {
         
         return ranges
     }
+
+    func prefixNumber() -> String {
+        var result = ""
+        for character in self {
+            if character.isNumber {
+                result += String(character)
+            }
+            else {
+                break
+            }
+        }
+        return result
+    }
 }

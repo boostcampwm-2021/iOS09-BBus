@@ -28,22 +28,20 @@ final class BusRouteViewModel {
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
-        self.configureObserver()
     }
 
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .none) { [weak self] _ in
-            self?.refreshBusPos()
-        }
+    func configureObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshBusPos), name: .thirtySecondPassed, object: nil)
+    }
+
+    func cancleObserver() {
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { [weak self] header in
-                self?.header = header
-            })
-            .store(in: &self.cancellables)
+            .assign(to: &self.$header)
     }
 
     private func bindingBodysInfo() {
@@ -100,6 +98,7 @@ final class BusRouteViewModel {
         var busesResult: [BusPosInfo] = []
         buses.forEach { [weak self] bus in
             guard let self = self else { return }
+
             let info: BusPosInfo
             info.location = self.convertBusPos(order: bus.sectionOrder,
                                                sect: bus.sectDist,
@@ -109,6 +108,7 @@ final class BusRouteViewModel {
             info.islower = (bus.busType == 1)
             busesResult.append(info)
         }
+        
         self.buses = busesResult
     }
 
@@ -117,7 +117,7 @@ final class BusRouteViewModel {
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
     }
 
-    func refreshBusPos() {
+    @objc func refreshBusPos() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 }

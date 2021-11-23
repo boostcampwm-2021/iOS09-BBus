@@ -13,21 +13,22 @@ class GetOnAlarmViewModel {
     let usecase: GetOnAlarmUsecase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
     private var cancellable: AnyCancellable?
-    @Published private(set) var message: String?
+    @Published private(set) var getApproachStatus: BusApproachStatus?
+    private(set) var message: String?
 
     init(usecase: GetOnAlarmUsecase, currentStatus: GetOnAlarmStatus) {
         self.usecase = usecase
         self.getOnAlarmStatus = currentStatus
         self.message = nil
         self.cancellable = nil
+        self.getApproachStatus = nil
         self.execute()
         self.configureObserver()
     }
 
     private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .main) { _ in
-            print("ewifjwofj")
-            self.fetch()
+        NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.fetch()
         }
     }
 
@@ -36,14 +37,16 @@ class GetOnAlarmViewModel {
             .receive(on: GetOnAlarmUsecase.queue)
             .sink { [weak self] position in
                 guard let self = self,
-                      let position = position else { return }
+                      let position = position,
+                      let stationOrd = Int(position.stationOrd) else { return }
 
-                if let status = BusApproachCheckUsecase().execute(currentOrd: Int(position.stationOrd)!,
-                                                                  beforeOrd: self.getOnAlarmStatus.currentBusOrd ?? Int(position.stationOrd)!,
+                if let status = BusApproachCheckUsecase().execute(currentOrd: stationOrd,
+                                                                  beforeOrd: self.getOnAlarmStatus.currentBusOrd ?? stationOrd,
                                                                   targetOrd: self.getOnAlarmStatus.targetOrd) {
                     self.makeMessage(with: status)
+                    self.getApproachStatus = status
                 }
-                self.getOnAlarmStatus = GetOnAlarmStatus(getOnAlarmStatus: self.getOnAlarmStatus, currentBusOrd: Int(position.stationOrd)!)
+                self.getOnAlarmStatus = self.getOnAlarmStatus.withCurrentBusOrd(stationOrd)
             }
     }
 

@@ -23,6 +23,7 @@ final class MovingStatusViewModel {
     private let toArsId: String
     private var startOrd: Int? // 2
     private var currentOrd: Int?
+    private(set) var isFolded: Bool = false
     @Published var isterminated: Bool = false
     @Published var busInfo: BusInfo? // 1
     @Published var stationInfos: [StationInfo] = [] // 3
@@ -178,17 +179,17 @@ final class MovingStatusViewModel {
         let userLocation = CLLocation(latitude: gpsX, longitude: gpsY)
         let busLocation = CLLocation(latitude: busX, longitude: busY)
         let distanceInMeters = userLocation.distance(from: busLocation)
-        print(distanceInMeters)
         
-        return distanceInMeters <= 30.0
+        return distanceInMeters <= 100.0
     }
 
     // 현재 버스의 노선도 위치 반환
     private func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> CGFloat {
-        let order = CGFloat(order-1-startOrd)
+        let order = CGFloat(order - startOrd)
         let sect = CGFloat((sect as NSString).floatValue)
         let fullSect = CGFloat((fullSect as NSString).floatValue)
-        return order + (sect/fullSect) + 1
+
+        return order + (sect/fullSect)
     }
 
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
@@ -218,7 +219,10 @@ final class MovingStatusViewModel {
     }
 
     static func averageSectionTime(speed: Int, distance: Int) -> Int {
-        let result = Double(distance)/21*0.06
+        let averageBusSpeed: Double = 21
+        let metterToKilometter: Double = 0.06
+
+        let result = Double(distance)/averageBusSpeed*metterToKilometter
         return Int(ceil(result))
     }
 
@@ -231,5 +235,13 @@ final class MovingStatusViewModel {
     // 타이머가 일정주기로 실행
     func updateAPI() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId) //고민 필요
+    }
+
+    func fold() {
+        self.isFolded = true
+    }
+
+    func unfold() {
+        self.isFolded = false
     }
 }
