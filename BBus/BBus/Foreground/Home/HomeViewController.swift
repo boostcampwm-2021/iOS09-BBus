@@ -190,7 +190,7 @@ extension HomeViewController: UICollectionViewDataSource {
                           let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
                           let busType = self?.viewModel?.busType(by: busName) else { return }
                     let busArrivalInfo = model.arriveInfo
-                    cell.configure(busNumber: busName,
+                    cell?.configure(busNumber: busName,
                                    routeType: busType,
                                    firstBusTime: busArrivalInfo?.firstTime.toString(),
                                    firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
@@ -203,7 +203,7 @@ extension HomeViewController: UICollectionViewDataSource {
             .store(in: &cell.cancellables)
         GetOnAlarmController.shared.$viewModel
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] getOnAlarmViewModel in
+            .sink { [weak self, weak cell] getOnAlarmViewModel in
                 guard let model = self?.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
                       let cellOrd = Int(model.favoriteItem.ord),
                       let cellBusRouteId = Int(model.favoriteItem.busRouteId),
@@ -211,10 +211,10 @@ extension HomeViewController: UICollectionViewDataSource {
                 if getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == cellOrd,
                    getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == cellBusRouteId,
                    getOnAlarmViewModel?.getOnAlarmStatus.stationId == cellStId {
-                    cell.configure(alarmButtonActive: true)
+                    cell?.configure(alarmButtonActive: true)
                 }
                 else {
-                    cell.configure(alarmButtonActive: false)
+                    cell?.configure(alarmButtonActive: false)
                 }
 
             }
