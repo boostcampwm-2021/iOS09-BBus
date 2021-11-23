@@ -52,14 +52,16 @@ final class GetOnAlarmController: NSObject {
         self.locationManager?.requestAlwaysAuthorization()
         self.locationManager?.allowsBackgroundLocationUpdates = true
         self.locationManager?.startUpdatingLocation()
-        self.locationManager?.delegate = self
-        
     }
     
     func bindingMessage() {
-        self.cancellable = self.viewModel?.$message
-            .sink(receiveValue: { message in
-                guard let message = message else { return }
+        self.cancellable = self.viewModel?.$getApproachStatus
+            .sink(receiveValue: { status in
+                guard let status = status,
+                      let message = self.viewModel?.message else { return }
+                if status == .oneStationLeft {
+                    self.viewModel = nil
+                }
                 self.pushGetOnAlarm(message: message)
             })
     }
@@ -81,8 +83,4 @@ final class GetOnAlarmController: NSObject {
         let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
-}
-
-extension GetOnAlarmController: CLLocationManagerDelegate {
-    
 }
