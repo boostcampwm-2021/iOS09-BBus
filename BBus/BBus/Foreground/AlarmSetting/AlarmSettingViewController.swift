@@ -216,7 +216,8 @@ extension AlarmSettingViewController: UITableViewDataSource {
                     .receive(on: DispatchQueue.main)
                     .sink { getOnAlarmViewModel in
                         if let getOnAlarmViewModel = getOnAlarmViewModel,
-                           info.vehicleId == getOnAlarmViewModel.getOnAlarmStatus.vehicleId {
+                           info.vehicleId == getOnAlarmViewModel.getOnAlarmStatus.vehicleId,
+                           self.viewModel?.stationOrd == getOnAlarmViewModel.getOnAlarmStatus.targetOrd {
                             cell.configure(alarmButtonActive: true)
                         }
                         else {
