@@ -117,11 +117,14 @@ class StationViewController: UIViewController {
             }.store(in: &self.cancellables)
         
         self.viewModel?.usecase.$stationInfo
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.main)
+            .dropFirst()
             .sink(receiveValue: { [weak self] station in
-                DispatchQueue.main.async {
-                    guard let station = station else { return }
+                if let station = station {
                     self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
+                }
+                else {
+                    self?.noInfoAlert()
                 }
             })
             .store(in: &self.cancellables)
@@ -172,6 +175,17 @@ class StationViewController: UIViewController {
 
     private func configureColor() {
         self.view.backgroundColor = BBusColor.bbusGray
+    }
+    
+    private func noInfoAlert() {
+        let controller = UIAlertController(title: "정거장 에러",
+                                           message: "죄송합니다. 현재 정보가 제공되지 않는 정거장입니다.",
+                                           preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인",
+                                   style: .default,
+                                   handler: { [weak self] _ in self?.coordinator?.terminate() })
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
     }
 }
 
