@@ -23,6 +23,7 @@ class AlarmSettingViewModel {
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
     @Published private(set) var errorMessage: String?
     private var cancellables: Set<AnyCancellable>
+    private var observer: NSObjectProtocol?
     
     init(useCase: AlarmSettingUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
         self.useCase = useCase
@@ -38,20 +39,23 @@ class AlarmSettingViewModel {
         self.errorMessage = nil
         self.binding()
         self.refresh()
-        self.configureObserver()
         self.showBusStations()
     }
     
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
+    func configureObserver() {
+        self.observer = NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
             self?.busArriveInfos.desend()
         }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
-            self?.refresh()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .thirtySecondPassed, object: nil)
+    }
+
+    func cancleObserver() {
+        guard let observer = self.observer else { return }
+        NotificationCenter.default.removeObserver(observer)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    func refresh() {
+    @objc func refresh() {
         self.useCase.busArriveInfoWillLoaded(stId: "\(self.stationId)",
                                              busRouteId: "\(self.busRouteId)",
                                              ord: "\(self.stationOrd)")

@@ -28,13 +28,14 @@ final class BusRouteViewModel {
         self.bindingHeaderInfo()
         self.bindingBodysInfo()
         self.bindingBusesPosInfo()
-        self.configureObserver()
     }
 
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .none) { [weak self] _ in
-            self?.refreshBusPos()
-        }
+    func configureObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshBusPos), name: .thirtySecondPassed, object: nil)
+    }
+
+    func cancleObserver() {
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func bindingHeaderInfo() {
@@ -117,7 +118,7 @@ final class BusRouteViewModel {
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
     }
 
-    func refreshBusPos() {
+    @objc func refreshBusPos() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
 }

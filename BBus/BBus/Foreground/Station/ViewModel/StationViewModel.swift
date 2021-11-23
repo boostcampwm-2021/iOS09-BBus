@@ -30,24 +30,23 @@ class StationViewModel {
         self.busKeys = []
         self.binding()
         self.refresh()
-        self.configureObserver()
     }
 
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
-            self?.descendTime()
-        }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
-            self?.refresh()
-        }
+    func configureObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(descendTime), name: .oneSecondPassed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .thirtySecondPassed, object: nil)
+    }
+
+    func cancleObserver() {
+        NotificationCenter.default.removeObserver(self)
     }
     
-    func refresh() {
+    @objc func refresh() {
         self.usecase.stationInfoWillLoad(with: arsId)
         self.usecase.refreshInfo(about: arsId)
     }
 
-    private func descendTime() {
+    @objc private func descendTime() {
         self.infoBuses.forEach({ [weak self] in
             self?.infoBuses[$0.key] = $0.value.map { result in
                 var remainTime = result

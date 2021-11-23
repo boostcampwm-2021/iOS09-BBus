@@ -70,6 +70,12 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel?.reloadFavoriteData()
+        self.viewModel?.configureObserver()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
     }
 
     // MARK: - Configuration

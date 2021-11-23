@@ -17,19 +17,18 @@ class HomeViewModel {
     init(useCase: HomeUseCase) {
         self.useCase = useCase
         self.bindFavoriteData()
-        self.configureObserver()
     }
 
-    private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
-            self.descendTime()
-        }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
-            self.reloadFavoriteData()
-        }
+    func configureObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(descendTime), name: .oneSecondPassed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadFavoriteData), name: .thirtySecondPassed, object: nil)
     }
 
-    private func descendTime() {
+    func cancleObserver() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func descendTime() {
         self.homeFavoriteList?.descendAllTime()
     }
 
@@ -49,7 +48,7 @@ class HomeViewModel {
             })
     }
 
-    func reloadFavoriteData() {
+    @objc func reloadFavoriteData() {
         self.useCase.loadFavoriteData()
     }
 
