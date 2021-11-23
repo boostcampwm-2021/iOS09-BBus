@@ -11,6 +11,7 @@ class EmptyFavoriteNoticeView: UIView {
 
     private lazy var noticeImage: UIImageView = {
         let imageView = UIImageView(image: BBusImage.homeFavoriteEmpty)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     private lazy var noticeLabel: UILabel = {
@@ -39,13 +40,16 @@ class EmptyFavoriteNoticeView: UIView {
     }
 
     private func configureLayout() {
+        let half: CGFloat = 0.5
+        let centerYInterval: CGFloat = -30
+
         self.addSubviews(self.noticeImage, self.noticeLabel)
 
         NSLayoutConstraint.activate([
             self.noticeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.noticeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.noticeImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
-            self.noticeImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.3)
+            self.noticeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: centerYInterval),
+            self.noticeImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half),
+            self.noticeImage.heightAnchor.constraint(equalTo: self.noticeImage.widthAnchor)
         ])
 
         NSLayoutConstraint.activate([

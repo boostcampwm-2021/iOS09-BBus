@@ -8,8 +8,6 @@
 import Foundation
 import Combine
 
-
-
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
