@@ -17,8 +17,8 @@ class CustomNavigationBar: UIView {
     
     private weak var delegate: BackButtonDelegate? {
         didSet {
-            self.backButton.addAction(UIAction(handler: { _ in
-                self.delegate?.touchedBackButton()
+            self.backButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.delegate?.touchedBackButton()
             }), for: .touchUpInside)
         }
     }

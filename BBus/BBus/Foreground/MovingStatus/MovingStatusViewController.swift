@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import CoreLocation
 
-typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate & AlertCreateDelegate
+typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatusFoldUnfoldDelegate & AlertCreateToNavigationDelegate & AlertCreateToMovingStatusDelegate
 
 final class MovingStatusViewController: UIViewController {
 
@@ -56,10 +56,6 @@ final class MovingStatusViewController: UIViewController {
         self.configureBusTag()
         self.fetch()
         self.configureLocationManager()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     private func configureLocationManager() {
@@ -141,58 +137,48 @@ final class MovingStatusViewController: UIViewController {
 
     private func bindHeaderBusInfo() {
         self.viewModel?.$busInfo
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] busInfo in
                 guard let busInfo = busInfo else { return }
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureBusName(to: busInfo.busName)
-                    self?.configureBusColor(type: busInfo.type)
-                    self?.configureBusTag(bus: nil)
-                }
+                self?.movingStatusView.configureBusName(to: busInfo.busName)
+                self?.configureBusColor(type: busInfo.type)
+                self?.configureBusTag(bus: nil)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindRemainTime() {
         self.viewModel?.$remainingTime
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] remainingTime in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
-                }
+                self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindCurrentStation() {
         self.viewModel?.$remainingStation
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] currentStation in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
-                }
+                self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindStationInfos() {
         self.viewModel?.$stationInfos
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.reload()
-                }
+                self?.movingStatusView.reload()
             })
             .store(in: &self.cancellables)
     }
 
     private func bindBoardedBus() {
         self.viewModel?.$boardedBus
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] boardedBus in
-                DispatchQueue.main.async {
-                    self?.configureBusTag(bus: boardedBus)
-                }
+                self?.configureBusTag(bus: boardedBus)
             })
             .store(in: &self.cancellables)
     }
@@ -260,7 +246,14 @@ final class MovingStatusViewController: UIViewController {
             self?.coordinator?.close()
         })
         controller.addAction(action)
-        self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
+
+        guard let isFolded = self.viewModel?.isFolded else { return }
+        if isFolded {
+            self.coordinator?.presentAlertToNavigation(controller: controller, completion: nil)
+        }
+        else {
+            self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
+        }
     }
 }
 
@@ -297,6 +290,7 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
         // Coordinator에게 Unfold 요청
         print("bottom indicator button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.viewModel?.unfold()
             self?.coordinator?.unfold()
         }
     }
@@ -308,6 +302,7 @@ extension MovingStatusViewController: FoldButtonDelegate {
         // Coordinator에게 fold 요청
         print("fold button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.viewModel?.fold()
             self?.coordinator?.fold()
         }
     }

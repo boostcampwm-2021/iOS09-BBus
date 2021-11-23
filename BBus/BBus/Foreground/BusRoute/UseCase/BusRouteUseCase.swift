@@ -38,10 +38,7 @@ final class BusRouteUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] header in
-                    self?.header = header
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$header)
         }
     }
 
@@ -58,10 +55,7 @@ final class BusRouteUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] bodys in
-                    self?.bodys = bodys
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$bodys)
         }
     }
 
@@ -78,10 +72,7 @@ final class BusRouteUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] buses in
-                    self?.buses = buses
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$buses)
         }
     }
 }

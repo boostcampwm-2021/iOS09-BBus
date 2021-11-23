@@ -184,13 +184,12 @@ extension HomeViewController: UICollectionViewDataSource {
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { $0.changedByTimer }
-            .sink(receiveValue: { [weak self] homeFavoriteList in
+            .sink(receiveValue: { [weak self, weak cell] homeFavoriteList in
                 DispatchQueue.main.async {
                     guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
-                          let busName = self?.viewModel?.busName(by: model.0.busRouteId),
+                          let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
                           let busType = self?.viewModel?.busType(by: busName) else { return }
-                    
-                    let busArrivalInfo = model.1
+                    let busArrivalInfo = model.arriveInfo
                     cell.configure(busNumber: busName,
                                    routeType: busType,
                                    firstBusTime: busArrivalInfo?.firstTime.toString(),
