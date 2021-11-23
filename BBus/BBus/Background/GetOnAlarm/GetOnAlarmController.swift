@@ -45,6 +45,8 @@ final class GetOnAlarmController: NSObject {
 
     func stop() {
         self.viewModel = nil
+        self.cancellable = nil
+        self.locationManager = nil
     }
     
     private func configureLocationManager() {
@@ -56,13 +58,13 @@ final class GetOnAlarmController: NSObject {
     
     func bindingMessage() {
         self.cancellable = self.viewModel?.$getApproachStatus
-            .sink(receiveValue: { status in
+            .sink(receiveValue: { [weak self] status in
                 guard let status = status,
-                      let message = self.viewModel?.message else { return }
+                      let message = self?.viewModel?.message else { return }
                 if status == .oneStationLeft {
-                    self.viewModel = nil
+                    self?.stop()
                 }
-                self.pushGetOnAlarm(message: message)
+                self?.pushGetOnAlarm(message: message)
             })
     }
     
