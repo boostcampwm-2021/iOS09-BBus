@@ -83,8 +83,12 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
 
 // MARK: - Delegate : AlertCreateDelegate
 extension AppCoordinator: AlertCreateDelegate {
-    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+    func presentAlertToNavigation(controller: UIAlertController, completion: (() -> Void)? = nil) {
         self.navigationPresenter.present(controller, animated: false, completion: completion)
+    }
+
+    func presentAlertToMovingStatus(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.movingStatusPresenter?.present(controller, animated: false, completion: completion)
     }
 }
 
