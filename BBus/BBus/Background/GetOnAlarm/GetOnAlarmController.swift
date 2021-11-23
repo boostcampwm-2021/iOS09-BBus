@@ -19,28 +19,34 @@ final class GetOnAlarmController: NSObject {
     private var cancellable: AnyCancellable?
     private var locationManager: CLLocationManager?
 
-    var status: (vehicleId: Int, targetOrd: Int)? {
-        get {
-            guard let viewModel = self.viewModel else { return nil }
-            return (viewModel.getOnAlarmStatus.vehicleId, viewModel.getOnAlarmStatus.targetOrd)
-        }
-    }
-
-    private(set) var viewModel: GetOnAlarmViewModel?
+    @Published private(set) var viewModel: GetOnAlarmViewModel?
     
     private override init() { }
 
-    func start(targetOrd: Int, vehicleId: Int, busName: String) {
-        let usecase = GetOnAlarmUsecase(usecases: BBusAPIUsecases(on: GetOnAlarmUsecase.queue))
-        let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
-                                                targetOrd: targetOrd,
-                                                vehicleId: vehicleId,
-                                                busName: busName)
-        self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
-        self.bindingMessage()
-        self.viewModel?.fetch()
-        self.sendRequestAuthorization()
-        self.configureLocationManager()
+    func start(targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) -> GetOnStartResult {
+        if self.viewModel != nil {
+            if isSameAlarm(targetOrd: targetOrd, vehicleId: vehicleId) {
+                return .sameAlarm
+            }
+            else {
+                return .duplicated
+            }
+        }
+        else {
+            let usecase = GetOnAlarmUsecase(usecases: BBusAPIUsecases(on: GetOnAlarmUsecase.queue))
+            let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
+                                                    targetOrd: targetOrd,
+                                                    vehicleId: vehicleId,
+                                                    busName: busName,
+                                                    busRouteId: busRouteId,
+                                                    stationId: stationId)
+            self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
+            self.viewModel?.fetch()
+            self.bindingMessage()
+            self.sendRequestAuthorization()
+            self.configureLocationManager()
+            return .success
+        }
     }
 
     func stop() {
@@ -84,5 +90,12 @@ final class GetOnAlarmController: NSObject {
         content.badge = Int(truncating: content.badge ?? 0) + 1 as NSNumber
         let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+
+    private func isSameAlarm(targetOrd: Int, vehicleId: Int) -> Bool {
+        guard let currentTargetOrd = self.viewModel?.getOnAlarmStatus.targetOrd,
+              let currentVehicleId = self.viewModel?.getOnAlarmStatus.vehicleId else { return false }
+
+        return currentTargetOrd == targetOrd && currentVehicleId == vehicleId
     }
 }

@@ -13,7 +13,10 @@ import Combine
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
+    let stationId: Int
     let busRouteId: Int
+    let stationOrd: Int
+    private let arsId: String
     let routeType: RouteType?
     let busName: String
     private let stationId: Int
@@ -79,11 +82,13 @@ class AlarmSettingViewModel {
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.firstBusArriveRemainTime,
                                                              congestion: data.firstBusCongestion,
                                                              currentStation: data.firstBusCurrentStation,
-                                                             plainNumber: data.firstBusPlainNumber))
+                                                             plainNumber: data.firstBusPlainNumber,
+                                                             vehicleId: data.firstBusVehicleId))
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.secondBusArriveRemainTime,
                                                              congestion: data.secondBusCongestion,
                                                              currentStation: data.secondBusCurrentStation,
-                                                             plainNumber: data.secondBusPlainNumber))
+                                                             plainNumber: data.secondBusPlainNumber,
+                                                             vehicleId: data.secondBusVehicleId))
                 self?.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: arriveInfos, changedByTimer: false)
             })
             .store(in: &self.cancellables)

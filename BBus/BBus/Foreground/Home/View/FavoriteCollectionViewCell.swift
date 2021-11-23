@@ -49,6 +49,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
                                     secondBusTime: nil,
                                     secondBusRemaining: nil,
                                     secondBusCongestion: nil)
+        self.trailingView.configure(alarmButtonActive: false)
     }
 
     required init?(coder: NSCoder) {
@@ -124,5 +125,9 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
                                     secondBusTime: secondBusTime,
                                     secondBusRemaining: secondBusRelativePosition,
                                     secondBusCongestion: secondBusCongsetion)
+    }
+
+    func configure(alarmButtonActive: Bool) {
+        self.trailingView.configure(alarmButtonActive: alarmButtonActive)
     }
 }

@@ -102,6 +102,7 @@
 		4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */; };
 		4ADB29CD274B880C00554A4E /* BusApproachCheckUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CC274B880C00554A4E /* BusApproachCheckUsecase.swift */; };
 		4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CE274B890800554A4E /* BusApproachStatus.swift */; };
+		4ADB29D1274CAF0100554A4E /* GetOnStartResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D0274CAF0100554A4E /* GetOnStartResult.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */; };
 		87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A84273B90D10078EAE3 /* RequestUsecases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
@@ -235,6 +236,7 @@
 		4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmViewModel.swift; sourceTree = "<group>"; };
 		4ADB29CC274B880C00554A4E /* BusApproachCheckUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachCheckUsecase.swift; sourceTree = "<group>"; };
 		4ADB29CE274B890800554A4E /* BusApproachStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachStatus.swift; sourceTree = "<group>"; };
+		4ADB29D0274CAF0100554A4E /* GetOnStartResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnStartResult.swift; sourceTree = "<group>"; };
 		87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIUsecases.swift; sourceTree = "<group>"; };
 		87038A84273B90D10078EAE3 /* RequestUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestUsecases.swift; sourceTree = "<group>"; };
 		87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArrInfoByRouteListFetcher.swift; sourceTree = "<group>"; };
@@ -700,6 +702,7 @@
 			children = (
 				4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */,
 				4ADB29CE274B890800554A4E /* BusApproachStatus.swift */,
+				4ADB29D0274CAF0100554A4E /* GetOnStartResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				87038A90273C11630078EAE3 /* GetStationsByRouteListFetcher.swift in Sources */,
 				4ACA522B272FCED600EC0531 /* MovingStatusModel.swift in Sources */,
 				4A917DF427463666002489FE /* EmptySearchResultNoticeView.swift in Sources */,
+				4ADB29D1274CAF0100554A4E /* GetOnStartResult.swift in Sources */,
 				87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */,
 				04C6D6692734B18A00D41678 /* MovingStatusTableViewCell.swift in Sources */,
 				87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */,
