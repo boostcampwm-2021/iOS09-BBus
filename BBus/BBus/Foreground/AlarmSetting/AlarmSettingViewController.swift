@@ -112,11 +112,15 @@ class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busStationInfos
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
-                guard let self = self else { return }
-                self.alarmSettingView.reload()
-                if let viewModel = self.viewModel,
-                   let stationName = infos.first?.name {
-                    self.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                if let infos = infos {
+                    self?.alarmSettingView.reload()
+                    if let viewModel = self?.viewModel,
+                       let stationName = infos.first?.name {
+                        self?.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                    }
+                }
+                else {
+                    self?.noInfoAlert()
                 }
             })
             .store(in: &self.cancellables)
@@ -150,6 +154,17 @@ class AlarmSettingViewController: UIViewController {
     private func networkAlert() {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
+    }
+    
+    private func noInfoAlert() {
+        let controller = UIAlertController(title: "알람 에러",
+                                           message: "죄송합니다. 현재 알람 서비스가 제공되지 않는 버스입니다.",
+                                           preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인",
+                                   style: .default,
+                                   handler: { [weak self] _ in self?.coordinator?.terminate() })
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
@@ -275,8 +290,8 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
     func shouldGoToMovingStatusScene(from cell: UITableViewCell) {
         guard let busRouteId = self.viewModel?.busRouteId,
               let indexPath = self.alarmSettingView.indexPath(for: cell),
-              let startStationArsId = self.viewModel?.busStationInfos.first?.arsId,
-              let endStationArsId = self.viewModel?.busStationInfos[indexPath.item].arsId else { return }
+              let startStationArsId = self.viewModel?.busStationInfos?.first?.arsId,
+              let endStationArsId = self.viewModel?.busStationInfos?[indexPath.item].arsId else { return }
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)

@@ -15,7 +15,7 @@ class AlarmSettingUseCase {
     
     private let useCases: AlarmSettingUseCases
     @Published private(set) var busArriveInfo: ArrInfoByRouteDTO?
-    @Published private(set) var busStationsInfo: [StationByRouteListDTO]
+    @Published private(set) var busStationsInfo: [StationByRouteListDTO]?
     @Published private(set) var networkError: Error?
     private var cancellables: Set<AnyCancellable>
     
@@ -56,9 +56,10 @@ class AlarmSettingUseCase {
                 .receive(on: Self.queue)
                 .tryMap({ data in
                     guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: data)?.body.itemList,
-                          let index = result.firstIndex(where: { $0.arsId == arsId }) else { throw BBusAPIError.wrongFormatError }
+                          let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
                     return Array(result[index..<result.count])
                 })
+                // 에러를 throw하지 않고 nil을 반환하게 하여 retry가 필요하지 않음.
                 .retry({ [weak self] in
                     self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
                 }, handler: { [weak self] error in
