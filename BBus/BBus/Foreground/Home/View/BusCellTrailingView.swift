@@ -31,7 +31,7 @@ class BusCellTrailingView: UIView {
     private lazy var secondBusTimeRightLabel = RemainCongestionBadgeLabel()
     private(set) lazy var alarmButton: UIButton = {
         let button = UIButton()
-        button.setImage(BBusImage.alarm, for: .normal)
+        button.setImage(BBusImage.alarmOffIcon, for: .normal)
         button.tintColor = BBusColor.bbusGray
         return button
     }()
@@ -46,6 +46,18 @@ class BusCellTrailingView: UIView {
 
     // MARK: - Configuration
     func configureLayout() {
+
+        let alarmButtonWidth: CGFloat = 45
+        let alarmButtonTrailingInterval: CGFloat = -10
+        self.addSubview(self.alarmButton)
+        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.alarmButton.widthAnchor.constraint(equalToConstant: alarmButtonWidth),
+            self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
+            self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmButtonTrailingInterval)
+        ])
+
         let centerYInterval: CGFloat = 3
 
         self.addSubview(self.firstBusTimeLabel)
@@ -84,16 +96,6 @@ class BusCellTrailingView: UIView {
             self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval)
         ])
 
-        let alarmButtonWidth: CGFloat = 20
-        let alarmButtonTrailingInterval: CGFloat = -20
-        self.addSubview(self.alarmButton)
-        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.alarmButton.widthAnchor.constraint(equalToConstant: alarmButtonWidth),
-            self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
-            self.alarmButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.alarmButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmButtonTrailingInterval)
-        ])
     }
 
     func configure(firstBusTime: String?, firstBusRemaining: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRemaining: String?, secondBusCongestion: String?) {
