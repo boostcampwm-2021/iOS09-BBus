@@ -23,6 +23,7 @@ final class MovingStatusViewModel {
     private let toArsId: String
     private var startOrd: Int? // 2
     private var currentOrd: Int?
+    private(set) var isFolded: Bool = false
     @Published var isterminated: Bool = false
     @Published var busInfo: BusInfo? // 1
     @Published var stationInfos: [StationInfo] = [] // 3
@@ -234,5 +235,13 @@ final class MovingStatusViewModel {
     // 타이머가 일정주기로 실행
     func updateAPI() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId) //고민 필요
+    }
+
+    func fold() {
+        self.isFolded = true
+    }
+
+    func unfold() {
+        self.isFolded = false
     }
 }
