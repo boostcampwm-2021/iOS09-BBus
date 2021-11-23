@@ -36,14 +36,14 @@ class HomeViewModel {
     private func bindFavoriteData() {
         self.cancellable = self.useCase.$favoriteList
             .receive(on: HomeUseCase.queue)
-            .sink(receiveValue: { favoriteItems in
+            .sink(receiveValue: { [weak self] favoriteItems in
                 guard let favoriteItems = favoriteItems else { return }
-                self.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
-                favoriteItems.forEach({ favoriteItem in
-                    self.useCase.loadBusRemainTime(favoriteItem: favoriteItem) { arrInfoByRouteDTO in
-                        guard let indexPath = self.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
+                self?.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
+                favoriteItems.forEach({ [weak self] favoriteItem in
+                    self?.useCase.loadBusRemainTime(favoriteItem: favoriteItem) { arrInfoByRouteDTO in
+                        guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
                         let homeArrivalInfo = HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
-                        self.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
+                        self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
                     }
                 })
             })

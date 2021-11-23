@@ -15,7 +15,7 @@ class CustomNavigationBar: UIView {
 
     static let height: CGFloat = 45
     
-    private var delegate: BackButtonDelegate? {
+    private weak var delegate: BackButtonDelegate? {
         didSet {
             self.backButton.addAction(UIAction(handler: { _ in
                 self.delegate?.touchedBackButton()

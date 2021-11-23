@@ -43,11 +43,11 @@ class AlarmSettingViewModel {
     }
     
     private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
-            self.busArriveInfos.desend()
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.busArriveInfos.desend()
         }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
-            self.refresh()
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.refresh()
         }
     }
     
@@ -69,7 +69,7 @@ class AlarmSettingViewModel {
     private func bindingBusArriveInfo() {
         self.useCase.$busArriveInfo
             .receive(on: AlarmSettingUseCase.queue)
-            .sink(receiveValue: { data in
+            .sink(receiveValue: { [weak self] data in
                 guard let data = data else { return }
                 var arriveInfos: [AlarmSettingBusArriveInfo] = []
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.firstBusArriveRemainTime,
@@ -80,7 +80,7 @@ class AlarmSettingViewModel {
                                                              congestion: data.secondBusCongestion,
                                                              currentStation: data.secondBusCurrentStation,
                                                              plainNumber: data.secondBusPlainNumber))
-                self.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: arriveInfos, changedByTimer: false)
+                self?.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: arriveInfos, changedByTimer: false)
             })
             .store(in: &self.cancellables)
     }
@@ -88,8 +88,8 @@ class AlarmSettingViewModel {
     private func bindingBusStationsInfo() {
         self.useCase.$busStationsInfo
             .receive(on: AlarmSettingUseCase.queue)
-            .sink(receiveValue: { infos in
-                self.mappingStationsDTOtoAlarmSettingInfo()
+            .sink(receiveValue: { [weak self] infos in
+                self?.mappingStationsDTOtoAlarmSettingInfo()
             })
             .store(in: &self.cancellables)
     }

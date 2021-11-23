@@ -43,7 +43,9 @@ class HomeUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.favoriteList, on: self)
+                .sink(receiveValue: { [weak self] favoriteList in
+                    self?.favoriteList = favoriteList
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -81,7 +83,9 @@ class HomeUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.stationList, on: self)
+                .sink(receiveValue: { [weak self] stationList in
+                    self?.stationList = stationList
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -96,7 +100,9 @@ class HomeUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.busRouteList, on: self)
+                .sink(receiveValue: { [weak self] busRouteList in
+                    self?.busRouteList = busRouteList
+                })
                 .store(in: &self.cancellables)
         }
     }

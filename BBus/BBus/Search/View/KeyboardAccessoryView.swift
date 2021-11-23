@@ -7,35 +7,35 @@
 
 import UIKit
 
-protocol KeyboardAccessoryNumberButtonDelegate {
+protocol KeyboardAccessoryNumberButtonDelegate: AnyObject {
     func shouldShowNumberPad()
 }
 
-protocol KeyboardAccessoryCharacterButtonDelegate {
+protocol KeyboardAccessoryCharacterButtonDelegate: AnyObject {
     func shouldShowCharacterPad()
 }
 
-protocol KeyboardAccessoryDownKeyboardButtonDelegate {
+protocol KeyboardAccessoryDownKeyboardButtonDelegate: AnyObject {
     func shouldHideKeyboard()
 }
 
 final class KeyboardAccessoryView: UIView {
 
-    private var numberDelegate: KeyboardAccessoryNumberButtonDelegate? {
+    private weak var numberDelegate: KeyboardAccessoryNumberButtonDelegate? {
         didSet {
             self.numberButton.addAction(UIAction(handler: { _ in
                 self.numberDelegate?.shouldShowNumberPad()
             }), for: .touchUpInside)
         }
     }
-    private var characterDelegate: KeyboardAccessoryCharacterButtonDelegate? {
+    private weak var characterDelegate: KeyboardAccessoryCharacterButtonDelegate? {
         didSet {
             self.characterButton.addAction(UIAction(handler: { _ in
                 self.characterDelegate?.shouldShowCharacterPad()
             }), for: .touchUpInside)
         }
     }
-    private var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate? {
+    private weak var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate? {
         didSet {
             self.downKeyboardButton.addAction(UIAction(handler: { _ in
                 self.downKeyboardDelegate?.shouldHideKeyboard()

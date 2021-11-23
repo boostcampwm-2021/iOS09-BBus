@@ -43,7 +43,9 @@ class AlarmSettingUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.busArriveInfo, on: self)
+                .sink(receiveValue: { [weak self] busArriveInfo in
+                    self?.busArriveInfo = busArriveInfo
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -62,7 +64,9 @@ class AlarmSettingUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.busStationsInfo, on: self)
+                .sink(receiveValue: { [weak self] busStationsInfo in
+                    self?.busStationsInfo = busStationsInfo
+                })
                 .store(in: &self.cancellables)
         }
     }

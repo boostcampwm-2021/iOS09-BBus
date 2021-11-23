@@ -12,14 +12,14 @@ protocol CoordinatorFinishDelegate: AnyObject {
     func removeChildCoordinator(_ coordinator: Coordinator)
 }
 
-protocol CoordinatorCreateDelegate {
+protocol CoordinatorCreateDelegate: AnyObject {
     func pushSearch()
     func pushBusRoute(busRouteId: Int)
     func pushAlarmSetting(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String)
     func pushStation(arsId: String)
 }
 
-protocol AlertCreateDelegate {
+protocol AlertCreateDelegate: AnyObject {
     func presentAlertToNavigation(controller: UIAlertController, completion: (() -> Void)?)
     func presentAlertToMovingStatus(controller: UIAlertController, completion: (() -> Void)?)
 }

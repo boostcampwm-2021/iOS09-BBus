@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, StationPushable {
-    var delegate: CoordinatorDelegate?
+    weak var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
 
     init(presenter: UINavigationController) {

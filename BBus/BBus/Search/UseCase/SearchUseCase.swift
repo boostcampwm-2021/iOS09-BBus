@@ -41,7 +41,9 @@ final class SearchUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.routeList, on: self)
+                .sink(receiveValue: { [weak self] routeList in
+                    self?.routeList = routeList
+                })
                 .store(in: &self.cancellables)
         }
     }
@@ -56,7 +58,9 @@ final class SearchUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .assign(to: \.stationList, on: self)
+                .sink(receiveValue: { [weak self] stationList in
+                    self?.stationList = stationList
+                })
                 .store(in: &self.cancellables)
         }
     }

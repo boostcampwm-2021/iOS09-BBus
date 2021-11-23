@@ -33,7 +33,8 @@ final class SearchViewModel {
         self.$keyword
             .receive(on: SearchUseCase.queue)
             .debounce(for: .milliseconds(400), scheduler: SearchUseCase.queue)
-            .sink { keyword in
+            .sink { [weak self] keyword in
+                guard let self = self else { return }
                 self.searchResults.busSearchResults = self.usecase.searchBus(by: keyword)
                 self.searchResults.stationSearchResults = self.usecase.searchStation(by: keyword)
             }

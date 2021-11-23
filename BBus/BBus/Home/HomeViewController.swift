@@ -22,8 +22,8 @@ class HomeViewController: UIViewController {
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = self.refreshButtonWidth / 2
         button.tintColor = BBusColor.white
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
-            self.viewModel?.reloadFavoriteData()
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+            self?.viewModel?.reloadFavoriteData()
         }
         return button
     }()
@@ -108,10 +108,10 @@ class HomeViewController: UIViewController {
             .compactMap { $0 }
             .filter { !$0.changedByTimer }
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { response in
+            .sink(receiveValue: { [weak self] response in
                 let isFavoriteEmpty = response.count() == 0
-                self.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
-                self.homeView.reload()
+                self?.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
+                self?.homeView.reload()
             })
             .store(in: &self.cancellables)
     }
@@ -178,11 +178,11 @@ extension HomeViewController: UICollectionViewDataSource {
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { $0.changedByTimer }
-            .sink(receiveValue: { homeFavoriteList in
+            .sink(receiveValue: { [weak self] homeFavoriteList in
                 DispatchQueue.main.async {
                     guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
-                          let busName = self.viewModel?.busName(by: model.0.busRouteId),
-                          let busType = self.viewModel?.busType(by: busName) else { return }
+                          let busName = self?.viewModel?.busName(by: model.0.busRouteId),
+                          let busType = self?.viewModel?.busType(by: busName) else { return }
                     
                     let busArrivalInfo = model.1
                     cell.configure(busNumber: busName,

@@ -59,13 +59,13 @@ final class SearchViewController: UIViewController {
     private func binding() {
         self.viewModel?.$searchResults
             .receive(on: SearchUseCase.queue)
-            .sink(receiveValue: { response in
+            .sink(receiveValue: { [weak self] response in
                 DispatchQueue.main.async {
                     let isBusResultEmpty = response.busSearchResults.count == 0
                     let isStationResultEmpty = response.stationSearchResults.count == 0
-                    self.searchView.emptyNoticeActivate(type: .bus, by: isBusResultEmpty)
-                    self.searchView.emptyNoticeActivate(type: .station, by: isStationResultEmpty)
-                    self.searchView.reload()
+                    self?.searchView.emptyNoticeActivate(type: .bus, by: isBusResultEmpty)
+                    self?.searchView.emptyNoticeActivate(type: .station, by: isStationResultEmpty)
+                    self?.searchView.reload()
                 }
             })
             .store(in: &self.cancellables)

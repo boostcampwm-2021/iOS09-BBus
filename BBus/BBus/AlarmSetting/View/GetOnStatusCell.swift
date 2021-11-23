@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-protocol GetOnAlarmButtonDelegate {
+protocol GetOnAlarmButtonDelegate: AnyObject {
     func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool?
 }
 
@@ -134,7 +134,7 @@ class GetOnStatusCell: UITableViewCell {
         return label
     }()
 
-    private var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
+    private weak var alarmButtonDelegate: GetOnAlarmButtonDelegate? {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { [weak self] _ in
                 guard let self = self else { return }

@@ -31,8 +31,8 @@ final class MovingStatusViewController: UIViewController {
         button.tintColor = BBusColor.white
         button.backgroundColor = BBusColor.darkGray
 
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
-            self.viewModel?.updateAPI()
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+            self?.viewModel?.updateAPI()
         }
         return button
     }()
@@ -296,8 +296,8 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
     func shouldUnfoldMovingStatusView() {
         // Coordinator에게 Unfold 요청
         print("bottom indicator button is touched")
-        UIView.animate(withDuration: 0.3) {
-            self.coordinator?.unfold()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.coordinator?.unfold()
         }
     }
 }
@@ -307,8 +307,8 @@ extension MovingStatusViewController: FoldButtonDelegate {
     func shouldFoldMovingStatusView() {
         // Coordinator에게 fold 요청
         print("fold button is touched")
-        UIView.animate(withDuration: 0.3) {
-            self.coordinator?.fold()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.coordinator?.fold()
         }
     }
 }

@@ -7,19 +7,19 @@
 
 import UIKit
 
-protocol SearchBackButtonDelegate {
+protocol SearchBackButtonDelegate: AnyObject {
     func shouldNavigationPop()
 }
 
-protocol BusTabButtonDelegate {
+protocol BusTabButtonDelegate: AnyObject {
     func shouldBusTabSelect()
 }
 
-protocol StationTabButtonDelegate {
+protocol StationTabButtonDelegate: AnyObject {
     func shouldStationTabSelect()
 }
 
-protocol TextFieldDelegate {
+protocol TextFieldDelegate: AnyObject {
     func shouldRefreshSearchResult(by keyword: String)
 }
 
@@ -27,10 +27,10 @@ final class SearchNavigationView: UIView {
 
     static let height: CGFloat = 100
 
-    private var backButtonDelegate: SearchBackButtonDelegate?
-    private var busTabButtonDelegate: BusTabButtonDelegate?
-    private var stationTabButtonDelegate: StationTabButtonDelegate?
-    private var textFieldDelegate: TextFieldDelegate? {
+    private weak var backButtonDelegate: SearchBackButtonDelegate?
+    private weak var busTabButtonDelegate: BusTabButtonDelegate?
+    private weak var stationTabButtonDelegate: StationTabButtonDelegate?
+    private weak var textFieldDelegate: TextFieldDelegate? {
         didSet {
             self.searchTextField.addAction(UIAction(handler: { _ in
                 self.textFieldDelegate?.shouldRefreshSearchResult(by: self.searchTextField.text ?? "")

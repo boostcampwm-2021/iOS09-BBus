@@ -11,7 +11,7 @@ import Combine
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
     var cancellables = Set<AnyCancellable>()
-    private var alarmButtonDelegate: AlarmButtonDelegate? {
+    private weak var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
             self.trailingView.alarmButton.addAction(UIAction(handler: { _ in

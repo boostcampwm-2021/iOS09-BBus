@@ -8,7 +8,7 @@
 import UIKit
 
 class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
-    var delegate: CoordinatorDelegate?
+    weak var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
 
     init(presenter: UINavigationController) {

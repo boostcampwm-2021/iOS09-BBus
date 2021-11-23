@@ -9,7 +9,7 @@ import UIKit
 
 class BusRouteCoordinator: StationPushable {
     var navigationPresenter: UINavigationController
-    var delegate: CoordinatorDelegate?
+    weak var delegate: CoordinatorDelegate?
 
     init(presenter: UINavigationController) {
         self.navigationPresenter = presenter
