@@ -45,8 +45,9 @@ final class MovingStatusViewModel {
     
     private func configureObserver() {
         NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { [weak self] _ in
-            if !self?.isterminated {
-                self?.updateAPI()
+            guard let self = self else { return }
+            if !(self.isterminated) {
+                self.updateAPI()
             }
         }
     }

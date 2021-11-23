@@ -185,7 +185,7 @@ class StationViewController: UIViewController {
                                    style: .default,
                                    handler: { [weak self] _ in self?.coordinator?.terminate() })
         controller.addAction(action)
-        self.coordinator?.delegate?.presentAlert(controller: controller, completion: nil)
+        self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
 }
 
