@@ -43,10 +43,7 @@ class HomeUseCase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] favoriteList in
-                    self?.favoriteList = favoriteList
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$favoriteList)
         }
     }
 

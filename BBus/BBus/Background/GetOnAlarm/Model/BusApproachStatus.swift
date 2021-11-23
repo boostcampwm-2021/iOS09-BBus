@@ -8,5 +8,5 @@
 import Foundation
 
 enum BusApproachStatus: Int {
-    case oneStationLeft = 1, twoStationLeft, threeStationLeft
+    case oneStationLeft = 1, twoStationLeft
 }
