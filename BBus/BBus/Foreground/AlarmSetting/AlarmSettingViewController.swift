@@ -102,7 +102,7 @@ class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busArriveInfos
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink(receiveValue: { [weak self] data in
+            .sink(receiveValue: { [weak self] _ in
                 self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
