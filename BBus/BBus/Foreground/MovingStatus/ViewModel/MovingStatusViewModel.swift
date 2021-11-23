@@ -178,17 +178,17 @@ final class MovingStatusViewModel {
         let userLocation = CLLocation(latitude: gpsX, longitude: gpsY)
         let busLocation = CLLocation(latitude: busX, longitude: busY)
         let distanceInMeters = userLocation.distance(from: busLocation)
-        print(distanceInMeters)
         
-        return distanceInMeters <= 30.0
+        return distanceInMeters <= 100.0
     }
 
     // 현재 버스의 노선도 위치 반환
     private func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> CGFloat {
-        let order = CGFloat(order-1-startOrd)
+        let order = CGFloat(order - startOrd)
         let sect = CGFloat((sect as NSString).floatValue)
         let fullSect = CGFloat((fullSect as NSString).floatValue)
-        return order + (sect/fullSect) + 1
+
+        return order + (sect/fullSect)
     }
 
     private func convertBusStations(with stations: [StationByRouteListDTO]) {
@@ -218,7 +218,10 @@ final class MovingStatusViewModel {
     }
 
     static func averageSectionTime(speed: Int, distance: Int) -> Int {
-        let result = Double(distance)/21*0.06
+        let averageBusSpeed: Double = 21
+        let metterToKilometter: Double = 0.06
+
+        let result = Double(distance)/averageBusSpeed*metterToKilometter
         return Int(ceil(result))
     }
 

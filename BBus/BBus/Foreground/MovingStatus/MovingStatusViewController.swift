@@ -141,58 +141,48 @@ final class MovingStatusViewController: UIViewController {
 
     private func bindHeaderBusInfo() {
         self.viewModel?.$busInfo
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] busInfo in
                 guard let busInfo = busInfo else { return }
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureBusName(to: busInfo.busName)
-                    self?.configureBusColor(type: busInfo.type)
-                    self?.configureBusTag(bus: nil)
-                }
+                self?.movingStatusView.configureBusName(to: busInfo.busName)
+                self?.configureBusColor(type: busInfo.type)
+                self?.configureBusTag(bus: nil)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindRemainTime() {
         self.viewModel?.$remainingTime
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] remainingTime in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
-                }
+                self?.movingStatusView.configureHeaderInfo(remainStation: self?.viewModel?.remainingStation, remainTime: remainingTime)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindCurrentStation() {
         self.viewModel?.$remainingStation
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] currentStation in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
-                }
+                self?.movingStatusView.configureHeaderInfo(remainStation: currentStation, remainTime: self?.viewModel?.remainingTime)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindStationInfos() {
         self.viewModel?.$stationInfos
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.movingStatusView.reload()
-                }
+                self?.movingStatusView.reload()
             })
             .store(in: &self.cancellables)
     }
 
     private func bindBoardedBus() {
         self.viewModel?.$boardedBus
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] boardedBus in
-                DispatchQueue.main.async {
-                    self?.configureBusTag(bus: boardedBus)
-                }
+                self?.configureBusTag(bus: boardedBus)
             })
             .store(in: &self.cancellables)
     }

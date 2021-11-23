@@ -189,8 +189,10 @@ extension AlarmSettingViewController: UITableViewDataSource {
                 cell.configureDelegate(self)
                 cell.cancellable = self.viewModel?.$busArriveInfos
                     .receive(on: DispatchQueue.main)
-                    .sink { busArriveInfos in
-                        guard let info = busArriveInfos[indexPath.row] else { return }
+                    .sink { [weak cell] busArriveInfos in
+                        guard let info = busArriveInfos[indexPath.row],
+                              let cell = cell else { return }
+                        
                         cell.configure(order: String(indexPath.row+1),
                                        remainingTime: info.arriveRemainTime?.toString(),
                                        remainingStationCount: info.relativePosition,

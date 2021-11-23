@@ -43,10 +43,7 @@ class StationUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] stationInfo in
-                    self?.stationInfo = stationInfo
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$stationInfo)
         }
     }
     
@@ -68,10 +65,7 @@ class StationUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] busArriveInfo in
-                    self?.busArriveInfo = busArriveInfo
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$busArriveInfo)
         }
     }
     
@@ -117,10 +111,7 @@ class StationUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] favoriteItems in
-                    self?.favoriteItems = favoriteItems
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$favoriteItems)
         }
     }
 }

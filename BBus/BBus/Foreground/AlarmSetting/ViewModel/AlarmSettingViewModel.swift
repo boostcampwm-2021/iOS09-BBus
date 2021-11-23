@@ -13,12 +13,12 @@ import Combine
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
-    private let stationId: Int
     let busRouteId: Int
-    private let stationOrd: Int
-    private let arsId: String
     let routeType: RouteType?
     let busName: String
+    private let stationId: Int
+    private let stationOrd: Int
+    private let arsId: String
     @Published private(set) var busArriveInfos: AlarmSettingBusStationInfos
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
     @Published private(set) var errorMessage: String?
@@ -109,8 +109,7 @@ class AlarmSettingViewModel {
                 return alarmSettingInfo
             })
             .collect()
-            .assign(to: \.busStationInfos, on: self)
-            .store(in: &self.cancellables)
+            .assign(to: &self.$busStationInfos)
     }
     
     func sendErrorMessage(_ message: String) {
