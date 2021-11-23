@@ -13,7 +13,7 @@ extension Publisher where Output == (Data, Int), Failure == Error {
         self.tryMap({ data, order -> Data in
             guard let code = BBusXMLParser().parse(dtoType: MessageHeader.self, xml: data)?.header.headerCode,
                   let error = BBusAPIError(errorCode: code ) else { return data }
-            Service.removeAccessKey(at: order)
+            Service.shared.removeAccessKey(at: order)
             throw error
         }).eraseToAnyPublisher()
     }
@@ -27,13 +27,13 @@ extension Publisher where Output == (Data, Int), Failure == Error {
 }
 
 extension Publisher where Failure == Error {
-    func retry(_ retry: @escaping () -> Void, handler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
+    func retry(_ currentTokenExhaustedHandler: @escaping () -> Void, handler wholeTokenExhaustedHandler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
         self.catch({ error -> AnyPublisher<Self.Output, Never> in
             switch error {
             case BBusAPIError.noMoreAccessKeyError, BBusAPIError.trafficExceed:
-                handler(error)
+                wholeTokenExhaustedHandler(error)
             default:
-                retry()
+                currentTokenExhaustedHandler()
             }
             
             let publisher = PassthroughSubject<Self.Output, Never>()
