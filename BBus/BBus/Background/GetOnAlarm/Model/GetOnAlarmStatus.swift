@@ -20,10 +20,10 @@ struct GetOnAlarmStatus {
         self.busName = busName
     }
 
-    init(getOnAlarmStatus: GetOnAlarmStatus, currentBusOrd: Int) {
-        self.vehicleId = getOnAlarmStatus.vehicleId
-        self.targetOrd = getOnAlarmStatus.targetOrd
-        self.busName = getOnAlarmStatus.busName
-        self.currentBusOrd = currentBusOrd
+    func withCurrentBusOrd(_ ord: Int) -> GetOnAlarmStatus {
+        return GetOnAlarmStatus(currentBusOrd: ord,
+                                targetOrd: self.targetOrd,
+                                vehicleId: self.vehicleId,
+                                busName: self.busName)
     }
 }

@@ -7,25 +7,23 @@
 
 import Foundation
 
-struct Welcome: Codable {
-    let msgHeader: MsgHeader
-    let msgBody: MsgBody
+struct JsonMessage: Codable {
+    let msgHeader: MessageHeader
+    let msgBody: MessageBody
 }
 
-// MARK: - MsgHeader
-struct MsgHeader: Codable {
-    let headerMsg, headerCD: String
+struct MessageHeader: Codable {
+    let headerMessage, headerCD: String
     let itemCount: Int
 
     enum CodingKeys: String, CodingKey {
-        case headerMsg
+        case headerMessage = "headerMsg"
         case headerCD = "headerCd"
         case itemCount
     }
 }
 
-// MARK: - MsgBody
-struct MsgBody: Codable {
+struct MessageBody: Codable {
     let itemList: [BusPosByVehicleIdDTO]
 }
 

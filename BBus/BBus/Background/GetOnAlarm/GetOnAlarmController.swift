@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 final class GetOnAlarmController {
 
     static let shared = GetOnAlarmController()
 
-    var status: (vehicleId: Int, targetId: Int)? {
+    var status: (vehicleId: Int, targetOrd: Int)? {
         get {
             guard let viewModel = self.viewModel else { return nil }
             return (viewModel.getOnAlarmStatus.vehicleId, viewModel.getOnAlarmStatus.targetOrd)

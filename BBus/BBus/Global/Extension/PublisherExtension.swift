@@ -11,7 +11,7 @@ import Combine
 extension Publisher where Output == (Data, Int), Failure == Error {
     func mapBBusAPIError() -> AnyPublisher<Data, Error> {
         self.tryMap({ data, order -> Data in
-            guard let code = BBusXMLParser().parse(dtoType: MessageHeader.self, xml: data)?.header.headerCode,
+            guard let code = BBusXMLParser().parse(dtoType: HeaderMessage.self, xml: data)?.header.headerCode,
                   let error = BBusAPIError(errorCode: code ) else { return data }
             Service.removeAccessKey(at: order)
             throw error

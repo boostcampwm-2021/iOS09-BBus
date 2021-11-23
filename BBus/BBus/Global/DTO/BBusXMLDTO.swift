@@ -27,7 +27,7 @@ struct GovernmentMessageHeader: BBusXMLDTO {
     }
 }
 
-struct MessageHeader: BBusXMLDTO {
+struct HeaderMessage: BBusXMLDTO {
     var header: GovernmentMessageHeader
 
     init?(dict: [String : [Any]]) {

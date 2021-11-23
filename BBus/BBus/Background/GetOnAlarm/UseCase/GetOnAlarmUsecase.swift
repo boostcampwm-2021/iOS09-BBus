@@ -28,7 +28,7 @@ class GetOnAlarmUsecase {
         Self.queue.async {
             self.cancellable = self.usecases.getBusPosByVehId(vehId)
                 .receive(on: Self.queue)
-                .decode(type: Welcome.self, decoder: JSONDecoder())
+                .decode(type: JsonMessage.self, decoder: JSONDecoder())
                 .retry({ [weak self] in
                     self?.fetch(withVehId: vehId)
                 }, handler: { [weak self] error in
