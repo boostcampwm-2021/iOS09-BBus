@@ -43,6 +43,9 @@ struct ArrInfoByRouteDTO: BBusXMLDTO {
     let secondBusCurrentStation: String
     let firstBusPlainNumber: String
     let secondBusPlainNumber: String
+    let firstBusVehicleId: Int
+    let secondBusVehicleId: Int
+
 
     init?(dict: [String : [Any]]) {
         guard let firstBusArriveRemainTime = ((dict["arrmsg1"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
@@ -54,7 +57,11 @@ struct ArrInfoByRouteDTO: BBusXMLDTO {
               let firstBusCurrentStation = ((dict["stationNm1"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let secondBusCurrentStation = ((dict["stationNm2"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
               let firstBusPlainNumber = ((dict["plainNo1"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let secondBusPlainNumber = ((dict["plainNo2"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }) else { return nil }
+              let secondBusPlainNumber = ((dict["plainNo2"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let firstBusVehicleIdString = ((dict["vehId1"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let firstBusVehicleId = Int(firstBusVehicleIdString),
+              let secondBusVehicleIdString = ((dict["vehId2"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
+              let secondBusVehicleId = Int(secondBusVehicleIdString) else { return nil }
         
         self.firstBusArriveRemainTime = firstBusArriveRemainTime
         self.secondBusArriveRemainTime = secondBusArriveRemainTime
@@ -64,5 +71,7 @@ struct ArrInfoByRouteDTO: BBusXMLDTO {
         self.secondBusCurrentStation = secondBusCurrentStation
         self.firstBusPlainNumber = firstBusPlainNumber
         self.secondBusPlainNumber = secondBusPlainNumber
+        self.firstBusVehicleId = firstBusVehicleId
+        self.secondBusVehicleId = secondBusVehicleId
     }
 }
