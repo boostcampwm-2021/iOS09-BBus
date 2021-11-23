@@ -138,10 +138,7 @@ class GetOnStatusCell: UITableViewCell {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { [weak self] _ in
                 guard let self = self else { return }
-                let _ = self.alarmButtonDelegate?.buttonTapped(for: self)
-//                if result == true {
-//                    self.alarmButton.isSelected.toggle()
-//                }
+                self.alarmButtonDelegate?.buttonTapped(for: self)
             }), for: .touchUpInside)
         }
     }
