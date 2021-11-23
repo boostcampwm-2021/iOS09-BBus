@@ -58,10 +58,6 @@ final class MovingStatusViewController: UIViewController {
         self.configureLocationManager()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     private func configureLocationManager() {
         // locationManager 인스턴스를 생성
         self.locationManager = CLLocationManager()
