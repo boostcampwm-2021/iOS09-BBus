@@ -5,7 +5,9 @@
 	<key>NSLocationUsageDescription</key>
 	<string>뭐라고 해야할지 모르는 알림 내용</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>하차 알람을 위해서 사용자의 GPS 위치를 추적해야합니다.</string>
+	<string>알람을 위해 사용자의 GPS 위치를 추적해야합니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>알람을 위해 앱을 사용중이지 않을 때도 사용자의 GPS 위치를 추적해야합니다.</string>
 	<key>API_ACCESS_KEY1</key>
 	<string>${API_ACCESS_KEY1}</string>
 	<key>API_ACCESS_KEY2</key>
