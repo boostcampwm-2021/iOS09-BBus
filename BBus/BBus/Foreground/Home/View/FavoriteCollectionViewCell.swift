@@ -14,7 +14,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     private weak var alarmButtonDelegate: AlarmButtonDelegate? {
         didSet {
             self.trailingView.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
-            self.trailingView.alarmButton.addAction(UIAction(handler: { _ in
+            self.trailingView.alarmButton.addAction(UIAction(handler: { [weak self] _ in
+                guard let self = self else { return }
                 self.alarmButtonDelegate?.shouldGoToAlarmSettingScene(at: self)
             }), for: .touchUpInside)
 

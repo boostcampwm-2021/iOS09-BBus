@@ -32,8 +32,8 @@ final class SearchNavigationView: UIView {
     private weak var stationTabButtonDelegate: StationTabButtonDelegate?
     private weak var textFieldDelegate: TextFieldDelegate? {
         didSet {
-            self.searchTextField.addAction(UIAction(handler: { _ in
-                self.textFieldDelegate?.shouldRefreshSearchResult(by: self.searchTextField.text ?? "")
+            self.searchTextField.addAction(UIAction(handler: { [weak self] _ in
+                self?.textFieldDelegate?.shouldRefreshSearchResult(by: self?.searchTextField.text ?? "")
             }), for: .editingChanged)
         }
     }
@@ -42,8 +42,8 @@ final class SearchNavigationView: UIView {
         let button = UIButton()
         button.setImage(BBusImage.back, for: .normal)
         button.tintColor = BBusColor.black
-        button.addAction(UIAction(handler: { _ in
-            self.backButtonDelegate?.shouldNavigationPop()
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.backButtonDelegate?.shouldNavigationPop()
         }), for: .touchUpInside)
         return button
     }()
@@ -85,8 +85,8 @@ final class SearchNavigationView: UIView {
         button.setTitleColor(BBusColor.bbusGray, for: .normal)
         button.setImage(BBusImage.busRedSymbol, for: .normal)
         button.tintColor = BBusColor.bbusGray
-        button.addAction(UIAction(handler: { _ in
-            self.busTabButtonDelegate?.shouldBusTabSelect()
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.busTabButtonDelegate?.shouldBusTabSelect()
         }), for: .touchUpInside)
         return button
     }()
@@ -96,8 +96,8 @@ final class SearchNavigationView: UIView {
         button.setTitleColor(BBusColor.bbusGray, for: .normal)
         button.setImage(BBusImage.stationRedSymbol, for: .normal)
         button.tintColor = BBusColor.bbusGray
-        button.addAction(UIAction(handler: { _ in
-            self.stationTabButtonDelegate?.shouldStationTabSelect()
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.stationTabButtonDelegate?.shouldStationTabSelect()
         }), for: .touchUpInside)
         return button
     }()

@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel?
 
     private lazy var homeView = HomeView()
-    lazy var refreshButton: ThrottleButton = {
+    private lazy var refreshButton: ThrottleButton = {
         let button = ThrottleButton()
         button.setImage(BBusImage.refresh, for: .normal)
         button.layer.cornerRadius = self.refreshButtonWidth / 2
@@ -178,22 +178,21 @@ extension HomeViewController: UICollectionViewDataSource {
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { $0.changedByTimer }
-            .sink(receiveValue: { [weak self] homeFavoriteList in
-                DispatchQueue.main.async {
-                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
-                          let busName = self?.viewModel?.busName(by: model.0.busRouteId),
-                          let busType = self?.viewModel?.busType(by: busName) else { return }
-                    
-                    let busArrivalInfo = model.1
-                    cell.configure(busNumber: busName,
-                                   routeType: busType,
-                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
-                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
-                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
-                }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self, weak cell] homeFavoriteList in
+                guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                      let busName = self?.viewModel?.busName(by: model.0.busRouteId),
+                      let busType = self?.viewModel?.busType(by: busName) else { return }
+                
+                let busArrivalInfo = model.1
+                cell?.configure(busNumber: busName,
+                               routeType: busType,
+                               firstBusTime: busArrivalInfo?.firstTime.toString(),
+                               firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                               firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                               secondBusTime: busArrivalInfo?.secondTime.toString(),
+                               secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                               secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
             })
             .store(in: &cell.cancellables)
         

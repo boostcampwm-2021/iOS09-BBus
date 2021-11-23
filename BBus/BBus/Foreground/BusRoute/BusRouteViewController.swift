@@ -175,23 +175,19 @@ final class BusRouteViewController: UIViewController {
 
     private func bindingBusRouteBodyResult() {
         self.viewModel?.$bodys
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] bodys in
-                DispatchQueue.main.async {
-                    self?.busRouteView.reload()
-                    self?.busRouteView.configureTableViewHeight(count: bodys.count)
-                }
+                self?.busRouteView.reload()
+                self?.busRouteView.configureTableViewHeight(count: bodys.count)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindingBusesPosInfo() {
         self.viewModel?.$buses
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] buses in
-                DispatchQueue.main.async {
-                    self?.configureBusTags(buses: buses)
-                }
+                self?.configureBusTags(buses: buses)
             })
             .store(in: &self.cancellables)
     }

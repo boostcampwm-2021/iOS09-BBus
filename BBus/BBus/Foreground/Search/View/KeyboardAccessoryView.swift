@@ -23,22 +23,22 @@ final class KeyboardAccessoryView: UIView {
 
     private weak var numberDelegate: KeyboardAccessoryNumberButtonDelegate? {
         didSet {
-            self.numberButton.addAction(UIAction(handler: { _ in
-                self.numberDelegate?.shouldShowNumberPad()
+            self.numberButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.numberDelegate?.shouldShowNumberPad()
             }), for: .touchUpInside)
         }
     }
     private weak var characterDelegate: KeyboardAccessoryCharacterButtonDelegate? {
         didSet {
-            self.characterButton.addAction(UIAction(handler: { _ in
-                self.characterDelegate?.shouldShowCharacterPad()
+            self.characterButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.characterDelegate?.shouldShowCharacterPad()
             }), for: .touchUpInside)
         }
     }
     private weak var downKeyboardDelegate: KeyboardAccessoryDownKeyboardButtonDelegate? {
         didSet {
-            self.downKeyboardButton.addAction(UIAction(handler: { _ in
-                self.downKeyboardDelegate?.shouldHideKeyboard()
+            self.downKeyboardButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.downKeyboardDelegate?.shouldHideKeyboard()
             }), for: .touchUpInside)
         }
     }

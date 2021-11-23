@@ -17,8 +17,8 @@ class HomeNavigationView: UIView {
 
     private weak var searchButtonDelegate: HomeSearchButtonDelegate? {
         didSet {
-            self.searchButton.addAction(UIAction(handler: { _ in
-                self.searchButtonDelegate?.shouldGoToSearchScene()
+            self.searchButton.addAction(UIAction(handler: { [weak self] _ in
+                self?.searchButtonDelegate?.shouldGoToSearchScene()
             }), for: .touchUpInside)
         }
     }
