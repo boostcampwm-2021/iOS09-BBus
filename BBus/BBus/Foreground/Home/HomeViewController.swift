@@ -75,7 +75,7 @@ class HomeViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.viewModel?.cancleObserver()
+        self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configuration
@@ -197,7 +197,7 @@ extension HomeViewController: UICollectionViewDataSource {
                                    firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
                                    secondBusTime: busArrivalInfo?.secondTime.toString(),
                                    secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                                   secondBusCongsetion: busArrivalInfo?.secondBusCongestion?.toString())
+                                   secondBusCongestion: busArrivalInfo?.secondBusCongestion?.toString())
                 }
             })
             .store(in: &cell.cancellables)

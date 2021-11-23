@@ -49,7 +49,7 @@ class AlarmSettingViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .thirtySecondPassed, object: nil)
     }
 
-    func cancleObserver() {
+    func cancelObserver() {
         guard let observer = self.observer else { return }
         NotificationCenter.default.removeObserver(observer)
         NotificationCenter.default.removeObserver(self)

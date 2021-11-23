@@ -13,6 +13,8 @@ typealias MovingStatusCoordinator = MovingStatusOpenCloseDelegate & MovingStatus
 
 final class MovingStatusViewController: UIViewController {
 
+    static private let alarmIdentifier: String = "GetOffAlarm"
+
     weak var coordinator: MovingStatusCoordinator?
     private lazy var movingStatusView = MovingStatusView()
     private let viewModel: MovingStatusViewModel?
@@ -56,6 +58,16 @@ final class MovingStatusViewController: UIViewController {
         self.configureBusTag()
         self.fetch()
         self.configureLocationManager()
+        self.sendRequestAuthorization()
+    }
+
+    private func sendRequestAuthorization() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
+            if let error = error {
+                print(error)
+            }
+        })
     }
 
     private func configureLocationManager() {
@@ -133,6 +145,17 @@ final class MovingStatusViewController: UIViewController {
         self.bindStationInfos()
         self.bindBoardedBus()
         self.bindIsTerminated()
+        self.bindGetOffMessage()
+    }
+
+    private func bindGetOffMessage() {
+        self.viewModel?.$message
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                guard let message = message else { return }
+                self?.pushGetOffAlarm(message: message)
+            })
+            .store(in: &self.cancellables)
     }
 
     private func bindHeaderBusInfo() {
@@ -255,6 +278,16 @@ final class MovingStatusViewController: UIViewController {
             self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
         }
     }
+
+    private func pushGetOffAlarm(message: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "하차 알람"
+        content.body = message
+        content.badge = Int(truncating: content.badge ?? 0) + 1 as NSNumber
+        let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+
 }
 
 // MARK: - DataSource: UITableView

@@ -100,7 +100,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = BBusColor.white
     }
     
-    func configure(busNumber: String, routeType: RouteType?, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongsetion: String?) {
+    func configure(busNumber: String, routeType: RouteType?, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongestion: String?) {
         self.busNumberLabel.text = busNumber
 
         switch routeType {
@@ -124,7 +124,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
                                     firstBusCongestion: firstBusCongestion,
                                     secondBusTime: secondBusTime,
                                     secondBusRemaining: secondBusRelativePosition,
-                                    secondBusCongestion: secondBusCongsetion)
+                                    secondBusCongestion: secondBusCongestion)
     }
 
     func configure(alarmButtonActive: Bool) {

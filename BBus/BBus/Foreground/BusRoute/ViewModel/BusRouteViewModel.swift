@@ -34,7 +34,7 @@ final class BusRouteViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(refreshBusPos), name: .thirtySecondPassed, object: nil)
     }
 
-    func cancleObserver() {
+    func cancelObserver() {
         NotificationCenter.default.removeObserver(self)
     }
 

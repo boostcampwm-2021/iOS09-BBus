@@ -75,7 +75,7 @@ class StationViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.viewModel?.cancleObserver()
+        self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configure
@@ -260,7 +260,7 @@ extension StationViewController: UICollectionViewDataSource {
                            firstBusCongestion: busInfo.firstBusCongestion?.toString(),
                            secondBusTime: busInfo.secondBusArriveRemainTime?.toString(),
                            secondBusRelativePosition: busInfo.secondBusRelativePosition,
-                           secondBusCongsetion: busInfo.secondBusCongestion?.toString())
+                           secondBusCongestion: busInfo.secondBusCongestion?.toString())
         }
         
         // InfoBus인 경우: 바인딩

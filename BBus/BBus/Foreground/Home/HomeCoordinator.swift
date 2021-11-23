@@ -1,5 +1,5 @@
 //
-//  HomeCoornicator.swift
+//  HomeCoordinator.swift
 //  BBus
 //
 //  Created by Kang Minsang on 2021/11/02.

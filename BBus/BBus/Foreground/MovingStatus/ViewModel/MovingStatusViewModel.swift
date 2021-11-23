@@ -24,19 +24,21 @@ final class MovingStatusViewModel {
     private var startOrd: Int? // 2
     private var currentOrd: Int?
     private(set) var isFolded: Bool = false
-    @Published var isterminated: Bool = false
-    @Published var busInfo: BusInfo? // 1
-    @Published var stationInfos: [StationInfo] = [] // 3
-    @Published var buses: [BusPosByRtidDTO] = [] // 5
-    @Published var remainingTime: Int? // 4, 7
-    @Published var remainingStation: Int? // 6
-    @Published var boardedBus: BoardedBus? // 8
+    @Published private(set) var isterminated: Bool = false
+    @Published private(set) var busInfo: BusInfo? // 1
+    @Published private(set) var stationInfos: [StationInfo] = [] // 3
+    @Published private(set) var buses: [BusPosByRtidDTO] = [] // 5
+    @Published private(set) var remainingTime: Int? // 4, 7
+    @Published private(set) var remainingStation: Int? // 6
+    @Published private(set) var boardedBus: BoardedBus? // 8
+    @Published private(set) var message: String?
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
         self.busRouteId = busRouteId
         self.fromArsId = fromArsId
         self.toArsId = toArsId
+        self.message = nil
         self.cancellables = []
         self.bindHeaderInfo()
         self.bindStationsInfo()
@@ -128,16 +130,13 @@ final class MovingStatusViewModel {
     // 정거장 수가 변화되었을 경우 알람 푸쉬 로직
     private func pushAlarm(remainStation: Int) {
         if remainStation < 4 && remainStation > 1 {
-            // TODO: push 알림 보내기 구현
-            print("\(remainStation) 정거장 남았어요!")
+            self.message = "\(remainStation) 정거장 남았어요!"
         }
         else if remainStation == 1 {
-            // TODO: push 알림 보내기 구현
-            print("다음 정거장에 내려야 합니다!")
+            self.message = "다음 정거장에 내려야 합니다!"
         }
         else if remainStation <= 0 {
-            // TODO: push 알림 보내기 구현
-            print("하차 정거장에 도착하여 알람이 종료되었습니다.")
+            self.message = "하차 정거장에 도착하여 알람이 종료되었습니다."
             self.isterminated = true
         }
     }

@@ -61,7 +61,7 @@ final class BusRouteViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.viewModel?.cancleObserver()
+        self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configure
