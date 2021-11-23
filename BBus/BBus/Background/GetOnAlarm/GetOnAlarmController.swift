@@ -12,29 +12,40 @@ final class GetOnAlarmController {
 
     static let shared = GetOnAlarmController()
 
-    var status: (vehicleId: Int, targetOrd: Int)? {
-        get {
-            guard let viewModel = self.viewModel else { return nil }
-            return (viewModel.getOnAlarmStatus.vehicleId, viewModel.getOnAlarmStatus.targetOrd)
-        }
-    }
-
-    private(set) var viewModel: GetOnAlarmViewModel?
+    @Published private(set) var viewModel: GetOnAlarmViewModel?
     
     private init() { }
 
-    func start(targetOrd: Int, vehicleId: Int, busName: String) {
-        let usecase = GetOnAlarmUsecase(usecases: BBusAPIUsecases(on: GetOnAlarmUsecase.queue))
-        let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
-                                                targetOrd: targetOrd,
-                                                vehicleId: vehicleId,
-                                                busName: busName)
-        self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
-        self.viewModel?.fetch()
+    func start(targetOrd: Int, vehicleId: Int, busName: String) -> GetOnStartResult {
+        if self.viewModel != nil {
+            if isSameAlarm(targetOrd: targetOrd, vehicleId: vehicleId) {
+                return .sameAlarm
+            }
+            else {
+                return .duplicated
+            }
+        }
+        else {
+            let usecase = GetOnAlarmUsecase(usecases: BBusAPIUsecases(on: GetOnAlarmUsecase.queue))
+            let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
+                                                    targetOrd: targetOrd,
+                                                    vehicleId: vehicleId,
+                                                    busName: busName)
+            self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
+            self.viewModel?.fetch()
+            return .success
+        }
     }
 
     func stop() {
         self.viewModel = nil
+    }
+
+    private func isSameAlarm(targetOrd: Int, vehicleId: Int) -> Bool {
+        guard let currentTargetOrd = self.viewModel?.getOnAlarmStatus.targetOrd,
+              let currentVehicleId = self.viewModel?.getOnAlarmStatus.vehicleId else { return false }
+
+        return currentTargetOrd == targetOrd && currentVehicleId == vehicleId
     }
 
 }

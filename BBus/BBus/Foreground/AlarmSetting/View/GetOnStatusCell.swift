@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 protocol GetOnAlarmButtonDelegate: AnyObject {
-    func toggleGetOnAlarmSetting(for cell: UITableViewCell, cancel: Bool) -> Bool?
+    func buttonTapped(for cell: UITableViewCell)
 }
 
 class GetOnStatusCell: UITableViewCell {
@@ -18,7 +18,7 @@ class GetOnStatusCell: UITableViewCell {
     static let infoCellHeight: CGFloat = 115
     static let singleInfoCellHeight: CGFloat = 50
     
-    var cancellable: AnyCancellable?
+    var cancellables: Set<AnyCancellable> = []
 
     private lazy var busOrderNumberLabel: UILabel = {
         let labelFontSize: CGFloat = 8
@@ -138,10 +138,10 @@ class GetOnStatusCell: UITableViewCell {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { [weak self] _ in
                 guard let self = self else { return }
-                let result = self.alarmButtonDelegate?.toggleGetOnAlarmSetting(for: self, cancel: self.alarmButton.isSelected)
-                if result == true {
-                    self.alarmButton.isSelected.toggle()
-                }
+                let _ = self.alarmButtonDelegate?.buttonTapped(for: self)
+//                if result == true {
+//                    self.alarmButton.isSelected.toggle()
+//                }
             }), for: .touchUpInside)
         }
     }
@@ -165,7 +165,8 @@ class GetOnStatusCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.cancellable?.cancel()
+        self.cancellables.forEach { $0.cancel() }
+        self.cancellables.removeAll()
         self.configure(order: "",
                        remainingTime: nil,
                        remainingStationCount: nil,
@@ -173,6 +174,7 @@ class GetOnStatusCell: UITableViewCell {
                        arrivalTime: nil,
                        currentLocation: "",
                        busNumber: "")
+        self.configure(alarmButtonActive: false)
         self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
     }
 
@@ -301,6 +303,10 @@ class GetOnStatusCell: UITableViewCell {
         self.arrivalTimeLabel.text = arrivalTime
         self.currentLocationLabel.text = currentLocation
         self.busNumberLabel.text = busNumber
+    }
+
+    func configure(alarmButtonActive: Bool) {
+        self.alarmButton.isSelected = alarmButtonActive
     }
     
     private func noInfoCellActivate(by isHidden: Bool) {
