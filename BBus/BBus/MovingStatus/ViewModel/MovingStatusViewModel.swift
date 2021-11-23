@@ -23,6 +23,7 @@ final class MovingStatusViewModel {
     private let toArsId: String
     private var startOrd: Int? // 2
     private var currentOrd: Int?
+    @Published var isterminated: Bool = false
     @Published var busInfo: BusInfo? // 1
     @Published var stationInfos: [StationInfo] = [] // 3
     @Published var buses: [BusPosByRtidDTO] = [] // 5
@@ -44,7 +45,9 @@ final class MovingStatusViewModel {
     
     private func configureObserver() {
         NotificationCenter.default.addObserver(forName: .fifteenSecondsPassed, object: nil, queue: .none) { [weak self] _ in
-            self?.updateAPI()
+            if !self?.isterminated {
+                self?.updateAPI()
+            }
         }
     }
 
@@ -94,7 +97,7 @@ final class MovingStatusViewModel {
         self.busInfo = busInfo // 1
     }
 
-    // GPS 를 통해 현재 위치를 찾은 경우 사용되는 메소드
+    // Background 내에서 GPS 변화시 불리는 함수
     func findBoardBus(gpsY: Double, gpsX: Double) {
         if buses.isEmpty { return }
         if stationInfos.isEmpty { return }
@@ -112,7 +115,29 @@ final class MovingStatusViewModel {
     // 남은 정거장 수 업데이트 로직
     private func updateRemainingStation(bus: BusPosByRtidDTO) {
         guard let startOrd = self.startOrd else { return }
-        self.remainingStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 6
+        let remainStation = (self.stationInfos.count - 1) - (bus.sectionOrder - startOrd) // 6
+
+        if self.remainingStation != remainStation {
+            self.pushAlarm(remainStation: remainStation)
+            self.remainingStation = remainStation
+        }
+    }
+
+    // 정거장 수가 변화되었을 경우 알람 푸쉬 로직
+    private func pushAlarm(remainStation: Int) {
+        if remainStation < 4 && remainStation > 1 {
+            // TODO: push 알림 보내기 구현
+            print("\(remainStation) 정거장 남았어요!")
+        }
+        else if remainStation == 1 {
+            // TODO: push 알림 보내기 구현
+            print("다음 정거장에 내려야 합니다!")
+        }
+        else if remainStation <= 0 {
+            // TODO: push 알림 보내기 구현
+            print("하차 정거장에 도착하여 알람이 종료되었습니다.")
+            self.isterminated = true
+        }
     }
 
     // 남은 시간 업데이트 로직

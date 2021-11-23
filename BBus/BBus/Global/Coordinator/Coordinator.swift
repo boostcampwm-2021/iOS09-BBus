@@ -20,7 +20,8 @@ protocol CoordinatorCreateDelegate: AnyObject {
 }
 
 protocol AlertCreateDelegate: AnyObject {
-    func presentAlert(controller: UIAlertController, completion: (() -> Void)?)
+    func presentAlertToNavigation(controller: UIAlertController, completion: (() -> Void)?)
+    func presentAlertToMovingStatus(controller: UIAlertController, completion: (() -> Void)?)
 }
 
 typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDelegate & AlertCreateDelegate)

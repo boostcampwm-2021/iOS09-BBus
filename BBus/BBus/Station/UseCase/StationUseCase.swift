@@ -35,9 +35,8 @@ class StationUsecase {
             self.usecases.getStationList()
                 .receive(on: Self.queue)
                 .decode(type: [StationDTO].self, decoder: JSONDecoder())
-                .tryMap({ stations in
-                    guard let result = self.findStation(in: stations, with: arsId) else { throw BBusAPIError.wrongFormatError }
-                    return result
+                .tryMap({ [weak self] stations in
+                    return self?.findStation(in: stations, with: arsId)
                 })
                 .retry({ [weak self] in
                     self?.stationInfoWillLoad(with: arsId)
