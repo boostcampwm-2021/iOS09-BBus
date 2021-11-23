@@ -150,6 +150,8 @@ class StationViewController: UIViewController {
         
         self.viewModel?.$favoriteItems
             .receive(on: StationUsecase.queue)
+            .compactMap { $0 }
+            .first()
             .sink(receiveValue: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.stationView.reload()
