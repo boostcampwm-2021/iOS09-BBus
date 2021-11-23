@@ -48,6 +48,17 @@ class AlarmSettingViewController: UIViewController {
         
         self.binding()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.configureObserver()
+        self.viewModel?.refresh()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
+    }
     
     // MARK: - Configure
     private func configureLayout() {
@@ -102,7 +113,7 @@ class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busArriveInfos
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink(receiveValue: { [weak self] data in
+            .sink(receiveValue: { [weak self] _ in
                 self?.alarmSettingView.reload()
             })
             .store(in: &self.cancellables)
@@ -189,8 +200,10 @@ extension AlarmSettingViewController: UITableViewDataSource {
                 cell.configureDelegate(self)
                 cell.cancellable = self.viewModel?.$busArriveInfos
                     .receive(on: DispatchQueue.main)
-                    .sink { busArriveInfos in
-                        guard let info = busArriveInfos[indexPath.row] else { return }
+                    .sink { [weak cell] busArriveInfos in
+                        guard let info = busArriveInfos[indexPath.row],
+                              let cell = cell else { return }
+                        
                         cell.configure(order: String(indexPath.row+1),
                                        remainingTime: info.arriveRemainTime?.toString(),
                                        remainingStationCount: info.relativePosition,

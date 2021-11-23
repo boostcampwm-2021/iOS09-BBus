@@ -67,6 +67,17 @@ class StationViewController: UIViewController {
         self.configureDelegate()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.configureObserver()
+        self.viewModel?.refresh()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel?.cancleObserver()
+    }
+
     // MARK: - Configure
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
@@ -144,6 +155,8 @@ class StationViewController: UIViewController {
         
         self.viewModel?.$favoriteItems
             .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .first()
             .sink(receiveValue: { [weak self] _ in
                 self?.stationView.reload()
             })
@@ -232,14 +245,14 @@ extension StationViewController: UICollectionViewDataSource {
             // 즐겨찾기 버튼 터치 시에도 reload 대신 버튼 색상만 다시 configure하도록 바인딩
             self.viewModel?.$favoriteItems
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { favoriteItems in
-                    cell.configureButton(status: favoriteItems.contains(item))
+                .sink(receiveValue: { [weak cell] favoriteItems in
+                    cell?.configureButton(status: favoriteItems.contains(item))
                 })
                 .store(in: &cell.cancellables)
         }
         
-        let configureCell: (BusArriveInfo) -> Void = { busInfo in
-            cell.configure(busNumber: busInfo.busNumber,
+        let configureCell: (BusArriveInfo) -> Void = { [weak cell] busInfo in
+            cell?.configure(busNumber: busInfo.busNumber,
                            routeType: busInfo.routeType.toRouteType(),
                            direction: busInfo.nextStation,
                            firstBusTime: busInfo.firstBusArriveRemainTime?.toString(),
