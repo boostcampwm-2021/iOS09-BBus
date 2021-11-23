@@ -40,10 +40,7 @@ final class BusRouteViewModel {
     private func bindingHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.queue)
-            .sink(receiveValue: { [weak self] header in
-                self?.header = header
-            })
-            .store(in: &self.cancellables)
+            .assign(to: &self.$header)
     }
 
     private func bindingBodysInfo() {
@@ -100,6 +97,7 @@ final class BusRouteViewModel {
         var busesResult: [BusPosInfo] = []
         buses.forEach { [weak self] bus in
             guard let self = self else { return }
+
             let info: BusPosInfo
             info.location = self.convertBusPos(order: bus.sectionOrder,
                                                sect: bus.sectDist,
@@ -109,6 +107,7 @@ final class BusRouteViewModel {
             info.islower = (bus.busType == 1)
             busesResult.append(info)
         }
+        
         self.buses = busesResult
     }
 

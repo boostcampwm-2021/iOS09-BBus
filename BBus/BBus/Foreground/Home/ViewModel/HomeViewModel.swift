@@ -21,11 +21,11 @@ class HomeViewModel {
     }
 
     private func configureObserver() {
-        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { _ in
-            self.descendTime()
+        NotificationCenter.default.addObserver(forName: .oneSecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.descendTime()
         }
-        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { _ in
-            self.reloadFavoriteData()
+        NotificationCenter.default.addObserver(forName: .thirtySecondPassed, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadFavoriteData()
         }
     }
 
