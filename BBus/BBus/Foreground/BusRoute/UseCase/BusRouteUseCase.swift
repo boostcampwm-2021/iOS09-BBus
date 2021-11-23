@@ -38,10 +38,11 @@ final class BusRouteUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
-                .sink(receiveValue: { [weak self] header in
-                    self?.header = header
-                })
-                .store(in: &self.cancellables)
+                .assign(to: &self.$header)
+//                .sink(receiveValue: { [weak self] header in
+//                    self?.header = header
+//                })
+//                .store(in: &self.cancellables)
         }
     }
 

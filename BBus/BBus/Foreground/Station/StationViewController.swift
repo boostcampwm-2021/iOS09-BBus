@@ -108,12 +108,10 @@ class StationViewController: UIViewController {
     
     private func binding() {
         self.$stationBusInfoHeight
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink() { [weak self] height in
-                DispatchQueue.main.async {
-                    self?.collectionHeightConstraint?.isActive = false
-                    self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
-                }
+                self?.collectionHeightConstraint?.isActive = false
+                self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
         
         self.viewModel?.usecase.$stationInfo
@@ -130,30 +128,24 @@ class StationViewController: UIViewController {
             .store(in: &self.cancellables)
         
         self.viewModel?.$nextStation
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] nextStation in
-                DispatchQueue.main.async {
-                    guard let nextStation = nextStation else { return }
-                    self?.stationView.configureNextStation(direction: nextStation)
-                }
+                guard let nextStation = nextStation else { return }
+                self?.stationView.configureNextStation(direction: nextStation)
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.$busKeys
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.stationView.reload()
-                }
+                self?.stationView.reload()
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.$favoriteItems
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.stationView.reload()
-                }
+                self?.stationView.reload()
             })
             .store(in: &self.cancellables)
         
