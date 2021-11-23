@@ -32,6 +32,7 @@ class BusCellTrailingView: UIView {
     private(set) lazy var alarmButton: UIButton = {
         let button = UIButton()
         button.setImage(BBusImage.alarmOffIcon, for: .normal)
+        button.setImage(BBusImage.alarmOnTintIcon, for: .selected)
         button.tintColor = BBusColor.bbusGray
         return button
     }()
@@ -116,5 +117,9 @@ class BusCellTrailingView: UIView {
         
         self.firstBusTimeRightLabel.configure(remaining: firstBusRemaining, congestion: firstBusCongestion)
         self.secondBusTimeRightLabel.configure(remaining: secondBusRemaining, congestion: secondBusCongestion)
+    }
+
+    func configure(alarmButtonActive: Bool) {
+        self.alarmButton.isSelected = alarmButtonActive
     }
 }

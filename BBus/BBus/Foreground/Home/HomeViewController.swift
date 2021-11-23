@@ -196,6 +196,21 @@ extension HomeViewController: UICollectionViewDataSource {
                 }
             })
             .store(in: &cell.cancellables)
+        GetOnAlarmController.shared.$viewModel
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] getOnAlarmViewModel in
+                guard let model = self?.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
+                      let cellOrd = Int(model.favoriteItem.ord),
+                      let cellBusRouteId = Int(model.favoriteItem.busRouteId),
+                      let cellStId = Int(model.favoriteItem.stId) else { return }
+                if getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == cellOrd,
+                   getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == cellBusRouteId,
+                   getOnAlarmViewModel?.getOnAlarmStatus.stationId == cellStId {
+                    cell.configure(alarmButtonActive: true)
+                }
+
+            }
+            .store(in: &self.cancellables)
         
         return cell
     }

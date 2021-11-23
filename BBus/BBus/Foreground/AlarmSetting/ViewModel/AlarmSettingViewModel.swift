@@ -13,7 +13,7 @@ import Combine
 class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
-    private let stationId: Int
+    let stationId: Int
     let busRouteId: Int
     let stationOrd: Int
     private let arsId: String

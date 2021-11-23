@@ -214,10 +214,10 @@ extension AlarmSettingViewController: UITableViewDataSource {
                     .store(in: &cell.cancellables)
                 GetOnAlarmController.shared.$viewModel
                     .receive(on: DispatchQueue.main)
-                    .sink { getOnAlarmViewModel in
+                    .sink { [weak self] getOnAlarmViewModel in
                         if let getOnAlarmViewModel = getOnAlarmViewModel,
                            info.vehicleId == getOnAlarmViewModel.getOnAlarmStatus.vehicleId,
-                           self.viewModel?.stationOrd == getOnAlarmViewModel.getOnAlarmStatus.targetOrd {
+                           self?.viewModel?.stationOrd == getOnAlarmViewModel.getOnAlarmStatus.targetOrd {
                             cell.configure(alarmButtonActive: true)
                         }
                         else {
@@ -315,7 +315,8 @@ extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
     func buttonTapped(for cell: UITableViewCell) {
         guard let indexPath = self.alarmSettingView.indexPath(for: cell),
               let arriveInfo = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item],
-              let remainTime = arriveInfo.arriveRemainTime?.toString(),
+              let busRouteId = self.viewModel?.busRouteId,
+              let stationId = self.viewModel?.stationId,
               let targetOrd = self.viewModel?.stationOrd,
               let vehicleId = self.viewModel?.busArriveInfos.arriveInfos[indexPath.item].vehicleId,
               let busName = self.viewModel?.busName else { return }
@@ -325,7 +326,11 @@ extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
             self.alarmSettingAlert(message: arrivingSoonMessage)
         }
         else {
-            let result = GetOnAlarmController.shared.start(targetOrd: targetOrd, vehicleId: vehicleId, busName: busName)
+            let result = GetOnAlarmController.shared.start(targetOrd: targetOrd,
+                                                           vehicleId: vehicleId,
+                                                           busName: busName,
+                                                           busRouteId: busRouteId,
+                                                           stationId: stationId)
             switch result {
             case .success: break
             case .sameAlarm:
@@ -335,7 +340,11 @@ extension AlarmSettingViewController: GetOnAlarmButtonDelegate {
             case .duplicated:
                 self.alarmSettingActionSheet(titleMessage: "이미 설정되어있는 승차알람이 있습니다.\n 재설정 하시겠습니까?", buttonMessage: "재설정") {
                     GetOnAlarmController.shared.stop()
-                    _ = GetOnAlarmController.shared.start(targetOrd: targetOrd, vehicleId: vehicleId, busName: busName)
+                    let _ = GetOnAlarmController.shared.start(targetOrd: targetOrd,
+                                                                   vehicleId: vehicleId,
+                                                                   busName: busName,
+                                                                   busRouteId: busRouteId,
+                                                                   stationId: stationId)
                 }
             }
         }

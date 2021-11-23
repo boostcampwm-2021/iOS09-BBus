@@ -16,7 +16,7 @@ final class GetOnAlarmController {
     
     private init() { }
 
-    func start(targetOrd: Int, vehicleId: Int, busName: String) -> GetOnStartResult {
+    func start(targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) -> GetOnStartResult {
         if self.viewModel != nil {
             if isSameAlarm(targetOrd: targetOrd, vehicleId: vehicleId) {
                 return .sameAlarm
@@ -30,7 +30,9 @@ final class GetOnAlarmController {
             let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
                                                     targetOrd: targetOrd,
                                                     vehicleId: vehicleId,
-                                                    busName: busName)
+                                                    busName: busName,
+                                                    busRouteId: busRouteId,
+                                                    stationId: stationId)
             self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
             self.viewModel?.fetch()
             return .success
