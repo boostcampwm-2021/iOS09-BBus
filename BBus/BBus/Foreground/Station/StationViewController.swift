@@ -278,7 +278,19 @@ extension StationViewController: UICollectionViewDataSource {
                 configureCell(busInfo)
             }
         }
-        
+
+        GetOnAlarmController.shared.$viewModel
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] getOnAlarmViewModel in
+                guard let key = self?.viewModel?.busKeys[indexPath.section],
+                      let model = self?.viewModel?.infoBuses[key]?[indexPath.item] else { return }
+                if getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == model.stationOrd,
+                   getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == model.busRouteId {
+                    cell.configure(alarmButtonActive: true)
+                }
+
+            }
+            .store(in: &self.cancellables)
         return cell
     }
 
