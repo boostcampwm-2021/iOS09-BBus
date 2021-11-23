@@ -19,11 +19,8 @@ class AlarmSettingViewModel {
     private let arsId: String
     let routeType: RouteType?
     let busName: String
-    private let stationId: Int
-    private let stationOrd: Int
-    private let arsId: String
-    @Published private(set) var busArriveInfos: AlarmSettingBusStationInfos
-    @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]
+    @Published private(set) var busArriveInfos: AlarmSettingBusArriveInfos
+    @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]?
     @Published private(set) var errorMessage: String?
     private var cancellables: Set<AnyCancellable>
     private var observer: NSObjectProtocol?
@@ -37,8 +34,8 @@ class AlarmSettingViewModel {
         self.routeType = routeType
         self.busName = busName
         self.cancellables = []
-        self.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: [], changedByTimer: false)
-        self.busStationInfos = []
+        self.busArriveInfos = AlarmSettingBusArriveInfos(arriveInfos: [], changedByTimer: false)
+        self.busStationInfos = nil
         self.errorMessage = nil
         self.binding()
         self.refresh()
@@ -84,12 +81,13 @@ class AlarmSettingViewModel {
                                                              currentStation: data.firstBusCurrentStation,
                                                              plainNumber: data.firstBusPlainNumber,
                                                              vehicleId: data.firstBusVehicleId))
+
                 arriveInfos.append(AlarmSettingBusArriveInfo(busArriveRemainTime: data.secondBusArriveRemainTime,
                                                              congestion: data.secondBusCongestion,
                                                              currentStation: data.secondBusCurrentStation,
                                                              plainNumber: data.secondBusPlainNumber,
                                                              vehicleId: data.secondBusVehicleId))
-                self?.busArriveInfos = AlarmSettingBusStationInfos(arriveInfos: arriveInfos, changedByTimer: false)
+                self?.busArriveInfos = AlarmSettingBusArriveInfos(arriveInfos: arriveInfos, changedByTimer: false)
             })
             .store(in: &self.cancellables)
     }
@@ -108,17 +106,23 @@ class AlarmSettingViewModel {
         initInfo.estimatedTime = 0
         initInfo.arsId = ""
         initInfo.name = ""
-        
-        self.useCase.busStationsInfo.publisher
-            .scan(initInfo, { before, info in
-                let alarmSettingInfo: AlarmSettingBusStationInfo
-                alarmSettingInfo.arsId = info.arsId
-                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
-                alarmSettingInfo.name = info.stationName
-                return alarmSettingInfo
-            })
-            .collect()
-            .assign(to: &self.$busStationInfos)
+
+        if let busStationsInfo = self.useCase.busStationsInfo {
+            busStationsInfo.publisher
+                .scan(initInfo, { before, info in
+                    let alarmSettingInfo: AlarmSettingBusStationInfo
+                    alarmSettingInfo.arsId = info.arsId
+                    alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
+                    alarmSettingInfo.name = info.stationName
+                    return alarmSettingInfo
+                })
+                .collect()
+                .map { $0 as [AlarmSettingBusStationInfo]? }
+                .assign(to: &self.$busStationInfos)
+        }
+        else {
+            self.busStationInfos = nil
+        }
     }
     
     func sendErrorMessage(_ message: String) {
