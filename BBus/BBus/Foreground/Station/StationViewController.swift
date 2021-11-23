@@ -288,6 +288,9 @@ extension StationViewController: UICollectionViewDataSource {
                    getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == model.busRouteId {
                     cell.configure(alarmButtonActive: true)
                 }
+                else {
+                    cell.configure(alarmButtonActive: false)
+                }
 
             }
             .store(in: &self.cancellables)

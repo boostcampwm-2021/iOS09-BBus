@@ -208,6 +208,9 @@ extension HomeViewController: UICollectionViewDataSource {
                    getOnAlarmViewModel?.getOnAlarmStatus.stationId == cellStId {
                     cell.configure(alarmButtonActive: true)
                 }
+                else {
+                    cell.configure(alarmButtonActive: false)
+                }
 
             }
             .store(in: &self.cancellables)
