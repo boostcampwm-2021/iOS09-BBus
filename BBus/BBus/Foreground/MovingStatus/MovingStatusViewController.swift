@@ -256,7 +256,14 @@ final class MovingStatusViewController: UIViewController {
             self?.coordinator?.close()
         })
         controller.addAction(action)
-        self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
+
+        guard let isFolded = self.viewModel?.isFolded else { return }
+        if isFolded {
+            self.coordinator?.presentAlertToNavigation(controller: controller, completion: nil)
+        }
+        else {
+            self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
+        }
     }
 }
 
@@ -293,6 +300,7 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
         // Coordinator에게 Unfold 요청
         print("bottom indicator button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.viewModel?.unfold()
             self?.coordinator?.unfold()
         }
     }
@@ -304,6 +312,7 @@ extension MovingStatusViewController: FoldButtonDelegate {
         // Coordinator에게 fold 요청
         print("fold button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.viewModel?.fold()
             self?.coordinator?.fold()
         }
     }
