@@ -267,6 +267,19 @@ extension AlarmSettingViewController: UITableViewDataSource {
                            description: indexPath.item == 0 ? "\(info.arsId)" : "\(info.arsId) | \(info.estimatedTime)분 소요",
                            type: indexPath.item == 0 ? .getOn : .waypoint)
             cell.configureDelegate(self)
+            GetOffAlarmController.shared.$viewModel
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] getOffAlarmViewModel in
+                    if let getOffAlarmViewModel = getOffAlarmViewModel,
+                       self?.viewModel?.busRouteId == getOffAlarmViewModel.getOffAlarmStatus.busRouteId,
+                       info.ord == getOffAlarmViewModel.getOffAlarmStatus.targetOrd {
+                        cell.configure(alarmButtonActive: true)
+                    }
+                    else {
+                        cell.configure(alarmButtonActive: false)
+                    }
+                }
+                .store(in: &cell.cancellables)
             return cell
         default:
             return UITableViewCell()

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol GetOffAlarmButtonDelegate: AnyObject {
     func shouldGoToMovingStatusScene(from cell: UITableViewCell)
@@ -15,9 +16,11 @@ class GetOffTableViewCell: BusStationTableViewCell {
     enum BusRootCenterImageType {
         case waypoint, getOn
     }
-    
+
     static let reusableID = "GetOffTableViewCell"
     static let cellHeight: CGFloat = 80
+
+    var cancellables: Set<AnyCancellable> = []
     
     override var titleLeadingOffset: CGFloat { return 70 }
     override var lineTrailingOffset: CGFloat { return -35 }
@@ -30,8 +33,6 @@ class GetOffTableViewCell: BusStationTableViewCell {
         didSet {
             self.alarmButton.addAction(UIAction(handler: { [weak self] _ in
                 guard let self = self else { return }
-                
-                self.alarmButton.isSelected.toggle()
                 self.alarmButtonDelegate?.shouldGoToMovingStatusScene(from: self)
             }), for: .touchUpInside)
         }
@@ -47,6 +48,11 @@ class GetOffTableViewCell: BusStationTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
+        self.cancellables.forEach { $0.cancel() }
+        self.cancellables.removeAll()
+
+        self.configure(alarmButtonActive: false)
+        self.configure(beforeColor: nil, afterColor: nil, title: "", description: "")
         self.alarmButton.removeTarget(nil, action: nil, for: .allEvents)
     }
     
@@ -106,5 +112,9 @@ class GetOffTableViewCell: BusStationTableViewCell {
     
     func configureDelegate(_ delegate: GetOffAlarmButtonDelegate) {
         self.alarmButtonDelegate = delegate
+    }
+
+    func configure(alarmButtonActive: Bool) {
+        self.alarmButton.isSelected = alarmButtonActive
     }
 }
