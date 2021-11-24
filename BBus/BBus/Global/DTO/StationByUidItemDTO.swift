@@ -7,33 +7,17 @@
 
 import Foundation
 
-struct StationByUidItemBody: BBusXMLDTO {
-    private(set) var itemList: [StationByUidItemDTO]
-
-    init?(dict: [String : [Any]]) {
-        guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ StationByUidItemDTO(dict: $0) }),
-              let itemListUnwrapped = itemList as? [StationByUidItemDTO] else { return nil }
-
-        self.itemList = itemListUnwrapped
-    }
+// JSON
+struct StationByUidItemResult: Codable {
+    let msgHeader: MessageHeader
+    let msgBody: StationByUidItemBody
 }
 
-struct StationByUidItemResult: BBusXMLDTO {
-    var header: GovernmentMessageHeader
-    var body: StationByUidItemBody
-
-    init?(dict: [String : [Any]]) {
-        guard let headerDict = dict["msgHeader"]?[0] as? [String:[Any]],
-              let bodyDict = dict["msgBody"]?[0] as? [String:[Any]],
-              let header = GovernmentMessageHeader(dict: headerDict),
-              let body = StationByUidItemBody(dict: bodyDict) else { return nil }
-
-        self.header = header
-        self.body = body
-    }
+struct StationByUidItemBody: Codable {
+    let itemList: [StationByUidItemDTO]
 }
 
-struct StationByUidItemDTO: BBusXMLDTO {
+struct StationByUidItemDTO: Codable {
     let firstBusArriveRemainTime: String
     let secondBusArriveRemainTime: String
     let arsId: String
@@ -44,29 +28,28 @@ struct StationByUidItemDTO: BBusXMLDTO {
     let busNumber: String
     let routeType: String
 
-    init?(dict: [String : [Any]]) {
-        guard let firstBusArrivalRemainTime = ((dict["arrmsg1"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let secondBusArrivalRemainTime = ((dict["arrmsg2"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let arsId = ((dict["arsId"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let staOrdString = ((dict["staOrd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let staOrd = Int(staOrdString),
-              let busRouteIdString = ((dict["busRouteId"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let busRouteId = Int(busRouteIdString),
-              let congestionString = ((dict["congestion"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let congestion = Int(congestionString),
-              let nextStation = ((dict["nxtStn"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let busNumber = ((dict["rtNm"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let routeType = ((dict["routeType"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 })
-        else { return nil }
+    enum CodingKeys: String, CodingKey {
+        case firstBusArriveRemainTime = "arrmsg1"
+        case secondBusArriveRemainTime = "arrmsg2"
+        case arsId
+        case stationOrd = "staOrd"
+        case busRouteId
+        case congestion
+        case nextStation = "nxtStn"
+        case busNumber = "rtNm"
+        case routeType
+    }
 
-        self.firstBusArriveRemainTime = firstBusArrivalRemainTime
-        self.secondBusArriveRemainTime = secondBusArrivalRemainTime
-        self.arsId = arsId
-        self.stationOrd = staOrd
-        self.busRouteId = busRouteId
-        self.congestion = congestion
-        self.nextStation = nextStation
-        self.busNumber = busNumber
-        self.routeType = routeType
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.firstBusArriveRemainTime = (try? container.decode(String.self, forKey: .firstBusArriveRemainTime)) ?? ""
+        self.secondBusArriveRemainTime = (try? container.decode(String.self, forKey: .secondBusArriveRemainTime)) ?? ""
+        self.arsId = (try? container.decode(String.self, forKey: .arsId)) ?? ""
+        self.stationOrd = Int((try? container.decode(String.self, forKey: .stationOrd)) ?? "") ?? 0
+        self.busRouteId = Int((try? container.decode(String.self, forKey: .busRouteId)) ?? "") ?? 0
+        self.congestion = Int((try? container.decode(String.self, forKey: .congestion)) ?? "") ?? 0
+        self.nextStation = (try? container.decode(String.self, forKey: .nextStation)) ?? ""
+        self.busNumber = (try? container.decode(String.self, forKey: .busNumber)) ?? ""
+        self.routeType = (try? container.decode(String.self, forKey: .routeType)) ?? ""
     }
 }

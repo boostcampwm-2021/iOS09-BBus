@@ -45,7 +45,7 @@ class BBusAPIUsecases: RequestUsecases {
     }
 
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
-        let param = ["arsId": arsId]
+        let param = ["arsId": arsId, "resultType": "json"]
         let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
