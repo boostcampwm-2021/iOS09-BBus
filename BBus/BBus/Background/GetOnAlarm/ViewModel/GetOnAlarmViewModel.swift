@@ -12,15 +12,17 @@ class GetOnAlarmViewModel {
 
     let usecase: GetOnAlarmUsecase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable>
     @Published private(set) var getApproachStatus: BusApproachStatus?
     private(set) var message: String?
+    @Published private(set) var networkErrorMessage: (title: String, body: String)?
 
     init(usecase: GetOnAlarmUsecase, currentStatus: GetOnAlarmStatus) {
         self.usecase = usecase
         self.getOnAlarmStatus = currentStatus
         self.message = nil
-        self.cancellable = nil
+        self.networkErrorMessage = nil
+        self.cancellables = []
         self.getApproachStatus = nil
         self.execute()
         self.configureObserver()
@@ -33,7 +35,12 @@ class GetOnAlarmViewModel {
     }
 
     private func execute() {
-        self.cancellable = self.usecase.$busPosition
+        self.bindBusPosition()
+        self.bindNetworkErrorMessage()
+    }
+    
+    func bindBusPosition() {
+        self.usecase.$busPosition
             .receive(on: GetOnAlarmUsecase.queue)
             .sink { [weak self] position in
                 guard let self = self,
@@ -48,6 +55,17 @@ class GetOnAlarmViewModel {
                 }
                 self.getOnAlarmStatus = self.getOnAlarmStatus.withCurrentBusOrd(stationOrd)
             }
+            .store(in: &self.cancellables)
+    }
+    
+    func bindNetworkErrorMessage() {
+        self.usecase.$networkError
+            .receive(on: GetOnAlarmUsecase.queue)
+            .sink(receiveValue: { [weak self] error in
+                guard let _ = error else { return }
+                self?.networkErrorMessage = ("승차 알람", "네트워크 에러가 발생하여 알람이 취소됩니다.")
+            })
+            .store(in: &self.cancellables)
     }
 
     func fetch() {
