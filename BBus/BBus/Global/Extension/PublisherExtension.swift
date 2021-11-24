@@ -9,15 +9,6 @@ import Foundation
 import Combine
 
 extension Publisher where Output == (Data, Int), Failure == Error {
-    func mapBBusAPIError() -> AnyPublisher<Data, Error> {
-        self.tryMap({ data, order -> Data in
-            guard let code = BBusXMLParser().parse(dtoType: HeaderMessage.self, xml: data)?.header.headerCode,
-                  let error = BBusAPIError(errorCode: code ) else { return data }
-            Service.shared.removeAccessKey(at: order)
-            throw error
-        }).eraseToAnyPublisher()
-    }
-
     func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
         self.tryMap({ data, order -> Data in
             // TODO: JSON BBUSAPIError map 로직 필요
