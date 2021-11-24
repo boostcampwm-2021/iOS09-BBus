@@ -51,20 +51,6 @@ class BBusAPIUsecases: RequestUsecases {
             .fetch(param: param, on: self.queue)
     }
 
-    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRouteId]
-        let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
-    func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error> {
-        let param = ["tmX": tmX, "tmY": tmY, "radius": radius]
-        let fetcher: GetStationsByPosListFetchable = ServiceGetStationsByPosListFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
     func getRouteList() -> AnyPublisher<Data, Error> {
         let fetcher: GetRouteListFetchable = PersistentGetRouteListFetcher()
         return fetcher
