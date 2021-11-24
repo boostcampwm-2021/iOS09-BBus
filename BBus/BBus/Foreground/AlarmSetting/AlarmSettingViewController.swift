@@ -346,22 +346,27 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
               let endStationArsId = self.viewModel?.busStationInfos?[indexPath.item].arsId,
               let targetOrd = self.viewModel?.busStationInfos?[indexPath.item].ord else { return }
 
-        let result = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: startStationArsId)
-        switch result {
-        case .success:
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
-            }
-        case .sameAlarm:
-            self.alarmSettingActionSheet(titleMessage: "하차 알람을 종료하시겠습니까?", buttonMessage: "종료") {
-                self.coordinator?.closeMovingStatus()
-            }
-        case .duplicated:
-            self.alarmSettingActionSheet(titleMessage: "이미 설정되어있는 하차알람이 있습니다.\n 재설정 하시겠습니까?", buttonMessage: "재설정") {
-                GetOffAlarmController.shared.stop()
-                _ = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: endStationArsId)
+        if startStationArsId == endStationArsId {
+            self.alarmSettingAlert(message: "해당 정거장으로 하차알람을 등록할 수 없습니다.")
+        }
+        else {
+            let result = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: startStationArsId)
+            switch result {
+            case .success:
                 UIView.animate(withDuration: 0.3) { [weak self] in
-                    self?.coordinator?.resetMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: startStationArsId)
+                    self?.coordinator?.openMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
+                }
+            case .sameAlarm:
+                self.alarmSettingActionSheet(titleMessage: "하차 알람을 종료하시겠습니까?", buttonMessage: "종료") {
+                    self.coordinator?.closeMovingStatus()
+                }
+            case .duplicated:
+                self.alarmSettingActionSheet(titleMessage: "이미 설정되어있는 하차알람이 있습니다.\n 재설정 하시겠습니까?", buttonMessage: "재설정") {
+                    GetOffAlarmController.shared.stop()
+                    _ = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: endStationArsId)
+                    UIView.animate(withDuration: 0.3) { [weak self] in
+                        self?.coordinator?.resetMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
+                    }
                 }
             }
         }
