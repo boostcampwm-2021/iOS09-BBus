@@ -33,9 +33,10 @@ class AlarmSettingUseCase {
                                                 busRouteId: busRouteId,
                                                 ord: ord)
                 .receive(on: Self.queue)
-                .tryMap ({ info -> ArrInfoByRouteDTO in
-                    guard let result = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: info),
-                          let item = result.body.itemList.first else { throw BBusAPIError.wrongFormatError }
+                .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
+                .tryMap({ item in
+                    let result = item.msgBody.itemList
+                    guard let item = result.first else { throw BBusAPIError.wrongFormatError }
                     return item
                 })
                 .retry ({ [weak self] in

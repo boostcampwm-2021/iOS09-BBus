@@ -21,7 +21,7 @@
 		049375A8273B9CD60061ACDA /* StationList.json in Resources */ = {isa = PBXBuildFile; fileRef = 049375A7273B9CD60061ACDA /* StationList.json */; };
 		049375AB273B9F330061ACDA /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
 		049375AF273BAA130061ACDA /* StationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AE273BAA130061ACDA /* StationDTO.swift */; };
-		049375B5273BB98E0061ACDA /* StationByRouteListRawDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListRawDTO.swift */; };
+		049375B5273BB98E0061ACDA /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
 		049375B7273BE08F0061ACDA /* BusPosByRtidDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */; };
 		049375B9273BE2640061ACDA /* StationByUidItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */; };
 		049375BD273C2E120061ACDA /* ArrInfoByRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */; };
@@ -153,7 +153,7 @@
 		049375A7273B9CD60061ACDA /* StationList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StationList.json; sourceTree = "<group>"; };
 		049375AA273B9F330061ACDA /* BusRouteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteDTO.swift; sourceTree = "<group>"; };
 		049375AE273BAA130061ACDA /* StationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDTO.swift; sourceTree = "<group>"; };
-		049375B4273BB98E0061ACDA /* StationByRouteListRawDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationByRouteListRawDTO.swift; sourceTree = "<group>"; };
+		049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationByRouteListDTO.swift; sourceTree = "<group>"; };
 		049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPosByRtidDTO.swift; sourceTree = "<group>"; };
 		049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationByUidItemDTO.swift; sourceTree = "<group>"; };
 		049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrInfoByRouteDTO.swift; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 		049375A9273B9F200061ACDA /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				049375B4273BB98E0061ACDA /* StationByRouteListRawDTO.swift */,
+				049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */,
 				049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */,
 				049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */,
 				049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */,
@@ -998,7 +998,7 @@
 				049B9D002744D2AA004DE66E /* ThrottleButton.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */,
-				049375B5273BB98E0061ACDA /* StationByRouteListRawDTO.swift in Sources */,
+				049375B5273BB98E0061ACDA /* StationByRouteListDTO.swift in Sources */,
 				4A094CE127438EB800428F55 /* UIViewExtension.swift in Sources */,
 				4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */,
 				04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */,

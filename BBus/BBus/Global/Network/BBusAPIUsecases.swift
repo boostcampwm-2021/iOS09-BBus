@@ -17,7 +17,7 @@ class BBusAPIUsecases: RequestUsecases {
     }
     
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error> {
-        let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord]
+        let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord, "resultType": "json"]
         let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)

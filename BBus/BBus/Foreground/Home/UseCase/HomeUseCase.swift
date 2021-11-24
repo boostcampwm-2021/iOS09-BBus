@@ -53,9 +53,10 @@ class HomeUseCase {
                                                 busRouteId: favoriteItem.busRouteId,
                                                 ord: favoriteItem.ord)
                 .receive(on: Self.queue)
-                .tryMap({ data -> ArrInfoByRouteDTO in
-                    guard let dto = BBusXMLParser().parse(dtoType: ArrInfoByRouteResult.self, xml: data),
-                          let item = dto.body.itemList.first else { throw BBusAPIError.wrongFormatError }
+                .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
+                .tryMap({ item in
+                    let result = item.msgBody.itemList
+                    guard let item = result.first else { throw BBusAPIError.wrongFormatError }
                     return item
                 })
                 .retry({ [weak self] in
