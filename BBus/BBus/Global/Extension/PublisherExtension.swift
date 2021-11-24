@@ -20,8 +20,11 @@ extension Publisher where Output == (Data, Int), Failure == Error {
 
     func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
         self.tryMap({ data, order -> Data in
-            // TODO: JSON BBUSAPIError map 로직 필요
-            return data
+            guard let json = try? JSONDecoder().decode(JsonHeader.self, from: data),
+                  let statusCode = Int(json.msgHeader.headerCD),
+                  let error = BBusAPIError(errorCode: statusCode) else { return data }
+            Service.shared.removeAccessKey(at: order)
+            throw error
         }).eraseToAnyPublisher()
     }
 }

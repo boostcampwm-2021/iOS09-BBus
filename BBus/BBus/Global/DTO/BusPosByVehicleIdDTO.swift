@@ -7,9 +7,13 @@
 
 import Foundation
 
-struct JsonMessage: Codable {
+struct JsonHeader: Codable {
     let msgHeader: MessageHeader
-    let msgBody: MessageBody
+}
+
+struct JsonMessage<T: Codable>: Codable {
+    let msgHeader: MessageHeader
+    let msgBody: MessageBody<T>
 }
 
 struct MessageHeader: Codable {
@@ -23,8 +27,8 @@ struct MessageHeader: Codable {
     }
 }
 
-struct MessageBody: Codable {
-    let itemList: [BusPosByVehicleIdDTO]
+struct MessageBody<T: Codable>: Codable {
+    let itemList: [T]
 }
 
 struct BusPosByVehicleIdDTO: Codable {

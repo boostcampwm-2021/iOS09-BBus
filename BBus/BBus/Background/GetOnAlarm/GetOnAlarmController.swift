@@ -16,12 +16,14 @@ final class GetOnAlarmController: NSObject {
 
     static let shared = GetOnAlarmController()
     
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable>
     private var locationManager: CLLocationManager?
 
     @Published private(set) var viewModel: GetOnAlarmViewModel?
     
-    private override init() { }
+    private override init() {
+        self.cancellables = []
+    }
 
     func start(targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) -> GetOnStartResult {
         if self.viewModel != nil {
@@ -42,7 +44,7 @@ final class GetOnAlarmController: NSObject {
                                                     stationId: stationId)
             self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
             self.viewModel?.fetch()
-            self.bindingMessage()
+            self.binding()
             self.sendRequestAuthorization()
             self.configureLocationManager()
             return .success
@@ -51,7 +53,7 @@ final class GetOnAlarmController: NSObject {
 
     func stop() {
         self.viewModel = nil
-        self.cancellable = nil
+        self.cancellables = []
         self.locationManager = nil
     }
     
@@ -62,16 +64,32 @@ final class GetOnAlarmController: NSObject {
         self.locationManager?.startUpdatingLocation()
     }
     
-    func bindingMessage() {
-        self.cancellable = self.viewModel?.$getApproachStatus
+    private func binding() {
+        self.bindMessage()
+        self.bindErrorMessage()
+    }
+    
+    private func bindMessage() {
+        self.viewModel?.$getApproachStatus
             .sink(receiveValue: { [weak self] status in
                 guard let status = status,
                       let message = self?.viewModel?.message else { return }
                 if status == .oneStationLeft {
                     self?.stop()
                 }
-                self?.pushGetOnAlarm(message: message)
+                self?.pushGetOnAlarm(title: "승차 알람" ,message: message)
             })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindErrorMessage() {
+        self.viewModel?.$networkErrorMessage
+            .sink(receiveValue: { [weak self] content in
+                guard let content = content else { return }
+                self?.pushGetOnAlarm(title: content.title, message: content.body)
+                self?.stop()
+            })
+            .store(in: &self.cancellables)
     }
     
     private func sendRequestAuthorization() {
@@ -83,9 +101,9 @@ final class GetOnAlarmController: NSObject {
         })
     }
     
-    private func pushGetOnAlarm(message: String) {
+    private func pushGetOnAlarm(title: String, message: String) {
         let content = UNMutableNotificationContent()
-        content.title = "승차 알람"
+        content.title = title
         content.body = message
         content.badge = Int(truncating: content.badge ?? 0) + 1 as NSNumber
         let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
