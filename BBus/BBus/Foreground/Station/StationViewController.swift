@@ -298,7 +298,7 @@ extension StationViewController: UICollectionViewDataSource {
                 }
 
             }
-            .store(in: &self.cancellables)
+            .store(in: &cell.cancellables)
         return cell
     }
 

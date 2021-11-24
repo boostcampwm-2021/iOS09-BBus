@@ -9,6 +9,7 @@ import Foundation
 
 protocol MovingStatusOpenCloseDelegate: AnyObject {
     func open(busRouteId: Int, fromArsId: String, toArsId: String)
+    func reset(busRouteId: Int, fromArsId: String, toArsId: String)
     func close()
 }
 

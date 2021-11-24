@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias AlarmSettingBusStationInfo = (arsId: String, name: String, estimatedTime: Int)
+typealias AlarmSettingBusStationInfo = (arsId: String, name: String, estimatedTime: Int, ord: Int)
 
 struct AlarmSettingBusArriveInfos {
     var arriveInfos: [AlarmSettingBusArriveInfo]

@@ -104,6 +104,7 @@ class AlarmSettingViewModel {
         initInfo.estimatedTime = 0
         initInfo.arsId = ""
         initInfo.name = ""
+        initInfo.ord = 0
 
         if let busStationsInfo = self.useCase.busStationsInfo {
             busStationsInfo.publisher
@@ -112,6 +113,7 @@ class AlarmSettingViewModel {
                     alarmSettingInfo.arsId = info.arsId
                     alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
                     alarmSettingInfo.name = info.stationName
+                    alarmSettingInfo.ord = info.sectionOrd
                     return alarmSettingInfo
                 })
                 .collect()
