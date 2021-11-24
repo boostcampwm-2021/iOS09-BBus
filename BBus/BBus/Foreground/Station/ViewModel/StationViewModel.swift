@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, firstBusCongestion: BusCongestion?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, secondBusCongestion: BusCongestion?, arsId: String, stationOrd: Int, busRouteId: Int, nextStation: String, busNumber: String, routeType: BBusRouteType)
+typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, firstBusCongestion: BusCongestion?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, secondBusCongestion: BusCongestion?, stationOrd: Int, busRouteId: Int, nextStation: String, busNumber: String, routeType: BBusRouteType)
 
 
 class StationViewModel {
@@ -96,7 +96,6 @@ class StationViewModel {
             
             info.nextStation = bus.nextStation
             info.busNumber = bus.busNumber
-            info.arsId = bus.arsId
             info.stationOrd = bus.stationOrd
             info.busRouteId = bus.busRouteId
             

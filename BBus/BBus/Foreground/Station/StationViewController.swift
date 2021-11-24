@@ -278,10 +278,14 @@ extension StationViewController: UICollectionViewDataSource {
 
             guard let key = self.viewModel?.busKeys[indexPath.section],
                   let maxCount = self.viewModel?.infoBuses[key]?.count,
-                  let busInfo = maxCount > indexPath.item ? self.viewModel?.infoBuses[key]?[indexPath.item] : nil,
-                  let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel else { return cell }
-            if getOnAlarmViewModel.getOnAlarmStatus.targetOrd == busInfo.stationOrd,
-               getOnAlarmViewModel.getOnAlarmStatus.busRouteId == busInfo.busRouteId {
+                  let busInfo = maxCount > indexPath.item ? self.viewModel?.infoBuses[key]?[indexPath.item] : nil  else { return cell }
+
+            let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel
+            let getOffAlarmViewModel = GetOffAlarmController.shared.viewModel
+            if (getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == busInfo.stationOrd &&
+               getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == busInfo.busRouteId) || (
+                getOffAlarmViewModel?.getOffAlarmStatus.arsId == self.viewModel?.arsId &&
+                getOffAlarmViewModel?.getOffAlarmStatus.busRouteId == busInfo.busRouteId) {
                 cell.configure(alarmButtonActive: true)
             }
             else {
@@ -384,11 +388,11 @@ extension StationViewController: LikeButtonDelegate {
         let item: FavoriteItemDTO
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         else {
             guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         return item
     }

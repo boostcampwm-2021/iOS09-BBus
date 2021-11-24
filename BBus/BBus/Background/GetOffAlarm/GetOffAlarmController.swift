@@ -16,7 +16,7 @@ final class GetOffAlarmController: NSObject {
 
     private override init() { }
 
-    func start(targetOrd: Int, busRouteId: Int, arsId: Int) -> AlarmStartResult {
+    func start(targetOrd: Int, busRouteId: Int, arsId: String) -> AlarmStartResult {
         if let viewModel = viewModel {
             return viewModel.causesStartFail(targetOrd: targetOrd, busRouteId: busRouteId)
         }

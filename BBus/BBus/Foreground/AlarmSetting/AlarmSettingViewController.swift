@@ -344,10 +344,9 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
               let indexPath = self.alarmSettingView.indexPath(for: cell),
               let startStationArsId = self.viewModel?.busStationInfos?.first?.arsId,
               let endStationArsId = self.viewModel?.busStationInfos?[indexPath.item].arsId,
-              let targetArsId = Int(endStationArsId),
               let targetOrd = self.viewModel?.busStationInfos?[indexPath.item].ord else { return }
 
-        let result = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: targetArsId)
+        let result = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: startStationArsId)
         switch result {
         case .success:
             UIView.animate(withDuration: 0.3) { [weak self] in
@@ -360,9 +359,9 @@ extension AlarmSettingViewController: GetOffAlarmButtonDelegate {
         case .duplicated:
             self.alarmSettingActionSheet(titleMessage: "이미 설정되어있는 하차알람이 있습니다.\n 재설정 하시겠습니까?", buttonMessage: "재설정") {
                 GetOffAlarmController.shared.stop()
-                _ = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: targetArsId)
+                _ = GetOffAlarmController.shared.start(targetOrd: targetOrd, busRouteId: busRouteId, arsId: endStationArsId)
                 UIView.animate(withDuration: 0.3) { [weak self] in
-                    self?.coordinator?.resetMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: endStationArsId)
+                    self?.coordinator?.resetMovingStatus(busRouteId: busRouteId, fromArsId: startStationArsId, toArsId: startStationArsId)
                 }
             }
         }
