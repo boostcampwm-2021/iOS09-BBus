@@ -145,11 +145,11 @@ extension SearchViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         
         if collectionView.frame.origin.x == 0 {
-            guard let bus = self.viewModel?.searchResults.busSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            guard let bus = self.viewModel?.searchResults.busSearchResults[indexPath.row] else { return cell }
             cell.configureBusUI(title: bus.busRouteName, detailInfo: bus.routeType)
         }
         else {
-            guard let station = self.viewModel?.searchResults.stationSearchResults[indexPath.row] else { return UICollectionViewCell() }
+            guard let station = self.viewModel?.searchResults.stationSearchResults[indexPath.row] else { return cell }
             cell.configureStationUI(title: station.stationName,
                                     titleMatchRanges: station.stationNameMatchRanges,
                                     arsId: station.arsId,

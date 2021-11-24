@@ -204,11 +204,16 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
               let cellOrd = Int(model.favoriteItem.ord),
               let cellBusRouteId = Int(model.favoriteItem.busRouteId),
-              let cellStId = Int(model.favoriteItem.stId),
-              let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel else { return cell }
-        if getOnAlarmViewModel.getOnAlarmStatus.targetOrd == cellOrd,
-           getOnAlarmViewModel.getOnAlarmStatus.busRouteId == cellBusRouteId,
-           getOnAlarmViewModel.getOnAlarmStatus.stationId == cellStId {
+              let cellStId = Int(model.favoriteItem.stId) else { return cell }
+        let cellArsId = model.favoriteItem.arsId
+        let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel
+        let getOffAlarmViewModel = GetOffAlarmController.shared.viewModel
+        if (getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == cellOrd &&
+            getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == cellBusRouteId &&
+            getOnAlarmViewModel?.getOnAlarmStatus.stationId == cellStId) || (
+                getOffAlarmViewModel?.getOffAlarmStatus.arsId == cellArsId &&
+                getOffAlarmViewModel?.getOffAlarmStatus.busRouteId == cellBusRouteId
+            ) {
             cell.configure(alarmButtonActive: true)
         }
         else {
