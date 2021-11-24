@@ -58,11 +58,11 @@ class StationViewModel {
     }
     
     private func binding() {
-        self.bindingFavoriteItems()
-        self.bindingBusArriveInfo()
+        self.bindFavoriteItems()
+        self.bindBusArriveInfo()
     }
     
-    private func bindingBusArriveInfo() {
+    private func bindBusArriveInfo() {
         self.usecase.$busArriveInfo
             .receive(on: StationUsecase.queue)
             .sink(receiveCompletion: { error in
@@ -75,7 +75,7 @@ class StationViewModel {
             .store(in: &self.cancellables)
     }
     
-    private func bindingFavoriteItems() {
+    private func bindFavoriteItems() {
         self.usecase.$favoriteItems
             .receive(on: StationUsecase.queue)
             .sink(receiveValue: { [weak self] items in

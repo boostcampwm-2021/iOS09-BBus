@@ -246,7 +246,7 @@ final class MovingStatusViewController: UIViewController {
         self.viewModel?.fetch()
     }
     
-    private func bindingErrorMessage() {
+    private func bindErrorMessage() {
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in

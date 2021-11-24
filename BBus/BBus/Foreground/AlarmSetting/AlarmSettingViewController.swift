@@ -104,12 +104,12 @@ class AlarmSettingViewController: UIViewController {
     }
     
     private func binding() {
-        self.bindingBusArriveInfos()
-        self.bindingBusStationInfos()
-        self.bindingErrorMessage()
+        self.bindBusArriveInfos()
+        self.bindBusStationInfos()
+        self.bindErrorMessage()
     }
     
-    private func bindingBusArriveInfos() {
+    private func bindBusArriveInfos() {
         self.viewModel?.$busArriveInfos
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
@@ -119,7 +119,7 @@ class AlarmSettingViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
-    private func bindingBusStationInfos() {
+    private func bindBusStationInfos() {
         self.viewModel?.$busStationInfos
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
@@ -137,7 +137,7 @@ class AlarmSettingViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
-    private func bindingErrorMessage() {
+    private func bindErrorMessage() {
         self.viewModel?.$errorMessage
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] message in

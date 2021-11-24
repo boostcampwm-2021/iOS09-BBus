@@ -104,11 +104,11 @@ class HomeViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingFavoriteList()
-        self.bindingNetworkError()
+        self.bindFavoriteList()
+        self.bindNetworkError()
     }
 
-    private func bindingFavoriteList() {
+    private func bindFavoriteList() {
 
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
@@ -122,7 +122,7 @@ class HomeViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
-    private func bindingNetworkError() {
+    private func bindNetworkError() {
         self.viewModel?.useCase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in

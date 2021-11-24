@@ -25,9 +25,9 @@ final class BusRouteViewModel {
         self.usecase = usecase
         self.busRouteId = busRouteId
         self.cancellables = []
-        self.bindingHeaderInfo()
-        self.bindingBodysInfo()
-        self.bindingBusesPosInfo()
+        self.bindHeaderInfo()
+        self.bindBodysInfo()
+        self.bindBusesPosInfo()
     }
 
     func configureObserver() {
@@ -38,13 +38,13 @@ final class BusRouteViewModel {
         NotificationCenter.default.removeObserver(self)
     }
 
-    private func bindingHeaderInfo() {
+    private func bindHeaderInfo() {
         self.usecase.$header
             .receive(on: BusRouteUsecase.queue)
             .assign(to: &self.$header)
     }
 
-    private func bindingBodysInfo() {
+    private func bindBodysInfo() {
         self.usecase.$bodys
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] bodys in
@@ -56,7 +56,7 @@ final class BusRouteViewModel {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusesPosInfo() {
+    private func bindBusesPosInfo() {
         self.usecase.$buses
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] buses in

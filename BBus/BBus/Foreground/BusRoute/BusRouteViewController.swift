@@ -158,13 +158,13 @@ final class BusRouteViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingBusRouteHeaderResult()
-        self.bindingBusRouteBodyResult()
-        self.bindingBusesPosInfo()
-        self.bindingNetworkError()
+        self.bindBusRouteHeaderResult()
+        self.bindBusRouteBodyResult()
+        self.bindBusesPosInfo()
+        self.bindNetworkError()
     }
 
-    private func bindingBusRouteHeaderResult() {
+    private func bindBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: DispatchQueue.main)
             .dropFirst()
@@ -184,7 +184,7 @@ final class BusRouteViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusRouteBodyResult() {
+    private func bindBusRouteBodyResult() {
         self.viewModel?.$bodys
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] bodys in
@@ -196,7 +196,7 @@ final class BusRouteViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusesPosInfo() {
+    private func bindBusesPosInfo() {
         self.viewModel?.$buses
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] buses in
@@ -207,7 +207,7 @@ final class BusRouteViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
-    private func bindingNetworkError() {
+    private func bindNetworkError() {
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
