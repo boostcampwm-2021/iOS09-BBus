@@ -56,9 +56,9 @@ class StationUsecase {
         Self.queue.async {
             self.usecases.getStationByUidItem(arsId: arsId)
                 .receive(on: Self.queue)
-                .tryMap({ data -> [StationByUidItemDTO] in
-                    guard let result = BBusXMLParser().parse(dtoType: StationByUidItemResult.self, xml: data) else { throw BBusAPIError.wrongFormatError }
-                    return result.body.itemList
+                .decode(type: StationByUidItemResult.self, decoder: JSONDecoder())
+                .tryMap({ item in
+                    item.msgBody.itemList
                 })
                 .retry({ [weak self] in
                     self?.refreshInfo(about: arsId)

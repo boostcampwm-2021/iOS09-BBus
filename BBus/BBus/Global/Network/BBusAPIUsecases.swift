@@ -17,43 +17,36 @@ class BBusAPIUsecases: RequestUsecases {
     }
     
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error> {
-        let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord]
+        let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord, "resultType": "json"]
         let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
 
-    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRouteId]
-        let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRoutedId]
+        let param = ["busRouteId": busRoutedId, "resultType": "json"]
         let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
 
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRoutedId]
+        let param = ["busRouteId": busRoutedId, "resultType": "json"]
         let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
 
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
-        let param = ["arsId": arsId]
+        let param = ["arsId": arsId, "resultType": "json"]
         let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
 
-    func getStationsByPosList(tmX: String, tmY: String, radius: String) -> AnyPublisher<Data, Error> {
-        let param = ["tmX": tmX, "tmY": tmY, "radius": radius]
-        let fetcher: GetStationsByPosListFetchable = ServiceGetStationsByPosListFetcher()
+    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
+        let param = ["vehId": vehId, "resultType": "json"]
+        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
@@ -84,13 +77,6 @@ class BBusAPIUsecases: RequestUsecases {
     
     func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
         let fetcher: DeleteFavoriteItemFetchable = PersistentDeleteFavoriteItemFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
-    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
-        let param = ["vehId": vehId, "resultType": "json"]
-        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }

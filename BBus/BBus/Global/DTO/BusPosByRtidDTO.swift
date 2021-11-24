@@ -7,33 +7,17 @@
 
 import Foundation
 
-struct BusPosByRtidBody: BBusXMLDTO {
+// JSON
+struct BusPosByRtidResult: Codable {
+    let msgHeader: MessageHeader
+    let msgBody: BusPosByRtidBody
+}
+
+struct BusPosByRtidBody: Codable {
     let itemList: [BusPosByRtidDTO]
-
-    init?(dict: [String : [Any]]) {
-        guard let itemList = (dict["itemList"] as? [[String:[Any]]])?.map({ BusPosByRtidDTO(dict: $0) }),
-              let itemListUnwrapped = itemList as? [BusPosByRtidDTO] else { return nil }
-
-        self.itemList = itemListUnwrapped
-    }
 }
 
-struct BusPosByRtidResult: BBusXMLDTO {
-    var header: GovernmentMessageHeader
-    var body: BusPosByRtidBody
-
-    init?(dict: [String : [Any]]) {
-        guard let headerDict = dict["msgHeader"]?[0] as? [String:[Any]],
-              let bodyDict = dict["msgBody"]?[0] as? [String:[Any]],
-              let header = GovernmentMessageHeader(dict: headerDict),
-              let body = BusPosByRtidBody(dict: bodyDict) else { return nil }
-
-        self.header = header
-        self.body = body
-    }
-}
-
-struct BusPosByRtidDTO: BBusXMLDTO {
+struct BusPosByRtidDTO: Codable {
     let busType: Int
     let congestion: Int
     let plainNumber: String
@@ -42,29 +26,27 @@ struct BusPosByRtidDTO: BBusXMLDTO {
     let sectDist: String
     let gpsY: Double
     let gpsX: Double
-    
-    init?(dict: [String : [Any]]) {
-        guard let busTypeString = ((dict["busType"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let busType = Int(busTypeString),
-              let congestionString = ((dict["congetion"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let congestion = Int(congestionString),
-              let plainNumber = ((dict["plainNo"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let sectOrd = ((dict["sectOrd"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let sectionOrder = Int(sectOrd),
-              let fullSectDist = ((dict["fullSectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let sectDist = ((dict["sectDist"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1 }),
-              let stringGpsY = ((dict["gpsY"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
-              let gpsY = Double(stringGpsY),
-              let stringGpsX = ((dict["gpsX"]?[0] as? [String:[Any]])?[BBusXMLParser.baseKey] as? [String])?.reduce("", { $0 + $1}),
-              let gpsX = Double(stringGpsX) else { return nil }
-        
-        self.busType = busType
-        self.congestion = congestion
-        self.plainNumber = plainNumber
-        self.sectionOrder = sectionOrder
-        self.fullSectDist = fullSectDist
-        self.sectDist = sectDist
-        self.gpsY = gpsY
-        self.gpsX = gpsX
+
+    enum CodingKeys: String, CodingKey {
+        case busType
+        case congestion
+        case plainNumber = "plainNo"
+        case sectionOrder = "sectOrd"
+        case fullSectDist
+        case sectDist
+        case gpsY
+        case gpsX
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.busType = Int((try? container.decode(String.self, forKey: .busType)) ?? "") ?? 0
+        self.congestion = Int((try? container.decode(String.self, forKey: .congestion)) ?? "") ?? 0
+        self.plainNumber = (try? container.decode(String.self, forKey: .plainNumber)) ?? ""
+        self.sectionOrder = Int((try? container.decode(String.self, forKey: .sectionOrder)) ?? "") ?? 0
+        self.fullSectDist = (try? container.decode(String.self, forKey: .fullSectDist)) ?? ""
+        self.sectDist = (try? container.decode(String.self, forKey: .sectDist)) ?? ""
+        self.gpsY = Double((try? container.decode(String.self, forKey: .gpsY)) ?? "") ?? 0
+        self.gpsX = Double((try? container.decode(String.self, forKey: .gpsX)) ?? "") ?? 0
     }
 }

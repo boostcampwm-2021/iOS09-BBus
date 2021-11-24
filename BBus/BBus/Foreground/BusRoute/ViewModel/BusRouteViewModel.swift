@@ -49,7 +49,7 @@ final class BusRouteViewModel {
             .receive(on: BusRouteUsecase.queue)
             .sink(receiveValue: { [weak self] bodys in
                 guard let self = self else { return }
-                
+
                 self.convertBusStationInfo(with: bodys)
                 self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
             })
