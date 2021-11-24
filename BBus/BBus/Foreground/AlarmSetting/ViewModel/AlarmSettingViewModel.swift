@@ -113,7 +113,7 @@ class AlarmSettingViewModel {
                     alarmSettingInfo.arsId = info.arsId
                     alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
                     alarmSettingInfo.name = info.stationName
-                    alarmSettingInfo.ord = info.sectionOrd
+                    alarmSettingInfo.ord = info.sequence
                     return alarmSettingInfo
                 })
                 .collect()
