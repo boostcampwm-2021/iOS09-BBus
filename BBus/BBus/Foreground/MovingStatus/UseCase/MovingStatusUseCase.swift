@@ -52,14 +52,14 @@ final class MovingStatusUsecase {
         Self.queue.async {
             self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
                 .receive(on: Self.queue)
-                .tryMap ({ stationsByRouteList -> [StationByRouteListDTO] in
-                    guard let result = BBusXMLParser().parse(dtoType: StationByRouteResult.self, xml: stationsByRouteList) else { throw BBusAPIError.wrongFormatError }
-                    return result.body.itemList
-                })
+                .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
                 .retry ({ [weak self] in
                     self?.fetchRouteList(busRouteId: busRouteId)
                 }, handler: { [weak self] error in
                     self?.networkError = error
+                })
+                .map({ item in
+                    item.msgBody.itemList.map { StationByRouteListDTO(rawDto: $0) }
                 })
                 .assign(to: &self.$stations)
         }

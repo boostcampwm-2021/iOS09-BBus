@@ -198,7 +198,7 @@ final class MovingStatusViewModel {
         var stationsResult: [StationInfo] = []
         var totalTime: Int = 0
         let stations = Array(stations[startIndex...endIndex])
-        self.startOrd = stations.first?.sectionOrd  // 2
+        self.startOrd = stations.first?.sequence  // 2
         self.currentOrd = self.startOrd
 
         for (idx, station) in stations.enumerated() {
