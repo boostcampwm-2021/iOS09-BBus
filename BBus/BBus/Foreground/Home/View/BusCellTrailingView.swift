@@ -11,7 +11,7 @@ protocol AlarmButtonDelegate: AnyObject {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell)
 }
 
-class BusCellTrailingView: UIView {
+final class BusCellTrailingView: UIView {
     
     static let noInfoMessage = "도착 정보 없음"
 
@@ -50,8 +50,9 @@ class BusCellTrailingView: UIView {
 
         let alarmButtonWidth: CGFloat = 45
         let alarmButtonTrailingInterval: CGFloat = -10
-        self.addSubview(self.alarmButton)
-        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubviews(self.alarmButton, self.firstBusTimeLabel, self.secondBusTimeLabel, self.busTimeMessageLabel, self.firstBusTimeRightLabel, self.secondBusTimeRightLabel)
+        
         NSLayoutConstraint.activate([
             self.alarmButton.widthAnchor.constraint(equalToConstant: alarmButtonWidth),
             self.alarmButton.heightAnchor.constraint(equalTo: self.alarmButton.widthAnchor),
@@ -60,38 +61,27 @@ class BusCellTrailingView: UIView {
         ])
 
         let centerYInterval: CGFloat = 3
-
-        self.addSubview(self.firstBusTimeLabel)
-        self.firstBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.firstBusTimeLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -centerYInterval),
             self.firstBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
-        self.addSubview(self.secondBusTimeLabel)
-        self.secondBusTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: centerYInterval),
             self.secondBusTimeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         
-        self.addSubview(self.busTimeMessageLabel)
-        self.busTimeMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTimeMessageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.busTimeMessageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
 
         let trailingViewLabelsInterval: CGFloat = 4
-        self.addSubview(self.firstBusTimeRightLabel)
-        self.firstBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.firstBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.firstBusTimeLabel.centerYAnchor),
             self.firstBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.firstBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval)
         ])
 
-        self.addSubview(self.secondBusTimeRightLabel)
-        self.secondBusTimeRightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.secondBusTimeRightLabel.centerYAnchor.constraint(equalTo: self.secondBusTimeLabel.centerYAnchor),
             self.secondBusTimeRightLabel.leadingAnchor.constraint(equalTo: self.secondBusTimeLabel.trailingAnchor, constant: trailingViewLabelsInterval)

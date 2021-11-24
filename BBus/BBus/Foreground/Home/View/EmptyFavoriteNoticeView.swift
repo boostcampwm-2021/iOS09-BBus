@@ -1,5 +1,5 @@
 //
-//  NothingFavoriteView.swift
+//  EmptyFavoriteNoticeView.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/18.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptyFavoriteNoticeView: UIView {
+final class EmptyFavoriteNoticeView: UIView {
 
     private lazy var noticeImage: UIImageView = {
         let imageView = UIImageView(image: BBusImage.homeFavoriteEmpty)

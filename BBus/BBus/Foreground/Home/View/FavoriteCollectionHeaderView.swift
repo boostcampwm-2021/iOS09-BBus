@@ -1,5 +1,5 @@
 //
-//  FavoriteHeader.swift
+//  FavoriteCollectionHeaderView.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/02.
@@ -11,7 +11,7 @@ protocol FavoriteHeaderViewDelegate: AnyObject {
     func shouldGoToStationScene(headerView: UICollectionReusableView)
 }
 
-class FavoriteCollectionHeaderView: UICollectionReusableView {
+final class FavoriteCollectionHeaderView: UICollectionReusableView {
 
     static let identifier = "FavoriteHeaderView"
     static let height: CGFloat = 70
@@ -62,15 +62,13 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         let titleBottomInterval: CGFloat = -35
         let titleDirectionInterval: CGFloat = 5
 
-        self.addSubview(self.stationTitleLabel)
-        self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.stationTitleLabel, self.arsIdLabel)
+        
         NSLayoutConstraint.activate([
             self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
             self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: titleBottomInterval)
         ])
 
-        self.addSubview(self.arsIdLabel)
-        self.arsIdLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.arsIdLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
             self.arsIdLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)

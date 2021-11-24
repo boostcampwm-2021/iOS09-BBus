@@ -12,7 +12,7 @@ protocol GetOnAlarmButtonDelegate: AnyObject {
     func buttonTapped(for cell: UITableViewCell)
 }
 
-class GetOnStatusCell: UITableViewCell {
+final class GetOnStatusCell: UITableViewCell {
 
     static let reusableID = "GetOnStatusCell"
     static let infoCellHeight: CGFloat = 115

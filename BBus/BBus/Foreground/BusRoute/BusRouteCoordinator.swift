@@ -1,5 +1,5 @@
 //
-//  BusCoordinator.swift
+//  BusRouteCoordinator.swift
 //  BBus
 //
 //  Created by 최수정 on 2021/11/03.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteCoordinator: StationPushable {
+final class BusRouteCoordinator: StationPushable {
     var navigationPresenter: UINavigationController
     weak var delegate: CoordinatorDelegate?
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovingStatusTableViewCell: BusStationTableViewCell {
+final class MovingStatusTableViewCell: BusStationTableViewCell {
 
     enum BusRouteCenterImageType {
         case waypoint, getOn, getOff

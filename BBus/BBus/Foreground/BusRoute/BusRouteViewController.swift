@@ -68,9 +68,9 @@ final class BusRouteViewController: UIViewController {
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
         let refreshTrailingBottomInterval: CGFloat = -16
+        
+        self.view.addSubviews(self.busRouteView, self.customNavigationBar, self.refreshButton)
 
-        self.view.addSubview(self.busRouteView)
-        self.busRouteView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busRouteView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.busRouteView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -78,8 +78,6 @@ final class BusRouteViewController: UIViewController {
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-        self.view.addSubview(self.customNavigationBar)
-        self.customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -87,9 +85,6 @@ final class BusRouteViewController: UIViewController {
         ])
 
         self.busRouteView.configureTableViewHeight(count: 20)
-
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
@@ -158,13 +153,13 @@ final class BusRouteViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingBusRouteHeaderResult()
-        self.bindingBusRouteBodyResult()
-        self.bindingBusesPosInfo()
-        self.bindingNetworkError()
+        self.bindBusRouteHeaderResult()
+        self.bindBusRouteBodyResult()
+        self.bindBusesPosInfo()
+        self.bindNetworkError()
     }
 
-    private func bindingBusRouteHeaderResult() {
+    private func bindBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: DispatchQueue.main)
             .dropFirst()
@@ -184,30 +179,26 @@ final class BusRouteViewController: UIViewController {
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusRouteBodyResult() {
+    private func bindBusRouteBodyResult() {
         self.viewModel?.$bodys
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] bodys in
-                DispatchQueue.main.async {
-                    self?.busRouteView.reload()
-                    self?.busRouteView.configureTableViewHeight(count: bodys.count)
-                }
+                self?.busRouteView.reload()
+                self?.busRouteView.configureTableViewHeight(count: bodys.count)
             })
             .store(in: &self.cancellables)
     }
 
-    private func bindingBusesPosInfo() {
+    private func bindBusesPosInfo() {
         self.viewModel?.$buses
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] buses in
-                DispatchQueue.main.async {
-                    self?.configureBusTags(buses: buses)
-                }
+                self?.configureBusTags(buses: buses)
             })
             .store(in: &self.cancellables)
     }
     
-    private func bindingNetworkError() {
+    private func bindNetworkError() {
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in

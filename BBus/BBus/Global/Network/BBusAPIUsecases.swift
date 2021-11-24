@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class BBusAPIUsecases: RequestUsecases {
+final class BBusAPIUsecases: RequestUsecases {
     
     private let queue: DispatchQueue
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteView: UIView {
+final class BusRouteView: UIView {
 
     private lazy var busRouteScrollView = UIScrollView()
     private lazy var busRouteScrollContentsView = UIView()
@@ -43,8 +43,8 @@ class BusRouteView: UIView {
     private func configureLayout() {
         let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
         
-        self.addSubview(self.colorBackgroundView)
-        self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.colorBackgroundView, self.busRouteScrollView)
+        
         NSLayoutConstraint.activate([
             self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: colorBackgroundViewHeightMultiplier),
             self.colorBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -52,8 +52,6 @@ class BusRouteView: UIView {
             self.colorBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
         
-        self.addSubview(self.busRouteScrollView)
-        self.busRouteScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busRouteScrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.busRouteScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -61,8 +59,8 @@ class BusRouteView: UIView {
             self.busRouteScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.busRouteScrollContentsView.addSubview(self.busHeaderView)
-        self.busHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        self.busRouteScrollContentsView.addSubviews(self.busHeaderView, self.busRouteTableView)
+        
         NSLayoutConstraint.activate([
             self.busHeaderView.heightAnchor.constraint(equalToConstant: BusRouteHeaderView.headerHeight),
             self.busHeaderView.leadingAnchor.constraint(equalTo: self.busRouteScrollContentsView.leadingAnchor),
@@ -70,8 +68,6 @@ class BusRouteView: UIView {
             self.busHeaderView.topAnchor.constraint(equalTo: self.busRouteScrollContentsView.topAnchor)
         ])
         
-        self.busRouteScrollContentsView.addSubview(self.busRouteTableView)
-        self.busRouteTableView.translatesAutoresizingMaskIntoConstraints = false
         self.busRouteTableViewHeightConstraint = self.busRouteTableView.heightAnchor.constraint(equalToConstant: tableViewMinHeight)
         self.busRouteTableViewHeightConstraint?.isActive = true
         NSLayoutConstraint.activate([
@@ -81,8 +77,7 @@ class BusRouteView: UIView {
             self.busRouteTableView.bottomAnchor.constraint(equalTo: self.busRouteScrollContentsView.bottomAnchor)
         ])
         
-        self.busRouteScrollView.addSubview(self.busRouteScrollContentsView)
-        self.busRouteScrollContentsView.translatesAutoresizingMaskIntoConstraints = false
+        self.busRouteScrollView.addSubviews(self.busRouteScrollContentsView)
         NSLayoutConstraint.activate([
             self.busRouteScrollContentsView.topAnchor.constraint(equalTo: self.busRouteScrollView.contentLayoutGuide.topAnchor),
             self.busRouteScrollContentsView.leadingAnchor.constraint(equalTo: self.busRouteScrollView.contentLayoutGuide.leadingAnchor),
@@ -126,8 +121,8 @@ class BusRouteView: UIView {
                          busCongestion: busCongestion,
                          isLowFloor: isLowFloor)
 
-        self.busRouteTableView.addSubview(busTag)
-        busTag.translatesAutoresizingMaskIntoConstraints = false
+        self.busRouteTableView.addSubviews(busTag)
+        
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.busRouteTableView.leadingAnchor, constant: 5),
             busTag.centerYAnchor.constraint(equalTo: self.busRouteTableView.topAnchor, constant: (BusRouteTableViewCell.cellHeight/2) + location*BusRouteTableViewCell.cellHeight)

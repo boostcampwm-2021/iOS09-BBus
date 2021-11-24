@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class Persistent {
+final class Persistent {
     
     enum PersistentError: Error {
         case noneError, decodingError, encodingError, urlError

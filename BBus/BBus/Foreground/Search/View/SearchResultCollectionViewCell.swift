@@ -40,15 +40,13 @@ final class SearchResultCollectionViewCell: UICollectionViewCell {
         let labelLeftPadding: CGFloat = 10
         let titleDetailInfoLabelInterval: CGFloat = 4
         
-        self.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.titleLabel, self.detailInfoLabel)
+        
         NSLayoutConstraint.activate([
             self.titleLabel.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -titleDetailInfoLabelInterval/2),
             self.titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeftPadding)
         ])
         
-        self.addSubview(self.detailInfoLabel)
-        self.detailInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.detailInfoLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: titleDetailInfoLabelInterval/2),
             self.detailInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: labelLeftPadding)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmSettingCoordinator: Coordinator {
+final class AlarmSettingCoordinator: Coordinator {
     weak var delegate: CoordinatorDelegate?
     weak var movingStatusDelegate: MovingStatusOpenCloseDelegate?
     var navigationPresenter: UINavigationController

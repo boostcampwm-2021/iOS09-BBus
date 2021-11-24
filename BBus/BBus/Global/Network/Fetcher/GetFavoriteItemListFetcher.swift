@@ -12,7 +12,7 @@ protocol GetFavoriteItemListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
 }
 
-class PersistentGetFavoriteItemListFetcher: GetFavoriteItemListFetchable {
+final class PersistentGetFavoriteItemListFetcher: GetFavoriteItemListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         return Persistent.shared.getFromUserDefaults(key: "FavoriteItems", on: queue)
     }

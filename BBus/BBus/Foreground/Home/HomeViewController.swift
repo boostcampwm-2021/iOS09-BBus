@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  BBus
 //
 //  Created by Kang Minsang on 2021/10/26.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
 
     private var lastContentOffset: CGFloat = 0
     private let refreshButtonWidth: CGFloat = 50
@@ -54,8 +54,8 @@ class HomeViewController: UIViewController {
 
         let statusbarView = UIView()
         statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-        self.view.addSubview(statusbarView)
-        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubviews(statusbarView)
         statusbarView.heightAnchor
             .constraint(equalToConstant: statusBarHeight).isActive = true
         statusbarView.widthAnchor
@@ -104,11 +104,11 @@ class HomeViewController: UIViewController {
     }
 
     private func binding() {
-        self.bindingFavoriteList()
-        self.bindingNetworkError()
+        self.bindFavoriteList()
+        self.bindNetworkError()
     }
 
-    private func bindingFavoriteList() {
+    private func bindFavoriteList() {
 
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
@@ -122,7 +122,7 @@ class HomeViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
-    private func bindingNetworkError() {
+    private func bindNetworkError() {
         self.viewModel?.useCase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
@@ -180,25 +180,23 @@ extension HomeViewController: UICollectionViewDataSource {
       
         cell.configureDelegate(self)
         
-        // bind RemainTimeLabel and ViewModel
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
             .filter { $0.changedByTimer }
             .sink(receiveValue: { [weak self, weak cell] homeFavoriteList in
-                DispatchQueue.main.async {
-                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
-                          let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
-                          let busType = self?.viewModel?.busType(by: busName) else { return }
-                    let busArrivalInfo = model.arriveInfo
-                    cell?.configure(busNumber: busName,
-                                   routeType: busType,
-                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
-                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
-                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                                   secondBusCongestion: busArrivalInfo?.secondBusCongestion?.toString())
-                }
+                guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                      let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
+                      let busType = self?.viewModel?.busType(by: busName) else { return }
+                let busArrivalInfo = model.arriveInfo
+                cell?.configure(busNumber: busName,
+                               routeType: busType,
+                               firstBusTime: busArrivalInfo?.firstTime.toString(),
+                               firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                               firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                               secondBusTime: busArrivalInfo?.secondTime.toString(),
+                               secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                               secondBusCongestion: busArrivalInfo?.secondBusCongestion?.toString())
             })
             .store(in: &cell.cancellables)
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],

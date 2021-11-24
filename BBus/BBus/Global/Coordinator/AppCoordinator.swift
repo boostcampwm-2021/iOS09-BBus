@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator: NSObject, Coordinator {
+final class AppCoordinator: NSObject, Coordinator {
     private let navigationWindow: UIWindow
     private let movingStatusWindow: UIWindow
     weak var delegate: CoordinatorDelegate?

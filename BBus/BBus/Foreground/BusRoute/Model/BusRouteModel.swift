@@ -2,7 +2,7 @@
 //  BusRouteModel.swift
 //  BBus
 //
-//  Created by 김태훈 on 2021/11/01.
+//  Created by 이지수 on 2021/11/24.
 //
 
 import Foundation

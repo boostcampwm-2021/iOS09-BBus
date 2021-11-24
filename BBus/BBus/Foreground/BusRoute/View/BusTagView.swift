@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusTagView: UIView {
+final class BusTagView: UIView {
 
     enum TagSizeType {
         case min, max
@@ -72,17 +72,15 @@ class BusTagView: UIView {
         let busIconImageViewHeightAnchor: CGFloat = 20
         let termBusTagImageViewToBusIconImageView: CGFloat = 2
         let busTagFrameViewCenterXAnchor: CGFloat = -2
+        
+        self.addSubviews(self.busTagImageView, self.busIconImageView)
 
-        self.addSubview(self.busTagImageView)
-        self.busTagImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTagImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.busTagImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.busTagImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
-        self.addSubview(self.busIconImageView)
-        self.busIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busIconImageView.widthAnchor.constraint(equalToConstant: busIconImageViewWidthAnchor),
             self.busIconImageView.heightAnchor.constraint(equalToConstant: busIconImageViewHeightAnchor),
@@ -90,23 +88,21 @@ class BusTagView: UIView {
             self.busIconImageView.leadingAnchor.constraint(equalTo: self.busTagImageView.trailingAnchor, constant: termBusTagImageViewToBusIconImageView),
             self.busIconImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-
-        self.busTagImageView.addSubview(self.busTagFrameView)
-        self.busTagFrameView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.busTagImageView.addSubviews(self.busTagFrameView)
+        
         NSLayoutConstraint.activate([
             self.busTagFrameView.centerXAnchor.constraint(equalTo: self.busTagImageView.centerXAnchor, constant: busTagFrameViewCenterXAnchor),
             self.busTagFrameView.centerYAnchor.constraint(equalTo: self.busTagImageView.centerYAnchor)
         ])
 
-        self.busTagFrameView.addSubview(self.busStatusStackView)
-        self.busStatusStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.busTagFrameView.addSubviews(self.busStatusStackView, self.lowFloorLabel)
+        
         NSLayoutConstraint.activate([
             self.busStatusStackView.topAnchor.constraint(equalTo: self.busTagFrameView.topAnchor),
             self.busStatusStackView.centerXAnchor.constraint(equalTo: self.busTagFrameView.centerXAnchor)
         ])
 
-        self.busTagFrameView.addSubview(self.lowFloorLabel)
-        self.lowFloorLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.lowFloorLabel.topAnchor.constraint(equalTo: self.busStatusStackView.bottomAnchor),
             self.lowFloorLabel.leadingAnchor.constraint(equalTo: self.busTagFrameView.leadingAnchor),

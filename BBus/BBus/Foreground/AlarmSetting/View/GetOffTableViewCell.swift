@@ -1,5 +1,5 @@
 //
-//  AlarmSettingTableViewCell.swift
+//  GetOffTableViewCell.swift
 //  BBus
 //
 //  Created by 최수정 on 2021/11/04.
@@ -12,7 +12,7 @@ protocol GetOffAlarmButtonDelegate: AnyObject {
     func shouldGoToMovingStatusScene(from cell: UITableViewCell)
 }
 
-class GetOffTableViewCell: BusStationTableViewCell {
+final class GetOffTableViewCell: BusStationTableViewCell {
     enum BusRootCenterImageType {
         case waypoint, getOn
     }
@@ -66,8 +66,8 @@ class GetOffTableViewCell: BusStationTableViewCell {
         let circleImageWidth: CGFloat = 32
         let separatorHeight: CGFloat = 1
         
-        self.contentView.addSubview(self.alarmButton)
-        self.alarmButton.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubviews(self.alarmButton)
+        
         NSLayoutConstraint.activate([
             self.alarmButton.heightAnchor.constraint(equalToConstant: alarmButtonWidthHeight),
             self.alarmButton.widthAnchor.constraint(equalTo: self.alarmButton.heightAnchor),
@@ -82,8 +82,8 @@ class GetOffTableViewCell: BusStationTableViewCell {
             super.centerImageView.centerXAnchor.constraint(equalTo: super.beforeCongestionLineView.centerXAnchor)
         ])
         
-        self.addSubview(self.separatorView)
-        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.separatorView)
+        
         NSLayoutConstraint.activate([
             self.separatorView.leadingAnchor.constraint(equalTo: super.labelStackView.leadingAnchor),
             self.separatorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),

@@ -19,7 +19,7 @@ protocol EndAlarmButtonDelegate: AnyObject {
     func shouldEndAlarm()
 }
 
-class MovingStatusView: UIView {
+final class MovingStatusView: UIView {
     
     static let bottomIndicatorHeight: CGFloat = 80
     static let endAlarmViewHeight: CGFloat = 80
@@ -148,8 +148,8 @@ class MovingStatusView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
-        self.addSubview(self.bottomIndicatorButton)
-        self.bottomIndicatorButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView)
+        
         NSLayoutConstraint.activate([
             self.bottomIndicatorButton.topAnchor.constraint(equalTo: self.topAnchor),
             self.bottomIndicatorButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -160,9 +160,7 @@ class MovingStatusView: UIView {
         let bottomIndicatorImageViewSize: CGFloat = 25
         let bottomIndicatorImgaeViewTopMargin: CGFloat = 13
         let bottomIndicatorImageViewLeftMargin: CGFloat = 25
-        
-        self.bottomIndicatorButton.addSubview(self.bottomIndicatorImageView)
-        self.bottomIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomIndicatorButton.addSubviews(self.bottomIndicatorImageView, self.unfoldImageView, self.bottomIndicatorLabel)
         NSLayoutConstraint.activate([
             self.bottomIndicatorImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomIndicatorImgaeViewTopMargin),
             self.bottomIndicatorImageView.heightAnchor.constraint(equalToConstant: bottomIndicatorImageViewSize),
@@ -173,9 +171,6 @@ class MovingStatusView: UIView {
         let unfoldButtonRightMargin: CGFloat = -20
         let unfoldButtonWidth: CGFloat = 20
         let unfoldButtonHeight: CGFloat = 20
-        
-        self.bottomIndicatorButton.addSubview(self.unfoldImageView)
-        self.unfoldImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.unfoldImageView.centerYAnchor.constraint(equalTo: self.bottomIndicatorImageView.centerYAnchor),
             self.unfoldImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: unfoldButtonRightMargin),
@@ -185,9 +180,6 @@ class MovingStatusView: UIView {
         
         let bottomIndicatorLabelRightMargin: CGFloat = -20
         let bottomIndicatorLabelLeftMargin: CGFloat = 10
-        
-        self.bottomIndicatorButton.addSubview(self.bottomIndicatorLabel)
-        self.bottomIndicatorLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.bottomIndicatorLabel.centerYAnchor.constraint(equalTo: self.bottomIndicatorImageView.centerYAnchor),
             self.bottomIndicatorLabel.trailingAnchor.constraint(equalTo: self.unfoldImageView.leadingAnchor, constant: bottomIndicatorLabelRightMargin),
@@ -195,9 +187,6 @@ class MovingStatusView: UIView {
         ])
         
         let headerHeight: CGFloat = 120
-        
-        self.addSubview(self.headerView)
-        self.headerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.headerView.topAnchor.constraint(equalTo: self.bottomIndicatorButton.bottomAnchor),
             self.headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -205,10 +194,9 @@ class MovingStatusView: UIView {
             self.headerView.heightAnchor.constraint(equalToConstant: headerHeight)
         ])
         
-        let headerBottomBorderHeight: CGFloat = 0.5
+        self.headerView.addSubviews(self.headerBottomBorderView, self.busNumberLabel, self.foldButton, self.alarmStatusLabel)
         
-        self.headerView.addSubview(self.headerBottomBorderView)
-        self.headerBottomBorderView.translatesAutoresizingMaskIntoConstraints = false
+        let headerBottomBorderHeight: CGFloat = 0.5
         NSLayoutConstraint.activate([
             self.headerBottomBorderView.bottomAnchor.constraint(equalTo: self.headerView.bottomAnchor),
             self.headerBottomBorderView.trailingAnchor.constraint(equalTo: self.headerView.trailingAnchor),
@@ -219,9 +207,6 @@ class MovingStatusView: UIView {
         let busNumberLabelTopMargin: CGFloat = 45
         let busNumberLabelLeftMargin: CGFloat = 40
         let busNumberLabelRightMargin: CGFloat = -70
-        
-        self.headerView.addSubview(self.busNumberLabel)
-        self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.topAnchor.constraint(equalTo: self.headerView.topAnchor, constant: busNumberLabelTopMargin),
             self.busNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: busNumberLabelRightMargin),
@@ -230,19 +215,15 @@ class MovingStatusView: UIView {
         
         let foldImageViewMargin: CGFloat = 10
         let foldButtonRightMargin: CGFloat = unfoldButtonRightMargin + foldImageViewMargin
-        
-        self.headerView.addSubview(self.foldButton)
-        self.foldButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.foldButton.centerYAnchor.constraint(equalTo: self.busNumberLabel.centerYAnchor),
             self.foldButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: foldButtonRightMargin)
         ])
         
+        self.foldButton.addSubviews(self.foldImageView)
+        
         let foldButtonHeight = unfoldButtonHeight
         let foldButtonWidth = unfoldButtonWidth
-        
-        self.foldButton.addSubview(self.foldImageView)
-        self.foldImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.foldImageView.topAnchor.constraint(equalTo: self.foldButton.topAnchor, constant: foldImageViewMargin),
             self.foldImageView.trailingAnchor.constraint(equalTo: self.foldButton.trailingAnchor, constant: -foldImageViewMargin),
@@ -254,17 +235,12 @@ class MovingStatusView: UIView {
         
         let alarmStatusLabelTopMargin: CGFloat = 4
         let alarmStatusLabelRightMargin: CGFloat = -50
-        
-        self.headerView.addSubview(self.alarmStatusLabel)
-        self.alarmStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.alarmStatusLabel.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: alarmStatusLabelTopMargin),
             self.alarmStatusLabel.leadingAnchor.constraint(equalTo: self.busNumberLabel.leadingAnchor),
             self.alarmStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: alarmStatusLabelRightMargin)
         ])
         
-        self.addSubview(self.endAlarmButton)
-        self.endAlarmButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.endAlarmButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.endAlarmButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -272,8 +248,6 @@ class MovingStatusView: UIView {
             self.endAlarmButton.heightAnchor.constraint(equalToConstant: Self.endAlarmViewHeight)
         ])
         
-        self.addSubview(self.stationsTableView)
-        self.stationsTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationsTableView.topAnchor.constraint(equalTo: self.headerView.bottomAnchor),
             self.stationsTableView.bottomAnchor.constraint(equalTo: self.endAlarmButton.topAnchor),
@@ -298,8 +272,8 @@ class MovingStatusView: UIView {
                          busIcon: busIcon,
                          remainStation: remainStation)
         
-        self.stationsTableView.addSubview(busTag)
-        busTag.translatesAutoresizingMaskIntoConstraints = false
+        self.stationsTableView.addSubviews(busTag)
+        
         NSLayoutConstraint.activate([
             busTag.leadingAnchor.constraint(equalTo: self.stationsTableView.leadingAnchor, constant: busTagLeftMargin),
             busTag.centerYAnchor.constraint(equalTo: self.stationsTableView.topAnchor, constant: (MovingStatusTableViewCell.cellHeight/2) + location*MovingStatusTableViewCell.cellHeight)

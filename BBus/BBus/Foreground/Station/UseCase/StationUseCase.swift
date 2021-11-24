@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class StationUsecase {
+final class StationUsecase {
     static let queue = DispatchQueue.init(label: "station")
     
     typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase

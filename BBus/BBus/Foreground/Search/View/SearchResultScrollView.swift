@@ -61,10 +61,9 @@ final class SearchResultScrollView: UIScrollView {
         let twice: CGFloat = 2
         let half: CGFloat = 0.5
         let quater: CGFloat = 0.25
-
         let contentView = UIView()
-        self.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubviews(contentView, self.emptyBusSearchResultNoticeView, self.emptyStationSearchResultNoticeView)
 
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: self.contentLayoutGuide.topAnchor),
@@ -74,9 +73,10 @@ final class SearchResultScrollView: UIScrollView {
             contentView.widthAnchor.constraint(equalTo: self.frameLayoutGuide.widthAnchor, multiplier: twice),
             contentView.heightAnchor.constraint(equalTo: self.frameLayoutGuide.heightAnchor)
         ])
+        
+        
+        contentView.addSubviews(self.collectionViewSeparateView, self.rightFakeIndicatorView, self.leftFakeIndicatorView, self.stationResultCollectionView, self.busResultCollectionView)
 
-        contentView.addSubview(self.busResultCollectionView)
-        self.busResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busResultCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             self.busResultCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),
@@ -84,8 +84,6 @@ final class SearchResultScrollView: UIScrollView {
             self.busResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
 
-        contentView.addSubview(self.stationResultCollectionView)
-        self.stationResultCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationResultCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             self.stationResultCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),
@@ -93,17 +91,13 @@ final class SearchResultScrollView: UIScrollView {
             self.stationResultCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
 
-        contentView.addSubview(self.leftFakeIndicatorView)
-        self.leftFakeIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.leftFakeIndicatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             self.leftFakeIndicatorView.topAnchor.constraint(equalTo: contentView.topAnchor),
             self.leftFakeIndicatorView.heightAnchor.constraint(equalToConstant: SearchResultScrollView.indicatorHeight),
             self.leftFakeIndicatorView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: quater)
         ])
-
-        contentView.addSubview(self.rightFakeIndicatorView)
-        self.rightFakeIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             self.rightFakeIndicatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             self.rightFakeIndicatorView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -112,9 +106,6 @@ final class SearchResultScrollView: UIScrollView {
         ])
 
         let separatorHeight: CGFloat = 0.3
-
-        contentView.addSubview(self.collectionViewSeparateView)
-        self.collectionViewSeparateView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.collectionViewSeparateView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             self.collectionViewSeparateView.topAnchor.constraint(equalTo: self.rightFakeIndicatorView.bottomAnchor),
@@ -122,8 +113,6 @@ final class SearchResultScrollView: UIScrollView {
             self.collectionViewSeparateView.heightAnchor.constraint(equalToConstant: separatorHeight)
         ])
 
-        self.addSubview(self.emptyBusSearchResultNoticeView)
-        self.emptyBusSearchResultNoticeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.emptyBusSearchResultNoticeView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             self.emptyBusSearchResultNoticeView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),
@@ -131,8 +120,6 @@ final class SearchResultScrollView: UIScrollView {
             self.emptyBusSearchResultNoticeView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: half)
         ])
 
-        self.addSubview(self.emptyStationSearchResultNoticeView)
-        self.emptyStationSearchResultNoticeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.emptyStationSearchResultNoticeView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             self.emptyStationSearchResultNoticeView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: SearchResultScrollView.indicatorHeight),

@@ -1,5 +1,5 @@
 //
-//  SearchBusView.swift
+//  SearchView.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/01.
@@ -51,8 +51,8 @@ final class SearchView: UIView {
     // MARK: - Configuration
     private func configureLayout() {
 
-        self.addSubview(self.navigationView)
-        self.navigationView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.navigationView, self.searchResultScrollView)
+        
         NSLayoutConstraint.activate([
             self.navigationView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.navigationView.heightAnchor.constraint(equalToConstant: SearchNavigationView.height),
@@ -60,8 +60,6 @@ final class SearchView: UIView {
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.addSubview(self.searchResultScrollView)
-        self.searchResultScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchResultScrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.searchResultScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),

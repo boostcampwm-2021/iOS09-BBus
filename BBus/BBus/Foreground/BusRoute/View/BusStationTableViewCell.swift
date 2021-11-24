@@ -66,16 +66,14 @@ class BusStationTableViewCell: UITableViewCell {
         let congestionLineViewHeightMultiplier: CGFloat = 0.5
         let congestionLineViewWidth: CGFloat = 3
         
-        self.addSubview(self.labelStackView)
-        self.labelStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.labelStackView, self.beforeCongestionLineView, self.afterCongestionLineView, self.centerImageView)
+        
         NSLayoutConstraint.activate([
             self.labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.titleLeadingOffset),
             self.labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: self.labelStackViewRightMargin),
             self.labelStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
-        self.addSubview(self.beforeCongestionLineView)
-        self.beforeCongestionLineView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.beforeCongestionLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: congestionLineViewHeightMultiplier),
             self.beforeCongestionLineView.widthAnchor.constraint(equalToConstant: congestionLineViewWidth),
@@ -83,17 +81,12 @@ class BusStationTableViewCell: UITableViewCell {
             self.beforeCongestionLineView.centerXAnchor.constraint(equalTo: self.labelStackView.leadingAnchor, constant: self.lineTrailingOffset)
         ])
         
-        self.addSubview(self.afterCongestionLineView)
-        self.afterCongestionLineView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.afterCongestionLineView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: congestionLineViewHeightMultiplier),
             self.afterCongestionLineView.widthAnchor.constraint(equalToConstant: congestionLineViewWidth),
             self.afterCongestionLineView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.afterCongestionLineView.centerXAnchor.constraint(equalTo: self.beforeCongestionLineView.centerXAnchor)
         ])
-        
-        self.addSubview(self.centerImageView)
-        self.centerImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureColor() {

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AlarmSettingViewModel {
+final class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
     let stationId: Int
@@ -64,11 +64,11 @@ class AlarmSettingViewModel {
     }
     
     private func binding() {
-        self.bindingBusArriveInfo()
-        self.bindingBusStationsInfo()
+        self.bindBusArriveInfo()
+        self.bindBusStationsInfo()
     }
     
-    private func bindingBusArriveInfo() {
+    private func bindBusArriveInfo() {
         self.useCase.$busArriveInfo
             .receive(on: AlarmSettingUseCase.queue)
             .sink(receiveValue: { [weak self] data in
@@ -90,16 +90,16 @@ class AlarmSettingViewModel {
             .store(in: &self.cancellables)
     }
     
-    private func bindingBusStationsInfo() {
+    private func bindBusStationsInfo() {
         self.useCase.$busStationsInfo
             .receive(on: AlarmSettingUseCase.queue)
             .sink(receiveValue: { [weak self] infos in
-                self?.mappingStationsDTOtoAlarmSettingInfo()
+                self?.mapStationsDTOtoAlarmSettingInfo()
             })
             .store(in: &self.cancellables)
     }
     
-    private func mappingStationsDTOtoAlarmSettingInfo() {
+    private func mapStationsDTOtoAlarmSettingInfo() {
         let initInfo: AlarmSettingBusStationInfo
         initInfo.estimatedTime = 0
         initInfo.arsId = ""

@@ -1,5 +1,5 @@
 //
-//  FavoriteTableViewCell.swift
+//  FavoriteCollectionViewCell.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/02.
@@ -69,21 +69,18 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Configuration
-    // Only uses Subclass
      func configureLayout() {
         let half: CGFloat = 0.5
-
-        self.addSubview(self.busNumberLabel)
+         
+        self.addSubviews(self.busNumberLabel, self.trailingView)
+         
         let busNumberLeadingConstraint = self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.busNumberLeadingInterval)
         busNumberLeadingConstraint.priority = UILayoutPriority.defaultHigh
-        self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: self.busNumberYAxisMargin),
             busNumberLeadingConstraint
         ])
 
-        self.addSubview(self.trailingView)
-        self.trailingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.trailingView.topAnchor.constraint(equalTo: self.topAnchor),
             self.trailingView.bottomAnchor.constraint(equalTo: self.bottomAnchor),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteHeaderView: UIView {
+final class BusRouteHeaderView: UIView {
 
     static let headerHeight: CGFloat = 170
 
@@ -78,22 +78,18 @@ class BusRouteHeaderView: UIView {
         let busTypeLabelBottomMargin: CGFloat = -5
         let stackViewTopMargin: CGFloat = 7
         
-        self.addSubview(self.busNumberLabel)
-        self.busNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.busNumberLabel, self.busTypeLabel, self.busStationStackView)
+        
         NSLayoutConstraint.activate([
             self.busNumberLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.busNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: busNumberLabelYaxisMargin)
         ])
         
-        self.addSubview(self.busTypeLabel)
-        self.busTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busTypeLabel.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
             self.busTypeLabel.bottomAnchor.constraint(equalTo: self.busNumberLabel.topAnchor, constant: busTypeLabelBottomMargin)
         ])
         
-        self.addSubview(self.busStationStackView)
-        self.busStationStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busStationStackView.centerXAnchor.constraint(equalTo: self.busNumberLabel.centerXAnchor),
             self.busStationStackView.topAnchor.constraint(equalTo: self.busNumberLabel.bottomAnchor, constant: stackViewTopMargin)

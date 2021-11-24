@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmSettingView: UIView {
+final class AlarmSettingView: UIView {
     
     static let tableViewSectionCount = 2
     static let tableViewHeaderHeight: CGFloat = 35
@@ -35,8 +35,7 @@ class AlarmSettingView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
-        self.addSubview(self.alarmTableView)
-        self.alarmTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.alarmTableView)
         NSLayoutConstraint.activate([
             self.alarmTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.alarmTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),

@@ -1,5 +1,5 @@
 //
-//  SearchBusViewController.swift
+//  SearchViewController.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/01.
@@ -42,8 +42,8 @@ final class SearchViewController: UIViewController {
     }
 
     private func configureLayout() {
-        self.view.addSubview(self.searchView)
-        self.searchView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.searchView)
+        
         NSLayoutConstraint.activate([
             self.searchView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.searchView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -58,15 +58,13 @@ final class SearchViewController: UIViewController {
     
     private func binding() {
         self.viewModel?.$searchResults
-            .receive(on: SearchUseCase.queue)
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] response in
-                DispatchQueue.main.async {
-                    let isBusResultEmpty = response.busSearchResults.count == 0
-                    let isStationResultEmpty = response.stationSearchResults.count == 0
-                    self?.searchView.emptyNoticeActivate(type: .bus, by: isBusResultEmpty)
-                    self?.searchView.emptyNoticeActivate(type: .station, by: isStationResultEmpty)
-                    self?.searchView.reload()
-                }
+                let isBusResultEmpty = response.busSearchResults.count == 0
+                let isStationResultEmpty = response.stationSearchResults.count == 0
+                self?.searchView.emptyNoticeActivate(type: .bus, by: isBusResultEmpty)
+                self?.searchView.emptyNoticeActivate(type: .station, by: isStationResultEmpty)
+                self?.searchView.reload()
             })
             .store(in: &self.cancellables)
         

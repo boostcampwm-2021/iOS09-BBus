@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteTableViewCell: BusStationTableViewCell {
+final class BusRouteTableViewCell: BusStationTableViewCell {
     enum BusRootCenterImageType {
         case waypoint, uturn
     }

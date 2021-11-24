@@ -1,5 +1,5 @@
 //
-//  BusRouteHeaderView.swift
+//  StationHeaderView.swift
 //  BBus
 //
 //  Created by 최수정 on 2021/11/02.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StationHeaderView: UIView {
+final class StationHeaderView: UIView {
 
     static let headerHeight: CGFloat = 170
 
@@ -50,23 +50,19 @@ class StationHeaderView: UIView {
         let stationIdLabelYaxisMargin: CGFloat = 10
         let stationIdLabelBottomMargin: CGFloat = -5
         let directionLabelTopMargin: CGFloat = 7
+        
+        self.addSubviews(self.stationNameLabel, self.stationIdLabel, self.directionLabel)
 
-        self.addSubview(self.stationNameLabel)
-        self.stationNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.stationNameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: stationIdLabelYaxisMargin)
         ])
 
-        self.addSubview(self.stationIdLabel)
-        self.stationIdLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationIdLabel.centerXAnchor.constraint(equalTo: self.stationNameLabel.centerXAnchor),
             self.stationIdLabel.bottomAnchor.constraint(equalTo: self.stationNameLabel.topAnchor, constant: stationIdLabelBottomMargin)
         ])
 
-        self.addSubview(self.directionLabel)
-        self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.directionLabel.centerXAnchor.constraint(equalTo: self.stationNameLabel.centerXAnchor),
             self.directionLabel.topAnchor.constraint(equalTo: self.stationNameLabel.bottomAnchor, constant: directionLabelTopMargin)

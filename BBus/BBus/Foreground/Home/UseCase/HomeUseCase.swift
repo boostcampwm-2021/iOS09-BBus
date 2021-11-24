@@ -10,7 +10,7 @@ import Combine
 
 typealias HomeUseCases = GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
 
-class HomeUseCase {
+final class HomeUseCase {
 
     private let usecases: HomeUseCases
     private var cancellables: Set<AnyCancellable>

@@ -91,8 +91,8 @@ final class MovingStatusViewController: UIViewController {
     
     // MARK: - Configure
     private func configureLayout() {
-        self.view.addSubview(self.movingStatusView)
-        self.movingStatusView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubviews(self.movingStatusView, self.refreshButton)
+        
         NSLayoutConstraint.activate([
             self.movingStatusView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.movingStatusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -104,8 +104,6 @@ final class MovingStatusViewController: UIViewController {
         let refreshBottomInterval: CGFloat = -MovingStatusView.endAlarmViewHeight
         let refreshTrailingInterval: CGFloat = -16
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
@@ -246,7 +244,7 @@ final class MovingStatusViewController: UIViewController {
         self.viewModel?.fetch()
     }
     
-    private func bindingErrorMessage() {
+    private func bindErrorMessage() {
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
