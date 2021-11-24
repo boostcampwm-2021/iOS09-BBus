@@ -336,11 +336,11 @@
 				049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */,
 				049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */,
 				049375BE273C326A0061ACDA /* StationsByPosDTO.swift */,
+				4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */,
 				049375C2273C36880061ACDA /* BBusXMLDTO.swift */,
 				049375AA273B9F330061ACDA /* BusRouteDTO.swift */,
 				049375AE273BAA130061ACDA /* StationDTO.swift */,
 				4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */,
-				4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";

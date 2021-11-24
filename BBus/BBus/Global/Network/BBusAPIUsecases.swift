@@ -23,13 +23,6 @@ class BBusAPIUsecases: RequestUsecases {
             .fetch(param: param, on: self.queue)
     }
 
-    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRouteId]
-        let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
         let param = ["busRouteId": busRoutedId, "resultType": "json"]
         let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher()
@@ -47,6 +40,20 @@ class BBusAPIUsecases: RequestUsecases {
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
         let param = ["arsId": arsId, "resultType": "json"]
         let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
+        return fetcher
+            .fetch(param: param, on: self.queue)
+    }
+
+    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
+        let param = ["vehId": vehId, "resultType": "json"]
+        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
+        return fetcher
+            .fetch(param: param, on: self.queue)
+    }
+
+    func getRouteInfoItem(busRouteId: String) -> AnyPublisher<Data, Error> {
+        let param = ["busRouteId": busRouteId]
+        let fetcher: GetRouteInfoItemFetchable = ServiceGetRouteInfoItemFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
@@ -84,13 +91,6 @@ class BBusAPIUsecases: RequestUsecases {
     
     func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
         let fetcher: DeleteFavoriteItemFetchable = PersistentDeleteFavoriteItemFetcher()
-        return fetcher
-            .fetch(param: param, on: self.queue)
-    }
-
-    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
-        let param = ["vehId": vehId, "resultType": "json"]
-        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
         return fetcher
             .fetch(param: param, on: self.queue)
     }
