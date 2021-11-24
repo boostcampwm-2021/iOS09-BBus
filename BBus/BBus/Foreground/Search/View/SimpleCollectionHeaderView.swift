@@ -32,10 +32,9 @@ final class SimpleCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - Configuration
     func configureLayout() {
-        let titleLeftPadding: CGFloat = 10
+        self.addSubviews(self.title)
         
-        self.addSubview(self.title)
-        self.title.translatesAutoresizingMaskIntoConstraints = false
+        let titleLeftPadding: CGFloat = 10
         NSLayoutConstraint.activate([
             self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: titleLeftPadding),
             self.title.centerYAnchor.constraint(equalTo: self.centerYAnchor)

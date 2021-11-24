@@ -55,9 +55,9 @@ class HomeNavigationView: UIView {
     
     // MARK: - Configuration
     func configureLayout() {
+        self.addSubviews(self.bottomBorderView, self.searchButton)
+        
         let borderHeight: CGFloat = 0.2
-        self.addSubview(self.bottomBorderView)
-        self.bottomBorderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.bottomBorderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.bottomBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -68,8 +68,6 @@ class HomeNavigationView: UIView {
         let searchButtonWidthRatio: CGFloat = 0.9
         let searchButtonHeightRatio: CGFloat = 0.6
         let searchButtonTitleLeftPadding: CGFloat = 10
-        self.addSubview(self.searchButton)
-        self.searchButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.searchButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.searchButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),

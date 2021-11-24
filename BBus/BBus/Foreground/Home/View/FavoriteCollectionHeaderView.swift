@@ -62,15 +62,13 @@ class FavoriteCollectionHeaderView: UICollectionReusableView {
         let titleBottomInterval: CGFloat = -35
         let titleDirectionInterval: CGFloat = 5
 
-        self.addSubview(self.stationTitleLabel)
-        self.stationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.stationTitleLabel, self.arsIdLabel)
+        
         NSLayoutConstraint.activate([
             self.stationTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
             self.stationTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: titleBottomInterval)
         ])
 
-        self.addSubview(self.arsIdLabel)
-        self.arsIdLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.arsIdLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingInterval),
             self.arsIdLabel.topAnchor.constraint(equalTo: self.stationTitleLabel.bottomAnchor, constant: titleDirectionInterval)

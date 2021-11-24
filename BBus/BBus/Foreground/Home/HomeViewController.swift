@@ -54,8 +54,8 @@ class HomeViewController: UIViewController {
 
         let statusbarView = UIView()
         statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-        self.view.addSubview(statusbarView)
-        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubviews(statusbarView)
         statusbarView.heightAnchor
             .constraint(equalToConstant: statusBarHeight).isActive = true
         statusbarView.widthAnchor

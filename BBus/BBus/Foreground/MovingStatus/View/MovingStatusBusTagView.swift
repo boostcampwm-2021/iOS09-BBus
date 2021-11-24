@@ -50,8 +50,8 @@ class MovingStatusBusTagView: UIView {
         let booduckBusImageRatio = CGFloat(5) / CGFloat(6)
         let booduckBusImageLeftMargin: CGFloat = 5
         
-        self.addSubview(self.speechBubbleImageView)
-        self.speechBubbleImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.speechBubbleImageView, self.booduckBusImageView)
+        
         NSLayoutConstraint.activate([
             self.speechBubbleImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.speechBubbleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -60,8 +60,7 @@ class MovingStatusBusTagView: UIView {
             self.speechBubbleImageView.heightAnchor.constraint(equalToConstant: speechBubbleHeight)
         ])
         
-        self.speechBubbleImageView.addSubview(self.movingStatusLabel)
-        self.movingStatusLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.speechBubbleImageView.addSubviews(self.movingStatusLabel)
         NSLayoutConstraint.activate([
             self.movingStatusLabel.topAnchor.constraint(equalTo: self.speechBubbleImageView.topAnchor, constant: movingStatusLabelTopBottomMargin),
             self.movingStatusLabel.bottomAnchor.constraint(equalTo: self.speechBubbleImageView.bottomAnchor, constant: -movingStatusLabelTopBottomMargin),
@@ -69,8 +68,6 @@ class MovingStatusBusTagView: UIView {
             self.movingStatusLabel.trailingAnchor.constraint(equalTo: self.speechBubbleImageView.trailingAnchor, constant: movingStatusLabelRightMargin)
         ])
         
-        self.addSubview(self.booduckBusImageView)
-        self.booduckBusImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.booduckBusImageView.heightAnchor.constraint(equalToConstant: booduckImageHeight),
             self.booduckBusImageView.widthAnchor.constraint(equalTo: self.booduckBusImageView.heightAnchor, multiplier: booduckBusImageRatio),

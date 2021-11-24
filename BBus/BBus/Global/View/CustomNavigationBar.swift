@@ -59,11 +59,11 @@ class CustomNavigationBar: UIView {
     func configureLayout() {
         let backButtonWidthAnchor: CGFloat = 50
         let backButtonHeightAnchor: CGFloat = 45
+        
+        self.addSubviews(self.backButton, self.backButtonTitleLabel, self.titleLabel)
 
         self.heightAnchor.constraint(equalToConstant: Self.height).isActive = true
 
-        self.addSubview(self.backButton)
-        self.backButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.backButton.widthAnchor.constraint(equalToConstant: backButtonWidthAnchor),
             self.backButton.heightAnchor.constraint(equalToConstant: backButtonHeightAnchor),
@@ -71,15 +71,11 @@ class CustomNavigationBar: UIView {
             self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
         ])
 
-        self.addSubview(self.backButtonTitleLabel)
-        self.backButtonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.backButtonTitleLabel.centerYAnchor.constraint(equalTo: self.backButton.centerYAnchor),
             self.backButtonTitleLabel.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor)
         ])
 
-        self.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),

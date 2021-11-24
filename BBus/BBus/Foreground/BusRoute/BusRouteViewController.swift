@@ -68,9 +68,9 @@ final class BusRouteViewController: UIViewController {
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
         let refreshTrailingBottomInterval: CGFloat = -16
+        
+        self.view.addSubviews(self.busRouteView, self.customNavigationBar, self.refreshButton)
 
-        self.view.addSubview(self.busRouteView)
-        self.busRouteView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.busRouteView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.busRouteView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -78,8 +78,6 @@ final class BusRouteViewController: UIViewController {
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-        self.view.addSubview(self.customNavigationBar)
-        self.customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -87,9 +85,6 @@ final class BusRouteViewController: UIViewController {
         ])
 
         self.busRouteView.configureTableViewHeight(count: 20)
-
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),

@@ -64,17 +64,15 @@ class AlarmSettingViewController: UIViewController {
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
         let refreshTrailingBottomInterval: CGFloat = -16
+        
+        self.view.addSubviews(self.customNavigationBar, self.alarmSettingView, self.refreshButton)
 
-        self.view.addSubview(self.customNavigationBar)
-        self.customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
 
-        self.view.addSubview(self.alarmSettingView)
-        self.alarmSettingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.alarmSettingView.topAnchor.constraint(equalTo: self.customNavigationBar.bottomAnchor),
             self.alarmSettingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -82,8 +80,6 @@ class AlarmSettingViewController: UIViewController {
             self.alarmSettingView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),

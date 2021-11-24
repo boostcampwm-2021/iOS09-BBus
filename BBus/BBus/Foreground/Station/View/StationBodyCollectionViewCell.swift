@@ -49,8 +49,8 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
     override func configureLayout() {
         super.configureLayout()
 
-        self.addSubview(self.likeButton)
-        self.likeButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews(self.likeButton, self.directionLabel)
+        
         NSLayoutConstraint.activate([
             self.likeButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.likeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: likeButtonleadingInterval),
@@ -59,8 +59,6 @@ class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
         ])
 
         let directionLabelTopInterval: CGFloat = 5
-        self.addSubview(self.directionLabel)
-        self.directionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.directionLabel.topAnchor.constraint(equalTo: self.centerYAnchor, constant: directionLabelTopInterval),
             self.directionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.busNumberLeadingInterval),

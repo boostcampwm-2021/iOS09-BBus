@@ -94,9 +94,9 @@ final class KeyboardAccessoryView: UIView {
         let buttonWidthRatio: CGFloat = 0.17
         let buttonLeadingInterval: CGFloat = 20
         let heightMarginRatio: CGFloat = 0.15
+        
+        self.addSubviews(self.numberButton, self.characterButton, self.downKeyboardButton)
 
-        self.addSubview(self.numberButton)
-        self.numberButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.numberButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: buttonWidthRatio),
             self.numberButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: buttonLeadingInterval),
@@ -105,9 +105,6 @@ final class KeyboardAccessoryView: UIView {
         ])
 
         let buttonInterval: CGFloat = 10
-
-        self.addSubview(self.characterButton)
-        self.characterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.characterButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: buttonWidthRatio),
             self.characterButton.leadingAnchor.constraint(equalTo: self.numberButton.trailingAnchor, constant: buttonInterval),
@@ -116,9 +113,6 @@ final class KeyboardAccessoryView: UIView {
         ])
 
         let buttonTrailingInterval: CGFloat = 10
-
-        self.addSubview(self.downKeyboardButton)
-        self.downKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.downKeyboardButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: buttonWidthRatio),
             self.downKeyboardButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -buttonTrailingInterval),

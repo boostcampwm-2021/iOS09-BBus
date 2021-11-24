@@ -40,9 +40,9 @@ class StationView: UIView {
     // MARK: - Configure
     private func configureLayout() {
         let half: CGFloat = 0.5
+        
+        self.addSubviews(self.colorBackgroundView, self.stationScrollView)
 
-        self.addSubview(self.colorBackgroundView)
-        self.colorBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: half),
             self.colorBackgroundView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -50,17 +50,15 @@ class StationView: UIView {
             self.colorBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        self.addSubview(self.stationScrollView)
-        self.stationScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationScrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.stationScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.stationScrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.stationScrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+        
+        self.stationScrollContentsView.addSubviews(self.stationHeaderView, self.stationBodyCollectionView)
 
-        self.stationScrollContentsView.addSubview(self.stationHeaderView)
-        self.stationHeaderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationHeaderView.heightAnchor.constraint(equalToConstant: BusRouteHeaderView.headerHeight),
             self.stationHeaderView.leadingAnchor.constraint(equalTo: self.stationScrollContentsView.leadingAnchor),
@@ -68,16 +66,12 @@ class StationView: UIView {
             self.stationHeaderView.topAnchor.constraint(equalTo: self.stationScrollContentsView.topAnchor)
         ])
 
-        self.stationScrollContentsView.addSubview(self.stationBodyCollectionView)
-        self.stationBodyCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationBodyCollectionView.leadingAnchor.constraint(equalTo: self.stationScrollContentsView.leadingAnchor),
             self.stationBodyCollectionView.trailingAnchor.constraint(equalTo: self.stationScrollContentsView.trailingAnchor),
             self.stationBodyCollectionView.topAnchor.constraint(equalTo: self.stationHeaderView.bottomAnchor)
         ])
-
-        self.stationScrollView.addSubview(self.stationScrollContentsView)
-        self.stationScrollContentsView.translatesAutoresizingMaskIntoConstraints = false
+        self.stationScrollView.addSubviews(self.stationScrollContentsView)
         NSLayoutConstraint.activate([
             self.stationScrollContentsView.topAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.topAnchor),
             self.stationScrollContentsView.leadingAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.leadingAnchor),

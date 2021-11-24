@@ -121,8 +121,8 @@ final class SearchNavigationView: UIView {
         let twice: CGFloat = 2
         let backButtonWidthRatio: CGFloat = 0.15
 
-        self.backButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.backButton)
+        self.addSubviews(self.backButton, self.searchTextField, self.firstSeparateView, self.busTabButton, self.stationTabButton)
+        
         NSLayoutConstraint.activate([
             self.backButton.topAnchor.constraint(equalTo: self.topAnchor),
             self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -132,9 +132,6 @@ final class SearchNavigationView: UIView {
 
         let textFieldTopMargin: CGFloat = 7
         let textFieldWidthRatio: CGFloat = 0.8
-
-        self.searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.searchTextField)
         NSLayoutConstraint.activate([
             self.searchTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldTopMargin),
             self.searchTextField.leadingAnchor.constraint(equalTo: self.backButton.trailingAnchor),
@@ -143,9 +140,6 @@ final class SearchNavigationView: UIView {
         ])
 
         let separatorHeight: CGFloat = 0.3
-
-        self.firstSeparateView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.firstSeparateView)
         NSLayoutConstraint.activate([
             self.firstSeparateView.topAnchor.constraint(equalTo: self.backButton.bottomAnchor),
             self.firstSeparateView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -153,8 +147,6 @@ final class SearchNavigationView: UIView {
             self.firstSeparateView.heightAnchor.constraint(equalToConstant: separatorHeight)
         ])
 
-        self.busTabButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.busTabButton)
         NSLayoutConstraint.activate([
             self.busTabButton.topAnchor.constraint(equalTo: self.firstSeparateView.bottomAnchor),
             self.busTabButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -162,8 +154,6 @@ final class SearchNavigationView: UIView {
             self.busTabButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half)
         ])
 
-        self.stationTabButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.stationTabButton)
         NSLayoutConstraint.activate([
             self.stationTabButton.topAnchor.constraint(equalTo: self.firstSeparateView.bottomAnchor),
             self.stationTabButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -173,7 +163,6 @@ final class SearchNavigationView: UIView {
         ])
 
         let buttonContentInterval: CGFloat = 10
-
 //        if #available(iOS 15.0, *) {
 //            var buttonPaddingConfiguration = UIButton.Configuration.plain()
 //            buttonPaddingConfiguration.imagePadding = 15

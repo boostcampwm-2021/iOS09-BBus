@@ -82,9 +82,9 @@ class StationViewController: UIViewController {
     private func configureLayout() {
         let refreshButtonWidthAnchor: CGFloat = 50
         let refreshTrailingBottomInterval: CGFloat = -16
+        
+        self.view.addSubviews(self.stationView, self.customNavigationBar, self.refreshButton)
 
-        self.view.addSubview(self.stationView)
-        self.stationView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.stationView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -92,8 +92,6 @@ class StationViewController: UIViewController {
             self.stationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-        self.view.addSubview(self.customNavigationBar)
-        self.customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -102,8 +100,6 @@ class StationViewController: UIViewController {
         
         self.stationBusInfoHeight = nil
 
-        self.view.addSubview(self.refreshButton)
-        self.refreshButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
