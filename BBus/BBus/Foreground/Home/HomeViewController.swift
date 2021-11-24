@@ -183,22 +183,21 @@ extension HomeViewController: UICollectionViewDataSource {
         // bind RemainTimeLabel and ViewModel
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
             .filter { $0.changedByTimer }
             .sink(receiveValue: { [weak self, weak cell] homeFavoriteList in
-                DispatchQueue.main.async {
-                    guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
-                          let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
-                          let busType = self?.viewModel?.busType(by: busName) else { return }
-                    let busArrivalInfo = model.arriveInfo
-                    cell?.configure(busNumber: busName,
-                                   routeType: busType,
-                                   firstBusTime: busArrivalInfo?.firstTime.toString(),
-                                   firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
-                                   firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
-                                   secondBusTime: busArrivalInfo?.secondTime.toString(),
-                                   secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
-                                   secondBusCongestion: busArrivalInfo?.secondBusCongestion?.toString())
-                }
+                guard let model = homeFavoriteList[indexPath.section]?[indexPath.item],
+                      let busName = self?.viewModel?.busName(by: model.favoriteItem.busRouteId),
+                      let busType = self?.viewModel?.busType(by: busName) else { return }
+                let busArrivalInfo = model.arriveInfo
+                cell?.configure(busNumber: busName,
+                               routeType: busType,
+                               firstBusTime: busArrivalInfo?.firstTime.toString(),
+                               firstBusRelativePosition: busArrivalInfo?.firstRemainStation,
+                               firstBusCongestion: busArrivalInfo?.firstBusCongestion?.toString(),
+                               secondBusTime: busArrivalInfo?.secondTime.toString(),
+                               secondBusRelativePosition: busArrivalInfo?.secondRemainStation,
+                               secondBusCongestion: busArrivalInfo?.secondBusCongestion?.toString())
             })
             .store(in: &cell.cancellables)
         guard let model = self.viewModel?.homeFavoriteList?[indexPath.section]?[indexPath.item],
