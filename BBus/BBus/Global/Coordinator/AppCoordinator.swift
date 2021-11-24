@@ -63,7 +63,9 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
 // MARK: - Delegate : MovingStatusOpenCloseDelegate
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
     func open(busRouteId: Int, fromArsId: String, toArsId: String) {
-        self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
+        if self.movingStatusWindow.isHidden {
+            self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
+        }
         
         let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
