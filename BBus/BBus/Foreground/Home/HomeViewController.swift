@@ -113,7 +113,7 @@ class HomeViewController: UIViewController {
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { !$0.changedByTimer }
-            .receive(on: DispatchQueue.main)
+            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] response in
                 let isFavoriteEmpty = response.count() == 0
                 self?.homeView.emptyNoticeActivate(by: isFavoriteEmpty)
