@@ -69,9 +69,9 @@ final class MovingStatusUsecase {
         Self.queue.async {
             self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
                 .receive(on: Self.queue)
-                .tryMap ({ busPosByRtidList -> [BusPosByRtidDTO] in
-                    guard let result = BBusXMLParser().parse(dtoType: BusPosByRtidResult.self, xml: busPosByRtidList) else { throw BBusAPIError.wrongFormatError }
-                    return result.body.itemList
+                .decode(type: BusPosByRtidResult.self, decoder: JSONDecoder())
+                .tryMap ({ item in
+                    return item.msgBody.itemList
                 })
                 .retry ({ [weak self] in
                     self?.fetchBusPosList(busRouteId: busRouteId)
