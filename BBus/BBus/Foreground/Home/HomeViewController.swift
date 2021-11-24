@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  BBus
 //
 //  Created by Kang Minsang on 2021/10/26.
@@ -180,7 +180,6 @@ extension HomeViewController: UICollectionViewDataSource {
       
         cell.configureDelegate(self)
         
-        // bind RemainTimeLabel and ViewModel
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)

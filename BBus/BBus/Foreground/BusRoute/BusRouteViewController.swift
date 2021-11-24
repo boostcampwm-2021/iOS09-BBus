@@ -198,7 +198,7 @@ final class BusRouteViewController: UIViewController {
         self.viewModel?.$buses
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] buses in
-                self?.configureBusTags(buses: buses){
+                self?.configureBusTags(buses: buses)
             })
             .store(in: &self.cancellables)
     }

@@ -1,5 +1,5 @@
 //
-//  BusPosByRtid.swift
+//  BusPosByRtidDTO.swift
 //  BBus
 //
 //  Created by 최수정 on 2021/11/10.

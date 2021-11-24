@@ -47,6 +47,7 @@
 		4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */; };
 		4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		4A412028274E34430083D691 /* BusRouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A412027274E34430083D691 /* BusRouteModel.swift */; };
 		4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEC2737885F0029915F /* StationHeaderView.swift */; };
 		4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */; };
 		4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */; };
@@ -69,7 +70,6 @@
 		4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F0272FCDF200EC0531 /* SearchUseCase.swift */; };
 		4ACA51F3272FCDF900EC0531 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */; };
 		4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F4272FCE0200EC0531 /* SearchView.swift */; };
-		4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5206272FCE5200EC0531 /* BusRouteModel.swift */; };
 		4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */; };
 		4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */; };
 		4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520C272FCE6500EC0531 /* BusRouteView.swift */; };
@@ -179,6 +179,7 @@
 		4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A38E20627463FF7003A9D10 /* BBusAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIError.swift; sourceTree = "<group>"; };
 		4A38E20827464015003A9D10 /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
+		4A412027274E34430083D691 /* BusRouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteModel.swift; sourceTree = "<group>"; };
 		4A7BBFEC2737885F0029915F /* StationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationHeaderView.swift; sourceTree = "<group>"; };
 		4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationBodyCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainCongestionBadgeLabel.swift; sourceTree = "<group>"; };
@@ -201,7 +202,6 @@
 		4ACA51F0272FCDF200EC0531 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		4ACA51F4272FCE0200EC0531 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		4ACA5206272FCE5200EC0531 /* BusRouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteModel.swift; sourceTree = "<group>"; };
 		4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteUseCase.swift; sourceTree = "<group>"; };
 		4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteViewModel.swift; sourceTree = "<group>"; };
 		4ACA520C272FCE6500EC0531 /* BusRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteView.swift; sourceTree = "<group>"; };
@@ -536,7 +536,7 @@
 		4ACA5205272FCE3C00EC0531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA5206272FCE5200EC0531 /* BusRouteModel.swift */,
+				4A412027274E34430083D691 /* BusRouteModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -974,7 +974,6 @@
 				4ACA51F3272FCDF900EC0531 /* SearchViewModel.swift in Sources */,
 				049375AB273B9F330061ACDA /* BusRouteDTO.swift in Sources */,
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
-				4ACA5207272FCE5200EC0531 /* BusRouteModel.swift in Sources */,
 				04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */,
 				4A992C4727311F1C0006FB8C /* FavoriteCollectionHeaderView.swift in Sources */,
 				4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */,
@@ -1022,6 +1021,7 @@
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
 				87038A8A273B96B60078EAE3 /* Service.swift in Sources */,
+				4A412028274E34430083D691 /* BusRouteModel.swift in Sources */,
 				87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */,
 				87038A90273C11630078EAE3 /* GetStationsByRouteListFetcher.swift in Sources */,
 				4ACA522B272FCED600EC0531 /* MovingStatusModel.swift in Sources */,
