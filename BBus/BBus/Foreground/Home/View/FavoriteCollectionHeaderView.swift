@@ -11,7 +11,7 @@ protocol FavoriteHeaderViewDelegate: AnyObject {
     func shouldGoToStationScene(headerView: UICollectionReusableView)
 }
 
-class FavoriteCollectionHeaderView: UICollectionReusableView {
+final class FavoriteCollectionHeaderView: UICollectionReusableView {
 
     static let identifier = "FavoriteHeaderView"
     static let height: CGFloat = 70

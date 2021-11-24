@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmSettingButton: UIButton {
+final class AlarmSettingButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         

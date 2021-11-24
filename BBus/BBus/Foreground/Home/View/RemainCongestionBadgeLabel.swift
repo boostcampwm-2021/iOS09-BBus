@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RemainCongestionBadgeLabel: UILabel {
+final class RemainCongestionBadgeLabel: UILabel {
 
     let padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
 

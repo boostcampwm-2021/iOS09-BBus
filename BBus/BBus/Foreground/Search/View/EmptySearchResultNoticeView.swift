@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptySearchResultNoticeView: UIView {
+final class EmptySearchResultNoticeView: UIView {
 
     private var searchType: SearchType = .bus
     private lazy var noticeImage: UIImageView = {

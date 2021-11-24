@@ -12,7 +12,7 @@ protocol GetOffAlarmButtonDelegate: AnyObject {
     func shouldGoToMovingStatusScene(from cell: UITableViewCell)
 }
 
-class GetOffTableViewCell: BusStationTableViewCell {
+final class GetOffTableViewCell: BusStationTableViewCell {
     enum BusRootCenterImageType {
         case waypoint, getOn
     }

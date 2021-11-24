@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class GetOnAlarmUsecase {
+final class GetOnAlarmUsecase {
 
     private let usecases: GetBusPosByVehIdUsecase
     private var cancellable: AnyCancellable?

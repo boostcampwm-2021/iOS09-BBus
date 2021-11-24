@@ -11,7 +11,7 @@ protocol BackButtonDelegate: AnyObject {
     func touchedBackButton()
 }
 
-class CustomNavigationBar: UIView {
+final class CustomNavigationBar: UIView {
 
     static let height: CGFloat = 45
     

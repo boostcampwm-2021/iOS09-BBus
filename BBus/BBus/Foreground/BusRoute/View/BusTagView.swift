@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusTagView: UIView {
+final class BusTagView: UIView {
 
     enum TagSizeType {
         case min, max

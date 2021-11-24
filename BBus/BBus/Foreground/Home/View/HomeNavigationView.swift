@@ -11,7 +11,7 @@ protocol HomeSearchButtonDelegate: AnyObject {
     func shouldGoToSearchScene()
 }
 
-class HomeNavigationView: UIView {
+final class HomeNavigationView: UIView {
 
     static let height: CGFloat = 50.0
 

@@ -11,7 +11,7 @@ protocol AlarmButtonDelegate: AnyObject {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell)
 }
 
-class BusCellTrailingView: UIView {
+final class BusCellTrailingView: UIView {
     
     static let noInfoMessage = "도착 정보 없음"
 

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AlarmSettingViewModel {
+final class AlarmSettingViewModel {
     
     let useCase: AlarmSettingUseCase
     let stationId: Int

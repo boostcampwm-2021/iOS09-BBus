@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
 
     private var lastContentOffset: CGFloat = 0
     private let refreshButtonWidth: CGFloat = 50

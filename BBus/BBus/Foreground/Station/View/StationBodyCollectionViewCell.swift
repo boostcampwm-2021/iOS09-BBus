@@ -12,7 +12,7 @@ protocol LikeButtonDelegate: AnyObject {
     func cancelLikeStationBus(at: UICollectionViewCell)
 }
 
-class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
+final class StationBodyCollectionViewCell: FavoriteCollectionViewCell {
 
     private weak var likeButtonDelegate: LikeButtonDelegate? {
         didSet {

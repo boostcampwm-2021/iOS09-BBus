@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, StationPushable {
+final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPushable, StationPushable {
     weak var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
 

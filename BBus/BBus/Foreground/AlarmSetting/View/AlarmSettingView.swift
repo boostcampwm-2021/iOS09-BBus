@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmSettingView: UIView {
+final class AlarmSettingView: UIView {
     
     static let tableViewSectionCount = 2
     static let tableViewHeaderHeight: CGFloat = 35

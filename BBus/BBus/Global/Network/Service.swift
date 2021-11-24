@@ -13,7 +13,7 @@ enum NetworkError: Error {
 }
 
 // TODO: - Service Return Type 수정 필요
-class Service {
+final class Service {
     static let shared = Service()
     
     private var accessKeys: [String] = { () -> [String] in

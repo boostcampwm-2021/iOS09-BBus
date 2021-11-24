@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptyFavoriteNoticeView: UIView {
+final class EmptyFavoriteNoticeView: UIView {
 
     private lazy var noticeImage: UIImageView = {
         let imageView = UIImageView(image: BBusImage.homeFavoriteEmpty)

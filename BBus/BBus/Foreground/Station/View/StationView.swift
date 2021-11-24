@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StationView: UIView {
+final class StationView: UIView {
 
     private lazy var colorBackgroundView: UIView = {
         let view = UIView()

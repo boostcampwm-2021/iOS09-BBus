@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteHeaderView: UIView {
+final class BusRouteHeaderView: UIView {
 
     static let headerHeight: CGFloat = 170
 

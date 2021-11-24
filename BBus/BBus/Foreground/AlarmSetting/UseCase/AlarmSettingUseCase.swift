@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AlarmSettingUseCase {
+final class AlarmSettingUseCase {
     static let queue = DispatchQueue.init(label: "alarmSetting")
     
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsecase & GetStationsByRouteListUsecase

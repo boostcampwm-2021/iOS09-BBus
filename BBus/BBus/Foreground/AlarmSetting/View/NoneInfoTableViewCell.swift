@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NoneInfoTableViewCell: UITableViewCell {
+final class NoneInfoTableViewCell: UITableViewCell {
     
     static let reusableID = "NoneInfoTableViewCell"
     static let height: CGFloat = 130

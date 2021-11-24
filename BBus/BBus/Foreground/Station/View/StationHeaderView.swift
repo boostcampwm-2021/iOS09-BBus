@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StationHeaderView: UIView {
+final class StationHeaderView: UIView {
 
     static let headerHeight: CGFloat = 170
 

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class HomeViewModel {
+final class HomeViewModel {
 
     let useCase: HomeUseCase
     private var cancellable: AnyCancellable?

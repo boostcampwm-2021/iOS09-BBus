@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovingStatusBusTagView: UIView {
+final class MovingStatusBusTagView: UIView {
 
     private lazy var booduckBusImageView = UIImageView()
     private lazy var speechBubbleImageView: UIImageView = {

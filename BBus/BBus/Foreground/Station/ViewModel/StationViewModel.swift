@@ -12,7 +12,7 @@ import UIKit
 typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, firstBusCongestion: BusCongestion?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, secondBusCongestion: BusCongestion?, stationOrd: Int, busRouteId: Int, nextStation: String, busNumber: String, routeType: BBusRouteType)
 
 
-class StationViewModel {
+final class StationViewModel {
     
     let usecase: StationUsecase
     let arsId: String

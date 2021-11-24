@@ -19,7 +19,7 @@ protocol EndAlarmButtonDelegate: AnyObject {
     func shouldEndAlarm()
 }
 
-class MovingStatusView: UIView {
+final class MovingStatusView: UIView {
     
     static let bottomIndicatorHeight: CGFloat = 80
     static let endAlarmViewHeight: CGFloat = 80

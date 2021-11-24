@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class StationViewController: UIViewController {
+final class StationViewController: UIViewController {
     
     @Published private var stationBusInfoHeight: CGFloat?
     private var collectionViewMinHeight: CGFloat {

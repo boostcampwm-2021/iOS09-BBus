@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BusRouteView: UIView {
+final class BusRouteView: UIView {
 
     private lazy var busRouteScrollView = UIScrollView()
     private lazy var busRouteScrollContentsView = UIView()

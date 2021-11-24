@@ -12,7 +12,7 @@ protocol GetRouteListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
 }
 
-class PersistentGetRouteListFetcher: GetRouteListFetchable {
+final class PersistentGetRouteListFetcher: GetRouteListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         return Persistent.shared.get(file: "BusRouteList", type: "json", on: queue)
     }

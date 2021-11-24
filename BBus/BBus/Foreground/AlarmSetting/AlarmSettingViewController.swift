@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class AlarmSettingViewController: UIViewController {
+final class AlarmSettingViewController: UIViewController {
 
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
