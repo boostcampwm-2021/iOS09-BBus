@@ -61,7 +61,7 @@ class AlarmSettingUseCase {
 
                 })
                 .map({ item in
-                    let result = item.msgBody.itemList.map { StationByRouteListDTO(rawDto: $0) }
+                    let result = item.msgBody.itemList
                     guard let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
                     return Array(result[index..<result.count])
                 })

@@ -14,14 +14,14 @@ struct StationByRouteResult: Codable {
 }
 
 struct StationByRouteBody: Codable {
-    let itemList: [StationByRouteListRawDTO]
+    let itemList: [StationByRouteListDTO]
 }
 
-struct StationByRouteListRawDTO: Codable {
-    let sectionSpeed: String //Int -> String 수정
-    let sequence: String //Int -> String 수정
+struct StationByRouteListDTO: Codable {
+    let sectionSpeed: Int
+    let sequence: Int
     let stationName: String
-    let fullSectionDistance: String //Int -> String 수정
+    let fullSectionDistance: Int
     let arsId: String
     let beginTm: String
     let lastTm: String
@@ -37,26 +37,16 @@ struct StationByRouteListRawDTO: Codable {
         case lastTm = "lastTm"
         case transYn = "transYn"
     }
-}
 
-struct StationByRouteListDTO {
-    let sectionSpeed: Int
-    let sequence: Int
-    let stationName: String
-    let fullSectionDistance: Int
-    let arsId: String
-    let beginTm: String
-    let lastTm: String
-    let transYn: String
-
-    init(rawDto: StationByRouteListRawDTO) {
-        self.sectionSpeed = Int(rawDto.sectionSpeed) ?? 0
-        self.sequence = Int(rawDto.sequence) ?? 0
-        self.stationName = rawDto.stationName
-        self.fullSectionDistance = Int(rawDto.fullSectionDistance) ?? 0
-        self.arsId = rawDto.arsId
-        self.beginTm = rawDto.beginTm
-        self.lastTm = rawDto.lastTm
-        self.transYn = rawDto.transYn
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.sectionSpeed = Int((try? container.decode(String.self, forKey: .sectionSpeed)) ?? "") ?? 0
+        self.sequence = Int((try? container.decode(String.self, forKey: .sequence)) ?? "") ?? 0
+        self.stationName = (try? container.decode(String.self, forKey: .stationName)) ?? ""
+        self.fullSectionDistance = Int((try? container.decode(String.self, forKey: .fullSectionDistance)) ?? "") ?? 0
+        self.arsId = (try? container.decode(String.self, forKey: .arsId)) ?? ""
+        self.beginTm = (try? container.decode(String.self, forKey: .beginTm)) ?? ""
+        self.lastTm = (try? container.decode(String.self, forKey: .lastTm)) ?? ""
+        self.transYn = (try? container.decode(String.self, forKey: .transYn)) ?? ""
     }
 }

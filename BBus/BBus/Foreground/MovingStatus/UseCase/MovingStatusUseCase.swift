@@ -59,7 +59,7 @@ final class MovingStatusUsecase {
                     self?.networkError = error
                 })
                 .map({ item in
-                    item.msgBody.itemList.map { StationByRouteListDTO(rawDto: $0) }
+                    item.msgBody.itemList
                 })
                 .assign(to: &self.$stations)
         }
