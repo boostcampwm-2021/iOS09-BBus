@@ -25,7 +25,7 @@ final class GetOnAlarmController: NSObject {
         self.cancellables = []
     }
 
-    func start(targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) -> GetOnStartResult {
+    func start(targetOrd: Int, vehicleId: Int, busName: String, busRouteId: Int, stationId: Int) -> AlarmStartResult {
         if self.viewModel != nil {
             if isSameAlarm(targetOrd: targetOrd, vehicleId: vehicleId) {
                 return .sameAlarm

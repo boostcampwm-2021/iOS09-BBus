@@ -275,6 +275,22 @@ extension StationViewController: UICollectionViewDataSource {
                     configureCell(busInfo)
                 })
                 .store(in: &cell.cancellables)
+
+            guard let key = self.viewModel?.busKeys[indexPath.section],
+                  let maxCount = self.viewModel?.infoBuses[key]?.count,
+                  let busInfo = maxCount > indexPath.item ? self.viewModel?.infoBuses[key]?[indexPath.item] : nil  else { return cell }
+
+            let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel
+            let getOffAlarmViewModel = GetOffAlarmController.shared.viewModel
+            if (getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == busInfo.stationOrd &&
+               getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == busInfo.busRouteId) || (
+                getOffAlarmViewModel?.getOffAlarmStatus.arsId == self.viewModel?.arsId &&
+                getOffAlarmViewModel?.getOffAlarmStatus.busRouteId == busInfo.busRouteId) {
+                cell.configure(alarmButtonActive: true)
+            }
+            else {
+                cell.configure(alarmButtonActive: false)
+            }
         }
         // NoInfoBus인 경우: 바로 configure
         else {
@@ -284,21 +300,6 @@ extension StationViewController: UICollectionViewDataSource {
             }
         }
 
-        GetOnAlarmController.shared.$viewModel
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] getOnAlarmViewModel in
-                guard let key = self?.viewModel?.busKeys[indexPath.section],
-                      let model = self?.viewModel?.infoBuses[key]?[indexPath.item] else { return }
-                if getOnAlarmViewModel?.getOnAlarmStatus.targetOrd == model.stationOrd,
-                   getOnAlarmViewModel?.getOnAlarmStatus.busRouteId == model.busRouteId {
-                    cell.configure(alarmButtonActive: true)
-                }
-                else {
-                    cell.configure(alarmButtonActive: false)
-                }
-
-            }
-            .store(in: &self.cancellables)
         return cell
     }
 
@@ -387,11 +388,11 @@ extension StationViewController: LikeButtonDelegate {
         let item: FavoriteItemDTO
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         else {
             guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
-            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: "\(bus.arsId)")
+            item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         return item
     }

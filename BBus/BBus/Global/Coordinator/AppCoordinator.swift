@@ -78,6 +78,19 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
             self?.unfold()
         }
     }
+
+    func reset(busRouteId: Int, fromArsId: String, toArsId: String) {
+        let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
+        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let viewController = MovingStatusViewController(viewModel: viewModel)
+        viewController.coordinator = self
+        self.movingStatusPresenter = viewController
+        self.movingStatusWindow.rootViewController = self.movingStatusPresenter
+        self.movingStatusWindow.isHidden = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.unfold()
+        }
+    }
     
     func close() {
         self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
@@ -90,6 +103,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
             self.movingStatusPresenter = nil
             self.movingStatusWindow.rootViewController = nil
         })
+        GetOffAlarmController.shared.stop()
     }
 }
 

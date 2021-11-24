@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GetOnStartResult {
+enum AlarmStartResult {
     case success
     case sameAlarm
     case duplicated
