@@ -123,7 +123,9 @@ final class AlarmSettingViewController: UIViewController {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
                        let stationName = infos.first?.name {
-                        self?.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                        self?.customNavigationBar.configureTitle(busName: viewModel.busName,
+                                                                 stationName: stationName,
+                                                                 routeType: viewModel.routeType)
                     }
                 }
                 else {
