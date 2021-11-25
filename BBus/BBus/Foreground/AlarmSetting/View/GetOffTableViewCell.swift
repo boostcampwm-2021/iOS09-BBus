@@ -48,7 +48,6 @@ final class GetOffTableViewCell: BusStationTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
 
         self.configure(alarmButtonActive: false)

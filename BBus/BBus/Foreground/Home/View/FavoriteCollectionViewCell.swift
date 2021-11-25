@@ -43,7 +43,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
         self.loader.isHidden = false
         self.loader.startAnimating()

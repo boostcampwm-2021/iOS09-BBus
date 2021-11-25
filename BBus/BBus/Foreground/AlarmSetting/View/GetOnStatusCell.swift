@@ -162,7 +162,6 @@ final class GetOnStatusCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
         self.configure(order: "",
                        remainingTime: nil,
