@@ -30,7 +30,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
         label.textColor = BBusColor.bbusTypeBlue
         return label
