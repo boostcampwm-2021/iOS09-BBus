@@ -40,7 +40,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
         self.busNumberLabel.text = ""
         self.trailingView.configure(firstBusTime: nil,
