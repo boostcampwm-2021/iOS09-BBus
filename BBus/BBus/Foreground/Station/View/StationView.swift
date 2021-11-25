@@ -27,6 +27,9 @@ final class StationView: UIView {
         collectionView.register(SimpleCollectionHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SimpleCollectionHeaderView.identifier)
+        collectionView.register(SourceFooterView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: SourceFooterView.identifier)
         collectionView.backgroundColor = BBusColor.bbusLightGray
         return collectionView
     }()
@@ -71,7 +74,9 @@ final class StationView: UIView {
             self.stationBodyCollectionView.trailingAnchor.constraint(equalTo: self.stationScrollContentsView.trailingAnchor),
             self.stationBodyCollectionView.topAnchor.constraint(equalTo: self.stationHeaderView.bottomAnchor)
         ])
+        
         self.stationScrollView.addSubviews(self.stationScrollContentsView)
+        
         NSLayoutConstraint.activate([
             self.stationScrollContentsView.topAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.topAnchor),
             self.stationScrollContentsView.leadingAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.leadingAnchor),
