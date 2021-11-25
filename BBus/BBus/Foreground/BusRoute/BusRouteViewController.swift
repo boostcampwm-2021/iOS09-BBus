@@ -55,6 +55,7 @@ final class BusRouteViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.busRouteView.startLoader()
         self.viewModel?.configureObserver()
         self.viewModel?.refreshBusPos()
     }
@@ -153,6 +154,7 @@ final class BusRouteViewController: UIViewController {
     }
 
     private func binding() {
+        self.bindLoader()
         self.bindBusRouteHeaderResult()
         self.bindBusRouteBodyResult()
         self.bindBusesPosInfo()
@@ -193,7 +195,13 @@ final class BusRouteViewController: UIViewController {
         self.viewModel?.$buses
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] buses in
+                guard let viewModel = self?.viewModel else { return }
+
                 self?.configureBusTags(buses: buses)
+
+                if viewModel.stopLoader {
+                    self?.busRouteView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
     }
@@ -204,6 +212,17 @@ final class BusRouteViewController: UIViewController {
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
                 self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindLoader() {
+        self.viewModel?.$stopLoader
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isStop in
+                if isStop {
+                    self?.busRouteView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
     }

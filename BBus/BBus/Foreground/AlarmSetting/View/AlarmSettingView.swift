@@ -25,6 +25,10 @@ final class AlarmSettingView: UIView {
         tableView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         return tableView
     }()
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        return loader
+    }()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -35,12 +39,18 @@ final class AlarmSettingView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
-        self.addSubviews(self.alarmTableView)
+        self.addSubviews(self.alarmTableView, self.loader)
+        
         NSLayoutConstraint.activate([
             self.alarmTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.alarmTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor),
             self.alarmTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 
@@ -55,5 +65,15 @@ final class AlarmSettingView: UIView {
     
     func indexPath(for cell: UITableViewCell) -> IndexPath? {
         return self.alarmTableView.indexPath(for: cell)
+    }
+
+    func startLoader() {
+        self.loader.isHidden = false
+        self.loader.startAnimating()
+    }
+
+    func stopLoader() {
+        self.loader.isHidden = true
+        self.loader.stopAnimating()
     }
 }

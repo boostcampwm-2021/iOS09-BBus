@@ -27,6 +27,10 @@ final class BusRouteView: UIView {
         tableView.separatorColor = BBusColor.bbusLightGray
         return tableView
     }()
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        return loader
+    }()
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
     private var tableViewMinHeight: CGFloat {
         return max(self.frame.height - BusRouteHeaderView.headerHeight, 0)
@@ -43,7 +47,7 @@ final class BusRouteView: UIView {
     private func configureLayout() {
         let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
         
-        self.addSubviews(self.colorBackgroundView, self.busRouteScrollView)
+        self.addSubviews(self.colorBackgroundView, self.busRouteScrollView, self.loader)
         
         NSLayoutConstraint.activate([
             self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: colorBackgroundViewHeightMultiplier),
@@ -84,6 +88,11 @@ final class BusRouteView: UIView {
             self.busRouteScrollContentsView.trailingAnchor.constraint(equalTo: self.busRouteScrollView.contentLayoutGuide.trailingAnchor),
             self.busRouteScrollContentsView.bottomAnchor.constraint(equalTo: self.busRouteScrollView.contentLayoutGuide.bottomAnchor),
             self.busRouteScrollContentsView.widthAnchor.constraint(equalTo: self.busRouteScrollView.frameLayoutGuide.widthAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 
@@ -133,5 +142,15 @@ final class BusRouteView: UIView {
 
     func reload() {
         self.busRouteTableView.reloadData()
+    }
+
+    func startLoader() {
+        self.loader.isHidden = false
+        self.loader.startAnimating()
+    }
+
+    func stopLoader() {
+        self.loader.isHidden = true
+        self.loader.stopAnimating()
     }
 }
