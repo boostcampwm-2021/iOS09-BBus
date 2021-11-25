@@ -69,6 +69,7 @@ final class StationViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.stationView.startLoader()
         self.viewModel?.configureObserver()
         self.viewModel?.refresh()
     }
@@ -145,7 +146,13 @@ final class StationViewController: UIViewController {
         self.viewModel?.$busKeys
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
+                guard let viewModel = self?.viewModel else { return }
+
                 self?.stationView.reload()
+
+                if viewModel.stopLoader {
+                    self?.stationView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
         
@@ -163,6 +170,15 @@ final class StationViewController: UIViewController {
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
                 self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+
+        self.viewModel?.$stopLoader
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isStop in
+                if isStop {
+                    self?.stationView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
     }

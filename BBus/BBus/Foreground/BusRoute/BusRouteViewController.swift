@@ -55,9 +55,9 @@ final class BusRouteViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.busRouteView.startLoader()
         self.viewModel?.configureObserver()
         self.viewModel?.refreshBusPos()
-        self.busRouteView.startLoader()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
