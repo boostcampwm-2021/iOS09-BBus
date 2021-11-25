@@ -17,7 +17,7 @@ final class StationViewModel {
     let usecase: StationUsecase
     let arsId: String
     private var cancellables: Set<AnyCancellable>
-    @Published private(set) var busKeys: [BBusRouteType]
+    @Published private(set) var busKeys: BusSectionKeys
     @Published private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
     @Published private(set) var favoriteItems = [FavoriteItemDTO]()
@@ -27,7 +27,7 @@ final class StationViewModel {
         self.usecase = usecase
         self.arsId = arsId
         self.cancellables = []
-        self.busKeys = []
+        self.busKeys = BusSectionKeys()
         self.binding()
         self.refresh()
     }
@@ -123,9 +123,10 @@ final class StationViewModel {
         }
         self.infoBuses = infoBuses
         self.noInfoBuses = noInfoBuses
-        
-        let keys = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue }) + Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
-        self.busKeys = keys
+
+        let sortedInfoBusesKey = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
+        let sortedNoInfoBusesKey = Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
+        self.busKeys = BusSectionKeys(keys: sortedInfoBusesKey) + BusSectionKeys(keys: sortedNoInfoBusesKey)
     }
     
     func add(favoriteItem: FavoriteItemDTO) {

@@ -193,9 +193,10 @@ final class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = self.viewModel else { return }
+        guard let viewModel = self.viewModel,
+              let key = viewModel.busKeys[indexPath.section] else { return }
         let busRouteId: Int
-        let key = viewModel.busKeys[indexPath.section]
+
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             busRouteId = viewModel.infoBuses[key]?[indexPath.item].busRouteId ?? 100100048
         }
@@ -210,17 +211,16 @@ extension StationViewController: UICollectionViewDelegate {
 extension StationViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return (self.viewModel?.busKeys.count ?? 0)
+        return (self.viewModel?.busKeys.count() ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewModel = self.viewModel else { return 0 }
+        guard let viewModel = self.viewModel,
+              let key = viewModel.busKeys[section] else { return 0 }
         if viewModel.infoBuses.count - 1 >= section {
-            let key = viewModel.busKeys[section]
             return viewModel.infoBuses[key]?.count ?? 0
         }
         else {
-            let key = viewModel.busKeys[section]
             return viewModel.noInfoBuses[key]?.count ?? 0
         }
     }
@@ -290,7 +290,7 @@ extension StationViewController: UICollectionViewDataSource {
         }
         // NoInfoBus인 경우: 바로 configure
         else {
-            let key = viewModel.busKeys[indexPath.section]
+            guard let key = viewModel.busKeys[indexPath.section] else { return cell }
             if let busInfo = viewModel.noInfoBuses[key]?[indexPath.item] {
                 configureCell(busInfo)
             }
@@ -304,7 +304,7 @@ extension StationViewController: UICollectionViewDataSource {
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
               
-                let title = self.viewModel?.busKeys[indexPath.section].toString() else { return UICollectionReusableView() }
+                let title = self.viewModel?.busKeys[indexPath.section]?.toString() else { return UICollectionReusableView() }
         header.configureLayout()
         header.configure(title: title)
         return header
@@ -379,8 +379,8 @@ extension StationViewController: LikeButtonDelegate {
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
         guard let viewModel = self.viewModel,
-              let station = viewModel.usecase.stationInfo else { return nil }
-        let key = viewModel.busKeys[indexPath.section]
+              let station = viewModel.usecase.stationInfo,
+              let key = viewModel.busKeys[indexPath.section] else { return nil }
         let item: FavoriteItemDTO
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
@@ -399,8 +399,8 @@ extension StationViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         guard let indexPath = self.indexPath(for: cell),
               let viewModel = viewModel,
-              let stationID = viewModel.usecase.stationInfo?.stationID else { return }
-        let key = viewModel.busKeys[indexPath.section]
+              let stationID = viewModel.usecase.stationInfo?.stationID,
+              let key = viewModel.busKeys[indexPath.section] else { return }
         let bus: BusArriveInfo
         if viewModel.infoBuses.count - 1 >= indexPath.section {
             guard let info = viewModel.infoBuses[key]?[indexPath.item] else { return }
