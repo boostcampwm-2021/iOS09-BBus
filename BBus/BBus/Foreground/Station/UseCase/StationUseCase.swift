@@ -11,9 +11,10 @@ import Combine
 final class StationUsecase {
     static let queue = DispatchQueue.init(label: "station")
     
-    typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase
+    typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase & GetRouteListUsecase
     
     private let usecases: StationUsecases
+    @Published private(set) var busRouteList: [BusRouteDTO]
     @Published private(set) var busArriveInfo: [StationByUidItemDTO]
     @Published private(set) var stationInfo: StationDTO?
     @Published private(set) var favoriteItems: [FavoriteItemDTO] // need more
@@ -22,11 +23,18 @@ final class StationUsecase {
     
     init(usecases: StationUsecases) {
         self.usecases = usecases
+        self.busRouteList = []
         self.busArriveInfo = []
         self.stationInfo = nil
         self.cancellables = []
         self.favoriteItems = []
         self.networkError = nil
+        
+        self.startStation()
+    }
+    
+    func startStation() {
+        self.loadRoute()
         self.getFavoriteItems()
     }
     
@@ -65,6 +73,11 @@ final class StationUsecase {
                 }, handler: { [weak self] error in
                     self?.networkError = error
                 })
+                .combineLatest(self.$busRouteList) { (busRouteList, entireBusRouteList) in
+                    busRouteList.filter { busRoute in
+                        entireBusRouteList.contains{ $0.routeID == busRoute.busRouteId }
+                    }
+                }
                 .assign(to: &self.$busArriveInfo)
         }
     }
@@ -112,6 +125,20 @@ final class StationUsecase {
                     self?.networkError = error
                 })
                 .assign(to: &self.$favoriteItems)
+        }
+    }
+    
+    private func loadRoute() {
+        Self.queue.async {
+            self.usecases.getRouteList()
+                .receive(on: Self.queue)
+                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+                .retry({ [weak self] in
+                    self?.loadRoute()
+                }, handler: { [weak self] error in
+                    self?.networkError = error
+                })
+                .assign(to: &self.$busRouteList)
         }
     }
 }
