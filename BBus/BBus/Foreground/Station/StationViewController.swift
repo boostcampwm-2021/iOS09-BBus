@@ -209,14 +209,15 @@ final class StationViewController: UIViewController {
 // MARK: - Delegate : CollectionView
 extension StationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = self.viewModel else { return }
+        guard let viewModel = self.viewModel,
+              let key = viewModel.busKeys[indexPath.section] else { return }
         let busRouteId: Int
-        let key = viewModel.busKeys[indexPath.section]
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            busRouteId = viewModel.infoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            busRouteId = viewModel.activeBuses[key]?[indexPath.item]?.busRouteId ?? 100100048
         }
         else {
-            busRouteId = viewModel.noInfoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+            busRouteId = viewModel.inActiveBuses[key]?[indexPath.item]?.busRouteId ?? 100100048
         }
         self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
@@ -226,18 +227,17 @@ extension StationViewController: UICollectionViewDelegate {
 extension StationViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return (self.viewModel?.busKeys.count ?? 0)
+        return (self.viewModel?.busKeys.count() ?? 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewModel = self.viewModel else { return 0 }
-        if viewModel.infoBuses.count - 1 >= section {
-            let key = viewModel.busKeys[section]
-            return viewModel.infoBuses[key]?.count ?? 0
+        guard let viewModel = self.viewModel,
+              let key = viewModel.busKeys[section] else { return 0 }
+        if viewModel.activeBuses.count - 1 >= section {
+            return viewModel.activeBuses[key]?.count() ?? 0
         }
         else {
-            let key = viewModel.busKeys[section]
-            return viewModel.noInfoBuses[key]?.count ?? 0
+            return viewModel.inActiveBuses[key]?.count() ?? 0
         }
     }
     
@@ -276,21 +276,18 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         // InfoBus인 경우: 바인딩
-        // TODO: maxCount 임시 조치, 추후 수정 필요
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            self.viewModel?.$infoBuses
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            self.viewModel?.$activeBuses
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] infoBuses in
+                .sink(receiveValue: { [weak self] activeBuses in
                     guard let key = self?.viewModel?.busKeys[indexPath.section],
-                          let maxCount = infoBuses[key]?.count,
-                          let busInfo = maxCount > indexPath.item ? infoBuses[key]?[indexPath.item] : nil else { return }
+                          let busInfo = activeBuses[key]?[indexPath.item] else { return }
                     configureCell(busInfo)
                 })
                 .store(in: &cell.cancellables)
 
             guard let key = self.viewModel?.busKeys[indexPath.section],
-                  let maxCount = self.viewModel?.infoBuses[key]?.count,
-                  let busInfo = maxCount > indexPath.item ? self.viewModel?.infoBuses[key]?[indexPath.item] : nil  else { return cell }
+                  let busInfo = self.viewModel?.activeBuses[key]?[indexPath.item] else { return cell }
 
             let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel
             let getOffAlarmViewModel = GetOffAlarmController.shared.viewModel
@@ -306,8 +303,8 @@ extension StationViewController: UICollectionViewDataSource {
         }
         // NoInfoBus인 경우: 바로 configure
         else {
-            let key = viewModel.busKeys[indexPath.section]
-            if let busInfo = viewModel.noInfoBuses[key]?[indexPath.item] {
+            guard let key = viewModel.busKeys[indexPath.section] else { return cell }
+            if let busInfo = viewModel.inActiveBuses[key]?[indexPath.item] {
                 configureCell(busInfo)
             }
         }
@@ -320,7 +317,7 @@ extension StationViewController: UICollectionViewDataSource {
                                                                            withReuseIdentifier: SimpleCollectionHeaderView.identifier,
                                                                            for: indexPath) as? SimpleCollectionHeaderView,
               
-                let title = self.viewModel?.busKeys[indexPath.section].toString() else { return UICollectionReusableView() }
+                let title = self.viewModel?.busKeys[indexPath.section]?.toString() else { return UICollectionReusableView() }
         header.configureLayout()
         header.configure(title: title)
         return header
@@ -395,15 +392,15 @@ extension StationViewController: LikeButtonDelegate {
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
         guard let viewModel = self.viewModel,
-              let station = viewModel.usecase.stationInfo else { return nil }
-        let key = viewModel.busKeys[indexPath.section]
+              let station = viewModel.usecase.stationInfo,
+              let key = viewModel.busKeys[indexPath.section] else { return nil }
         let item: FavoriteItemDTO
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            guard let bus = viewModel.activeBuses[key]?[indexPath.item] else { return nil }
             item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         else {
-            guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
+            guard let bus = viewModel.inActiveBuses[key]?[indexPath.item] else { return nil }
             item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         return item
@@ -415,15 +412,15 @@ extension StationViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         guard let indexPath = self.indexPath(for: cell),
               let viewModel = viewModel,
-              let stationID = viewModel.usecase.stationInfo?.stationID else { return }
-        let key = viewModel.busKeys[indexPath.section]
+              let stationID = viewModel.usecase.stationInfo?.stationID,
+              let key = viewModel.busKeys[indexPath.section] else { return }
         let bus: BusArriveInfo
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            guard let info = viewModel.infoBuses[key]?[indexPath.item] else { return }
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            guard let info = viewModel.activeBuses[key]?[indexPath.item] else { return }
             bus = info
         }
         else {
-            guard let info = viewModel.noInfoBuses[key]?[indexPath.item] else { return }
+            guard let info = viewModel.inActiveBuses[key]?[indexPath.item] else { return }
             bus = info
         }
         self.coordinator?.pushToAlarmSetting(stationId: stationID,
