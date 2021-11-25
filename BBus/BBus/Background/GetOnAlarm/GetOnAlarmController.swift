@@ -77,7 +77,7 @@ final class GetOnAlarmController {
                 if status == .oneStationLeft {
                     self?.stop()
                 }
-                self?.pushGetOnAlarm(title: "승차 알람" ,message: message)
+                self?.pushGetOnAlarm(title: "승차 알람", message: message)
             })
             .store(in: &self.cancellables)
     }
