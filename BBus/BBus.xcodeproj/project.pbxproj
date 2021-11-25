@@ -92,6 +92,7 @@
 		4ACA523D272FCF4300EC0531 /* MovingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA523C272FCF4300EC0531 /* MovingStatusViewController.swift */; };
 		4ACA5245272FD52D00EC0531 /* BBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5244272FD52D00EC0531 /* BBusTests.swift */; };
 		4ACC26B4274F669800173A32 /* BusSectionKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC26B3274F669800173A32 /* BusSectionKeys.swift */; };
+		4ACC26B8274F6BD300173A32 /* BusArriveInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC26B7274F6BD300173A32 /* BusArriveInfos.swift */; };
 		4ADB29B9274B68CE00554A4E /* GetOnAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */; };
 		4ADB29BB274B6C8300554A4E /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
 		4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */; };
@@ -226,6 +227,7 @@
 		4ACA5242272FD52D00EC0531 /* BBusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACA5244272FD52D00EC0531 /* BBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusTests.swift; sourceTree = "<group>"; };
 		4ACC26B3274F669800173A32 /* BusSectionKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSectionKeys.swift; sourceTree = "<group>"; };
+		4ACC26B7274F6BD300173A32 /* BusArriveInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArriveInfos.swift; sourceTree = "<group>"; };
 		4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmController.swift; sourceTree = "<group>"; };
 		4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPosByVehicleIdDTO.swift; sourceTree = "<group>"; };
 		4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBusPosByVehIdFetcher.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 				4ACA5212272FCE8500EC0531 /* BusCongestion.swift */,
 				4A094CDE27435C5900428F55 /* BusRemainTime.swift */,
 				4ACC26B3274F669800173A32 /* BusSectionKeys.swift */,
+				4ACC26B7274F6BD300173A32 /* BusArriveInfos.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */,
 				4A06AEE92743DAB20027222D /* NotificationNameExtension.swift in Sources */,
 				4ADB29BB274B6C8300554A4E /* BusPosByVehicleIdDTO.swift in Sources */,
+				4ACC26B8274F6BD300173A32 /* BusArriveInfos.swift in Sources */,
 				049B9D002744D2AA004DE66E /* ThrottleButton.swift in Sources */,
 				4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */,
 				4ADB29DA274E1A5F00554A4E /* GetOffAlarmStatus.swift in Sources */,

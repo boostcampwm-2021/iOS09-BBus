@@ -9,16 +9,13 @@ import Foundation
 import Combine
 import UIKit
 
-typealias BusArriveInfo = (firstBusArriveRemainTime: BusRemainTime?, firstBusRelativePosition: String?, firstBusCongestion: BusCongestion?, secondBusArriveRemainTime: BusRemainTime?, secondBusRelativePosition: String?, secondBusCongestion: BusCongestion?, stationOrd: Int, busRouteId: Int, nextStation: String, busNumber: String, routeType: BBusRouteType)
-
-
 final class StationViewModel {
     
     let usecase: StationUsecase
     let arsId: String
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busKeys: BusSectionKeys
-    @Published private(set) var infoBuses = [BBusRouteType: [BusArriveInfo]]()
+    @Published private(set) var activeBuses = [BBusRouteType: BusArriveInfos]()
     private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
     @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
@@ -47,13 +44,8 @@ final class StationViewModel {
     }
 
     @objc private func descendTime() {
-        self.infoBuses.forEach({ [weak self] in
-            self?.infoBuses[$0.key] = $0.value.map { result in
-                var remainTime = result
-                remainTime.firstBusArriveRemainTime?.descend()
-                remainTime.secondBusArriveRemainTime?.descend()
-                return remainTime
-            }
+        self.activeBuses.forEach({ [weak self] in
+            self?.activeBuses[$0.key] = $0.value.descended()
         })
     }
     
@@ -85,7 +77,7 @@ final class StationViewModel {
     }
 
     private func classifyByRouteType(with buses: [StationByUidItemDTO]) {
-        var infoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
+        var activeBuses: [BBusRouteType: BusArriveInfos] = [:]
         var noInfoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
         buses.forEach() { bus in
             guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0) else { return }
@@ -108,8 +100,8 @@ final class StationViewModel {
                 info.secondBusArriveRemainTime = timeAndPositionInfo2.time
                 info.secondBusRelativePosition = timeAndPositionInfo2.position
                 info.secondBusCongestion = timeAndPositionInfo2.time.checkInfo() ? info.firstBusCongestion : nil
-                
-                infoBuses.updateValue((infoBuses[routeType] ?? []) + [info], forKey: routeType)
+
+                activeBuses.updateValue((activeBuses[routeType] ?? BusArriveInfos()) + BusArriveInfos(infos: [info]), forKey: routeType)
             }
             else {
                 info.firstBusArriveRemainTime = nil
@@ -121,10 +113,10 @@ final class StationViewModel {
                 noInfoBuses.updateValue((noInfoBuses[routeType] ?? []) + [info], forKey: routeType)
             }
         }
-        self.infoBuses = infoBuses
+        self.activeBuses = activeBuses
         self.noInfoBuses = noInfoBuses
 
-        let sortedInfoBusesKey = Array(infoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
+        let sortedInfoBusesKey = Array(activeBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
         let sortedNoInfoBusesKey = Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
         self.busKeys = BusSectionKeys(keys: sortedInfoBusesKey) + BusSectionKeys(keys: sortedNoInfoBusesKey)
     }

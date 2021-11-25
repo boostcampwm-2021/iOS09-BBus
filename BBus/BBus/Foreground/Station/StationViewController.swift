@@ -197,8 +197,8 @@ extension StationViewController: UICollectionViewDelegate {
               let key = viewModel.busKeys[indexPath.section] else { return }
         let busRouteId: Int
 
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            busRouteId = viewModel.infoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            busRouteId = viewModel.activeBuses[key]?[indexPath.item]?.busRouteId ?? 100100048
         }
         else {
             busRouteId = viewModel.noInfoBuses[key]?[indexPath.item].busRouteId ?? 100100048
@@ -217,8 +217,8 @@ extension StationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let viewModel = self.viewModel,
               let key = viewModel.busKeys[section] else { return 0 }
-        if viewModel.infoBuses.count - 1 >= section {
-            return viewModel.infoBuses[key]?.count ?? 0
+        if viewModel.activeBuses.count - 1 >= section {
+            return viewModel.activeBuses[key]?.count() ?? 0
         }
         else {
             return viewModel.noInfoBuses[key]?.count ?? 0
@@ -260,21 +260,19 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         // InfoBus인 경우: 바인딩
-        // TODO: maxCount 임시 조치, 추후 수정 필요
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            self.viewModel?.$infoBuses
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            self.viewModel?.$activeBuses
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] infoBuses in
+                .sink(receiveValue: { [weak self] activeBuses in
                     guard let key = self?.viewModel?.busKeys[indexPath.section],
-                          let maxCount = infoBuses[key]?.count,
-                          let busInfo = maxCount > indexPath.item ? infoBuses[key]?[indexPath.item] : nil else { return }
+                          let maxCount = activeBuses[key]?.count(),
+                          let busInfo = maxCount > indexPath.item ? activeBuses[key]?[indexPath.item] : nil else { return }
                     configureCell(busInfo)
                 })
                 .store(in: &cell.cancellables)
 
             guard let key = self.viewModel?.busKeys[indexPath.section],
-                  let maxCount = self.viewModel?.infoBuses[key]?.count,
-                  let busInfo = maxCount > indexPath.item ? self.viewModel?.infoBuses[key]?[indexPath.item] : nil  else { return cell }
+                  let busInfo = self.viewModel?.activeBuses[key]?[indexPath.item] else { return cell }
 
             let getOnAlarmViewModel = GetOnAlarmController.shared.viewModel
             let getOffAlarmViewModel = GetOffAlarmController.shared.viewModel
@@ -382,8 +380,8 @@ extension StationViewController: LikeButtonDelegate {
               let station = viewModel.usecase.stationInfo,
               let key = viewModel.busKeys[indexPath.section] else { return nil }
         let item: FavoriteItemDTO
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            guard let bus = viewModel.infoBuses[key]?[indexPath.item] else { return nil }
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            guard let bus = viewModel.activeBuses[key]?[indexPath.item] else { return nil }
             item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         else {
@@ -402,8 +400,8 @@ extension StationViewController: AlarmButtonDelegate {
               let stationID = viewModel.usecase.stationInfo?.stationID,
               let key = viewModel.busKeys[indexPath.section] else { return }
         let bus: BusArriveInfo
-        if viewModel.infoBuses.count - 1 >= indexPath.section {
-            guard let info = viewModel.infoBuses[key]?[indexPath.item] else { return }
+        if viewModel.activeBuses.count - 1 >= indexPath.section {
+            guard let info = viewModel.activeBuses[key]?[indexPath.item] else { return }
             bus = info
         }
         else {
