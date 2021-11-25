@@ -59,6 +59,6 @@ protocol AlertPresentable: Coordinator {
 
 extension AlertPresentable {
     func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
-        self.delegate?.presentAlert(controller: controller, completion: completion)
+        self.delegate?.presentAlertToNavigation(controller: controller, completion: completion)
     }
 }

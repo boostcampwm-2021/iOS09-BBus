@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ThrottleButton: UIButton {
+final class ThrottleButton: UIButton {
     
     static let refreshInterval: Double = 3
 

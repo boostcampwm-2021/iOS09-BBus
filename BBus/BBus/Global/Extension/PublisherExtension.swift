@@ -9,24 +9,25 @@ import Foundation
 import Combine
 
 extension Publisher where Output == (Data, Int), Failure == Error {
-    func mapBBusAPIError() -> AnyPublisher<Data, Error> {
+    func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
         self.tryMap({ data, order -> Data in
-            guard let code = BBusXMLParser().parse(dtoType: MessageHeader.self, xml: data)?.header.headerCode,
-                  let error = BBusAPIError(errorCode: code ) else { return data }
-            Service.removeAccessKey(at: order)
+            guard let json = try? JSONDecoder().decode(JsonHeader.self, from: data),
+                  let statusCode = Int(json.msgHeader.headerCD),
+                  let error = BBusAPIError(errorCode: statusCode) else { return data }
+            Service.shared.removeAccessKey(at: order)
             throw error
         }).eraseToAnyPublisher()
     }
 }
 
 extension Publisher where Failure == Error {
-    func retry(_ retry: @escaping () -> Void, handler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
+    func retry(_ currentTokenExhaustedHandler: @escaping () -> Void, handler wholeTokenExhaustedHandler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
         self.catch({ error -> AnyPublisher<Self.Output, Never> in
             switch error {
             case BBusAPIError.noMoreAccessKeyError, BBusAPIError.trafficExceed:
-                handler(error)
+                wholeTokenExhaustedHandler(error)
             default:
-                retry()
+                currentTokenExhaustedHandler()
             }
             
             let publisher = PassthroughSubject<Self.Output, Never>()

@@ -7,10 +7,10 @@
 
 import UIKit
 
-class AppCoordinator: NSObject, Coordinator {
+final class AppCoordinator: NSObject, Coordinator {
     private let navigationWindow: UIWindow
     private let movingStatusWindow: UIWindow
-    var delegate: CoordinatorDelegate?
+    weak var delegate: CoordinatorDelegate?
     var navigationPresenter: UINavigationController
     var movingStatusPresenter: UIViewController?
     var childCoordinators: [Coordinator]
@@ -38,14 +38,21 @@ class AppCoordinator: NSObject, Coordinator {
         self.navigationWindow.makeKeyAndVisible()
         self.movingStatusWindow.makeKeyAndVisible()
         
-        self.close()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.fold()
+        }, completion: { [weak self] _ in
+            guard let self = self else { return }
+            self.movingStatusWindow.isHidden = true
+            self.movingStatusPresenter = nil
+            self.movingStatusWindow.rootViewController = nil
+        })
     }
 }
 
 // MARK: - Delegate : MovingStatusFoldUnfoldDelegate
 extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
     func fold() {
-        self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
+        self.movingStatusWindow.frame.origin = CGPoint(x: 0, y: self.navigationWindow.frame.height)
     }
     
     func unfold() {
@@ -56,35 +63,61 @@ extension AppCoordinator: MovingStatusFoldUnfoldDelegate {
 // MARK: - Delegate : MovingStatusOpenCloseDelegate
 extension AppCoordinator: MovingStatusOpenCloseDelegate {
     func open(busRouteId: Int, fromArsId: String, toArsId: String) {
-
+        if self.movingStatusWindow.isHidden {
+            self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
+        }
+        
         let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController
         self.movingStatusWindow.rootViewController = self.movingStatusPresenter
-        
         self.movingStatusWindow.isHidden = false
-        UIView.animate(withDuration: 0.3) {
-            self.unfold()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.unfold()
+        }
+    }
+
+    func reset(busRouteId: Int, fromArsId: String, toArsId: String) {
+        let usecase = MovingStatusUsecase(usecases: BBusAPIUsecases(on: MovingStatusUsecase.queue))
+        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let viewController = MovingStatusViewController(viewModel: viewModel)
+        viewController.coordinator = self
+        self.movingStatusPresenter = viewController
+        self.movingStatusWindow.rootViewController = self.movingStatusPresenter
+        self.movingStatusWindow.isHidden = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.unfold()
         }
     }
     
     func close() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.fold()
-        }, completion: { _ in
+        self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height + MovingStatusView.bottomIndicatorHeight)
+        
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.fold()
+        }, completion: { [weak self] _ in
+            guard let self = self else { return }
             self.movingStatusWindow.isHidden = true
             self.movingStatusPresenter = nil
             self.movingStatusWindow.rootViewController = nil
         })
+        GetOffAlarmController.shared.stop()
     }
 }
 
-// MARK: - Delegate : AlertCreateDelegate
-extension AppCoordinator: AlertCreateDelegate {
-    func presentAlert(controller: UIAlertController, completion: (() -> Void)? = nil) {
+// MARK: - Delegate : AlertCreateToNavigation
+extension AppCoordinator: AlertCreateToNavigationDelegate {
+    func presentAlertToNavigation(controller: UIAlertController, completion: (() -> Void)? = nil) {
         self.navigationPresenter.present(controller, animated: false, completion: completion)
+    }
+}
+
+// MARK: - Delegate : AlertCreateToMovingStatus
+extension AppCoordinator: AlertCreateToMovingStatusDelegate {
+    func presentAlertToMovingStatus(controller: UIAlertController, completion: (() -> Void)? = nil) {
+        self.movingStatusPresenter?.present(controller, animated: false, completion: completion)
     }
 }
 

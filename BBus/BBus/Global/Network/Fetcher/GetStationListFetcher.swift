@@ -12,7 +12,7 @@ protocol GetStationListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
 }
 
-class PersistentGetStationListFetcher: GetStationListFetchable {
+final class PersistentGetStationListFetcher: GetStationListFetchable {
     func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         return Persistent.shared.get(file: "StationList", type: "json", on: queue)
     }

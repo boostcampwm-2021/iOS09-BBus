@@ -12,9 +12,9 @@ protocol GetArrInfoByRouteListFetchable {
     func fetch(param: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error>
 }
 
-class ServiceGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
+final class ServiceGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
     func fetch(param: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute"
-        return Service.shared.get(url: url, params: param, on: queue).mapBBusAPIError()
+        return Service.shared.get(url: url, params: param, on: queue).mapJsonBBusAPIError()
     }
 }
