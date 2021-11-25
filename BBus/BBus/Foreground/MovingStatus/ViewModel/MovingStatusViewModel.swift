@@ -32,6 +32,7 @@ final class MovingStatusViewModel {
     @Published private(set) var remainingStation: Int? // 6
     @Published private(set) var boardedBus: BoardedBus? // 8
     @Published private(set) var message: String?
+    @Published private(set) var stopLoader: Bool = false
 
     init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
@@ -40,9 +41,7 @@ final class MovingStatusViewModel {
         self.toArsId = toArsId
         self.message = nil
         self.cancellables = []
-        self.bindHeaderInfo()
-        self.bindStationsInfo()
-        self.bindBusesPosInfo()
+        self.binding()
         self.configureObserver()
     }
     
@@ -53,6 +52,13 @@ final class MovingStatusViewModel {
                 self.updateAPI()
             }
         }
+    }
+
+    private func binding() {
+        self.bindLoader()
+        self.bindHeaderInfo()
+        self.bindStationsInfo()
+        self.bindBusesPosInfo()
     }
 
     private func bindHeaderInfo() {
@@ -242,5 +248,13 @@ final class MovingStatusViewModel {
 
     func unfold() {
         self.isFolded = false
+    }
+
+    private func bindLoader() {
+        self.$busInfo.zip(self.$stationInfos).dropFirst()
+            .sink(receiveValue: { _ in
+                self.stopLoader = true
+            })
+            .store(in: &self.cancellables)
     }
 }

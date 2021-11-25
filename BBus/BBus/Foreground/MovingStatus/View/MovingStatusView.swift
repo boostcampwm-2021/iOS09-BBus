@@ -127,6 +127,10 @@ final class MovingStatusView: UIView {
                                               right: 0)
         return button
     }()
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        return loader
+    }()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -148,7 +152,7 @@ final class MovingStatusView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
-        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView)
+        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView, self.loader)
         
         NSLayoutConstraint.activate([
             self.bottomIndicatorButton.topAnchor.constraint(equalTo: self.topAnchor),
@@ -254,6 +258,11 @@ final class MovingStatusView: UIView {
             self.stationsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.stationsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
+
+        NSLayoutConstraint.activate([
+            self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
     }
     
     func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate) {
@@ -314,5 +323,15 @@ final class MovingStatusView: UIView {
 
     func reload() {
         self.stationsTableView.reloadData()
+    }
+
+    func startLoader() {
+        self.loader.isHidden = false
+        self.loader.startAnimating()
+    }
+
+    func stopLoader() {
+        self.loader.isHidden = true
+        self.loader.stopAnimating()
     }
 }
