@@ -142,7 +142,6 @@ final class StationViewModel {
         self.$busKeys.zip(self.$favoriteItems, self.$nextStation)
             .dropFirst()
             .sink(receiveValue: { result in
-                dump(result)
                 self.stopLoader = true
             })
             .store(in: &self.cancellables)
