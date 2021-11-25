@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import CoreLocation
 
-final class GetOnAlarmController: NSObject {
+final class GetOnAlarmController {
     
     static private let alarmIdentifier: String = "GetOnAlarm"
 
@@ -21,7 +21,7 @@ final class GetOnAlarmController: NSObject {
 
     @Published private(set) var viewModel: GetOnAlarmViewModel?
     
-    private override init() {
+    private init() {
         self.cancellables = []
     }
 
@@ -70,7 +70,7 @@ final class GetOnAlarmController: NSObject {
     }
     
     private func bindMessage() {
-        self.viewModel?.$getApproachStatus
+        self.viewModel?.$busApproachStatus
             .sink(receiveValue: { [weak self] status in
                 guard let status = status,
                       let message = self?.viewModel?.message else { return }
