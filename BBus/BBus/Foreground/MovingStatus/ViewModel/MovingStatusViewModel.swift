@@ -251,7 +251,8 @@ final class MovingStatusViewModel {
     }
 
     private func bindLoader() {
-        self.$busInfo.zip(self.$stationInfos).dropFirst()
+        self.$busInfo.zip(self.$stationInfos)
+            .dropFirst()
             .sink(receiveValue: { _ in
                 self.stopLoader = true
             })

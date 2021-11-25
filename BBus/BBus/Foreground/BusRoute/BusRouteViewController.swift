@@ -154,6 +154,7 @@ final class BusRouteViewController: UIViewController {
     }
 
     private func binding() {
+        self.bindLoader()
         self.bindBusRouteHeaderResult()
         self.bindBusRouteBodyResult()
         self.bindBusesPosInfo()
@@ -165,8 +166,6 @@ final class BusRouteViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .dropFirst()
             .sink(receiveValue: { [weak self] header in
-                guard let viewModel = self?.viewModel else { return }
-
                 if let header = header {
                     self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
                     self?.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
@@ -174,10 +173,6 @@ final class BusRouteViewController: UIViewController {
                                                           fromStation: header.startStation,
                                                           toStation: header.endStation)
                     self?.configureBusColor(type: header.routeType)
-
-                    if viewModel.isStopLoader() {
-                        self?.busRouteView.stopLoader()
-                    }
                 }
                 else {
                     self?.noInfoAlert()
@@ -190,14 +185,8 @@ final class BusRouteViewController: UIViewController {
         self.viewModel?.$bodys
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] bodys in
-                guard let viewModel = self?.viewModel else { return }
-
                 self?.busRouteView.reload()
                 self?.busRouteView.configureTableViewHeight(count: bodys.count)
-
-                if viewModel.isStopLoader() {
-                    self?.busRouteView.stopLoader()
-                }
             })
             .store(in: &self.cancellables)
     }
@@ -210,7 +199,7 @@ final class BusRouteViewController: UIViewController {
 
                 self?.configureBusTags(buses: buses)
 
-                if viewModel.isStopLoader() {
+                if viewModel.stopLoader {
                     self?.busRouteView.stopLoader()
                 }
             })
@@ -223,6 +212,17 @@ final class BusRouteViewController: UIViewController {
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
                 self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindLoader() {
+        self.viewModel?.$stopLoader
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isStop in
+                if isStop {
+                    self?.busRouteView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
     }
