@@ -51,6 +51,7 @@ final class AlarmSettingViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.alarmSettingView.startLoader()
         self.viewModel?.configureObserver()
         self.viewModel?.refresh()
     }
@@ -110,7 +111,13 @@ final class AlarmSettingViewController: UIViewController {
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink(receiveValue: { [weak self] _ in
+                guard let viewModel = self?.viewModel else { return }
+
                 self?.alarmSettingView.reload()
+
+                if viewModel.isStopLoader() {
+                    self?.alarmSettingView.stopLoader()
+                }
             })
             .store(in: &self.cancellables)
     }
@@ -119,11 +126,17 @@ final class AlarmSettingViewController: UIViewController {
         self.viewModel?.$busStationInfos
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
+                guard let viewModel = self?.viewModel else { return }
+
                 if let infos = infos {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
                        let stationName = infos.first?.name {
                         self?.customNavigationBar.configureTitle(busName: viewModel.busName, stationName: stationName, routeType: viewModel.routeType)
+                    }
+
+                    if viewModel.isStopLoader() {
+                        self?.alarmSettingView.stopLoader()
                     }
                 }
                 else {
