@@ -24,6 +24,13 @@ final class EmptyFavoriteNoticeView: UIView {
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    private lazy var sourceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "출처 : 서울특별시"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = BBusColor.bbusGray
+        return label
+    }()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -43,7 +50,7 @@ final class EmptyFavoriteNoticeView: UIView {
         let half: CGFloat = 0.5
         let centerYInterval: CGFloat = -30
 
-        self.addSubviews(self.noticeImage, self.noticeLabel)
+        self.addSubviews(self.noticeImage, self.noticeLabel, self.sourceLabel)
 
         NSLayoutConstraint.activate([
             self.noticeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -56,6 +63,12 @@ final class EmptyFavoriteNoticeView: UIView {
             self.noticeLabel.topAnchor.constraint(equalTo: self.noticeImage.bottomAnchor, constant: 15),
             self.noticeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.noticeLabel.widthAnchor.constraint(equalTo: self.noticeImage.widthAnchor, multiplier: 1.2)
+        ])
+        
+        let sourceLabelBottominterval: CGFloat = -30
+        NSLayoutConstraint.activate([
+            self.sourceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: sourceLabelBottominterval),
+            self.sourceLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
 }

@@ -84,7 +84,7 @@ final class HomeViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.homeView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.homeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
@@ -222,7 +222,38 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return UICollectionReusableView() }
+        switch kind {
+        case UICollectionView.elementKindSectionFooter :
+            if let footer = footer(with: collectionView, indexPath: indexPath) {
+                return footer
+            }
+        case UICollectionView.elementKindSectionHeader :
+            if let header = header(with: collectionView, indexPath: indexPath) {
+                return header
+            }
+        default :
+            return UICollectionReusableView()
+        }
+        return UICollectionReusableView()
+    }
+    
+    private func footer(with collectionView: UICollectionView, indexPath: IndexPath) -> SourceFooterView? {
+        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SourceFooterView.identifier, for: indexPath) as? SourceFooterView else { return nil }
+        if let maxSize = self.footerSize(with: collectionView) {
+            footer.frame.size = maxSize
+        }
+        return footer
+    }
+    
+    private func footerSize(with collectionView: UICollectionView) -> CGSize? {
+        guard collectionView.contentSize.height < collectionView.frame.height else { return nil }
+        let gap = collectionView.frame.height - collectionView.contentSize.height
+        return CGSize(width: self.view.frame.width, height: SourceFooterView.height + gap)
+    }
+    
+    private func header(with collectionView: UICollectionView, indexPath: IndexPath) -> FavoriteCollectionHeaderView? {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier, for: indexPath) as? FavoriteCollectionHeaderView else { return nil }
+        
         guard let stationId = self.viewModel?.homeFavoriteList?[indexPath.section]?.stationId,
               let stationName = self.viewModel?.stationName(by: stationId),
               let arsId = self.viewModel?.homeFavoriteList?[indexPath.section]?.arsId else { return header }
@@ -247,6 +278,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         else {
             return CGSize(width: self.view.frame.width, height: FavoriteCollectionHeaderView.height)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard section == (self.viewModel?.homeFavoriteList?.count() ?? 1) - 1 else { return CGSize.zero }
+        return CGSize(width: self.view.frame.width, height: SourceFooterView.height)
     }
 }
 
