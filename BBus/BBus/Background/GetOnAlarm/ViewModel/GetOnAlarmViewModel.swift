@@ -13,7 +13,7 @@ final class GetOnAlarmViewModel {
     let usecase: GetOnAlarmUsecase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
     private var cancellables: Set<AnyCancellable>
-    @Published private(set) var getApproachStatus: BusApproachStatus?
+    @Published private(set) var busApproachStatus: BusApproachStatus?
     private(set) var message: String?
     @Published private(set) var networkErrorMessage: (title: String, body: String)?
 
@@ -23,7 +23,7 @@ final class GetOnAlarmViewModel {
         self.message = nil
         self.networkErrorMessage = nil
         self.cancellables = []
-        self.getApproachStatus = nil
+        self.busApproachStatus = nil
         self.execute()
         self.configureObserver()
     }
@@ -51,7 +51,7 @@ final class GetOnAlarmViewModel {
                                                                   beforeOrd: self.getOnAlarmStatus.currentBusOrd ?? stationOrd,
                                                                   targetOrd: self.getOnAlarmStatus.targetOrd) {
                     self.makeMessage(with: status)
-                    self.getApproachStatus = status
+                    self.busApproachStatus = status
                 }
                 self.getOnAlarmStatus = self.getOnAlarmStatus.withCurrentBusOrd(stationOrd)
             }
