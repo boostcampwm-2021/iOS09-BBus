@@ -53,13 +53,10 @@ final class AlarmSettingUseCase {
             self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
                 .receive(on: Self.queue)
                 .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
-                // 에러를 throw하지 않고 nil을 반환하게 하여 retry가 필요하지 않음.
                 .retry({ [weak self] in
-                self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
-
+                    self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
                 }, handler: { [weak self] error in
                     self?.networkError = error
-
                 })
                 .map({ item in
                     let result = item.msgBody.itemList
