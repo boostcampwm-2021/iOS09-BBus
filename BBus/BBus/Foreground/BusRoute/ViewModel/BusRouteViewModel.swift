@@ -120,4 +120,8 @@ final class BusRouteViewModel {
     @objc func refreshBusPos() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
     }
+
+    func isStopLoader() -> Bool {
+        return self.header != nil && !self.bodys.isEmpty && !self.buses.isEmpty
+    }
 }
