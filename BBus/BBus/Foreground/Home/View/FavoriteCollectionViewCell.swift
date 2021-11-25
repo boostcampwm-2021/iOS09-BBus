@@ -22,6 +22,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
         }
     }
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        return loader
+    }()
     class var height: CGFloat { return 70 }
     static let identifier = "FavoriteCollectionViewCell"
     var busNumberYAxisMargin: CGFloat { return 0 }
@@ -30,7 +34,6 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
 
     private lazy var busNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "272"
         label.font = UIFont.boldSystemFont(ofSize: self.busNumberFontSize)
         label.textColor = BBusColor.bbusTypeBlue
         return label
@@ -42,6 +45,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
         
         self.cancellables.forEach { $0.cancel() }
         self.cancellables.removeAll()
+        self.loader.isHidden = false
+        self.loader.startAnimating()
         self.busNumberLabel.text = ""
         self.trailingView.configure(firstBusTime: nil,
                                     firstBusRemaining: nil,
@@ -72,7 +77,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
      func configureLayout() {
         let half: CGFloat = 0.5
          
-        self.addSubviews(self.busNumberLabel, self.trailingView)
+         self.addSubviews(self.busNumberLabel, self.trailingView, self.loader)
+
          
         let busNumberLeadingConstraint = self.busNumberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.busNumberLeadingInterval)
         busNumberLeadingConstraint.priority = UILayoutPriority.defaultHigh
@@ -87,6 +93,13 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             self.trailingView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.trailingView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half)
         ])
+
+         NSLayoutConstraint.activate([
+            self.loader.topAnchor.constraint(equalTo: self.topAnchor),
+            self.loader.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.loader.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.loader.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: half)
+         ])
     }
 
     func configureDelegate(_ delegate: AlarmButtonDelegate) {
@@ -100,6 +113,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     func configure(busNumber: String, routeType: RouteType?, firstBusTime: String?, firstBusRelativePosition: String?, firstBusCongestion: String?, secondBusTime: String?, secondBusRelativePosition: String?, secondBusCongestion: String?) {
         self.busNumberLabel.text = busNumber
 
+        self.loader.isHidden = true
+        self.loader.stopAnimating()
         switch routeType {
         case .mainLine:
             self.busNumberLabel.textColor = BBusColor.bbusTypeBlue

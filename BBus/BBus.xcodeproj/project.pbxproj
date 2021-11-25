@@ -62,6 +62,7 @@
 		4AA294B3273C111C008E5497 /* GetFavoriteItemListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B2273C111C008E5497 /* GetFavoriteItemListFetcher.swift */; };
 		4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B4273C11DE008E5497 /* CreateFavoriteItemFetcher.swift */; };
 		4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */; };
+		4AC79161274F6FDB00019827 /* SourceFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC79160274F6FDB00019827 /* SourceFooterView.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
 		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
@@ -196,6 +197,7 @@
 		4AA294B2273C111C008E5497 /* GetFavoriteItemListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteItemListFetcher.swift; sourceTree = "<group>"; };
 		4AA294B4273C11DE008E5497 /* CreateFavoriteItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFavoriteItemFetcher.swift; sourceTree = "<group>"; };
 		4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteItemFetchable.swift; sourceTree = "<group>"; };
+		4AC79160274F6FDB00019827 /* SourceFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFooterView.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				4A1A22DA27326FD100476861 /* HomeNavigationView.swift */,
 				4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */,
 				4A917DF127462E36002489FE /* EmptyFavoriteNoticeView.swift */,
+				4AC79160274F6FDB00019827 /* SourceFooterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -965,6 +968,7 @@
 				4A06AEC8274159D10027222D /* FavoriteItemDTO.swift in Sources */,
 				4ACA521F272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift in Sources */,
 				4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */,
+				4AC79161274F6FDB00019827 /* SourceFooterView.swift in Sources */,
 				0484107627464D49006F8636 /* AlarmSettingBusArriveInfos.swift in Sources */,
 				4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */,
 				87038A92273C12320078EAE3 /* GetBusPosByRtidFetcher.swift in Sources */,

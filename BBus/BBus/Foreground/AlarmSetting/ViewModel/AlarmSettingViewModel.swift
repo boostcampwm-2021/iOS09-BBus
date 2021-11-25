@@ -128,4 +128,9 @@ final class AlarmSettingViewModel {
     func sendErrorMessage(_ message: String) {
         self.errorMessage = message
     }
+
+    func isStopLoader() -> Bool {
+        guard let busStationInfos = self.busStationInfos else { return false }
+        return !self.busArriveInfos.arriveInfos.isEmpty && !busStationInfos.isEmpty
+    }
 }

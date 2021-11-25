@@ -52,6 +52,7 @@ final class MovingStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.movingStatusView.startLoader()
         self.binding()
         self.configureLayout()
         self.configureDelegate()
@@ -137,6 +138,7 @@ final class MovingStatusViewController: UIViewController {
     }
 
     private func binding() {
+        self.bindLoader()
         self.bindHeaderBusInfo()
         self.bindRemainTime()
         self.bindCurrentStation()
@@ -210,6 +212,17 @@ final class MovingStatusViewController: UIViewController {
             .sink(receiveValue: { [weak self] isTerminated in
                 if isTerminated {
                     self?.terminateAlert()
+                }
+            })
+            .store(in: &self.cancellables)
+    }
+
+    private func bindLoader() {
+        self.viewModel?.$stopLoader
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isStop in
+                if isStop {
+                    self?.movingStatusView.stopLoader()
                 }
             })
             .store(in: &self.cancellables)

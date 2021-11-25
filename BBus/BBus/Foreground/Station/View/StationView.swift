@@ -27,8 +27,15 @@ final class StationView: UIView {
         collectionView.register(SimpleCollectionHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SimpleCollectionHeaderView.identifier)
+        collectionView.register(SourceFooterView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: SourceFooterView.identifier)
         collectionView.backgroundColor = BBusColor.bbusLightGray
         return collectionView
+    }()
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView(style: .large)
+        return loader
     }()
 
     convenience init() {
@@ -41,7 +48,7 @@ final class StationView: UIView {
     private func configureLayout() {
         let half: CGFloat = 0.5
         
-        self.addSubviews(self.colorBackgroundView, self.stationScrollView)
+        self.addSubviews(self.colorBackgroundView, self.stationScrollView, self.loader)
 
         NSLayoutConstraint.activate([
             self.colorBackgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: half),
@@ -71,7 +78,9 @@ final class StationView: UIView {
             self.stationBodyCollectionView.trailingAnchor.constraint(equalTo: self.stationScrollContentsView.trailingAnchor),
             self.stationBodyCollectionView.topAnchor.constraint(equalTo: self.stationHeaderView.bottomAnchor)
         ])
+        
         self.stationScrollView.addSubviews(self.stationScrollContentsView)
+        
         NSLayoutConstraint.activate([
             self.stationScrollContentsView.topAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.topAnchor),
             self.stationScrollContentsView.leadingAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.leadingAnchor),
@@ -79,6 +88,11 @@ final class StationView: UIView {
             self.stationScrollContentsView.bottomAnchor.constraint(equalTo: self.stationScrollView.contentLayoutGuide.bottomAnchor),
             self.stationScrollContentsView.widthAnchor.constraint(equalTo: self.stationScrollView.frameLayoutGuide.widthAnchor),
             self.stationScrollContentsView.heightAnchor.constraint(equalTo: self.stationBodyCollectionView.heightAnchor, constant: StationHeaderView.headerHeight)
+        ])
+
+        NSLayoutConstraint.activate([
+            self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 
@@ -118,5 +132,15 @@ final class StationView: UIView {
     
     func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
         return self.stationBodyCollectionView.indexPath(for: cell)
+    }
+
+    func startLoader() {
+        self.loader.isHidden = false
+        self.loader.startAnimating()
+    }
+
+    func stopLoader() {
+        self.loader.isHidden = true
+        self.loader.stopAnimating()
     }
 }

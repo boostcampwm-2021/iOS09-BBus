@@ -19,6 +19,7 @@ final class StationViewModel {
     private(set) var inActiveBuses = [BBusRouteType: BusArriveInfos]()
     @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
+    @Published private(set) var stopLoader: Bool = false
     
     init(usecase: StationUsecase, arsId: String) {
         self.usecase = usecase
@@ -50,6 +51,7 @@ final class StationViewModel {
     }
     
     private func binding() {
+        self.bindLoader()
         self.bindFavoriteItems()
         self.bindBusArriveInfo()
     }
@@ -127,5 +129,14 @@ final class StationViewModel {
     
     func remove(favoriteItem: FavoriteItemDTO) {
         self.usecase.remove(favoriteItem: favoriteItem)
+    }
+
+    private func bindLoader() {
+        self.$busKeys.zip(self.$favoriteItems, self.$nextStation)
+            .dropFirst()
+            .sink(receiveValue: { result in
+                self.stopLoader = true
+            })
+            .store(in: &self.cancellables)
     }
 }

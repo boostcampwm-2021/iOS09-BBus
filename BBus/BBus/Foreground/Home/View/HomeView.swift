@@ -11,7 +11,12 @@ final class HomeView: UIView {
 
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
-        collectionView.register(FavoriteCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
+        collectionView.register(FavoriteCollectionHeaderView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: FavoriteCollectionHeaderView.identifier)
+        collectionView.register(SourceFooterView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: SourceFooterView.identifier)
         collectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         let backgroundView = UIView()
         backgroundView.backgroundColor = BBusColor.bbusBackground

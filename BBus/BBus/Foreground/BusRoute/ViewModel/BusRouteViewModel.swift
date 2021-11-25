@@ -18,13 +18,18 @@ final class BusRouteViewModel {
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     @Published var header: BusRouteDTO?
-    @Published var bodys: [BusStationInfo] = []
-    @Published var buses: [BusPosInfo] = []
+    @Published var bodys: [BusStationInfo]
+    @Published var buses: [BusPosInfo]
+    @Published private(set) var stopLoader: Bool = false
 
     init(usecase: BusRouteUsecase, busRouteId: Int) {
         self.usecase = usecase
         self.busRouteId = busRouteId
+        self.header = nil
         self.cancellables = []
+        self.bodys = []
+        self.buses = []
+        self.bindLoader()
         self.bindHeaderInfo()
         self.bindBodysInfo()
         self.bindBusesPosInfo()
@@ -119,5 +124,20 @@ final class BusRouteViewModel {
 
     @objc func refreshBusPos() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+    }
+
+    func isStopLoader() -> Bool {
+        return self.header != nil && !self.bodys.isEmpty && !self.buses.isEmpty
+    }
+
+    private func bindLoader() {
+        self.$header.zip(self.$bodys, self.$buses)
+            .dropFirst()
+            .dropFirst()
+            .sink(receiveValue: { result in
+                dump(result)
+                self.stopLoader = true
+            })
+            .store(in: &self.cancellables)
     }
 }
