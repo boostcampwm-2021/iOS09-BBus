@@ -16,7 +16,7 @@ final class StationViewModel {
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busKeys: BusSectionKeys
     @Published private(set) var activeBuses = [BBusRouteType: BusArriveInfos]()
-    private(set) var noInfoBuses = [BBusRouteType: [BusArriveInfo]]()
+    private(set) var inActiveBuses = [BBusRouteType: BusArriveInfos]()
     @Published private(set) var favoriteItems = [FavoriteItemDTO]()
     @Published private(set) var nextStation: String? = nil
     
@@ -78,7 +78,7 @@ final class StationViewModel {
 
     private func classifyByRouteType(with buses: [StationByUidItemDTO]) {
         var activeBuses: [BBusRouteType: BusArriveInfos] = [:]
-        var noInfoBuses: [BBusRouteType: [BusArriveInfo]] = [:]
+        var inActiveBuses: [BBusRouteType: BusArriveInfos] = [:]
         buses.forEach() { bus in
             guard let routeType = BBusRouteType(rawValue: Int(bus.routeType) ?? 0) else { return }
             
@@ -110,14 +110,14 @@ final class StationViewModel {
                 info.secondBusRelativePosition = nil
                 info.secondBusCongestion = nil
                 
-                noInfoBuses.updateValue((noInfoBuses[routeType] ?? []) + [info], forKey: routeType)
+                inActiveBuses.updateValue((inActiveBuses[routeType] ?? BusArriveInfos()) + BusArriveInfos(infos: [info]), forKey: routeType)
             }
         }
         self.activeBuses = activeBuses
-        self.noInfoBuses = noInfoBuses
+        self.inActiveBuses = inActiveBuses
 
         let sortedInfoBusesKey = Array(activeBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
-        let sortedNoInfoBusesKey = Array(noInfoBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
+        let sortedNoInfoBusesKey = Array(inActiveBuses.keys).sorted(by: { $0.rawValue < $1.rawValue })
         self.busKeys = BusSectionKeys(keys: sortedInfoBusesKey) + BusSectionKeys(keys: sortedNoInfoBusesKey)
     }
     

@@ -201,7 +201,7 @@ extension StationViewController: UICollectionViewDelegate {
             busRouteId = viewModel.activeBuses[key]?[indexPath.item]?.busRouteId ?? 100100048
         }
         else {
-            busRouteId = viewModel.noInfoBuses[key]?[indexPath.item].busRouteId ?? 100100048
+            busRouteId = viewModel.inActiveBuses[key]?[indexPath.item]?.busRouteId ?? 100100048
         }
         self.coordinator?.pushToBusRoute(busRouteId: busRouteId)
     }
@@ -221,7 +221,7 @@ extension StationViewController: UICollectionViewDataSource {
             return viewModel.activeBuses[key]?.count() ?? 0
         }
         else {
-            return viewModel.noInfoBuses[key]?.count ?? 0
+            return viewModel.inActiveBuses[key]?.count() ?? 0
         }
     }
     
@@ -265,8 +265,7 @@ extension StationViewController: UICollectionViewDataSource {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak self] activeBuses in
                     guard let key = self?.viewModel?.busKeys[indexPath.section],
-                          let maxCount = activeBuses[key]?.count(),
-                          let busInfo = maxCount > indexPath.item ? activeBuses[key]?[indexPath.item] : nil else { return }
+                          let busInfo = activeBuses[key]?[indexPath.item] else { return }
                     configureCell(busInfo)
                 })
                 .store(in: &cell.cancellables)
@@ -289,7 +288,7 @@ extension StationViewController: UICollectionViewDataSource {
         // NoInfoBus인 경우: 바로 configure
         else {
             guard let key = viewModel.busKeys[indexPath.section] else { return cell }
-            if let busInfo = viewModel.noInfoBuses[key]?[indexPath.item] {
+            if let busInfo = viewModel.inActiveBuses[key]?[indexPath.item] {
                 configureCell(busInfo)
             }
         }
@@ -385,7 +384,7 @@ extension StationViewController: LikeButtonDelegate {
             item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         else {
-            guard let bus = viewModel.noInfoBuses[key]?[indexPath.item] else { return nil }
+            guard let bus = viewModel.inActiveBuses[key]?[indexPath.item] else { return nil }
             item = FavoriteItemDTO(stId: "\(station.stationID)", busRouteId: "\(bus.busRouteId)", ord: "\(bus.stationOrd)", arsId: viewModel.arsId)
         }
         return item
@@ -405,7 +404,7 @@ extension StationViewController: AlarmButtonDelegate {
             bus = info
         }
         else {
-            guard let info = viewModel.noInfoBuses[key]?[indexPath.item] else { return }
+            guard let info = viewModel.inActiveBuses[key]?[indexPath.item] else { return }
             bus = info
         }
         self.coordinator?.pushToAlarmSetting(stationId: stationID,
