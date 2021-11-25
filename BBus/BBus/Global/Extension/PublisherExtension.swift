@@ -14,7 +14,12 @@ extension Publisher where Output == (Data, Int), Failure == Error {
             guard let json = try? JSONDecoder().decode(JsonHeader.self, from: data),
                   let statusCode = Int(json.msgHeader.headerCD),
                   let error = BBusAPIError(errorCode: statusCode) else { return data }
-            Service.shared.removeAccessKey(at: order)
+            switch error {
+            case .noneAccessKeyError, .noneRegisteredKeyError, .suspendedKeyError, .exceededKeyError:
+                Service.shared.removeAccessKey(at: order)
+            default:
+                break
+            }
             throw error
         }).eraseToAnyPublisher()
     }
@@ -26,10 +31,11 @@ extension Publisher where Failure == Error {
             switch error {
             case BBusAPIError.noMoreAccessKeyError, BBusAPIError.trafficExceed:
                 wholeTokenExhaustedHandler(error)
-            default:
+            case BBusAPIError.systemError:
                 currentTokenExhaustedHandler()
+            default:
+                break
             }
-            
             let publisher = PassthroughSubject<Self.Output, Never>()
             DispatchQueue.global().async {
                 publisher.send(completion: .finished)

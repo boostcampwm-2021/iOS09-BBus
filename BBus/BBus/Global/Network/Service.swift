@@ -17,7 +17,15 @@ final class Service {
     static let shared = Service()
     
     private var accessKeys: [String] = { () -> [String] in
-        let keys = [Bundle.main.infoDictionary?["API_ACCESS_KEY1"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY2"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY3"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY4"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY5"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY6"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY7"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY8"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY9"] as? String]
+        let keys = [Bundle.main.infoDictionary?["API_ACCESS_KEY1"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY2"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY3"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY4"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY5"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY6"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY7"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY8"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY9"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY10"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY11"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY12"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY13"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY14"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY15"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY16"] as? String,
+            Bundle.main.infoDictionary?["API_ACCESS_KEY17"] as? String]
         return keys.compactMap({ $0 })
     }()
     
@@ -32,16 +40,16 @@ final class Service {
     }
 
     func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<(Data, Int), Error> {
-//        let userDefaultKey = "APIRequestCount"
-//        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
-//        if apiRequestCount > 300 {
-//            let publisher = PassthroughSubject<(Data, Int), Error>()
-//            queue.async {
-//                publisher.send(completion: .failure(BBusAPIError.trafficExceed))
-//            }
-//            return publisher.eraseToAnyPublisher()
-//        }
-//        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
+        let userDefaultKey = "APIRequestCount"
+        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
+        if apiRequestCount > 500 {
+            let publisher = PassthroughSubject<(Data, Int), Error>()
+            queue.async {
+                publisher.send(completion: .failure(BBusAPIError.trafficExceed))
+            }
+            return publisher.eraseToAnyPublisher()
+        }
+        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
         guard self.keys.count != 0,
               let order = self.keys.randomElement() else {
                   let publisher = PassthroughSubject<(Data, Int), Error>()

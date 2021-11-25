@@ -26,6 +26,22 @@
 	<string>${API_ACCESS_KEY8}</string>
 	<key>API_ACCESS_KEY9</key>
 	<string>${API_ACCESS_KEY9}</string>
+	<key>API_ACCESS_KEY10</key>
+	<string>${API_ACCESS_KEY10}</string>
+	<key>API_ACCESS_KEY11</key>
+	<string>${API_ACCESS_KEY11}</string>
+	<key>API_ACCESS_KEY12</key>
+	<string>${API_ACCESS_KEY12}</string>
+	<key>API_ACCESS_KEY13</key>
+	<string>${API_ACCESS_KEY13}</string>
+	<key>API_ACCESS_KEY14</key>
+	<string>${API_ACCESS_KEY14}</string>
+	<key>API_ACCESS_KEY15</key>
+	<string>${API_ACCESS_KEY15}</string>
+	<key>API_ACCESS_KEY16</key>
+	<string>${API_ACCESS_KEY16}</string>
+	<key>API_ACCESS_KEY17</key>
+	<string>${API_ACCESS_KEY17}</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

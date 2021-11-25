@@ -331,8 +331,6 @@ extension MovingStatusViewController: UITableViewDelegate {
 // MARK: - Delegate : BottomIndicatorButton
 extension MovingStatusViewController: BottomIndicatorButtonDelegate {
     func shouldUnfoldMovingStatusView() {
-        // Coordinator에게 Unfold 요청
-        print("bottom indicator button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.viewModel?.unfold()
             self?.coordinator?.unfold()
@@ -343,8 +341,6 @@ extension MovingStatusViewController: BottomIndicatorButtonDelegate {
 // MARK: - Delegate : BottomIndicatorButton
 extension MovingStatusViewController: FoldButtonDelegate {
     func shouldFoldMovingStatusView() {
-        // Coordinator에게 fold 요청
-        print("fold button is touched")
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.viewModel?.fold()
             self?.coordinator?.fold()
@@ -355,8 +351,6 @@ extension MovingStatusViewController: FoldButtonDelegate {
 // MARK: - Delegate : EndAlarmButton
 extension MovingStatusViewController: EndAlarmButtonDelegate {
     func shouldEndAlarm() {
-        // alarm 종료
-        print("end the alarm")
         self.coordinator?.close()
     }
 }

@@ -131,11 +131,10 @@ final class BusRouteViewModel {
     }
 
     private func bindLoader() {
-        self.$header.zip(self.$bodys, self.$buses)
-            .dropFirst()
-            .dropFirst()
+        self.$header.zip(self.$bodys)
+            .receive(on: BusRouteUsecase.queue)
+            .output(at: 2)
             .sink(receiveValue: { result in
-                dump(result)
                 self.stopLoader = true
             })
             .store(in: &self.cancellables)

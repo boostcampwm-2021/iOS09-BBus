@@ -46,6 +46,7 @@ final class BusRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.busRouteView.startLoader()
         self.binding()
         self.configureLayout()
         self.configureDelegate()
@@ -55,7 +56,6 @@ final class BusRouteViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.busRouteView.startLoader()
         self.viewModel?.configureObserver()
         self.viewModel?.refreshBusPos()
     }
