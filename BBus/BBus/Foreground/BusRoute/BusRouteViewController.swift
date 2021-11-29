@@ -51,7 +51,6 @@ final class BusRouteViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureBaseColor()
-        self.fetch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -164,7 +163,6 @@ final class BusRouteViewController: UIViewController {
     private func bindBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: DispatchQueue.main)
-            .dropFirst()
             .sink(receiveValue: { [weak self] header in
                 if let header = header {
                     self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
@@ -173,9 +171,6 @@ final class BusRouteViewController: UIViewController {
                                                           fromStation: header.startStation,
                                                           toStation: header.endStation)
                     self?.configureBusColor(type: header.routeType)
-                }
-                else {
-                    self?.noInfoAlert()
                 }
             })
             .store(in: &self.cancellables)
@@ -207,7 +202,7 @@ final class BusRouteViewController: UIViewController {
     }
     
     private func bindNetworkError() {
-        self.viewModel?.usecase.$networkError
+        self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
@@ -243,10 +238,6 @@ final class BusRouteViewController: UIViewController {
                                    handler: { [weak self] _ in self?.coordinator?.terminate() })
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
-    }
-    
-    private func fetch() {
-        self.viewModel?.fetch()
     }
 }
 

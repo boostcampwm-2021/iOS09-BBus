@@ -21,15 +21,16 @@ final class BusRouteViewModel {
     @Published var bodys: [BusStationInfo]
     @Published var buses: [BusPosInfo]
     @Published private(set) var stopLoader: Bool = false
+    @Published private(set) var networkError: Error?
 
     init(usecase: BusRouteAPIUsecase, busRouteId: Int) {
         self.usecase = usecase
         self.busRouteId = busRouteId
-        self.header = nil
         self.cancellables = []
         self.bodys = []
         self.buses = []
         self.bindLoader()
+        self.bindNetworkError()
         self.bindHeaderInfo()
         self.bindBodysInfo()
         self.bindBusesPosInfo()
@@ -44,30 +45,33 @@ final class BusRouteViewModel {
     }
 
     private func bindHeaderInfo() {
-        self.usecase.$header
+        self.usecase.searchHeader(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .assign(to: &self.$header)
     }
 
     private func bindBodysInfo() {
-        self.usecase.$bodys
+        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] bodys in
-                guard let self = self else { return }
-
-                self.convertBusStationInfo(with: bodys)
-                self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+                self?.convertBusStationInfo(with: bodys)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindBusesPosInfo() {
-        self.usecase.$buses
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] buses in
                 self?.convertBusPosInfo(with: buses)
             })
             .store(in: &self.cancellables)
+    }
+    
+    private func bindNetworkError() {
+        self.usecase.$networkError
+            .receive(on: DispatchQueue.main)
+            .assign(to: &self.$networkError)
     }
 
     private func convertBusPos(order: Int, sect: String, fullSect: String) -> CGFloat {
@@ -117,13 +121,8 @@ final class BusRouteViewModel {
         self.buses = busesResult
     }
 
-    func fetch() {
-        self.usecase.searchHeader(busRouteId: self.busRouteId)
-        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
-    }
-
     @objc func refreshBusPos() {
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+        self.bindBusesPosInfo()
     }
 
     func isStopLoader() -> Bool {
@@ -133,7 +132,7 @@ final class BusRouteViewModel {
     private func bindLoader() {
         self.$header.zip(self.$bodys)
             .receive(on: DispatchQueue.global())
-            .output(at: 2)
+            .dropFirst()
             .sink(receiveValue: { result in
                 self.stopLoader = true
             })
