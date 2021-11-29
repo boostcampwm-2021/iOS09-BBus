@@ -9,10 +9,12 @@ import Foundation
 import Combine
 
 protocol BaseBusRouteAPIUsable: BaseUseCase {
-
+    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Never>
+    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Never>
+    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Never>
 }
 
-final class BusRouteAPIUsecase: BaseBusRouteAPIUsable {
+final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var networkError: Error?

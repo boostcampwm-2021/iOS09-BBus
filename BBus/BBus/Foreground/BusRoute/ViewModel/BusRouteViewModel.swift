@@ -14,7 +14,7 @@ typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusConges
 
 final class BusRouteViewModel {
 
-    let usecase: BusRouteAPIUsecase
+    let usecase: BusRouteAPIUseCase
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     @Published var header: BusRouteDTO?
@@ -23,7 +23,7 @@ final class BusRouteViewModel {
     @Published private(set) var stopLoader: Bool = false
     @Published private(set) var networkError: Error?
 
-    init(usecase: BusRouteAPIUsecase, busRouteId: Int) {
+    init(usecase: BusRouteAPIUseCase, busRouteId: Int) {
         self.usecase = usecase
         self.busRouteId = busRouteId
         self.cancellables = []
