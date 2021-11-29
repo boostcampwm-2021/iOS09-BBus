@@ -108,7 +108,6 @@ final class AlarmSettingViewModel {
             .scan(initInfo, { before, info in
                 let alarmSettingInfo: AlarmSettingBusStationInfo
                 alarmSettingInfo.arsId = info.arsId
-                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
                 alarmSettingInfo.name = info.stationName
                 alarmSettingInfo.ord = info.sequence
                 return alarmSettingInfo
@@ -116,6 +115,7 @@ final class AlarmSettingViewModel {
             .collect()
             .map { $0 as [AlarmSettingBusStationInfo]? }
             .assign(to: &self.$busStationInfos)
+                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
     }
     
     private func bindAlarmSettingViewModelInfo() {
@@ -129,6 +129,16 @@ final class AlarmSettingViewModel {
                 self.loaderActiveStatus = false
             })
             .store(in: &self.cancellables)
+    func averageSectionTime(speed: Int, distance: Int) -> Int {
+        let averageBusSpeed: Double = 21
+        let metterToKilometter: Double = 0.06
+
+        let result = Double(distance)/averageBusSpeed*metterToKilometter
+        return Int(ceil(result))
+    }
+    
+    func sendErrorMessage(_ message: String) {
+        self.errorMessage = message
     }
     
     func activateLoaderActiveStatus() {

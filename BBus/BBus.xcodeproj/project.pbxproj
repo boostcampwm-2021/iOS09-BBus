@@ -129,6 +129,7 @@
 		87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556F2728116400A9B5E3 /* HomeViewController.swift */; };
 		87A555752728116600A9B5E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87A555742728116600A9B5E3 /* Assets.xcassets */; };
 		87A555782728116600A9B5E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A555762728116600A9B5E3 /* LaunchScreen.storyboard */; };
+		87B35D0A2754E71F00159791 /* MovingStatusCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B35D092754E71F00159791 /* MovingStatusCalculateUseCase.swift */; };
 		87EB52AE2733A6C6000D5492 /* GetOnStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -269,6 +270,7 @@
 		87A555742728116600A9B5E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87A555772728116600A9B5E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87A555792728116600A9B5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87B35D092754E71F00159791 /* MovingStatusCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusCalculateUseCase.swift; sourceTree = "<group>"; };
 		87EB52AD2733A6C6000D5492 /* GetOnStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnStatusCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -658,6 +660,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA522C272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift */,
+				87B35D092754E71F00159791 /* MovingStatusCalculateUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
+				87B35D0A2754E71F00159791 /* MovingStatusCalculateUseCase.swift in Sources */,
 				87038A8A273B96B60078EAE3 /* Service.swift in Sources */,
 				4A412028274E34430083D691 /* BusRouteModel.swift in Sources */,
 				87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */,
