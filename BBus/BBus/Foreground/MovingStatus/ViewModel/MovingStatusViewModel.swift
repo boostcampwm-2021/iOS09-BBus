@@ -86,7 +86,6 @@ final class MovingStatusViewModel {
 
     private func binding() {
         self.bindLoader()
-        self.bindErrorMessage()
         self.bindHeaderInfo()
         self.bindStationsInfo()
         self.bindBusesPosInfo()
@@ -95,6 +94,9 @@ final class MovingStatusViewModel {
     private func bindHeaderInfo() {
         self.apiUseCase.searchHeader(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] header in
                 guard let self = self,
                       let header = header else { return }
@@ -107,6 +109,9 @@ final class MovingStatusViewModel {
     private func bindStationsInfo() {
         self.apiUseCase.fetchRouteList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] stations in
                 self?.convertBusStations(with: stations)
             })
@@ -116,6 +121,9 @@ final class MovingStatusViewModel {
     private func bindBusesPosInfo() {
         self.apiUseCase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink { [weak self] buses in
                 guard let self = self,
                       let currentOrd = self.currentOrd,
@@ -134,12 +142,6 @@ final class MovingStatusViewModel {
                 self.findBoardBus(gpsY: y, gpsX: x)
             }
             .store(in: &self.cancellables)
-    }
-    
-    private func bindErrorMessage() {
-        self.apiUseCase.$networkError
-            .receive(on: DispatchQueue.main)
-            .assign(to: &self.$networkError)
     }
     
     private func bindLoader() {
