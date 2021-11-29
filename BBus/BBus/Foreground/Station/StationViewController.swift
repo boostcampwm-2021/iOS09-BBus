@@ -122,16 +122,11 @@ final class StationViewController: UIViewController {
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
         
-        self.viewModel?.usecase.$stationInfo
+        self.viewModel?.$stationInfo
             .receive(on: DispatchQueue.main)
-            .dropFirst()
+            .compactMap { $0 }
             .sink(receiveValue: { [weak self] station in
-                if let station = station {
-                    self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
-                }
-                else {
-                    self?.noInfoAlert()
-                }
+                self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
             })
             .store(in: &self.cancellables)
         
@@ -143,11 +138,17 @@ final class StationViewController: UIViewController {
             })
             .store(in: &self.cancellables)
         
-        self.viewModel?.usecase.$networkError
+        self.viewModel?.$error
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
-                guard let _ = error else { return }
-                self?.networkAlert()
+                guard let error = error as? BBusAPIError else { return }
+                
+                switch error {
+                case .invalidStationError:
+                    self?.noInfoAlert()
+                default:
+                    self?.networkAlert()
+                }
             })
             .store(in: &self.cancellables)
 
@@ -162,8 +163,7 @@ final class StationViewController: UIViewController {
         
         guard let viewModel = viewModel else { return }
         viewModel.$busKeys
-            .compactMap({$0})
-            .combineLatest(viewModel.usecase.$stationInfo.compactMap({$0}), viewModel.$favoriteItems.compactMap({$0}).first())
+            .combineLatest(viewModel.$stationInfo.compactMap{$0}, viewModel.$favoriteItems.compactMap{$0}.first())
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] results in
                 self?.stationView.reload()
@@ -239,13 +239,14 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         // configure delegate and button
-        if let item = self.makeFavoriteItem(at: indexPath) {
+        if let item = self.makeFavoriteItem(at: indexPath),
+           let favoriteItems = viewModel.favoriteItems {
             cell.configure(delegate: self)
-            cell.configureButton(status: viewModel.favoriteItems.contains(item))
-            // 즐겨찾기 버튼 터치 시에도 reload 대신 버튼 색상만 다시 configure하도록 바인딩
+            cell.configureButton(status: favoriteItems.contains(item))
             self.viewModel?.$favoriteItems
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak cell] favoriteItems in
+                    guard let favoriteItems = favoriteItems else { return }
                     cell?.configureButton(status: favoriteItems.contains(item))
                 })
                 .store(in: &cell.cancellables)
@@ -380,7 +381,7 @@ extension StationViewController: LikeButtonDelegate {
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
         guard let viewModel = self.viewModel,
-              let station = viewModel.usecase.stationInfo,
+              let station = viewModel.stationInfo,
               let key = viewModel.busKeys[indexPath.section] else { return nil }
         let item: FavoriteItemDTO
         if viewModel.activeBuses.count - 1 >= indexPath.section {
@@ -400,7 +401,7 @@ extension StationViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         guard let indexPath = self.indexPath(for: cell),
               let viewModel = viewModel,
-              let stationID = viewModel.usecase.stationInfo?.stationID,
+              let stationID = viewModel.stationInfo?.stationID,
               let key = viewModel.busKeys[indexPath.section] else { return }
         let bus: BusArriveInfo
         if viewModel.activeBuses.count - 1 >= indexPath.section {
