@@ -9,39 +9,34 @@ import Foundation
 import Combine
 
 protocol HomeAPIUsable: BaseUseCase {
-    typealias HomeUseCases = GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & GetStationListUsecase & GetRouteListUsecase & GetArrInfoByRouteListUsecase
+    typealias HomeUseCases = GetFavoriteItemListUseCase & CreateFavoriteItemUseCase & GetStationListUseCase & GetRouteListUseCase & GetArrInfoByRouteListUseCase
 
-    func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Never>
-    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Never>
-    func fetchStation() -> AnyPublisher<[StationDTO], Never>
-    func fetchBusRoute() -> AnyPublisher<[BusRouteDTO], Never>
+    func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Error>
+    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Error>
+    func fetchStation() -> AnyPublisher<[StationDTO], Error>
+    func fetchBusRoute() -> AnyPublisher<[BusRouteDTO], Error>
 }
 
 final class HomeAPIUseCase: HomeAPIUsable {
 
-    private let usecases: HomeUseCases
-    @Published private(set) var networkError: Error?
+    private let useCases: HomeUseCases
 
-    init(usecases: HomeUseCases) {
-        self.usecases = usecases
-        self.networkError = nil
+    init(useCases: HomeUseCases) {
+        self.useCases = useCases
     }
 
-    func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Never> {
-        return self.usecases.getFavoriteItemList()
+    func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Error> {
+        return self.useCases.getFavoriteItemList()
             .decode(type: [FavoriteItemDTO]?.self, decoder: PropertyListDecoder())
             .tryMap({ item in
                 guard let item = item else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .catchError({ [weak self] error in
-                self?.networkError = error
-            })
             .eraseToAnyPublisher()
     }
 
-    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Never> {
-        return self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
+    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Error> {
+        return self.useCases.getArrInfoByRouteList(stId: favoriteItem.stId,
                                                    busRouteId: favoriteItem.busRouteId,
                                                    ord: favoriteItem.ord)
             .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
@@ -50,35 +45,26 @@ final class HomeAPIUseCase: HomeAPIUsable {
                 guard let item = result.first else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .catchError({ [weak self] error in
-                self?.networkError = error
-            })
             .eraseToAnyPublisher()
     }
 
-    func fetchStation() -> AnyPublisher<[StationDTO], Never> {
-        self.usecases.getStationList()
+    func fetchStation() -> AnyPublisher<[StationDTO], Error> {
+        self.useCases.getStationList()
             .decode(type: [StationDTO]?.self, decoder: JSONDecoder())
             .tryMap({ item in
                 guard let item = item else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .catchError { [weak self] error in
-                self?.networkError = error
-            }
             .eraseToAnyPublisher()
     }
 
-    func fetchBusRoute() -> AnyPublisher<[BusRouteDTO], Never> {
-        return self.usecases.getRouteList()
+    func fetchBusRoute() -> AnyPublisher<[BusRouteDTO], Error> {
+        return self.useCases.getRouteList()
             .decode(type: [BusRouteDTO]?.self, decoder: JSONDecoder())
             .tryMap({ item in
                 guard let item = item else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .catchError { [weak self] error in
-                self?.networkError = error
-            }
             .eraseToAnyPublisher()
     }
 }

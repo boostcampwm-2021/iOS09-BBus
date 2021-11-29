@@ -18,7 +18,7 @@ final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
 
-    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
+    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
         self.usecases = usecases
     }
 

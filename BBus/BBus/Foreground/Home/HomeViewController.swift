@@ -39,6 +39,7 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.viewModel?.loadHomeData()
         self.baseViewWillAppear()
         
         self.viewModel?.configureObserver()
@@ -111,7 +112,7 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     }
     
     private func bindNetworkError() {
-        self.viewModel?.useCase.$networkError
+        self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
