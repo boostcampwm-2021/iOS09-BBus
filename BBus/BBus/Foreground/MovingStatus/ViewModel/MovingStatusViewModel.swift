@@ -16,7 +16,7 @@ typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String
 
 final class MovingStatusViewModel {
 
-    let usecase: MovingStatusUsecase
+    let usecase: MovingStatusAPIUseCase
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     private let fromArsId: String
@@ -33,8 +33,9 @@ final class MovingStatusViewModel {
     @Published private(set) var boardedBus: BoardedBus? // 8
     @Published private(set) var message: String?
     @Published private(set) var stopLoader: Bool = false
+    @Published private(set) var networkError: Error?
 
-    init(usecase: MovingStatusUsecase, busRouteId: Int, fromArsId: String, toArsId: String) {
+    init(usecase: MovingStatusAPIUseCase, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.usecase = usecase
         self.busRouteId = busRouteId
         self.fromArsId = fromArsId
@@ -56,13 +57,14 @@ final class MovingStatusViewModel {
 
     private func binding() {
         self.bindLoader()
+        self.bindErrorMessage()
         self.bindHeaderInfo()
         self.bindStationsInfo()
         self.bindBusesPosInfo()
     }
 
     private func bindHeaderInfo() {
-        self.usecase.$header
+        self.usecase.searchHeader(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] header in
                 self?.convertBusInfo(header: header)
@@ -71,7 +73,7 @@ final class MovingStatusViewModel {
     }
 
     private func bindStationsInfo() {
-        self.usecase.$stations
+        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] stations in
                 self?.convertBusStations(with: stations)
@@ -80,7 +82,7 @@ final class MovingStatusViewModel {
     }
 
     private func bindBusesPosInfo() {
-        self.usecase.$buses
+        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .sink { [weak self] buses in
                 guard let currentOrd = self?.currentOrd,
@@ -95,6 +97,12 @@ final class MovingStatusViewModel {
                 self?.findBoardBus(gpsY: y, gpsX: x)
             }
             .store(in: &self.cancellables)
+    }
+    
+    private func bindErrorMessage() {
+        self.usecase.$networkError
+            .receive(on: DispatchQueue.main)
+            .assign(to: &self.$networkError)
     }
 
     private func convertBusInfo(header: BusRouteDTO?) {
@@ -231,15 +239,9 @@ final class MovingStatusViewModel {
         return Int(ceil(result))
     }
 
-    func fetch() {
-        self.usecase.searchHeader(busRouteId: self.busRouteId)
-        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
-    }
-
     // 타이머가 일정주기로 실행
     func updateAPI() {
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId) //고민 필요
+        self.bindBusesPosInfo()
     }
 
     func fold() {

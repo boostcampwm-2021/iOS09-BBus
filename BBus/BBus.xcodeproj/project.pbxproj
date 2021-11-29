@@ -85,7 +85,7 @@
 		4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5222272FCEB500EC0531 /* AlarmSettingViewModel.swift */; };
 		4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */; };
 		4ACA522B272FCED600EC0531 /* MovingStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522A272FCED600EC0531 /* MovingStatusModel.swift */; };
-		4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522C272FCEDB00EC0531 /* MovingStatusUseCase.swift */; };
+		4ACA522D272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522C272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift */; };
 		4ACA522F272FCEDF00EC0531 /* MovingStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522E272FCEDF00EC0531 /* MovingStatusViewModel.swift */; };
 		4ACA5231272FCEE600EC0531 /* MovingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5230272FCEE600EC0531 /* MovingStatusView.swift */; };
 		4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5232272FCF0F00EC0531 /* SearchViewController.swift */; };
@@ -222,7 +222,7 @@
 		4ACA5222272FCEB500EC0531 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
 		4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 		4ACA522A272FCED600EC0531 /* MovingStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusModel.swift; sourceTree = "<group>"; };
-		4ACA522C272FCEDB00EC0531 /* MovingStatusUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusUseCase.swift; sourceTree = "<group>"; };
+		4ACA522C272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusAPIUseCase.swift; sourceTree = "<group>"; };
 		4ACA522E272FCEDF00EC0531 /* MovingStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusViewModel.swift; sourceTree = "<group>"; };
 		4ACA5230272FCEE600EC0531 /* MovingStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusView.swift; sourceTree = "<group>"; };
 		4ACA5232272FCF0F00EC0531 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -657,7 +657,7 @@
 		4ACA5228272FCEC800EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA522C272FCEDB00EC0531 /* MovingStatusUseCase.swift */,
+				4ACA522C272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1041,7 +1041,7 @@
 				4A094CE127438EB800428F55 /* UIViewExtension.swift in Sources */,
 				4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */,
 				04AC7D132733B0940095CD4E /* GetOffTableViewCell.swift in Sources */,
-				4ACA522D272FCEDB00EC0531 /* MovingStatusUseCase.swift in Sources */,
+				4ACA522D272FCEDB00EC0531 /* MovingStatusAPIUseCase.swift in Sources */,
 				4AA294AF273C0E8D008E5497 /* GetRouteListFetcher.swift in Sources */,
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
