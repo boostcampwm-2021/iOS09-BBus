@@ -1,5 +1,5 @@
 //
-//  StationUseCase.swift
+//  StationAPIUseCase.swift
 //  BBus
 //
 //  Created by 김태훈 on 2021/11/01.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class StationUsecase {
+final class StationAPIUseCase {
     typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase & GetRouteListUsecase
     
     private let usecases: StationUsecases

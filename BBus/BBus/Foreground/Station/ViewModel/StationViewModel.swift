@@ -11,7 +11,7 @@ import UIKit
 
 final class StationViewModel {
     
-    let usecase: StationUsecase
+    let usecase: StationAPIUseCase
     let arsId: String
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busKeys: BusSectionKeys
@@ -21,7 +21,7 @@ final class StationViewModel {
     @Published private(set) var nextStation: String? = nil
     @Published private(set) var stopLoader: Bool = false
     
-    init(usecase: StationUsecase, arsId: String) {
+    init(usecase: StationAPIUseCase, arsId: String) {
         self.usecase = usecase
         self.arsId = arsId
         self.cancellables = []
