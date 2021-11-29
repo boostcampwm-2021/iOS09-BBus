@@ -57,7 +57,6 @@ final class MovingStatusViewController: UIViewController {
         self.configureLayout()
         self.configureDelegate()
         self.configureBusTag()
-        self.fetch()
         self.configureLocationManager()
         self.sendRequestAuthorization()
     }
@@ -252,13 +251,9 @@ final class MovingStatusViewController: UIViewController {
 
         self.movingStatusView.configureColor(to: color)
     }
-
-    private func fetch() {
-        self.viewModel?.fetch()
-    }
     
     private func bindErrorMessage() {
-        self.viewModel?.usecase.$networkError
+        self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
@@ -271,7 +266,14 @@ final class MovingStatusViewController: UIViewController {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
         controller.addAction(action)
-        self.coordinator?.presentAlertToNavigation(controller: controller, completion: nil)
+        
+        guard let isFolded = self.viewModel?.isFolded else { return }
+        if isFolded {
+            self.coordinator?.presentAlertToNavigation(controller: controller, completion: nil)
+        }
+        else {
+            self.coordinator?.presentAlertToMovingStatus(controller: controller, completion: nil)
+        }
     }
 
     private func terminateAlert() {
