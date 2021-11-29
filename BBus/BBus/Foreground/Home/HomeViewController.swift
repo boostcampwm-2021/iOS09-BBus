@@ -23,7 +23,7 @@ final class HomeViewController: UIViewController {
         button.layer.cornerRadius = self.refreshButtonWidth / 2
         button.tintColor = BBusColor.white
         button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.reloadFavoriteData()
+            self?.viewModel?.reloadFavorite()
         }
         return button
     }()
@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.reloadFavoriteData()
+        self.viewModel?.reloadFavorite()
         self.viewModel?.configureObserver()
     }
 
