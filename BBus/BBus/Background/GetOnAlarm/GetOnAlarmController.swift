@@ -35,7 +35,8 @@ final class GetOnAlarmController {
             }
         }
         else {
-            let usecase = GetOnAlarmAPIUsecase(usecases: BBusAPIUsecases())
+            let apiUseCases = BBusAPIUsecases(requestFactory: RequestFactory())
+            let usecase = GetOnAlarmAPIUsecase(usecases: apiUseCases)
             let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
                                                     targetOrd: targetOrd,
                                                     vehicleId: vehicleId,

@@ -16,7 +16,8 @@ final class BusRouteCoordinator: StationPushable {
     }
 
     func start(busRouteId: Int) {
-        let usecase = BusRouteAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUsecases(requestFactory: RequestFactory())
+        let usecase = BusRouteAPIUsecase(usecases: apiUseCases)
         let viewModel = BusRouteViewModel(usecase: usecase, busRouteId: busRouteId)
         let viewController = BusRouteViewController(viewModel: viewModel)
         viewController.coordinator = self

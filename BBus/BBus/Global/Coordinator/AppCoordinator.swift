@@ -67,7 +67,8 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
             self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
         }
         
-        let usecase = MovingStatusAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUsecases(requestFactory: RequestFactory())
+        let usecase = MovingStatusUsecase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
@@ -80,7 +81,8 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
     }
 
     func reset(busRouteId: Int, fromArsId: String, toArsId: String) {
-        let usecase = MovingStatusAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUsecases(requestFactory: RequestFactory())
+        let usecase = MovingStatusUsecase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self

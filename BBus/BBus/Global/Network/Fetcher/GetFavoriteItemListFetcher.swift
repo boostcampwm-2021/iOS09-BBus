@@ -14,8 +14,7 @@ protocol GetFavoriteItemListFetchable {
 
 struct PersistentGetFavoriteItemListFetcher: GetFavoriteItemListFetchable {
     func fetch() -> AnyPublisher<Data, Error> {
-        return Persistent.shared.getFromUserDefaults(key: "FavoriteItems")
-            .compactMap({$0})
+        return PersistenceStorage.shared.getFromUserDefaults(key: "FavoriteItems")
             .eraseToAnyPublisher()
     }
 }

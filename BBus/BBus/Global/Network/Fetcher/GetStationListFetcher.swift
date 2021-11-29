@@ -14,8 +14,7 @@ protocol GetStationListFetchable {
 
 struct PersistentGetStationListFetcher: GetStationListFetchable {
     func fetch() -> AnyPublisher<Data, Error> {
-        return Persistent.shared.get(file: "StationList", type: "json")
-            .compactMap({$0})
+        return PersistenceStorage.shared.get(file: "StationList", type: "json")
             .eraseToAnyPublisher()
     }
 }

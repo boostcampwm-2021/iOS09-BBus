@@ -14,8 +14,7 @@ protocol GetRouteListFetchable {
 
 struct PersistentGetRouteListFetcher: GetRouteListFetchable {
     func fetch() -> AnyPublisher<Data, Error> {
-        return Persistent.shared.get(file: "BusRouteList", type: "json")
-            .compactMap({$0})
+        return PersistenceStorage.shared.get(file: "BusRouteList", type: "json")
             .eraseToAnyPublisher()
     }
 }

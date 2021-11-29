@@ -8,16 +8,16 @@
 import Foundation
 import Combine
 
-extension Publisher where Output == (Data, Int)?, Failure == Error {
-    func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
+extension Publisher where Output == Data, Failure == Error {
+    func mapJsonBBusAPIError(with removeAccessKeyHandler: @escaping () -> Void ) -> AnyPublisher<Data, Error> {
         self.compactMap({$0})
-            .tryMap({ data, order -> Data in
+            .tryMap({ data -> Data in
             guard let json = try? JSONDecoder().decode(JsonHeader.self, from: data),
                   let statusCode = Int(json.msgHeader.headerCD),
                   let error = BBusAPIError(errorCode: statusCode) else { return data }
             switch error {
             case .noneAccessKeyError, .noneRegisteredKeyError, .suspendedKeyError, .exceededKeyError:
-                Service.shared.removeAccessKey(at: order)
+                removeAccessKeyHandler()
             default:
                 break
             }
@@ -56,4 +56,3 @@ extension Publisher where Failure == Error {
         }).eraseToAnyPublisher()
     }
 }
-

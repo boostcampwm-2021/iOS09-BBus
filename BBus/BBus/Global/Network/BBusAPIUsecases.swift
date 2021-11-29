@@ -10,9 +10,15 @@ import Combine
 
 final class BBusAPIUsecases: RequestUsecases {
     
+    private let requestFactory: Requestable
+    
+    init(requestFactory: Requestable) {
+        self.requestFactory = requestFactory
+    }
+    
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error> {
         let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord, "resultType": "json"]
-        let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher()
+        let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher(tokenManager: TokenManager(), requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)
             .tryCatch({ error -> AnyPublisher<Data, Error> in
@@ -25,7 +31,7 @@ final class BBusAPIUsecases: RequestUsecases {
 
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
         let param = ["busRouteId": busRoutedId, "resultType": "json"]
-        let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher()
+        let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher(tokenManager: TokenManager(), requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)
             .tryCatch({ error -> AnyPublisher<Data, Error> in
@@ -38,7 +44,7 @@ final class BBusAPIUsecases: RequestUsecases {
 
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
         let param = ["busRouteId": busRoutedId, "resultType": "json"]
-        let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher()
+        let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher(tokenManager: TokenManager(), requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)
             .tryCatch({ error -> AnyPublisher<Data, Error> in
@@ -51,7 +57,7 @@ final class BBusAPIUsecases: RequestUsecases {
 
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
         let param = ["arsId": arsId, "resultType": "json"]
-        let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher()
+        let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher(tokenManager: TokenManager(), requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)
             .tryCatch({ error -> AnyPublisher<Data, Error> in
@@ -64,7 +70,7 @@ final class BBusAPIUsecases: RequestUsecases {
 
     func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
         let param = ["vehId": vehId, "resultType": "json"]
-        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher()
+        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher(tokenManager: TokenManager(), requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)
             .tryCatch({ error -> AnyPublisher<Data, Error> in

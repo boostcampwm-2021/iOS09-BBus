@@ -14,8 +14,7 @@ protocol DeleteFavoriteItemFetchable {
 
 struct PersistentDeleteFavoriteItemFetcher: DeleteFavoriteItemFetchable {
     func fetch(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.delete(key: "FavoriteItems", param: param)
-            .compactMap({$0})
+        return PersistenceStorage.shared.delete(key: "FavoriteItems", param: param)
             .eraseToAnyPublisher()
     }
 }
