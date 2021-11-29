@@ -11,9 +11,9 @@ import UIKit
 
 final class StationViewModel {
     
-    let usecase: StationAPIUsable
+    let apiUseCase: StationAPIUsable
+    let calculateUseCase: StationCalculatable
     let arsId: String
-    private var cancellables: Set<AnyCancellable>
     @Published private(set) var stationInfo: StationDTO?
     @Published private(set) var busRouteList: [BusRouteDTO]
     @Published private(set) var busKeys: BusSectionKeys
@@ -22,10 +22,12 @@ final class StationViewModel {
     @Published private(set) var favoriteItems: [FavoriteItemDTO]?
     @Published private(set) var nextStation: String?
     @Published private(set) var stopLoader: Bool
+    private var cancellables: Set<AnyCancellable>
     @Published private(set) var error: Error?
     
-    init(usecase: StationAPIUseCase, arsId: String) {
-        self.usecase = usecase
+    init(apiUseCase: StationAPIUsable, calculateUseCase: StationCalculatable, arsId: String) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
         self.arsId = arsId
         self.busRouteList = []
         self.busKeys = BusSectionKeys()
@@ -48,7 +50,7 @@ final class StationViewModel {
     }
     
     @objc func refresh() {
-        self.usecase.refreshInfo(about: self.arsId)
+        self.apiUseCase.refreshInfo(about: self.arsId)
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
                 self?.error = error
@@ -79,7 +81,10 @@ final class StationViewModel {
     }
 
     private func loadStationInfo(with arsId: String) {
-        self.usecase.loadStationInfo(with: arsId)
+        self.apiUseCase.loadStationList()
+            .tryMap({ [weak self] stations in
+                return self?.calculateUseCase.findStation(in: stations, with: arsId)
+            })
             .catchError({ [weak self] error in
                 self?.error = error
             })
@@ -95,7 +100,7 @@ final class StationViewModel {
     }
     
     private func loadRoute() {
-        self.usecase.loadRoute()
+        self.apiUseCase.loadRoute()
             .catchError({ [weak self] error in
                 self?.error = error
             })
@@ -108,7 +113,7 @@ final class StationViewModel {
     }
     
     private func bindFavoriteItems() {
-        self.usecase.getFavoriteItems()
+        self.apiUseCase.getFavoriteItems()
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
                 self?.error = error
@@ -165,13 +170,13 @@ final class StationViewModel {
     }
     
     func add(favoriteItem: FavoriteItemDTO) {
-        self.usecase.add(favoriteItem: favoriteItem)
+        self.apiUseCase.add(favoriteItem: favoriteItem)
             .catchError({ [weak self] error in
                 self?.error = error
             })
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.usecase.getFavoriteItems()
+                self.apiUseCase.getFavoriteItems()
                     .catchError({ [weak self] error in
                         self?.error = error
                     })
@@ -182,13 +187,13 @@ final class StationViewModel {
     }
     
     func remove(favoriteItem: FavoriteItemDTO) {
-        self.usecase.remove(favoriteItem: favoriteItem)
+        self.apiUseCase.remove(favoriteItem: favoriteItem)
             .catchError({ [weak self] error in
                 self?.error = error
             })
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.usecase.getFavoriteItems()
+                self.apiUseCase.getFavoriteItems()
                     .catchError({ [weak self] error in
                         self?.error = error
                     })
