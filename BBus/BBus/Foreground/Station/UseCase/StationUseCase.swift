@@ -27,13 +27,6 @@ final class StationUsecase {
         self.cancellables = []
         self.favoriteItems = []
         self.networkError = nil
-        
-        self.startStation()
-    }
-    
-    func startStation() {
-        self.loadRoute()
-        self.getFavoriteItems()
     }
     
     func stationInfoWillLoad(with arsId: String) {
@@ -100,7 +93,7 @@ final class StationUsecase {
             .store(in: &self.cancellables)
     }
     
-    private func getFavoriteItems() {
+    func getFavoriteItems() {
         self.usecases.getFavoriteItemList()
             .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
             .catchError({ [weak self] error in
@@ -109,7 +102,7 @@ final class StationUsecase {
             .assign(to: &self.$favoriteItems)
     }
     
-    private func loadRoute() {
+    func loadRoute() {
         self.usecases.getRouteList()
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .retry({ [weak self] in

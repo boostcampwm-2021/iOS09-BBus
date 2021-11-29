@@ -27,6 +27,8 @@ final class StationViewModel {
         self.cancellables = []
         self.busKeys = BusSectionKeys()
         self.binding()
+        self.usecase.loadRoute()
+        self.usecase.getFavoriteItems()
         self.usecase.stationInfoWillLoad(with: arsId)
     }
 
@@ -143,7 +145,6 @@ final class StationViewModel {
         self.$busKeys
             .dropFirst(2)
             .sink(receiveValue: { result in
-                dump(result)
                 self.stopLoader = true
             })
             .store(in: &self.cancellables)
