@@ -8,7 +8,12 @@
 import Foundation
 import Combine
 
-final class SearchAPIUseCase {
+protocol SearchAPIUsable: BaseUseCase {
+    func searchBus(by keyword: String) -> [BusSearchResult]
+    func searchStation(by keyword: String) -> [StationSearchResult]
+}
+
+final class SearchAPIUseCase: SearchAPIUsable {
     
     private let usecases: GetRouteListUsecase & GetStationListUsecase
     @Published var routeList: [BusRouteDTO]
