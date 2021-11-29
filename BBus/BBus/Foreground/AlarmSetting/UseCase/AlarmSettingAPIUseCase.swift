@@ -8,55 +8,50 @@
 import Foundation
 import Combine
 
-final class AlarmSettingUseCase {
+protocol AlarmSettingAPIUsable: BaseUseCase {
+    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Never>
+    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Never>
+}
+
+final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsecase & GetStationsByRouteListUsecase
     
     private let useCases: AlarmSettingUseCases
-    @Published private(set) var busArriveInfo: ArrInfoByRouteDTO?
-    @Published private(set) var busStationsInfo: [StationByRouteListDTO]?
     @Published private(set) var networkError: Error?
-    private var cancellables: Set<AnyCancellable>
     
     init(useCases: AlarmSettingUseCases) {
         self.useCases = useCases
-        self.busArriveInfo = nil
-        self.busStationsInfo = []
         self.networkError = nil
-        self.cancellables = []
     }
     
-    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) {
-        self.useCases.getArrInfoByRouteList(stId: stId,
+    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Never> {
+        return self.useCases.getArrInfoByRouteList(stId: stId,
                                             busRouteId: busRouteId,
                                             ord: ord)
             .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
-            .tryMap({ item in
+            .tryMap({ item -> ArrInfoByRouteDTO in
                 let result = item.msgBody.itemList
                 guard let item = result.first else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .retry ({ [weak self] in
-                self?.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
-            }, handler: { [weak self] error in
+            .catchError({ [weak self] error in
                 self?.networkError = error
             })
-            .assign(to: &self.$busArriveInfo)
+            .eraseToAnyPublisher()
     }
     
-    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) {
-        self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
+    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Never> {
+        return self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
             .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
-            .retry({ [weak self] in
-                self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
-            }, handler: { [weak self] error in
-                self?.networkError = error
-            })
-            .map({ item in
+            .map({ item -> [StationByRouteListDTO]? in
                 let result = item.msgBody.itemList
                 guard let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
                 return Array(result[index..<result.count])
             })
-            .assign(to: &self.$busStationsInfo)
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .eraseToAnyPublisher()
     }
     
 }

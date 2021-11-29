@@ -53,6 +53,7 @@ final class AlarmSettingViewController: UIViewController {
         super.viewWillAppear(animated)
         self.alarmSettingView.startLoader()
         self.viewModel?.configureObserver()
+        self.viewModel?.activateLoaderActiveStatus()
         self.viewModel?.refresh()
     }
 
@@ -104,6 +105,7 @@ final class AlarmSettingViewController: UIViewController {
         self.bindBusArriveInfos()
         self.bindBusStationInfos()
         self.bindErrorMessage()
+        self.bindLoaderActiveStatus()
     }
     
     private func bindBusArriveInfos() {
@@ -111,23 +113,16 @@ final class AlarmSettingViewController: UIViewController {
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink(receiveValue: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-
                 self?.alarmSettingView.reload()
-
-                if viewModel.isStopLoader() {
-                    self?.alarmSettingView.stopLoader()
-                }
             })
             .store(in: &self.cancellables)
     }
     
     private func bindBusStationInfos() {
         self.viewModel?.$busStationInfos
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
-                guard let viewModel = self?.viewModel else { return }
-
                 if let infos = infos {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
@@ -135,10 +130,6 @@ final class AlarmSettingViewController: UIViewController {
                         self?.customNavigationBar.configureTitle(busName: viewModel.busName,
                                                                  stationName: stationName,
                                                                  routeType: viewModel.routeType)
-                    }
-
-                    if viewModel.isStopLoader() {
-                        self?.alarmSettingView.stopLoader()
                     }
                 }
                 else {
@@ -150,18 +141,29 @@ final class AlarmSettingViewController: UIViewController {
     
     private func bindErrorMessage() {
         self.viewModel?.$errorMessage
+            .compactMap({$0})
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] message in
-                guard let message = message else { return }
                 self?.alarmSettingAlert(message: message)
             })
             .store(in: &self.cancellables)
         
         self.viewModel?.useCase.$networkError
+            .compactMap({$0})
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
-                guard let _ = error else { return }
                 self?.networkAlert()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindLoaderActiveStatus() {
+        self.viewModel?.$loaderActiveStatus
+            .dropFirst()
+            .filter({ !$0 })
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] a in
+                self?.alarmSettingView.stopLoader()
             })
             .store(in: &self.cancellables)
     }

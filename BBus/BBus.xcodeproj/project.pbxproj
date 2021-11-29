@@ -81,7 +81,7 @@
 		4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5216272FCE8E00EC0531 /* StationViewModel.swift */; };
 		4ACA5219272FCE9500EC0531 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5218272FCE9500EC0531 /* StationView.swift */; };
 		4ACA521F272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA521E272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift */; };
-		4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5220272FCEAF00EC0531 /* AlarmSettingUseCase.swift */; };
+		4ACA5221272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5220272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift */; };
 		4ACA5223272FCEB500EC0531 /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5222272FCEB500EC0531 /* AlarmSettingViewModel.swift */; };
 		4ACA5225272FCEBF00EC0531 /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */; };
 		4ACA522B272FCED600EC0531 /* MovingStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522A272FCED600EC0531 /* MovingStatusModel.swift */; };
@@ -218,7 +218,7 @@
 		4ACA5216272FCE8E00EC0531 /* StationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationViewModel.swift; sourceTree = "<group>"; };
 		4ACA5218272FCE9500EC0531 /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
 		4ACA521E272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingBusArriveInfo.swift; sourceTree = "<group>"; };
-		4ACA5220272FCEAF00EC0531 /* AlarmSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingUseCase.swift; sourceTree = "<group>"; };
+		4ACA5220272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingAPIUseCase.swift; sourceTree = "<group>"; };
 		4ACA5222272FCEB500EC0531 /* AlarmSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewModel.swift; sourceTree = "<group>"; };
 		4ACA5224272FCEBF00EC0531 /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 		4ACA522A272FCED600EC0531 /* MovingStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusModel.swift; sourceTree = "<group>"; };
@@ -622,7 +622,7 @@
 		4ACA521C272FCE9E00EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA5220272FCEAF00EC0531 /* AlarmSettingUseCase.swift */,
+				4ACA5220272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -954,7 +954,7 @@
 				4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */,
 				4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */,
 				4ACA523B272FCF3C00EC0531 /* AlarmSettingViewController.swift in Sources */,
-				4ACA5221272FCEAF00EC0531 /* AlarmSettingUseCase.swift in Sources */,
+				4ACA5221272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift in Sources */,
 				4ACA51F1272FCDF200EC0531 /* SearchUseCase.swift in Sources */,
 				4A094CDF27435C5900428F55 /* BusRemainTime.swift in Sources */,
 				4AA294B5273C11DE008E5497 /* CreateFavoriteItemFetcher.swift in Sources */,
