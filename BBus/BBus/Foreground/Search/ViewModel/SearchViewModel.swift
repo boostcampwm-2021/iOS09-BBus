@@ -12,12 +12,12 @@ final class SearchViewModel {
     
     typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
-    let usecase: SearchUseCase
+    let usecase: SearchAPIUseCase
     @Published private var keyword: String
     @Published private(set) var searchResults: SearchResults
     private var cancellables: Set<AnyCancellable>
     
-    init(usecase: SearchUseCase) {
+    init(usecase: SearchAPIUseCase) {
         self.usecase = usecase
         self.keyword = ""
         self.searchResults = SearchResults(busSearchResults: [], stationSearchResults: [])

@@ -10,14 +10,14 @@ import Combine
 
 final class GetOnAlarmViewModel {
 
-    let usecase: GetOnAlarmUsecase
+    let usecase: GetOnAlarmAPIUsecase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busApproachStatus: BusApproachStatus?
     private(set) var message: String?
     @Published private(set) var networkErrorMessage: (title: String, body: String)?
 
-    init(usecase: GetOnAlarmUsecase, currentStatus: GetOnAlarmStatus) {
+    init(usecase: GetOnAlarmAPIUsecase, currentStatus: GetOnAlarmStatus) {
         self.usecase = usecase
         self.getOnAlarmStatus = currentStatus
         self.message = nil
@@ -47,7 +47,7 @@ final class GetOnAlarmViewModel {
                       let position = position,
                       let stationOrd = Int(position.stationOrd) else { return }
 
-                if let status = BusApproachCheckUsecase().execute(currentOrd: stationOrd,
+                if let status = GetOnAlarmCalculateUsecase().busApproachStatus(currentOrd: stationOrd,
                                                                   beforeOrd: self.getOnAlarmStatus.currentBusOrd ?? stationOrd,
                                                                   targetOrd: self.getOnAlarmStatus.targetOrd) {
                     self.makeMessage(with: status)

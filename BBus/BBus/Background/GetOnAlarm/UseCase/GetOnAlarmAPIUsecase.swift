@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
-final class GetOnAlarmUsecase {
+protocol GetOnAlarmAPIUsable: BaseUseCase {
+    func fetch(withVehId vehId: String)
+}
+
+final class GetOnAlarmAPIUsecase: GetOnAlarmAPIUsable {
 
     private let usecases: GetBusPosByVehIdUsecase
     private var cancellable: AnyCancellable?
