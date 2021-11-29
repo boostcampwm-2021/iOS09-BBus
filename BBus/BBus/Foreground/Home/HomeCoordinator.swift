@@ -16,7 +16,10 @@ final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPusha
     }
 
     func start() {
-        let useCase = HomeUseCase(usecases: BBusAPIUsecases(requestFactory: RequestFactory()))
+        let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
+                                          persistenceStorage: PersistenceStorage(),
+                                          requestFactory: RequestFactory())
+        let useCase = HomeUseCase(usecases: apiUseCases)
         let viewModel = HomeViewModel(useCase: useCase)
         let viewController = HomeViewController(viewModel: viewModel)
         viewController.coordinator = self

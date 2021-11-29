@@ -8,31 +8,33 @@
 import Foundation
 import Combine
 
+// TODO: ServiceFectable 선언 논의 필요
 protocol ServiceFetchable {
+    var networkService: NetworkServiceProtocol { get }
     var tokenManager: TokenManagable { get }
     var requestFactory: Requestable { get }
-    
-    func errorPublisher(with error: Error) -> AnyPublisher<Data, Error>
-    
+
     func fetch(url: String, param: [String: String]) -> AnyPublisher<Data, Error>
 }
 
 extension ServiceFetchable {
-    func errorPublisher(with error: Error) -> AnyPublisher<Data, Error> {
+    func fetch(url: String, param: [String: String]) -> AnyPublisher<Data, Error> {
+        guard let key = try? self.tokenManager.randomAccessKey() else { return BBusAPIError.noMoreAccessKeyError.publisher }
+        guard let request =
+                self.requestFactory.request(url: url, accessKey: key.key, params: param) else { return NetworkError.urlError.publisher }
+        
+        return networkService.get(request: request, params: param)
+            .mapJsonBBusAPIError {
+                self.tokenManager.removeAccessKey(at: key.index)
+            }
+    }
+}
+
+fileprivate extension Error {
+    var publisher: AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)
-        publisher.send(completion: .failure(error))
+        publisher.send(completion: .failure(self))
         return publisher.compactMap({$0})
             .eraseToAnyPublisher()
-    }
-    
-    func fetch(url: String, param: [String: String]) -> AnyPublisher<Data, Error> {
-        guard let key = try? self.tokenManager.randomAccessKey() else { return self.errorPublisher(with: BBusAPIError.noMoreAccessKeyError) }
-        guard let request =
-                self.requestFactory.request(url: url, accessKey: key.key, params: param) else { return self.errorPublisher(with: NetworkError.urlError) }
-        
-        return NetworkService.shared.get(request: request, params: param)
-            .mapJsonBBusAPIError {
-                tokenManager.removeAccessKey(at: key.index)
-            }
     }
 }

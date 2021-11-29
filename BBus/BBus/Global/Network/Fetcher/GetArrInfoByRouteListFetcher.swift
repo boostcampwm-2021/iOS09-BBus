@@ -13,6 +13,7 @@ protocol GetArrInfoByRouteListFetchable {
 }
 
 struct ServiceGetArrInfoByRouteListFetcher: ServiceFetchable, GetArrInfoByRouteListFetchable {
+    private(set) var networkService: NetworkServiceProtocol
     private(set) var tokenManager: TokenManagable
     private(set) var requestFactory: Requestable
     

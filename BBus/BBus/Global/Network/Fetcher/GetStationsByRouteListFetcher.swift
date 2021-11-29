@@ -13,6 +13,7 @@ protocol GetStationsByRouteListFetchable {
 }
 
 struct ServiceGetStationsByRouteListFetcher: ServiceFetchable, GetStationsByRouteListFetchable {
+    private(set) var networkService: NetworkServiceProtocol
     private(set) var tokenManager: TokenManagable
     private(set) var requestFactory: Requestable
     

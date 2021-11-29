@@ -13,6 +13,7 @@ protocol GetBusPosByRtidFetchable {
 }
 
 struct ServiceGetBusPosByRtidFetcher: ServiceFetchable, GetBusPosByRtidFetchable {
+    private(set) var networkService: NetworkServiceProtocol
     private(set) var tokenManager: TokenManagable
     private(set) var requestFactory: Requestable
     

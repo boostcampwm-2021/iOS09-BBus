@@ -16,9 +16,7 @@ protocol NetworkServiceProtocol {
     func get(request: URLRequest, params: [String: String]) -> AnyPublisher<Data, Error>
 }
 
-final class NetworkService: NetworkServiceProtocol {
-    static let shared = NetworkService()
-    
+struct NetworkService: NetworkServiceProtocol {
     func get(request: URLRequest, params: [String: String]) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
             .mapError({ $0 as Error })

@@ -13,6 +13,7 @@ protocol GetRouteInfoItemFetchable {
 }
 
 struct ServiceGetRouteInfoItemFetcher: ServiceFetchable, GetRouteInfoItemFetchable {
+    private(set) var networkService: NetworkServiceProtocol
     private(set) var tokenManager: TokenManagable
     private(set) var requestFactory: Requestable
     

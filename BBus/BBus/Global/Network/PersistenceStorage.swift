@@ -15,13 +15,11 @@ protocol PersistenceStorageProtocol {
     func delete<T: Codable & Equatable>(key: String, param: T) -> AnyPublisher<Data, Error>
 }
 
-final class PersistenceStorage: PersistenceStorageProtocol {
+struct PersistenceStorage: PersistenceStorageProtocol {
     
-    enum PersistenceError: Error {
+    private enum PersistenceError: Error {
         case noneError, decodingError, encodingError, urlError
     }
-    
-    static let shared = PersistenceStorage()
 
     func create<T: Codable>(key: String, param: T) -> AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)

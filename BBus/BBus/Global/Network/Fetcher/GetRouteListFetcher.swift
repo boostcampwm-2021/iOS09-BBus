@@ -12,9 +12,11 @@ protocol GetRouteListFetchable {
     func fetch() -> AnyPublisher<Data, Error>
 }
 
-struct PersistentGetRouteListFetcher: GetRouteListFetchable {
+struct PersistenceGetRouteListFetcher: PersistenceFetchable, GetRouteListFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
     func fetch() -> AnyPublisher<Data, Error> {
-        return PersistenceStorage.shared.get(file: "BusRouteList", type: "json")
+        return self.persistenceStorage.get(file: "BusRouteList", type: "json")
             .eraseToAnyPublisher()
     }
 }

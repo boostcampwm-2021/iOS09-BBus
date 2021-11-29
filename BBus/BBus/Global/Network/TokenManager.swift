@@ -13,7 +13,9 @@ protocol TokenManagable {
 }
 
 class TokenManager: TokenManagable {
-    private var accessKeys: [String] = { () -> [String] in
+    static let maxTokenCount: Int = 17
+    
+    private(set) var accessKeys: [String] = { () -> [String] in
         let keys = [Bundle.main.infoDictionary?["API_ACCESS_KEY1"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY2"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY3"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY4"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY5"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY6"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY7"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY8"] as? String, Bundle.main.infoDictionary?["API_ACCESS_KEY9"] as? String,
             Bundle.main.infoDictionary?["API_ACCESS_KEY10"] as? String,
             Bundle.main.infoDictionary?["API_ACCESS_KEY11"] as? String,
