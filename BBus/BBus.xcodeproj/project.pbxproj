@@ -66,7 +66,7 @@
 		4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */; };
 		4AC79161274F6FDB00019827 /* SourceFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC79160274F6FDB00019827 /* SourceFooterView.swift */; };
 		4ACA51E3272FCD9600EC0531 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E2272FCD9600EC0531 /* HomeModel.swift */; };
-		4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */; };
+		4ACA51E5272FCD9C00EC0531 /* HomeAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E4272FCD9C00EC0531 /* HomeAPIUseCase.swift */; };
 		4ACA51E7272FCDA600EC0531 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */; };
 		4ACA51E9272FCDAE00EC0531 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51E8272FCDAE00EC0531 /* HomeView.swift */; };
 		4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */; };
@@ -203,7 +203,7 @@
 		4AA294B6273C1275008E5497 /* DeleteFavoriteItemFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteItemFetchable.swift; sourceTree = "<group>"; };
 		4AC79160274F6FDB00019827 /* SourceFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFooterView.swift; sourceTree = "<group>"; };
 		4ACA51E2272FCD9600EC0531 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
-		4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
+		4ACA51E4272FCD9C00EC0531 /* HomeAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIUseCase.swift; sourceTree = "<group>"; };
 		4ACA51E6272FCDA600EC0531 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		4ACA51E8272FCDAE00EC0531 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSearchResult.swift; sourceTree = "<group>"; };
@@ -473,7 +473,7 @@
 		4ACA51E0272FCD7100EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA51E4272FCD9C00EC0531 /* HomeUseCase.swift */,
+				4ACA51E4272FCD9C00EC0531 /* HomeAPIUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1060,7 +1060,7 @@
 				87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */,
 				4A17CED72733A754007B1646 /* SimpleCollectionHeaderView.swift in Sources */,
 				047C30FE273A05A60075EA14 /* BBusRouteType.swift in Sources */,
-				4ACA51E5272FCD9C00EC0531 /* HomeUseCase.swift in Sources */,
+				4ACA51E5272FCD9C00EC0531 /* HomeAPIUseCase.swift in Sources */,
 				87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */,
 				87285F5527461DB300CA3BA9 /* UINavigationControllerExtension.swift in Sources */,
 				4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */,

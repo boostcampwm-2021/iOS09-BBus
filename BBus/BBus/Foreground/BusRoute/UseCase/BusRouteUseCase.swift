@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol BaseBusRouteAPIUsable: BaseUseCase {
+protocol BusRouteAPIUsable: BaseUseCase {
 
 }
 
-final class BusRouteAPIUsecase: BaseBusRouteAPIUsable {
+final class BusRouteAPIUsecase: BusRouteAPIUsable {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
     @Published var header: BusRouteDTO?
