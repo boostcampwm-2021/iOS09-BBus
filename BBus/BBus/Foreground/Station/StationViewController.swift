@@ -143,28 +143,6 @@ final class StationViewController: UIViewController {
             })
             .store(in: &self.cancellables)
         
-        self.viewModel?.$busKeys
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-
-                self?.stationView.reload()
-
-                if viewModel.stopLoader {
-                    self?.stationView.stopLoader()
-                }
-            })
-            .store(in: &self.cancellables)
-        
-        self.viewModel?.$favoriteItems
-            .receive(on: DispatchQueue.main)
-            .compactMap { $0 }
-            .first()
-            .sink(receiveValue: { [weak self] _ in
-                self?.stationView.reload()
-            })
-            .store(in: &self.cancellables)
-        
         self.viewModel?.usecase.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
@@ -179,6 +157,16 @@ final class StationViewController: UIViewController {
                 if isStop {
                     self?.stationView.stopLoader()
                 }
+            })
+            .store(in: &self.cancellables)
+        
+        guard let viewModel = viewModel else { return }
+        viewModel.$busKeys
+            .compactMap({$0})
+            .combineLatest(viewModel.usecase.$stationInfo.compactMap({$0}), viewModel.$favoriteItems.compactMap({$0}).first())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] results in
+                self?.stationView.reload()
             })
             .store(in: &self.cancellables)
     }

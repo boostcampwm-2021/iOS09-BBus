@@ -27,7 +27,7 @@ final class StationViewModel {
         self.cancellables = []
         self.busKeys = BusSectionKeys()
         self.binding()
-        self.refresh()
+        self.usecase.stationInfoWillLoad(with: arsId)
     }
 
     func configureObserver() {
@@ -40,7 +40,6 @@ final class StationViewModel {
     }
     
     @objc func refresh() {
-        self.usecase.stationInfoWillLoad(with: arsId)
         self.usecase.refreshInfo(about: arsId)
     }
 
@@ -58,7 +57,8 @@ final class StationViewModel {
     
     private func bindBusArriveInfo() {
         self.usecase.$busArriveInfo
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { [weak self] arriveInfo in
@@ -71,7 +71,8 @@ final class StationViewModel {
     
     private func bindFavoriteItems() {
         self.usecase.$favoriteItems
-            .receive(on: StationUsecase.queue)
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
             .sink(receiveValue: { [weak self] items in
                 self?.favoriteItems = items.filter() { $0.arsId == self?.arsId }
             })
@@ -132,9 +133,17 @@ final class StationViewModel {
     }
 
     private func bindLoader() {
-        self.$busKeys.zip(self.$favoriteItems, self.$nextStation)
-            .dropFirst()
+        self.$busKeys.zip(self.$favoriteItems, self.usecase.$stationInfo)
+            .first()
+            .sink(receiveValue: { _ in
+                self.stopLoader = true
+            })
+            .store(in: &self.cancellables)
+        
+        self.$busKeys
+            .dropFirst(2)
             .sink(receiveValue: { result in
+                dump(result)
                 self.stopLoader = true
             })
             .store(in: &self.cancellables)

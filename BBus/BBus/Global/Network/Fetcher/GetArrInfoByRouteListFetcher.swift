@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 protocol GetArrInfoByRouteListFetchable {
-    func fetch(param: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch(param: [String: String]) -> AnyPublisher<Data, Error>
 }
 
-final class ServiceGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
-    func fetch(param: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
+struct ServiceGetArrInfoByRouteListFetcher: GetArrInfoByRouteListFetchable {
+    func fetch(param: [String: String]) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute"
-        return Service.shared.get(url: url, params: param, on: queue).mapJsonBBusAPIError()
+        return Service.shared.get(url: url, params: param).mapJsonBBusAPIError()
     }
 }

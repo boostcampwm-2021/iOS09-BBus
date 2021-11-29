@@ -39,23 +39,11 @@ final class Service {
         self.keys = self.keys.filter({ $0 != order })
     }
 
-    func get(url: String, params: [String: String], on queue: DispatchQueue) -> AnyPublisher<(Data, Int), Error> {
-        let userDefaultKey = "APIRequestCount"
-        let apiRequestCount = UserDefaults.standard.object(forKey: userDefaultKey) as? Int ?? 0
-        if apiRequestCount > 500 {
-            let publisher = PassthroughSubject<(Data, Int), Error>()
-            queue.async {
-                publisher.send(completion: .failure(BBusAPIError.trafficExceed))
-            }
-            return publisher.eraseToAnyPublisher()
-        }
-        UserDefaults.standard.set(apiRequestCount + 1, forKey: userDefaultKey)
+    func get(url: String, params: [String: String]) -> AnyPublisher<(Data, Int)?, Error> {
         guard self.keys.count != 0,
               let order = self.keys.randomElement() else {
-                  let publisher = PassthroughSubject<(Data, Int), Error>()
-                  queue.async {
-                      publisher.send(completion: .failure(BBusAPIError.noMoreAccessKeyError))
-                  }
+                  let publisher = CurrentValueSubject<(Data, Int)?, Error>(nil)
+                  publisher.send(completion: .failure(BBusAPIError.noMoreAccessKeyError))
                   return publisher.eraseToAnyPublisher()
         }
         if let request = self.makeRequest(url: url, accessKey: self.accessKeys[order], params: params) {
@@ -73,10 +61,8 @@ final class Service {
                 .eraseToAnyPublisher()
         }
         else {
-            let publisher = PassthroughSubject<(Data, Int), Error>()
-            queue.async {
-                publisher.send(completion: .failure(NetworkError.urlError))
-            }
+            let publisher = CurrentValueSubject<(Data, Int)?, Error>(nil)
+            publisher.send(completion: .failure(NetworkError.urlError))
             return publisher.eraseToAnyPublisher()
         }
     }

@@ -9,8 +9,6 @@ import Foundation
 import Combine
 
 final class AlarmSettingUseCase {
-    static let queue = DispatchQueue.init(label: "alarmSetting")
-    
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsecase & GetStationsByRouteListUsecase
     
     private let useCases: AlarmSettingUseCases
@@ -28,43 +26,37 @@ final class AlarmSettingUseCase {
     }
     
     func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) {
-        Self.queue.async {
-            self.useCases.getArrInfoByRouteList(stId: stId,
-                                                busRouteId: busRouteId,
-                                                ord: ord)
-                .receive(on: Self.queue)
-                .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
-                .tryMap({ item in
-                    let result = item.msgBody.itemList
-                    guard let item = result.first else { throw BBusAPIError.wrongFormatError }
-                    return item
-                })
-                .retry ({ [weak self] in
-                    self?.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$busArriveInfo)
-        }
+        self.useCases.getArrInfoByRouteList(stId: stId,
+                                            busRouteId: busRouteId,
+                                            ord: ord)
+            .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
+            .tryMap({ item in
+                let result = item.msgBody.itemList
+                guard let item = result.first else { throw BBusAPIError.wrongFormatError }
+                return item
+            })
+            .retry ({ [weak self] in
+                self?.busArriveInfoWillLoaded(stId: stId, busRouteId: busRouteId, ord: ord)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$busArriveInfo)
     }
     
     func busStationsInfoWillLoaded(busRouetId: String, arsId: String) {
-        Self.queue.async {
-            self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
-                .receive(on: Self.queue)
-                .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .map({ item in
-                    let result = item.msgBody.itemList
-                    guard let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
-                    return Array(result[index..<result.count])
-                })
-                .assign(to: &self.$busStationsInfo)
-        }
+        self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
+            .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.busStationsInfoWillLoaded(busRouetId: busRouetId, arsId: arsId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .map({ item in
+                let result = item.msgBody.itemList
+                guard let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
+                return Array(result[index..<result.count])
+            })
+            .assign(to: &self.$busStationsInfo)
     }
     
 }

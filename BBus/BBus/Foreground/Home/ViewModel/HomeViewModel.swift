@@ -11,11 +11,12 @@ import Combine
 final class HomeViewModel {
 
     let useCase: HomeUseCase
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable>
     @Published private(set) var homeFavoriteList: HomeFavoriteList?
 
     init(useCase: HomeUseCase) {
         self.useCase = useCase
+        self.cancellables = []
         self.bindFavoriteData()
     }
 
@@ -33,19 +34,25 @@ final class HomeViewModel {
     }
 
     private func bindFavoriteData() {
-        self.cancellable = self.useCase.$favoriteList
-            .receive(on: HomeUseCase.queue)
+        self.useCase.$favoriteList
             .sink(receiveValue: { [weak self] favoriteItems in
-                guard let favoriteItems = favoriteItems else { return }
-                self?.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
+                guard let self = self,
+                      let favoriteItems = favoriteItems else { return }
+                self.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
                 favoriteItems.forEach({ [weak self] favoriteItem in
-                    self?.useCase.loadBusRemainTime(favoriteItem: favoriteItem) { arrInfoByRouteDTO in
-                        guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
-                        let homeArrivalInfo = HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
-                        self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
-                    }
+                    guard let self = self else { return }
+                    self.useCase.loadBusRemainTime(favoriteItem: favoriteItem)
+                        .map({ arrInfoByRouteDTO in
+                            return HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
+                        })
+                        .sink(receiveValue: { [weak self] homeArrivalInfo in
+                            guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
+                            self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
+                        })
+                        .store(in: &self.cancellables)
                 })
             })
+            .store(in: &self.cancellables)
     }
 
     @objc func reloadFavoriteData() {

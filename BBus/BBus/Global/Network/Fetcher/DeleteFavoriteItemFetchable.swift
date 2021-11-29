@@ -9,11 +9,13 @@ import Foundation
 import Combine
 
 protocol DeleteFavoriteItemFetchable {
-    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
-final class PersistentDeleteFavoriteItemFetcher: DeleteFavoriteItemFetchable {
-    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.delete(key: "FavoriteItems", param: param, on: queue)
+struct PersistentDeleteFavoriteItemFetcher: DeleteFavoriteItemFetchable {
+    func fetch(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
+        return Persistent.shared.delete(key: "FavoriteItems", param: param)
+            .compactMap({$0})
+            .eraseToAnyPublisher()
     }
 }

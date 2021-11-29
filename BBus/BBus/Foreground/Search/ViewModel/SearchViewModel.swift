@@ -31,8 +31,7 @@ final class SearchViewModel {
 
     private func prepare() {
         self.$keyword
-            .receive(on: SearchUseCase.queue)
-            .debounce(for: .milliseconds(400), scheduler: SearchUseCase.queue)
+            .debounce(for: .milliseconds(400), scheduler: DispatchQueue.global())
             .sink { [weak self] keyword in
                 guard let self = self else { return }
                 self.searchResults.busSearchResults = self.usecase.searchBus(by: keyword)

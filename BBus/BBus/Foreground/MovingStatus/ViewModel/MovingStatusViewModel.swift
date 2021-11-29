@@ -63,7 +63,7 @@ final class MovingStatusViewModel {
 
     private func bindHeaderInfo() {
         self.usecase.$header
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] header in
                 self?.convertBusInfo(header: header)
             })
@@ -72,7 +72,7 @@ final class MovingStatusViewModel {
 
     private func bindStationsInfo() {
         self.usecase.$stations
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] stations in
                 self?.convertBusStations(with: stations)
             })
@@ -81,7 +81,7 @@ final class MovingStatusViewModel {
 
     private func bindBusesPosInfo() {
         self.usecase.$buses
-            .receive(on: MovingStatusUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink { [weak self] buses in
                 guard let currentOrd = self?.currentOrd,
                       let startOrd = self?.startOrd,

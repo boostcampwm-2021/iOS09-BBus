@@ -12,7 +12,6 @@ final class GetOnAlarmUsecase {
 
     private let usecases: GetBusPosByVehIdUsecase
     private var cancellable: AnyCancellable?
-    static let queue = DispatchQueue.init(label: "GetOnAlarm")
     @Published private(set) var networkError: Error?
     @Published private(set) var busPosition: BusPosByVehicleIdDTO?
 
@@ -24,21 +23,16 @@ final class GetOnAlarmUsecase {
     }
 
     func fetch(withVehId vehId: String) {
-
-        Self.queue.async {
-            self.cancellable = self.usecases.getBusPosByVehId(vehId)
-                .receive(on: Self.queue)
-                .decode(type: JsonMessage.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.fetch(withVehId: vehId)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .map({ item in
-                    item.msgBody.itemList.first
-                })
-                .assign(to: \.busPosition, on: self)
-
-        }
+        self.cancellable = self.usecases.getBusPosByVehId(vehId)
+            .decode(type: JsonMessage.self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.fetch(withVehId: vehId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .map({ item in
+                item.msgBody.itemList.first
+            })
+            .assign(to: \.busPosition, on: self)
     }
 }

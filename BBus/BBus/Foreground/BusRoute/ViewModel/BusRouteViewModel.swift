@@ -45,13 +45,13 @@ final class BusRouteViewModel {
 
     private func bindHeaderInfo() {
         self.usecase.$header
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .assign(to: &self.$header)
     }
 
     private func bindBodysInfo() {
         self.usecase.$bodys
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] bodys in
                 guard let self = self else { return }
 
@@ -63,7 +63,7 @@ final class BusRouteViewModel {
 
     private func bindBusesPosInfo() {
         self.usecase.$buses
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] buses in
                 self?.convertBusPosInfo(with: buses)
             })
@@ -132,7 +132,7 @@ final class BusRouteViewModel {
 
     private func bindLoader() {
         self.$header.zip(self.$bodys)
-            .receive(on: BusRouteUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .output(at: 2)
             .sink(receiveValue: { result in
                 self.stopLoader = true

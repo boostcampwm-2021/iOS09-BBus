@@ -8,9 +8,10 @@
 import Foundation
 import Combine
 
-extension Publisher where Output == (Data, Int), Failure == Error {
+extension Publisher where Output == (Data, Int)?, Failure == Error {
     func mapJsonBBusAPIError() -> AnyPublisher<Data, Error> {
-        self.tryMap({ data, order -> Data in
+        self.compactMap({$0})
+            .tryMap({ data, order -> Data in
             guard let json = try? JSONDecoder().decode(JsonHeader.self, from: data),
                   let statusCode = Int(json.msgHeader.headerCD),
                   let error = BBusAPIError(errorCode: statusCode) else { return data }
@@ -36,6 +37,17 @@ extension Publisher where Failure == Error {
             default:
                 break
             }
+            let publisher = PassthroughSubject<Self.Output, Never>()
+            DispatchQueue.global().async {
+                publisher.send(completion: .finished)
+            }
+            return publisher.eraseToAnyPublisher()
+        }).eraseToAnyPublisher()
+    }
+    
+    func catchError(_ handler: @escaping (Error) -> Void) -> AnyPublisher<Self.Output, Never> {
+        self.catch({ error -> AnyPublisher<Self.Output, Never> in
+            handler(error)
             let publisher = PassthroughSubject<Self.Output, Never>()
             DispatchQueue.global().async {
                 publisher.send(completion: .finished)

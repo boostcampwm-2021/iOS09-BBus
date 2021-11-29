@@ -70,7 +70,7 @@ final class AlarmSettingViewModel {
     
     private func bindBusArriveInfo() {
         self.useCase.$busArriveInfo
-            .receive(on: AlarmSettingUseCase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] data in
                 guard let data = data else { return }
                 var arriveInfos: [AlarmSettingBusArriveInfo] = []
@@ -92,7 +92,7 @@ final class AlarmSettingViewModel {
     
     private func bindBusStationsInfo() {
         self.useCase.$busStationsInfo
-            .receive(on: AlarmSettingUseCase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] infos in
                 self?.mapStationsDTOtoAlarmSettingInfo()
             })

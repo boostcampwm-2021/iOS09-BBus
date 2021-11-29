@@ -14,7 +14,6 @@ final class HomeUseCase {
 
     private let usecases: HomeUseCases
     private var cancellables: Set<AnyCancellable>
-    static let queue = DispatchQueue.init(label: "Home")
     private(set) var stationList: [StationDTO]?
     private(set) var busRouteList: [BusRouteDTO]?
     @Published var favoriteList: [FavoriteItemDTO]?
@@ -34,74 +33,57 @@ final class HomeUseCase {
     }
 
     func loadFavoriteData() {
-        Self.queue.async {
-            self.usecases.getFavoriteItemList()
-                .receive(on: Self.queue)
-                .decode(type: [FavoriteItemDTO]?.self, decoder: PropertyListDecoder())
-                .retry({ [weak self] in
-                    self?.loadFavoriteData()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$favoriteList)
-        }
+        self.usecases.getFavoriteItemList()
+            .decode(type: [FavoriteItemDTO]?.self, decoder: PropertyListDecoder())
+            .retry({ [weak self] in
+                self?.loadFavoriteData()
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$favoriteList)
     }
 
-    func loadBusRemainTime(favoriteItem: FavoriteItemDTO, completion: @escaping (ArrInfoByRouteDTO) -> Void) {
-        Self.queue.async {
-            self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
-                                                busRouteId: favoriteItem.busRouteId,
-                                                ord: favoriteItem.ord)
-                .receive(on: Self.queue)
-                .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
-                .tryMap({ item in
-                    let result = item.msgBody.itemList
-                    guard let item = result.first else { throw BBusAPIError.wrongFormatError }
-                    return item
-                })
-                .retry({ [weak self] in
-                    self?.loadBusRemainTime(favoriteItem: favoriteItem, completion: completion)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .sink(receiveValue: { item in
-                    completion(item)
-                })
-                .store(in: &self.cancellables)
-        }
+    func loadBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Never> {
+        return self.usecases.getArrInfoByRouteList(stId: favoriteItem.stId,
+                                                   busRouteId: favoriteItem.busRouteId,
+                                                   ord: favoriteItem.ord)
+            .decode(type: ArrInfoByRouteResult.self, decoder: JSONDecoder())
+            .tryMap({ item in
+                let result = item.msgBody.itemList
+                guard let item = result.first else { throw BBusAPIError.wrongFormatError }
+                return item
+            })
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .eraseToAnyPublisher()
     }
 
     private func loadStation() {
-        Self.queue.async {
-            self.usecases.getStationList()
-                .receive(on: Self.queue)
-                .decode(type: [StationDTO]?.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.loadStation()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .sink(receiveValue: { [weak self] stationList in
-                    self?.stationList = stationList
-                })
-                .store(in: &self.cancellables)
-        }
+        self.usecases.getStationList()
+            .decode(type: [StationDTO]?.self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.loadStation()
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .sink(receiveValue: { [weak self] stationList in
+                self?.stationList = stationList
+            })
+            .store(in: &self.cancellables)
     }
 
     private func loadRoute() {
-        Self.queue.async {
-            self.usecases.getRouteList()
-                .receive(on: Self.queue)
-                .decode(type: [BusRouteDTO]?.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.loadRoute()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .sink(receiveValue: { [weak self] busRouteList in
-                    self?.busRouteList = busRouteList
-                })
-                .store(in: &self.cancellables)
-        }
+        self.usecases.getRouteList()
+            .decode(type: [BusRouteDTO]?.self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.loadRoute()
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .sink(receiveValue: { [weak self] busRouteList in
+                self?.busRouteList = busRouteList
+            })
+            .store(in: &self.cancellables)
     }
 }

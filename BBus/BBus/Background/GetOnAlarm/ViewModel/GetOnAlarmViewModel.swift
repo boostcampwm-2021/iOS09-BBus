@@ -41,7 +41,7 @@ final class GetOnAlarmViewModel {
     
     func bindBusPosition() {
         self.usecase.$busPosition
-            .receive(on: GetOnAlarmUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink { [weak self] position in
                 guard let self = self,
                       let position = position,
@@ -60,7 +60,7 @@ final class GetOnAlarmViewModel {
     
     func bindNetworkErrorMessage() {
         self.usecase.$networkError
-            .receive(on: GetOnAlarmUsecase.queue)
+            .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
                 self?.networkErrorMessage = ("승차 알람", "네트워크 에러가 발생하여 알람이 취소됩니다.")

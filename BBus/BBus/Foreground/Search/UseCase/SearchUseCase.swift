@@ -15,7 +15,6 @@ final class SearchUseCase {
     @Published var stationList: [StationDTO]
     @Published var networkError: Error?
     private var cancellables: Set<AnyCancellable>
-    static let queue = DispatchQueue(label: "Search")
     
     init(usecases: GetRouteListUsecase & GetStationListUsecase) {
         self.usecases = usecases
@@ -32,31 +31,25 @@ final class SearchUseCase {
     }
     
     private func startRouteSearch() {
-        Self.queue.async {
-            self.usecases.getRouteList()
-                .receive(on: Self.queue)
-                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.startRouteSearch()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$routeList)
-        }
+        self.usecases.getRouteList()
+            .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.startRouteSearch()
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$routeList)
     }
     
     private func startStationSearch() {
-        Self.queue.async {
-            self.usecases.getStationList()
-                .receive(on: Self.queue)
-                .decode(type: [StationDTO].self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.startStationSearch()
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$stationList)
-        }
+        self.usecases.getStationList()
+            .decode(type: [StationDTO].self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.startStationSearch()
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$stationList)
     }
     
     func searchBus(by keyword: String) -> [BusSearchResult] {

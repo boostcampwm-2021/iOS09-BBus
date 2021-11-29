@@ -15,64 +15,52 @@ final class BusRouteUsecase {
     @Published var bodys: [StationByRouteListDTO] = []
     @Published var buses: [BusPosByRtidDTO] = []
     @Published var networkError: Error?
-    private var cancellables: Set<AnyCancellable>
-    static let queue = DispatchQueue(label: "BusRoute")
 
     init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
         self.usecases = usecases
-        self.cancellables = []
         self.networkError = nil
     }
 
     func searchHeader(busRouteId: Int) {
-        Self.queue.async {
-            self.usecases.getRouteList()
-                .receive(on: Self.queue)
-                .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
-                .tryMap({ routeList -> BusRouteDTO? in
-                    let header = routeList.filter { $0.routeID == busRouteId }.first
-                    return header
-                })
-                .retry({ [weak self] in
-                    self?.searchHeader(busRouteId: busRouteId)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$header)
-        }
+        self.usecases.getRouteList()
+            .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
+            .tryMap({ routeList -> BusRouteDTO? in
+                let header = routeList.filter { $0.routeID == busRouteId }.first
+                return header
+            })
+            .retry({ [weak self] in
+                self?.searchHeader(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$header)
     }
 
     func fetchRouteList(busRouteId: Int) {
-        Self.queue.async {
-            self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
-                .receive(on: Self.queue)
-                .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
-                .retry({ [weak self] in
-                    self?.fetchRouteList(busRouteId: busRouteId)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .map({ item in
-                    item.msgBody.itemList
-                })
-                .assign(to: &self.$bodys)
-        }
+        self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
+            .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
+            .retry({ [weak self] in
+                self?.fetchRouteList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .map({ item in
+                item.msgBody.itemList
+            })
+            .assign(to: &self.$bodys)
     }
 
     func fetchBusPosList(busRouteId: Int) {
-        Self.queue.async {
-            self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
-                .receive(on: Self.queue)
-                .decode(type: BusPosByRtidResult.self, decoder: JSONDecoder())
-                .tryMap({ item in
-                    return item.msgBody.itemList
-                })
-                .retry({ [weak self] in
-                    self?.fetchBusPosList(busRouteId: busRouteId)
-                }, handler: { [weak self] error in
-                    self?.networkError = error
-                })
-                .assign(to: &self.$buses)
-        }
+        self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
+            .decode(type: BusPosByRtidResult.self, decoder: JSONDecoder())
+            .tryMap({ item in
+                return item.msgBody.itemList
+            })
+            .retry({ [weak self] in
+                self?.fetchBusPosList(busRouteId: busRouteId)
+            }, handler: { [weak self] error in
+                self?.networkError = error
+            })
+            .assign(to: &self.$buses)
     }
 }
