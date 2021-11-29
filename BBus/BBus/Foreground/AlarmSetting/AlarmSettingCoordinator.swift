@@ -20,7 +20,7 @@ final class AlarmSettingCoordinator: Coordinator {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           requestFactory: RequestFactory())
-        let useCase = AlarmSettingUseCase(useCases: apiUseCases)
+        let useCase = AlarmSettingAPIUseCase(useCases: apiUseCases)
         let viewModel = AlarmSettingViewModel(useCase: useCase,
                                               stationId: stationId,
                                               busRouteId: busRouteId,

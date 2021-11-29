@@ -70,7 +70,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           requestFactory: RequestFactory())
-        let usecase = MovingStatusUsecase(usecases: apiUseCases)
+        let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
@@ -86,7 +86,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           requestFactory: RequestFactory())
-        let usecase = MovingStatusUsecase(usecases: apiUseCases)
+        let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
