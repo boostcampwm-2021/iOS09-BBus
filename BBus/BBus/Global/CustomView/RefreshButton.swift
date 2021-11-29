@@ -9,7 +9,7 @@ import UIKit
 
 final class RefreshButton: ThrottleButton {
 
-    private let refreshButtonWidth: CGFloat = 50
+    static let refreshButtonWidth: CGFloat = 50
 
     convenience init() {
         self.init(frame: CGRect())
@@ -18,7 +18,7 @@ final class RefreshButton: ThrottleButton {
 
     private func configureUI() {
         self.setImage(BBusImage.refresh, for: .normal)
-        self.layer.cornerRadius = self.refreshButtonWidth / 2
+        self.layer.cornerRadius = Self.refreshButtonWidth / 2
         self.tintColor = BBusColor.white
         self.backgroundColor = BBusColor.darkGray
     }

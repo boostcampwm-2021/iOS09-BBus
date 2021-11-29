@@ -7,14 +7,33 @@
 
 import UIKit
 
+protocol RefreshButtonDelegate {
+    func buttonTapped()
+}
+
 class RefreshableView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    internal lazy var refreshButton = RefreshButton()
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.configureLayout()
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.configureLayout()
+    }
+
+    private func configureLayout() {
+        self.addSubviews(self.refreshButton)
+
+        let refreshTrailingBottomInterval: CGFloat = -16
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: RefreshButton.refreshButtonWidth),
+            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+        ])
+    }
 }
