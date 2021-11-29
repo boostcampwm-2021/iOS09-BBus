@@ -184,7 +184,7 @@ final class StationViewController: UIViewController {
     
     private func noInfoAlert() {
         let controller = UIAlertController(title: "정거장 에러",
-                                           message: "죄송합니다. 현재 정보가 제공되지 않는 정거장입니다.",
+                                           message: "서울 외 지역은 정거장 정보를 제공하지 않습니다. 죄송합니다",
                                            preferredStyle: .alert)
         let action = UIAlertAction(title: "확인",
                                    style: .default,
