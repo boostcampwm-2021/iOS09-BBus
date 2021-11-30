@@ -37,6 +37,7 @@ final class HomeViewController: UIViewController {
         self.binding()
         self.homeView.configureLayout()
         self.homeView.configureDelegate(self)
+        self.configureStatusBarLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +62,22 @@ final class HomeViewController: UIViewController {
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
+    }
+
+    private func configureStatusBarLayout() {
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
+
+        self.view.addSubviews(statusbarView)
+        NSLayoutConstraint.activate([
+            statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
+            statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
+            statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
     }
     
     private func configureColor() {
