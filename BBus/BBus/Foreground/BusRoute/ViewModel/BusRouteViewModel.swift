@@ -14,7 +14,7 @@ typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusConges
 
 final class BusRouteViewModel {
 
-    let usecase: BusRouteAPIUseCase
+    let useCase: BusRouteAPIUseCase
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     @Published var header: BusRouteDTO?
@@ -23,8 +23,8 @@ final class BusRouteViewModel {
     @Published private(set) var stopLoader: Bool = false
     @Published private(set) var networkError: Error?
 
-    init(usecase: BusRouteAPIUseCase, busRouteId: Int) {
-        self.usecase = usecase
+    init(useCase: BusRouteAPIUseCase, busRouteId: Int) {
+        self.useCase = useCase
         self.busRouteId = busRouteId
         self.cancellables = []
         self.bodys = []
@@ -44,7 +44,7 @@ final class BusRouteViewModel {
     }
 
     private func bindHeaderInfo() {
-        self.usecase.searchHeader(busRouteId: self.busRouteId)
+        self.useCase.searchHeader(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
                 self?.networkError = error
@@ -53,7 +53,7 @@ final class BusRouteViewModel {
     }
 
     private func bindBodysInfo() {
-        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
+        self.useCase.fetchRouteList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
                 self?.networkError = error
@@ -65,7 +65,7 @@ final class BusRouteViewModel {
     }
 
     private func bindBusesPosInfo() {
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+        self.useCase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
                 self?.networkError = error

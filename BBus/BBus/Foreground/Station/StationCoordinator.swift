@@ -20,7 +20,7 @@ final class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let apiUseCase = StationAPIUseCase(usecases: apiUseCases)
+        let apiUseCase = StationAPIUseCase(useCases: apiUseCases)
         let calculateUseCase = StationCalculateUseCase()
         let viewModel = StationViewModel(apiUseCase: apiUseCase,
                                          calculateUseCase: calculateUseCase,

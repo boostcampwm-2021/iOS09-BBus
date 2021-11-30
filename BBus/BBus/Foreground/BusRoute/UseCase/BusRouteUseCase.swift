@@ -16,14 +16,14 @@ protocol BaseBusRouteAPIUsable: BaseUseCase {
 
 final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
 
-    private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
+    private let useCases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
 
-    init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
-        self.usecases = usecases
+    init(useCases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
+        self.useCases = useCases
     }
 
     func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error> {
-        return self.usecases.getRouteList()
+        return self.useCases.getRouteList()
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .tryMap({ routeList -> BusRouteDTO? in
                 let header = routeList.filter { $0.routeID == busRouteId }.first
@@ -33,7 +33,7 @@ final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
     }
 
     func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Error> {
-        return self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
+        return self.useCases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
             .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
             .map({ item in
                 item.msgBody.itemList
@@ -42,7 +42,7 @@ final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
     }
 
     func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Error> {
-        return self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
+        return self.useCases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
             .decode(type: BusPosByRtidResult.self, decoder: JSONDecoder())
             .tryMap({ item in
                 return item.msgBody.itemList

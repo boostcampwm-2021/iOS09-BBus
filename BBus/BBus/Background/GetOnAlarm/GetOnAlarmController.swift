@@ -39,14 +39,14 @@ final class GetOnAlarmController {
                                               persistenceStorage: PersistenceStorage(),
                                               tokenManageType: TokenManager.self,
                                               requestFactory: RequestFactory())
-            let usecase = GetOnAlarmAPIUsecase(usecases: apiUseCases)
+            let useCase = GetOnAlarmAPIUseCase(useCases: apiUseCases)
             let getOnAlarmStatus = GetOnAlarmStatus(currentBusOrd: nil,
                                                     targetOrd: targetOrd,
                                                     vehicleId: vehicleId,
                                                     busName: busName,
                                                     busRouteId: busRouteId,
                                                     stationId: stationId)
-            self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
+            self.viewModel = GetOnAlarmViewModel(useCase: useCase, currentStatus: getOnAlarmStatus)
             self.viewModel?.fetch()
             self.binding()
             self.sendRequestAuthorization()

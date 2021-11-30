@@ -12,22 +12,22 @@ protocol GetOnAlarmAPIUsable: BaseUseCase {
     func fetch(withVehId vehId: String)
 }
 
-final class GetOnAlarmAPIUsecase: GetOnAlarmAPIUsable {
+final class GetOnAlarmAPIUseCase: GetOnAlarmAPIUsable {
 
-    private let usecases: GetBusPosByVehIdUsable
+    private let useCases: GetBusPosByVehIdUsable
     private var cancellable: AnyCancellable?
     @Published private(set) var networkError: Error?
     @Published private(set) var busPosition: BusPosByVehicleIdDTO?
 
-    init(usecases: GetBusPosByVehIdUsable) {
-        self.usecases = usecases
+    init(useCases: GetBusPosByVehIdUsable) {
+        self.useCases = useCases
         self.cancellable = nil
         self.networkError = nil
         self.busPosition = nil
     }
 
     func fetch(withVehId vehId: String) {
-        self.cancellable = self.usecases.getBusPosByVehId(vehId)
+        self.cancellable = self.useCases.getBusPosByVehId(vehId)
             .decode(type: JsonMessage.self, decoder: JSONDecoder())
             .retry({ [weak self] in
                 self?.fetch(withVehId: vehId)
