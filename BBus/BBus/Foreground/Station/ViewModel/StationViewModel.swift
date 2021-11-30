@@ -61,7 +61,7 @@ final class StationViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { [weak self] arriveInfo in
-                self?.nextStation = arriveInfo[0].nextStation
+                self?.nextStation = arriveInfo.first?.nextStation
                 self?.classifyByRouteType(with: arriveInfo)
             })
             .store(in: &self.cancellables)

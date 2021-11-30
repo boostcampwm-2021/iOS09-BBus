@@ -34,8 +34,7 @@ class StationViewModelTests: XCTestCase {
         }
         
         func refreshInfo(about arsId: String) -> AnyPublisher<[StationByUidItemDTO], Error> {
-            
-            guard let url = Bundle.main.url(forResource: "DummyJsonStringStationByUidItemDTO", withExtension: "json") else {
+            guard let url = Bundle.init(identifier: "com.boostcamp.ios-009.StationViewModelTests")?.url(forResource: "DummyJsonStringStationByUidItemDTO", withExtension: "json") else {
                 return TestError.urlError.publisher()
             }
             if let data = try? Data(contentsOf: url),
@@ -73,7 +72,7 @@ class StationViewModelTests: XCTestCase {
         }
         
         func loadRoute() -> AnyPublisher<[BusRouteDTO], Error> {
-            let busRouteDTOs = [BusRouteDTO(routeID: 1,
+            let busRouteDTOs = [BusRouteDTO(routeID: 100100496,
                                             busRouteName: "bus1",
                                             routeType: RouteType.broadArea,
                                             startStation: "station1",
@@ -83,7 +82,7 @@ class StationViewModelTests: XCTestCase {
                                             routeType: RouteType.broadArea,
                                             startStation: "station2",
                                             endStation: "station100"),
-                                BusRouteDTO(routeID: 3,
+                                BusRouteDTO(routeID: 107000002,
                                             busRouteName: "bus3",
                                             routeType: RouteType.circulation,
                                             startStation: "station1",
@@ -95,13 +94,6 @@ class StationViewModelTests: XCTestCase {
         }
         
         
-    }
-    
-    struct MOCKStationCalculateUseCase: StationCalculatable {
-        func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
-            let station = stations.filter() { $0.arsID == arsId }
-            return station.first
-        }
     }
     
     private let timeout: TimeInterval = 10
@@ -118,7 +110,7 @@ class StationViewModelTests: XCTestCase {
     func test_bindStationInfo_정상_할당_확인() {
         // given
         let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
-                                                calculateUseCase: MOCKStationCalculateUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
                                                 arsId: "1")
         let expectation = self.expectation(description: "StationViewModel에 stationInfo가 정상적으로 왔는지 확인")
         let expectationResult = StationDTO(stationID: 1, arsID: "1", stationName: "station1")
@@ -143,7 +135,7 @@ class StationViewModelTests: XCTestCase {
     func test_bindStationInfo_일치하는_Station_정보가_없는_경우() {
         // given
         let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
-                                                calculateUseCase: MOCKStationCalculateUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
                                                 arsId: "0")
         let expectation = self.expectation(description: "일치하는 stationInfo가 없는 경우 에러를 반환하는지 확인")
         var error: Error? = nil
@@ -167,7 +159,7 @@ class StationViewModelTests: XCTestCase {
     func test_bindFavoriteItems_정상_할당_확인() {
         // given
         let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
-                                                calculateUseCase: MOCKStationCalculateUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
                                                 arsId: "1")
         let expectation = self.expectation(description: "StationViewModel에 favoriteItems가 정상적으로 왔는지 확인")
         let expectationResult = [FavoriteItemDTO(stId: "1", busRouteId: "1", ord: "1", arsId: "1"),
@@ -188,14 +180,175 @@ class StationViewModelTests: XCTestCase {
         // then
         XCTAssertEqual(stationViewModel.favoriteItems?.count ?? 0, expectationResult.count)
         stationViewModel.favoriteItems?.enumerated().forEach({ index, favoriteItem in
-            if expectationResult.count - 1 < index {
-                XCTFail()
-                return
-            }
             XCTAssertEqual(favoriteItem.arsId, expectationResult[index].arsId)
             XCTAssertEqual(favoriteItem.busRouteId, expectationResult[index].busRouteId)
             XCTAssertEqual(favoriteItem.ord, expectationResult[index].ord)
             XCTAssertEqual(favoriteItem.stId, expectationResult[index].stId)
         })
+    }
+    
+    func test_refresh_nextStation_정상_할당_확인() {
+        // given
+        let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
+                                                arsId: "1")
+        let expectation = self.expectation(description: "StationViewModel에 nextStation가 정상적으로 왔는지 확인")
+        let expectationResult = "송파와이즈더샵.엠코타운센트로엘"
+        
+        // when
+        stationViewModel.$nextStation
+            .dropFirst()
+            .sink(receiveCompletion: { _ in
+                return
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
+            })
+            .store(in: &self.cancellables)
+        stationViewModel.refresh()
+        
+        waitForExpectations(timeout: timeout)
+        
+        // then
+        XCTAssertEqual(stationViewModel.nextStation, expectationResult)
+    }
+    
+    func test_refresh_activeBuses_정상_할당_확인() {
+        // given
+        let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
+                                                arsId: "1")
+        let expectation = self.expectation(description: "StationViewModel에 activeBuses가 정상적으로 왔는지 확인")
+        let busArriveInfo: BusArriveInfo
+        busArriveInfo.nextStation = "송파와이즈더샵.엠코타운센트로엘"
+        busArriveInfo.busRouteId = 100100496
+        busArriveInfo.busNumber = "333"
+        busArriveInfo.routeType = BBusRouteType.gansun
+        busArriveInfo.stationOrd = 7
+        busArriveInfo.firstBusArriveRemainTime = BusRemainTime(arriveRemainTime: "2분20초")
+        busArriveInfo.firstBusRelativePosition = "1번째전"
+        busArriveInfo.firstBusCongestion = BusCongestion(rawValue: 0)
+        busArriveInfo.secondBusArriveRemainTime = BusRemainTime(arriveRemainTime: "7분20초")
+        busArriveInfo.secondBusRelativePosition = "3번째전"
+        busArriveInfo.secondBusCongestion = BusCongestion(rawValue: 0)
+        
+        let expectationResult = [BBusRouteType.gansun: BusArriveInfos(infos: [busArriveInfo])]
+        
+        // when
+        stationViewModel.$busKeys
+            .dropFirst()
+            .sink(receiveCompletion: { _ in
+                return
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
+            })
+            .store(in: &self.cancellables)
+        stationViewModel.refresh()
+        
+        waitForExpectations(timeout: timeout)
+        
+        // then
+        XCTAssertEqual(stationViewModel.activeBuses.count, expectationResult.count)
+        stationViewModel.activeBuses.forEach({ key, info in
+            guard info.count() == expectationResult[key]?.count() ?? 0 else { return XCTFail() }
+            for i in 0..<info.count() {
+                XCTAssertEqual(info[i]?.nextStation, expectationResult[key]?[i]?.nextStation)
+                XCTAssertEqual(info[i]?.busRouteId, expectationResult[key]?[i]?.busRouteId)
+                XCTAssertEqual(info[i]?.busNumber, expectationResult[key]?[i]?.busNumber)
+                XCTAssertEqual(info[i]?.routeType, expectationResult[key]?[i]?.routeType)
+                XCTAssertEqual(info[i]?.stationOrd, expectationResult[key]?[i]?.stationOrd)
+                XCTAssertEqual(info[i]?.firstBusArriveRemainTime?.message, expectationResult[key]?[i]?.firstBusArriveRemainTime?.message)
+                XCTAssertEqual(info[i]?.firstBusArriveRemainTime?.seconds, expectationResult[key]?[i]?.firstBusArriveRemainTime?.seconds)
+                XCTAssertEqual(info[i]?.firstBusRelativePosition, expectationResult[key]?[i]?.firstBusRelativePosition)
+                XCTAssertEqual(info[i]?.firstBusCongestion, expectationResult[key]?[i]?.firstBusCongestion)
+                XCTAssertEqual(info[i]?.secondBusArriveRemainTime?.message, expectationResult[key]?[i]?.secondBusArriveRemainTime?.message)
+                XCTAssertEqual(info[i]?.secondBusArriveRemainTime?.seconds, expectationResult[key]?[i]?.secondBusArriveRemainTime?.seconds)
+                XCTAssertEqual(info[i]?.secondBusRelativePosition, expectationResult[key]?[i]?.secondBusRelativePosition)
+                XCTAssertEqual(info[i]?.secondBusCongestion, expectationResult[key]?[i]?.secondBusCongestion)
+            }
+        })
+    }
+    
+    func test_refresh_inActiveBuses_정상_할당_확인() {
+        // given
+        let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
+                                                arsId: "1")
+        let expectation = self.expectation(description: "StationViewModel에 inActiveBuses가 정상적으로 왔는지 확인")
+        let busArriveInfo: BusArriveInfo
+        busArriveInfo.nextStation = "서울위례별초교"
+        busArriveInfo.busRouteId = 107000002
+        busArriveInfo.busNumber = "343"
+        busArriveInfo.routeType = BBusRouteType.jisun
+        busArriveInfo.stationOrd = 7
+        busArriveInfo.firstBusArriveRemainTime = nil
+        busArriveInfo.firstBusRelativePosition = nil
+        busArriveInfo.firstBusCongestion = nil
+        busArriveInfo.secondBusArriveRemainTime = nil
+        busArriveInfo.secondBusRelativePosition = nil
+        busArriveInfo.secondBusCongestion = nil
+        
+        let expectationResult = [BBusRouteType.jisun: BusArriveInfos(infos: [busArriveInfo])]
+        
+        // when
+        stationViewModel.$busKeys
+            .dropFirst()
+            .sink(receiveCompletion: { _ in
+                return
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
+            })
+            .store(in: &self.cancellables)
+        stationViewModel.refresh()
+        
+        waitForExpectations(timeout: timeout)
+        
+        // then
+        XCTAssertEqual(stationViewModel.inActiveBuses.count, expectationResult.count)
+        stationViewModel.inActiveBuses.forEach({ key, info in
+            guard info.count() == expectationResult[key]?.count() ?? 0 else { return XCTFail() }
+            for i in 0..<info.count() {
+                XCTAssertEqual(info[i]?.nextStation, expectationResult[key]?[i]?.nextStation)
+                XCTAssertEqual(info[i]?.busRouteId, expectationResult[key]?[i]?.busRouteId)
+                XCTAssertEqual(info[i]?.busNumber, expectationResult[key]?[i]?.busNumber)
+                XCTAssertEqual(info[i]?.routeType, expectationResult[key]?[i]?.routeType)
+                XCTAssertEqual(info[i]?.stationOrd, expectationResult[key]?[i]?.stationOrd)
+                XCTAssertEqual(info[i]?.firstBusArriveRemainTime?.message, expectationResult[key]?[i]?.firstBusArriveRemainTime?.message)
+                XCTAssertEqual(info[i]?.firstBusArriveRemainTime?.seconds, expectationResult[key]?[i]?.firstBusArriveRemainTime?.seconds)
+                XCTAssertEqual(info[i]?.firstBusRelativePosition, expectationResult[key]?[i]?.firstBusRelativePosition)
+                XCTAssertEqual(info[i]?.firstBusCongestion, expectationResult[key]?[i]?.firstBusCongestion)
+                XCTAssertEqual(info[i]?.secondBusArriveRemainTime?.message, expectationResult[key]?[i]?.secondBusArriveRemainTime?.message)
+                XCTAssertEqual(info[i]?.secondBusArriveRemainTime?.seconds, expectationResult[key]?[i]?.secondBusArriveRemainTime?.seconds)
+                XCTAssertEqual(info[i]?.secondBusRelativePosition, expectationResult[key]?[i]?.secondBusRelativePosition)
+                XCTAssertEqual(info[i]?.secondBusCongestion, expectationResult[key]?[i]?.secondBusCongestion)
+            }
+        })
+    }
+    
+    func test_refresh_busKeys_정상_할당_확인() {
+        // given
+        let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
+                                                calculateUseCase: StationCalculateUseCase(),
+                                                arsId: "1")
+        let expectation = self.expectation(description: "StationViewModel에 activeBuses가 정상적으로 왔는지 확인")
+        let expectationResult = BusSectionKeys(keys: [BBusRouteType.gansun, BBusRouteType.jisun])
+        
+        // when
+        stationViewModel.$busKeys
+            .dropFirst()
+            .sink(receiveCompletion: { _ in
+                return
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
+            })
+            .store(in: &self.cancellables)
+        stationViewModel.refresh()
+        
+        waitForExpectations(timeout: timeout)
+        
+        // then
+        guard stationViewModel.busKeys.count() == expectationResult.count() else { return XCTFail() }
+        for i in 0..<stationViewModel.busKeys.count() {
+            XCTAssertEqual(stationViewModel.busKeys[i], expectationResult[i])
+        }
     }
 }

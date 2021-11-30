@@ -78,6 +78,8 @@
 		4A2634C12756862F00267B47 /* StationAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468430275676ED007E440A /* StationAPIUsable.swift */; };
 		4A2634C22756863600267B47 /* StationCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468432275676F8007E440A /* StationCalculatable.swift */; };
 		4A2634C32756864A00267B47 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		4A2634C427568CB900267B47 /* StationCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */; };
+		4A2634C5275693BC00267B47 /* DummyJsonStringStationByUidItemDTO.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A2634C027567E5400267B47 /* DummyJsonStringStationByUidItemDTO.json */; };
 		4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
 		4A3B6C502755DF2400BBC498 /* AlarmCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */; };
@@ -1657,6 +1659,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2634C5275693BC00267B47 /* DummyJsonStringStationByUidItemDTO.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1773,6 +1776,7 @@
 				4A2634B72756755700267B47 /* BBusRouteType.swift in Sources */,
 				4A2634B92756757400267B47 /* NotificationNameExtension.swift in Sources */,
 				4A2634B82756756200267B47 /* BusArriveInfos.swift in Sources */,
+				4A2634C427568CB900267B47 /* StationCalculateUseCase.swift in Sources */,
 				4A2634B2275670CB00267B47 /* BusRouteDTO.swift in Sources */,
 				4A2634AC27566F8600267B47 /* StationViewModel.swift in Sources */,
 			);
