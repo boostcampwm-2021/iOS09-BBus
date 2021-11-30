@@ -10,7 +10,8 @@ import Combine
 
 final class AlarmSettingViewModel {
     
-    let useCase: AlarmSettingAPIUseCase
+    let apiUseCase: AlarmSettingAPIUseCase
+    let calculateUseCase: AlarmSettingCalculateUseCase
     let stationId: Int
     let busRouteId: Int
     let stationOrd: Int
@@ -24,8 +25,9 @@ final class AlarmSettingViewModel {
     private var cancellables: Set<AnyCancellable>
     private var observer: NSObjectProtocol?
     
-    init(useCase: AlarmSettingAPIUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
-        self.useCase = useCase
+    init(apiUseCase: AlarmSettingAPIUseCase, calculateUseCase: AlarmSettingCalculateUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
         self.stationId = stationId
         self.busRouteId = busRouteId
         self.stationOrd = stationOrd
@@ -64,7 +66,7 @@ final class AlarmSettingViewModel {
     }
     
     private func bindBusArriveInfo() {
-        self.useCase.busArriveInfoWillLoaded(stId: "\(self.stationId)",
+        self.apiUseCase.busArriveInfoWillLoaded(stId: "\(self.stationId)",
                                              busRouteId: "\(self.busRouteId)",
                                              ord: "\(self.stationOrd)")
             .first()
@@ -95,7 +97,7 @@ final class AlarmSettingViewModel {
         initInfo.name = ""
         initInfo.ord = 0
         
-        self.useCase.busStationsInfoWillLoaded(busRouetId: "\(self.busRouteId)", arsId: self.arsId)
+        self.apiUseCase.busStationsInfoWillLoaded(busRouetId: "\(self.busRouteId)", arsId: self.arsId)
             .first()
             .receive(on: DispatchQueue.global())
             .compactMap({ [weak self] result -> [StationByRouteListDTO]? in
@@ -108,7 +110,7 @@ final class AlarmSettingViewModel {
             .scan(initInfo, { before, info in
                 let alarmSettingInfo: AlarmSettingBusStationInfo
                 alarmSettingInfo.arsId = info.arsId
-                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? MovingStatusViewModel.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
+                alarmSettingInfo.estimatedTime = before.estimatedTime + (before.arsId != "" ? self.calculateUseCase.averageSectionTime(speed: info.sectionSpeed, distance: info.fullSectionDistance) : 0)
                 alarmSettingInfo.name = info.stationName
                 alarmSettingInfo.ord = info.sequence
                 return alarmSettingInfo
