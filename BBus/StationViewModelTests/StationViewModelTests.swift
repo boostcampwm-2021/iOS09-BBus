@@ -127,8 +127,8 @@ class StationViewModelTests: XCTestCase {
         stationViewModel.$stationInfo
             .sink(receiveCompletion: { _ in
                 return
-            }, receiveValue: { _ in
-                expectation.fulfill()
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
             })
             .store(in: &self.cancellables)
         
@@ -152,9 +152,9 @@ class StationViewModelTests: XCTestCase {
         stationViewModel.$error
             .sink(receiveCompletion: { _ in
                 return
-            }, receiveValue: { result in
+            }, receiveValue: { [weak expectation] result in
                 error = result
-                expectation.fulfill()
+                expectation?.fulfill()
             })
             .store(in: &self.cancellables)
         
@@ -162,5 +162,40 @@ class StationViewModelTests: XCTestCase {
         
         // then
         XCTAssertNotNil(error)
+    }
+    
+    func test_bindFavoriteItems_정상_할당_확인() {
+        // given
+        let stationViewModel = StationViewModel(apiUseCase: MOCKStationAPIUseCase(),
+                                                calculateUseCase: MOCKStationCalculateUseCase(),
+                                                arsId: "1")
+        let expectation = self.expectation(description: "StationViewModel에 favoriteItems가 정상적으로 왔는지 확인")
+        let expectationResult = [FavoriteItemDTO(stId: "1", busRouteId: "1", ord: "1", arsId: "1"),
+                                 FavoriteItemDTO(stId: "1", busRouteId: "1", ord: "1", arsId: "1")]
+        
+        // when
+        stationViewModel.$favoriteItems
+            .dropFirst()
+            .sink(receiveCompletion: { _ in
+                return
+            }, receiveValue: { [weak expectation] _ in
+                expectation?.fulfill()
+            })
+            .store(in: &self.cancellables)
+        
+        waitForExpectations(timeout: timeout)
+        
+        // then
+        XCTAssertEqual(stationViewModel.favoriteItems?.count ?? 0, expectationResult.count)
+        stationViewModel.favoriteItems?.enumerated().forEach({ index, favoriteItem in
+            if expectationResult.count - 1 < index {
+                XCTFail()
+                return
+            }
+            XCTAssertEqual(favoriteItem.arsId, expectationResult[index].arsId)
+            XCTAssertEqual(favoriteItem.busRouteId, expectationResult[index].busRouteId)
+            XCTAssertEqual(favoriteItem.ord, expectationResult[index].ord)
+            XCTAssertEqual(favoriteItem.stId, expectationResult[index].stId)
+        })
     }
 }
