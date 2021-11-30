@@ -147,6 +147,7 @@
 		87038A90273C11630078EAE3 /* GetStationsByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8F273C11630078EAE3 /* GetStationsByRouteListFetcher.swift */; };
 		87038A92273C12320078EAE3 /* GetBusPosByRtidFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */; };
 		87038A94273C12E20078EAE3 /* GetStationByUidItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A93273C12E20078EAE3 /* GetStationByUidItemFetcher.swift */; };
+		87115EFA27564D0F00601770 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A527550988001EA530 /* RequestFactory.swift */; };
 		87285F5527461DB300CA3BA9 /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87285F5427461DB300CA3BA9 /* UINavigationControllerExtension.swift */; };
 		873578832732545D00CC8ECC /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873578822732545D00CC8ECC /* CustomNavigationBar.swift */; };
 		87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87359B8C27311BF100F461A7 /* BusTagView.swift */; };
@@ -1636,6 +1637,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87115EFA27564D0F00601770 /* RequestFactory.swift in Sources */,
 				4AF1E08F2756264600DE51C8 /* RequestFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
