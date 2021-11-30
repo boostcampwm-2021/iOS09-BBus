@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, BaseViewControllerType {
 
     private var lastContentOffset: CGFloat = 0
     private let refreshButtonWidth: CGFloat = 50
@@ -42,34 +42,15 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Home"
+        self.baseViewDidLoad()
+        
         self.configureColor()
-        self.configureLayout()
-        self.binding()
-        self.homeView.configureLayout()
-        self.homeView.configureDelegate(self)
-        
-        let app = UIApplication.shared
-        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
-
-        let statusbarView = UIView()
-        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-        
-        self.view.addSubviews(statusbarView)
-        statusbarView.heightAnchor
-            .constraint(equalToConstant: statusBarHeight).isActive = true
-        statusbarView.widthAnchor
-            .constraint(equalTo: self.view.widthAnchor, multiplier: 1.0).isActive = true
-        statusbarView.topAnchor
-            .constraint(equalTo: self.view.topAnchor).isActive = true
-        statusbarView.centerXAnchor
-            .constraint(equalTo: self.view.centerXAnchor).isActive = true
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.reloadFavorite()
+        self.baseViewWillAppear()
+        
         self.viewModel?.configureObserver()
     }
 
@@ -79,7 +60,7 @@ final class HomeViewController: UIViewController {
     }
 
     // MARK: - Configuration
-    private func configureLayout() {
+    func configureLayout() {
         self.view.addSubviews(self.homeView, self.refreshButton)
 
         NSLayoutConstraint.activate([
@@ -97,15 +78,25 @@ final class HomeViewController: UIViewController {
             self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
             self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
+        
+        self.homeView.configureLayout()
+    }
+    
+    func configureDelegate() {
+        self.homeView.configureDelegate(self)
+    }
+    
+    func refresh() {
+        self.viewModel?.reloadFavorite()
+    }
+    
+    func bindAll() {
+        self.bindFavoriteList()
+        self.bindNetworkError()
     }
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
-    }
-
-    private func binding() {
-        self.bindFavoriteList()
-        self.bindNetworkError()
     }
 
     private func bindFavoriteList() {
