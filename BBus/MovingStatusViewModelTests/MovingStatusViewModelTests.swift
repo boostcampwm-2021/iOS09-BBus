@@ -83,7 +83,7 @@ class MovingStatusViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         super.setUp()
-        self.movingStatusViewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21809", toArsId: "21210")
+        self.movingStatusViewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
     }
 
     override func tearDownWithError() throws {
@@ -113,6 +113,38 @@ class MovingStatusViewModelTests: XCTestCase {
                 // then
                 XCTAssertEqual(header.busName, answerHeader.busName)
                 XCTAssertEqual(header.type, answerHeader.type)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 2)
+    }
+    
+    func test_bindStationsInfo_수신_성공() throws {
+        // given
+        guard let viewModel = self.movingStatusViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        let expectation = XCTestExpectation()
+        let station1 = StationInfo(speed: 44, afterSpeed: 29, count: 2, title: "신림복지관앞", sectTime: 0)
+        let station2 = StationInfo(speed: 29, afterSpeed: nil, count: 2, title: "난우중학교입구", sectTime: Int(ceil(Double(11.4)/Double(21))))
+        let answerStations = [station1, station2]
+        
+        // when
+        viewModel.$stationInfos
+            .receive(on: DispatchQueue.global())
+            .sink { completion in
+                // then
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { stations in
+                // then
+                XCTAssertEqual(stations[0].title, answerStations[0].title)
+                XCTAssertEqual(stations[0].speed, answerStations[0].speed)
+                XCTAssertEqual(stations[1].sectTime, answerStations[1].sectTime)
+                XCTAssertEqual(stations[1].afterSpeed, answerStations[1].afterSpeed)
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
