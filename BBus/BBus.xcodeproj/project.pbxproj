@@ -11,6 +11,8 @@
 		04045B812740F6DC0056A433 /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
 		041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
+		0446840C275650B0007E440A /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A32754E3CA001EA530 /* TokenManager.swift */; };
+		0446840D2756597F007E440A /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -1628,7 +1630,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446840D2756597F007E440A /* BBusAPIError.swift in Sources */,
 				4AF1E0822756263E00DE51C8 /* TokenManagerTests.swift in Sources */,
+				0446840C275650B0007E440A /* TokenManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
