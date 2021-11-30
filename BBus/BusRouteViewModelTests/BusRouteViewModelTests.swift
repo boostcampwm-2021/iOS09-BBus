@@ -12,6 +12,7 @@ import Combine
 class BusRouteViewModelTests: XCTestCase {
     
     var busRouteViewModel: BusRouteViewModel?
+    var cancellables: Set<AnyCancellable> = []
     
     class DummyBusRouteAPIUseCase: BusRouteAPIUsable {
         func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error> {
@@ -90,9 +91,50 @@ class BusRouteViewModelTests: XCTestCase {
         self.busRouteViewModel = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_bindHeaderInfo_수신_성공() throws {
+        guard let viewModel = self.busRouteViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        
+        let expectation = XCTestExpectation()
+        
+        viewModel.$header
+            .receive(on: DispatchQueue.global())
+            .sink { completion in
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { header in
+                dump(header)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 2)
+    }
+    
+    func test_bindBodysInfo_수신_성공() throws {
+        guard let viewModel = self.busRouteViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        
+        let expectation = XCTestExpectation()
+        
+        viewModel.$bodys
+            .receive(on: DispatchQueue.global())
+            .sink { completion in
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { bodys in
+                dump(bodys)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 2)
     }
 
     func testPerformanceExample() throws {
