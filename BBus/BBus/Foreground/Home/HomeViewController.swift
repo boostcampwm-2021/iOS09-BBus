@@ -10,22 +10,23 @@ import Combine
 
 final class HomeViewController: UIViewController, BaseViewControllerType {
 
-    private var lastContentOffset: CGFloat = 0
-
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
-
     private lazy var homeView = HomeView()
 
+    private let statusBarHeight: CGFloat?    
+    private var lastContentOffset: CGFloat = 0
     private var cancellables: Set<AnyCancellable> = []
 
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel, statusBarHegiht: CGFloat?) {
         self.viewModel = viewModel
+        self.statusBarHeight = statusBarHegiht
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         self.viewModel = nil
+        self.statusBarHeight = nil
         super.init(coder: coder)
     }
 
@@ -39,7 +40,6 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.loadHomeData()
         self.baseViewWillAppear()
         
         self.viewModel?.configureObserver()
@@ -47,26 +47,26 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configuration
     func configureLayout() {
         self.view.addSubviews(self.homeView)
-
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
-
+        
+        self.homeView.configureLayout()
     }
 
     private func configureStatusBarLayout() {
-        let app = UIApplication.shared
-        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
-
+        guard let statusBarHeight = self.statusBarHeight else { return }
+        
         let statusbarView = UIView()
         statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
 
@@ -77,8 +77,6 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
             statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
             statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
-        
-        self.homeView.configureLayout()
     }
     
     func configureDelegate() {

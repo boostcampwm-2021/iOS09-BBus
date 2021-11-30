@@ -29,8 +29,26 @@ final class BusRouteView: NavigatableView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
+    private lazy var customNavigationBar = CustomNavigationBar()
+    private lazy var refreshButton: UIButton = {
+        let radius: CGFloat = 25
+
+        let button = UIButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
+
+        button.addAction(UIAction(handler: { [weak self] _ in
+//            self?.viewModel?.refreshBusPos()
+        }), for: .touchUpInside)
+        return button
+    }()
+    private var busTags: [BusTagView] = []
+    private var busIcon: UIImage?
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
     private var tableViewMinHeight: CGFloat {
         return max(self.frame.height - BusRouteHeaderView.headerHeight, 0)
@@ -98,7 +116,7 @@ final class BusRouteView: NavigatableView {
         super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate & RefreshButtonDelegate & BackButtonDelegate) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate & BackButtonDelegate & RefreshButtonDelegate) {
         self.busRouteTableView.delegate = delegate
         self.busRouteTableView.dataSource = delegate
         self.busRouteScrollView.delegate = delegate
@@ -109,6 +127,9 @@ final class BusRouteView: NavigatableView {
     func configureColor(to color: UIColor?) {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
+        self.customNavigationBar.configureBackgroundColor(color: color)
+        self.customNavigationBar.configureTintColor(color: BBusColor.white)
+        self.customNavigationBar.configureAlpha(alpha: 0)
     }
 
     func configureTableViewHeight(count: Int) {
@@ -156,5 +177,56 @@ final class BusRouteView: NavigatableView {
     func stopLoader() {
         self.loader.isHidden = true
         self.loader.stopAnimating()
+    }
+    
+    func configureBusColor(type: RouteType) -> UIColor? {
+        let color: UIColor?
+
+        switch type {
+        case .mainLine:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .broadArea:
+            color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBusIcon
+        case .customized:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .circulation:
+            color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBusIcon
+        case .lateNight:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .localLine:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        }
+
+        self.configureColor(to: color)
+        return color
+    }
+    
+    func configureBusTags(buses: [BusPosInfo]) {
+        self.busTags.forEach { $0.removeFromSuperview() }
+        self.busTags.removeAll()
+        
+        buses.forEach { [weak self] bus in
+            guard let self = self else { return }
+            let tag = self.createBusTag(location: bus.location,
+                                        busIcon: self.busIcon,
+                                        busNumber: bus.number,
+                                        busCongestion: bus.congestion.toString(),
+                                        isLowFloor: bus.islower)
+            self.busTags.append(tag)
+        }
+    }
+    
+    func configureBackButtonTitle(title: String) {
+        self.customNavigationBar.configureBackButtonTitle(title)
+    }
+    
+    func configureNavigationAlpha(alpha: CGFloat) {
+        self.customNavigationBar.configureAlpha(alpha: alpha)
     }
 }

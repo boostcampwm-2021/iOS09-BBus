@@ -2,30 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationUsageDescription</key>
-	<string>하차 알람을 위해서 사용자의 GPS 위치를 추적해야합니다.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>알람을 위해 사용자의 GPS 위치를 추적해야합니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>알람을 위해 앱을 사용중이지 않을 때도 사용자의 GPS 위치를 추적해야합니다.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>알람을 위해 사용자의 GPS 위치를 추적해야합니다.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>하차 알람을 위해서 사용자의 GPS 위치를 추적해야합니다.</string>
+	<key>UISupportedInterfaceOrientations~iphone</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 	<key>API_ACCESS_KEY1</key>
 	<string>${API_ACCESS_KEY1}</string>
-	<key>API_ACCESS_KEY2</key>
-	<string>${API_ACCESS_KEY2}</string>
-	<key>API_ACCESS_KEY3</key>
-	<string>${API_ACCESS_KEY3}</string>
-	<key>API_ACCESS_KEY4</key>
-	<string>${API_ACCESS_KEY4}</string>
-	<key>API_ACCESS_KEY5</key>
-	<string>${API_ACCESS_KEY5}</string>
-	<key>API_ACCESS_KEY6</key>
-	<string>${API_ACCESS_KEY6}</string>
-	<key>API_ACCESS_KEY7</key>
-	<string>${API_ACCESS_KEY7}</string>
-	<key>API_ACCESS_KEY8</key>
-	<string>${API_ACCESS_KEY8}</string>
-	<key>API_ACCESS_KEY9</key>
-	<string>${API_ACCESS_KEY9}</string>
 	<key>API_ACCESS_KEY10</key>
 	<string>${API_ACCESS_KEY10}</string>
 	<key>API_ACCESS_KEY11</key>
@@ -42,6 +30,22 @@
 	<string>${API_ACCESS_KEY16}</string>
 	<key>API_ACCESS_KEY17</key>
 	<string>${API_ACCESS_KEY17}</string>
+	<key>API_ACCESS_KEY2</key>
+	<string>${API_ACCESS_KEY2}</string>
+	<key>API_ACCESS_KEY3</key>
+	<string>${API_ACCESS_KEY3}</string>
+	<key>API_ACCESS_KEY4</key>
+	<string>${API_ACCESS_KEY4}</string>
+	<key>API_ACCESS_KEY5</key>
+	<string>${API_ACCESS_KEY5}</string>
+	<key>API_ACCESS_KEY6</key>
+	<string>${API_ACCESS_KEY6}</string>
+	<key>API_ACCESS_KEY7</key>
+	<string>${API_ACCESS_KEY7}</string>
+	<key>API_ACCESS_KEY8</key>
+	<string>${API_ACCESS_KEY8}</string>
+	<key>API_ACCESS_KEY9</key>
+	<string>${API_ACCESS_KEY9}</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

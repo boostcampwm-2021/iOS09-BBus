@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol RefreshButtonDelegate: AnyObject {
+    func buttonTapped()
+}
+
 class RefreshableView: UIView {
 
     lazy var refreshButton = RefreshButton()

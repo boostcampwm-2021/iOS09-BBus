@@ -8,11 +8,12 @@
 import UIKit
 import Combine
 
-final class AlarmSettingViewController: UIViewController {
-
+final class AlarmSettingViewController: UIViewController, BaseViewControllerType {
+    
     weak var coordinator: AlarmSettingCoordinator?
-    private lazy var alarmSettingView = AlarmSettingView()
     private let viewModel: AlarmSettingViewModel?
+    private lazy var alarmSettingView = AlarmSettingView()
+    
     private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: AlarmSettingViewModel) {
@@ -27,12 +28,9 @@ final class AlarmSettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         
         self.configureColor()
-        self.configureLayout()
-        self.configureDelegate()
-        
-        self.binding()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +47,7 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - Configure
-    private func configureLayout() {
+    func configureLayout() {
         self.view.addSubviews(self.alarmSettingView)
 
         NSLayoutConstraint.activate([
@@ -60,17 +58,16 @@ final class AlarmSettingViewController: UIViewController {
         ])
     }
 
-    private func configureDelegate() {
+    func configureDelegate() {
         self.alarmSettingView.configureDelegate(self)
     }
 
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
-        self.alarmSettingView.navigationBar.configureTintColor(color: BBusColor.black)
-        self.alarmSettingView.navigationBar.configureAlpha(alpha: 1)
+        self.alarmSettingView.configureColor(color: BBusColor.black)
     }
     
-    private func binding() {
+    func bindAll() {
         self.bindBusArriveInfos()
         self.bindBusStationInfos()
         self.bindErrorMessage()
@@ -96,7 +93,7 @@ final class AlarmSettingViewController: UIViewController {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
                        let stationName = infos.first?.name {
-                        self?.alarmSettingView.navigationBar.configureTitle(busName: viewModel.busName,
+                        self?.alarmSettingView.configureTitle(busName: viewModel.busName,
                                                                  stationName: stationName,
                                                                  routeType: viewModel.routeType)
                     }
@@ -127,6 +124,10 @@ final class AlarmSettingViewController: UIViewController {
                 self?.alarmSettingView.stopLoader()
             })
             .store(in: &self.cancellables)
+    }
+    
+    func refresh() {
+        self.viewModel?.refresh()
     }
     
     private func alarmSettingAlert(message: String) {
@@ -311,10 +312,10 @@ extension AlarmSettingViewController: BackButtonDelegate {
     }
 }
 
-// MARK: - Delegate : RefreshButton
+// MARK: - Delegate: RefreshButton
 extension AlarmSettingViewController: RefreshButtonDelegate {
     func buttonTapped() {
-        self.viewModel?.refresh()
+        self.refresh()
     }
 }
 

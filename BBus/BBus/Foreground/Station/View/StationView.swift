@@ -35,16 +35,45 @@ final class StationView: NavigatableView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
+    }()
+    private lazy var customNavigationBar: CustomNavigationBar = {
+        let bar = CustomNavigationBar()
+        bar.configureTintColor(color: BBusColor.white)
+        if let bbusGray = BBusColor.bbusGray {
+            bar.configureBackgroundColor(color: bbusGray)
+        }
+        bar.configureAlpha(alpha: 0)
+        return bar
+    }()
+    
+    private lazy var refreshButton: ThrottleButton = {
+        let radius: CGFloat = 25
+
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.darkGray
+        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+//            self?.viewModel?.refresh()
+        }
+        return button
     }()
 
     convenience init() {
         self.init(frame: CGRect())
         
+        self.configureColor()
         self.configureLayout()
     }
 
     // MARK: - Configure
+    private func configureColor() {
+        self.backgroundColor = BBusColor.white
+    }
+    
     override func configureLayout() {
         let half: CGFloat = 0.5
         
@@ -98,7 +127,7 @@ final class StationView: NavigatableView {
         super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UIScrollViewDelegate & RefreshButtonDelegate & BackButtonDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UIScrollViewDelegate & BackButtonDelegate & RefreshButtonDelegate) {
         self.stationBodyCollectionView.delegate = delegate
         self.stationBodyCollectionView.dataSource = delegate
         self.stationScrollView.delegate = delegate
@@ -146,5 +175,9 @@ final class StationView: NavigatableView {
     func stopLoader() {
         self.loader.isHidden = true
         self.loader.stopAnimating()
+    }
+    
+    func configureNavigationAlpha(alpha: CGFloat) {
+        self.customNavigationBar.configureAlpha(alpha: alpha)
     }
 }

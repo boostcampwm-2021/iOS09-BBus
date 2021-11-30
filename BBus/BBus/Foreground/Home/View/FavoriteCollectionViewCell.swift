@@ -24,6 +24,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
     class var height: CGFloat { return 70 }

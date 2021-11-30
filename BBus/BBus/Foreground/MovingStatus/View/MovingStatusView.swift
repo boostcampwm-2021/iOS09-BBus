@@ -45,6 +45,13 @@ final class MovingStatusView: RefreshableView {
             }), for: .touchUpInside)
         }
     }
+    private weak var refreshButtonDelegate: RefreshButtonDelegate? {
+        didSet {
+            self.refreshButton.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+                self?.refreshButtonDelegate?.buttonTapped()
+            }
+        }
+    }
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
@@ -129,8 +136,22 @@ final class MovingStatusView: RefreshableView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
+    private lazy var refreshButton: ThrottleButton = {
+        let radius: CGFloat = 25
+
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
+        return button
+    }()
+    private var busTag: MovingStatusBusTagView?
+    private var color: UIColor?
+    private var busIcon: UIImage?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -272,7 +293,7 @@ final class MovingStatusView: RefreshableView {
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: refreshBottomInterval)
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshBottomInterval)
         ])
     }
     
@@ -303,6 +324,31 @@ final class MovingStatusView: RefreshableView {
         return busTag
     }
 
+    func configureColorAndBusIcon(type: RouteType) {
+        switch type {
+        case .mainLine:
+            self.color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBooduckBus
+        case .broadArea:
+            self.color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBooduckBus
+        case .customized:
+            self.color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBooduckBus
+        case .circulation:
+            self.color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBooduckBus
+        case .lateNight:
+            self.color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBooduckBus
+        case .localLine:
+            self.color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBooduckBus
+        }
+        
+        self.configureColor(to: self.color)
+    }
+    
     func configureColor(to color: UIColor?) {
         self.bottomIndicatorButton.backgroundColor = color
         self.busNumberLabel.textColor = color
@@ -331,6 +377,22 @@ final class MovingStatusView: RefreshableView {
 
         self.bottomIndicatorLabel.text = headerInfoResult
         self.alarmStatusLabel.text = headerInfoResult
+    }
+    
+    func configureBusTag(bus: BoardedBus? = nil) {
+        self.busTag?.removeFromSuperview()
+
+        if let bus = bus {
+            self.busTag = self.createBusTag(location: bus.location,
+                                                             color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: bus.remainStation)
+        }
+        else {
+            self.busTag = self.createBusTag(color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: nil)
+        }
     }
 
     func reload() {

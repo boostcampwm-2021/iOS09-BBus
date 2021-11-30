@@ -5,23 +5,22 @@
 //  Created by 김태훈 on 2021/11/22.
 //
 
-import Foundation
 import UIKit
 import Combine
-import CoreLocation
 
 final class GetOnAlarmController {
     
     static private let alarmIdentifier: String = "GetOnAlarm"
 
-    static let shared = GetOnAlarmController()
+    static let shared = GetOnAlarmController(alarmCenter: AlarmCenter())
     
+    private let alarmCenter: AlarmManagable
     private var cancellables: Set<AnyCancellable>
-    private var locationManager: CLLocationManager?
 
     @Published private(set) var viewModel: GetOnAlarmViewModel?
     
-    private init() {
+    private init(alarmCenter: AlarmManagable) {
+        self.alarmCenter = alarmCenter
         self.cancellables = []
     }
 
@@ -49,23 +48,14 @@ final class GetOnAlarmController {
             self.viewModel = GetOnAlarmViewModel(usecase: usecase, currentStatus: getOnAlarmStatus)
             self.viewModel?.fetch()
             self.binding()
-            self.sendRequestAuthorization()
-            self.configureLocationManager()
+            self.alarmCenter.configurePermission()
             return .success
         }
     }
-
+    
     func stop() {
         self.viewModel = nil
         self.cancellables = []
-        self.locationManager = nil
-    }
-    
-    private func configureLocationManager() {
-        self.locationManager = CLLocationManager()
-        self.locationManager?.requestAlwaysAuthorization()
-        self.locationManager?.allowsBackgroundLocationUpdates = true
-        self.locationManager?.startUpdatingLocation()
     }
     
     private func binding() {
@@ -81,7 +71,9 @@ final class GetOnAlarmController {
                 if status == .oneStationLeft {
                     self?.stop()
                 }
-                self?.pushGetOnAlarm(title: "승차 알람", message: message)
+                self?.alarmCenter.pushAlarm(in: Self.alarmIdentifier,
+                                            title: "승차 알람",
+                                            message: message)
             })
             .store(in: &self.cancellables)
     }
@@ -90,28 +82,12 @@ final class GetOnAlarmController {
         self.viewModel?.$networkErrorMessage
             .sink(receiveValue: { [weak self] content in
                 guard let content = content else { return }
-                self?.pushGetOnAlarm(title: content.title, message: content.body)
+                self?.alarmCenter.pushAlarm(in: Self.alarmIdentifier,
+                                            title: content.title,
+                                            message: content.body)
                 self?.stop()
             })
             .store(in: &self.cancellables)
-    }
-    
-    private func sendRequestAuthorization() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
-            if let error = error {
-                print(error)
-            }
-        })
-    }
-    
-    private func pushGetOnAlarm(title: String, message: String) {
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = message
-        content.badge = Int(truncating: content.badge ?? 0) + 1 as NSNumber
-        let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 
     private func isSameAlarm(targetOrd: Int, vehicleId: Int) -> Bool {

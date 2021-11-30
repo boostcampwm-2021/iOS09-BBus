@@ -8,22 +8,13 @@
 import UIKit
 import Combine
 
-final class SearchViewController: UIViewController {
-
+final class SearchViewController: UIViewController, BaseViewControllerType {
+    
     weak var coordinator: SearchCoordinator?
-    private lazy var searchView = SearchView()
     private let viewModel: SearchViewModel?
+    private lazy var searchView = SearchView()
+    
     private var cancellables: Set<AnyCancellable> = []
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.configureLayout()
-        self.configureUI()
-        self.configureDelegate()
-        self.binding()
-        self.searchView.configureInitialTabStatus(type: .bus)
-    }
 
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -34,14 +25,17 @@ final class SearchViewController: UIViewController {
         self.viewModel = nil
         super.init(coder: coder)
     }
-
-    // MARK: - Configuration
-    private func configureDelegate() {
-        self.searchView.configureBackButtonDelegate(self)
-        self.searchView.configureDelegate(self)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.baseViewDidLoad()
+        
+        self.configureColor()
+        self.searchView.configureInitialTabStatus(type: .bus)
     }
 
-    private func configureLayout() {
+    // MARK: - Configuration
+    func configureLayout() {
         self.view.addSubviews(self.searchView)
         
         NSLayoutConstraint.activate([
@@ -51,12 +45,24 @@ final class SearchViewController: UIViewController {
             self.searchView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
+    
+    func configureDelegate() {
+        self.searchView.configureBackButtonDelegate(self)
+        self.searchView.configureDelegate(self)
+    }
+    
+    func refresh() { }
+    
+    func bindAll() {
+        self.bindSearchResults()
+        self.bindNetworkError()
+    }
 
-    private func configureUI() {
+    private func configureColor() {
         self.view.backgroundColor = BBusColor.white
     }
     
-    private func binding() {
+    private func bindSearchResults() {
         self.viewModel?.$searchResults
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] response in
@@ -67,7 +73,9 @@ final class SearchViewController: UIViewController {
                 self?.searchView.reload()
             })
             .store(in: &self.cancellables)
-        
+    }
+    
+    private func bindNetworkError() {
         self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
