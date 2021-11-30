@@ -49,6 +49,7 @@
 		4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */; };
 		4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		4A3B6C502755DF2400BBC498 /* AlarmCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */; };
 		4A412028274E34430083D691 /* BusRouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A412027274E34430083D691 /* BusRouteModel.swift */; };
 		4A5100332754CDB100754B36 /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
 		4A5100352754CE1500754B36 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100342754CE1500754B36 /* BaseViewController.swift */; };
@@ -208,6 +209,7 @@
 		4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A38E20627463FF7003A9D10 /* BBusAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIError.swift; sourceTree = "<group>"; };
 		4A38E20827464015003A9D10 /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
+		4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCenter.swift; sourceTree = "<group>"; };
 		4A412027274E34430083D691 /* BusRouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteModel.swift; sourceTree = "<group>"; };
 		4A5100322754CDB100754B36 /* BaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUseCase.swift; sourceTree = "<group>"; };
 		4A5100342754CE1500754B36 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 		047C30FF273A06980075EA14 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				4A3B6C4E2755DF0400BBC498 /* DeviceConfig */,
 				875F1AAE2755BD77003F5BB1 /* UseCase */,
 				049375A9273B9F200061ACDA /* DTO */,
 				049375A4273B9C970061ACDA /* Resource */,
@@ -406,6 +409,14 @@
 				4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */,
 			);
 			path = CustomView;
+			sourceTree = "<group>";
+		};
+		4A3B6C4E2755DF0400BBC498 /* DeviceConfig */ = {
+			isa = PBXGroup;
+			children = (
+				4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */,
+			);
+			path = DeviceConfig;
 			sourceTree = "<group>";
 		};
 		4A5100312754CD5800754B36 /* Base */ = {
@@ -1163,6 +1174,7 @@
 				87A5556E2728116400A9B5E3 /* SceneDelegate.swift in Sources */,
 				04C6D6692734B18A00D41678 /* MovingStatusTableViewCell.swift in Sources */,
 				87359B8D27311BF100F461A7 /* BusTagView.swift in Sources */,
+				4A3B6C502755DF2400BBC498 /* AlarmCenter.swift in Sources */,
 				4A17CED72733A754007B1646 /* SimpleCollectionHeaderView.swift in Sources */,
 				047C30FE273A05A60075EA14 /* BBusRouteType.swift in Sources */,
 				4ACA51E5272FCD9C00EC0531 /* HomeAPIUseCase.swift in Sources */,

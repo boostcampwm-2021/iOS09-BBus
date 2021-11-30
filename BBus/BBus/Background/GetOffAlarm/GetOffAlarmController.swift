@@ -7,14 +7,18 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
-final class GetOffAlarmController: NSObject {
+final class GetOffAlarmController {
 
-    static let shared = GetOffAlarmController()
+    static let shared = GetOffAlarmController(alarmCenter: AlarmCenter())
 
     @Published private(set) var viewModel: GetOffAlarmViewModel?
+    private let alarmCenter: AlarmDetailConfigurable
 
-    private override init() { }
+    private init(alarmCenter: AlarmDetailConfigurable) {
+        self.alarmCenter = alarmCenter
+    }
 
     func start(targetOrd: Int, busRouteId: Int, arsId: String) -> AlarmStartResult {
         if let viewModel = viewModel {
@@ -32,5 +36,9 @@ final class GetOffAlarmController: NSObject {
     func stop() {
         self.viewModel = nil
     }
-
+    
+    func configureAlarmPermission(_ delegate: CLLocationManagerDelegate) {
+        self.alarmCenter.configurePermission()
+        self.alarmCenter.configureLocationDetail(delegate)
+    }
 }
