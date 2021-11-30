@@ -8,45 +8,19 @@
 import UIKit
 import Combine
 
-final class StationViewController: UIViewController {
+final class StationViewController: UIViewController, BaseViewControllerType {
     
-    @Published private var stationBusInfoHeight: CGFloat?
+    weak var coordinator: StationCoordinator?
+    private let viewModel: StationViewModel?
+    private lazy var stationView = StationView()
+    
+    private var cancellables: Set<AnyCancellable> = []
+    private var collectionHeightConstraint: NSLayoutConstraint?
     private var collectionViewMinHeight: CGFloat {
         let twice: CGFloat = 2
         return self.view.frame.height - (StationHeaderView.headerHeight*twice)
     }
-    weak var coordinator: StationCoordinator?
-    private let viewModel: StationViewModel?
-
-    private lazy var customNavigationBar: CustomNavigationBar = {
-        let bar = CustomNavigationBar()
-        bar.configureTintColor(color: BBusColor.white)
-        if let bbusGray = BBusColor.bbusGray {
-            bar.configureBackgroundColor(color: bbusGray)
-        }
-        bar.configureAlpha(alpha: 0)
-        return bar
-    }()
-    private lazy var stationView: StationView = {
-        let view = StationView()
-        view.backgroundColor = BBusColor.white
-        return view
-    }()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.refresh()
-        }
-        return button
-    }()
-    private var collectionHeightConstraint: NSLayoutConstraint?
-    private var cancellables: Set<AnyCancellable> = []
+    @Published private var stationBusInfoHeight: CGFloat?
     
     init(viewModel: StationViewModel) {
         self.viewModel = viewModel
@@ -60,18 +34,15 @@ final class StationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.binding()
-        self.configureColor()
-        self.configureLayout()
-        self.configureDelegate()
+        self.baseViewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.baseViewWillAppear()
+        
         self.stationView.startLoader()
         self.viewModel?.configureObserver()
-        self.viewModel?.refresh()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,12 +50,9 @@ final class StationViewController: UIViewController {
         self.viewModel?.cancelObserver()
     }
 
-    // MARK: - Configure
-    private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.stationView, self.customNavigationBar, self.refreshButton)
+    // MARK: - Configuration
+    func configureLayout() {
+        self.view.addSubviews(self.stationView)
 
         NSLayoutConstraint.activate([
             self.stationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -92,36 +60,35 @@ final class StationViewController: UIViewController {
             self.stationView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.stationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
-
-        NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-        
-        self.stationBusInfoHeight = nil
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
-    private func configureDelegate() {
+    func configureDelegate() {
         self.stationView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
     
-    private func binding() {
+    func refresh() {
+        self.viewModel?.refresh()
+    }
+    
+    func bindAll() {
+        self.bindStationBusInfoHeight()
+        self.bindStationInfo()
+        self.bindNextStation()
+        self.bindError()
+        self.bindStopLoader()
+        self.bindBusKeys()
+    }
+    
+    private func bindStationBusInfoHeight() {
         self.$stationBusInfoHeight
             .receive(on: DispatchQueue.main)
             .sink() { [weak self] height in
                 self?.collectionHeightConstraint?.isActive = false
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
-        
+    }
+    
+    private func bindStationInfo() {
         self.viewModel?.$stationInfo
             .receive(on: DispatchQueue.main)
             .compactMap { $0 }
@@ -129,7 +96,9 @@ final class StationViewController: UIViewController {
                 self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
             })
             .store(in: &self.cancellables)
-        
+    }
+    
+    private func bindNextStation() {
         self.viewModel?.$nextStation
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] nextStation in
@@ -137,7 +106,9 @@ final class StationViewController: UIViewController {
                 self?.stationView.configureNextStation(direction: nextStation)
             })
             .store(in: &self.cancellables)
-        
+    }
+    
+    private func bindError() {
         self.viewModel?.$error
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
@@ -151,7 +122,9 @@ final class StationViewController: UIViewController {
                 }
             })
             .store(in: &self.cancellables)
-
+    }
+    
+    private func bindStopLoader() {
         self.viewModel?.$stopLoader
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isStop in
@@ -160,7 +133,9 @@ final class StationViewController: UIViewController {
                 }
             })
             .store(in: &self.cancellables)
-        
+    }
+    
+    private func bindBusKeys() {
         guard let viewModel = viewModel else { return }
         viewModel.$busKeys
             .combineLatest(viewModel.$stationInfo.compactMap{$0}, viewModel.$favoriteItems.compactMap{$0}.first())
@@ -176,10 +151,6 @@ final class StationViewController: UIViewController {
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
-    }
-
-    private func configureColor() {
-        self.view.backgroundColor = BBusColor.bbusGray
     }
     
     private func noInfoAlert() {
@@ -329,10 +300,10 @@ extension StationViewController: UIScrollViewDelegate {
 //        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
         let baseLineContentOffset = StationHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
-            self.customNavigationBar.configureAlpha(alpha: 1)
+            self.stationView.configureNavigationAlpha(alpha: 1)
         }
         else {
-            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+            self.stationView.configureNavigationAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
         }
     }
 

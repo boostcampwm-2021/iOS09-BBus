@@ -10,14 +10,12 @@ import Combine
 
 final class HomeViewController: UIViewController, BaseViewControllerType {
 
-    private var lastContentOffset: CGFloat = 0
-
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
-
     private lazy var homeView = HomeView()
-    private let statusBarHeight: CGFloat?
-    
+
+    private let statusBarHeight: CGFloat?    
+    private var lastContentOffset: CGFloat = 0
     private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: HomeViewModel, statusBarHegiht: CGFloat?) {
@@ -42,7 +40,6 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.loadHomeData()
         self.baseViewWillAppear()
         
         self.viewModel?.configureObserver()
@@ -50,6 +47,7 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.viewModel?.cancelObserver()
     }
 
