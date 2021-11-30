@@ -29,6 +29,7 @@ final class BusRouteView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
