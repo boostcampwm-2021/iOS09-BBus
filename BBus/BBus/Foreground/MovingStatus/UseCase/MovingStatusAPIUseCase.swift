@@ -8,12 +8,6 @@
 import Foundation
 import Combine
 
-protocol MovingStatusAPIUsable: BaseUseCase {
-    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error>
-    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Error>
-    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Error>
-}
-
 final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
 
     private let useCases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
