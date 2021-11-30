@@ -16,6 +16,7 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     
     private var cancellables: Set<AnyCancellable> = []
     private var lastContentOffset: CGFloat = 0
+    private var scrollDirection: Bool = false
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
