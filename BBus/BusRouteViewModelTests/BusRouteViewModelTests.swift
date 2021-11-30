@@ -158,6 +158,39 @@ class BusRouteViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 2)
     }
+    
+    func test_bindBusesPosInfo_수신_성공() throws {
+        // given
+        guard let viewModel = self.busRouteViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        let expectation = XCTestExpectation()
+        let bus1 = BusPosInfo(location: CGFloat(21), number: "5255", congestion: .normal, islower: true)
+        let bus2 = BusPosInfo(location: CGFloat(27) + CGFloat(("0.017" as NSString).floatValue)/CGFloat(("0.378" as NSString).floatValue), number: "5254", congestion: .normal, islower: true)
+        let bus3 = BusPosInfo(location: CGFloat(31) + CGFloat(0.022)/CGFloat(0.41), number: "5252", congestion: .normal, islower: true)
+        let answerBuses = [bus1, bus2, bus3]
+        
+        // when
+        viewModel.$buses
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
+            .sink { completion in
+                // then
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { buses in
+                // then
+                XCTAssertEqual(buses[0].number, answerBuses[0].number)
+                XCTAssertEqual(buses[1].location, answerBuses[1].location)
+                XCTAssertEqual(buses[2].congestion, answerBuses[2].congestion)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 2)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
