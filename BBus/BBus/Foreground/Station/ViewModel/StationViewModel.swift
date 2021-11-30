@@ -36,7 +36,6 @@ final class StationViewModel {
         self.cancellables = []
         self.stopLoader = false
         
-        self.load()
         self.bind()
     }
 
@@ -75,12 +74,14 @@ final class StationViewModel {
         })
     }
     
-    private func load() {
-        self.loadStationInfo(with: self.arsId)
-        self.loadRoute()
+    private func bind() {
+        self.bindStationInfo(with: self.arsId)
+        self.bindBusRouteList()
+        self.bindLoader()
+        self.bindFavoriteItems()
     }
-
-    private func loadStationInfo(with arsId: String) {
+    
+    private func bindStationInfo(with arsId: String) {
         self.apiUseCase.loadStationList()
             .tryMap({ [weak self] stations in
                 return self?.calculateUseCase.findStation(in: stations, with: arsId)
@@ -99,17 +100,12 @@ final class StationViewModel {
             .store(in: &self.cancellables)
     }
     
-    private func loadRoute() {
+    private func bindBusRouteList() {
         self.apiUseCase.loadRoute()
             .catchError({ [weak self] error in
                 self?.error = error
             })
             .assign(to: &self.$busRouteList)
-    }
-    
-    private func bind() {
-        self.bindLoader()
-        self.bindFavoriteItems()
     }
     
     private func bindFavoriteItems() {
