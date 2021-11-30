@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol RefreshButtonDelegate {
-    func buttonTapped()
-}
-
 class RefreshableView: UIView {
 
     lazy var refreshButton = RefreshButton()
