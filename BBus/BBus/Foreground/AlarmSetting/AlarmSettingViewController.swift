@@ -143,6 +143,14 @@ final class AlarmSettingViewController: UIViewController {
         self.viewModel?.$networkError
             .compactMap({$0})
             .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] message in
+                self?.alarmSettingAlert(message: message)
+            })
+            .store(in: &self.cancellables)
+        
+        self.viewModel?.apiUseCase.$networkError
+            .compactMap({$0})
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 self?.networkAlert()
             })
