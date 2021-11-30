@@ -1,5 +1,5 @@
 //
-//  GetStationByUidItemUseCase.swift
+//  GetStationByUidItemUsable.swift
 //  BBus
 //
 //  Created by 이지수 on 2021/11/29.
@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol GetStationByUidItemUseCase {
+protocol GetStationByUidItemUsable {
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error>
 }
 
-extension BBusAPIUseCases: GetStationByUidItemUseCase {
+extension BBusAPIUseCases: GetStationByUidItemUsable {
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error> {
         let param = ["arsId": arsId, "resultType": "json"]
         let fetcher: GetStationByUidItemFetchable = ServiceGetStationByUidItemFetcher(networkService: self.networkService,

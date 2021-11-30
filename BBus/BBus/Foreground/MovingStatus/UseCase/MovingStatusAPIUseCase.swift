@@ -16,10 +16,10 @@ protocol MovingStatusAPIUsable: BaseUseCase {
 
 final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
 
-    private let usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase
+    private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
     @Published var networkError: Error?
 
-    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
+    init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
         self.usecases = usecases
         self.networkError = nil
     }

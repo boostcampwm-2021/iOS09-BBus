@@ -1,5 +1,5 @@
 //
-//  GetFavoriteItemListUseCase.swift
+//  GetFavoriteItemListUsable.swift
 //  BBus
 //
 //  Created by 이지수 on 2021/11/29.
@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol GetFavoriteItemListUseCase {
+protocol GetFavoriteItemListUsable {
     func getFavoriteItemList() -> AnyPublisher<Data, Error>
 }
 
-extension BBusAPIUseCases: GetFavoriteItemListUseCase {
+extension BBusAPIUseCases: GetFavoriteItemListUsable {
     func getFavoriteItemList() -> AnyPublisher<Data, Error> {
         let fetcher: GetFavoriteItemListFetchable = PersistenceGetFavoriteItemListFetcher(persistenceStorage: self.persistenceStorage)
         return fetcher

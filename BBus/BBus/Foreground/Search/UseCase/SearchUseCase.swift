@@ -10,13 +10,13 @@ import Combine
 
 final class SearchAPIUseCase {
     
-    private let usecases: GetRouteListUseCase & GetStationListUseCase
+    private let usecases: GetRouteListUsable & GetStationListUsable
     @Published var routeList: [BusRouteDTO]
     @Published var stationList: [StationDTO]
     @Published var networkError: Error?
     private var cancellables: Set<AnyCancellable>
     
-    init(usecases: GetRouteListUseCase & GetStationListUseCase) {
+    init(usecases: GetRouteListUsable & GetStationListUsable) {
         self.usecases = usecases
         self.routeList = []
         self.stationList = []

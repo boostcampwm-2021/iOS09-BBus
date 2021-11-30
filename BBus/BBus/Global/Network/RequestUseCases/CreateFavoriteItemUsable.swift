@@ -1,5 +1,5 @@
 //
-//  CreateFavoriteItemUseCase.swift
+//  CreateFavoriteItemUsable.swift
 //  BBus
 //
 //  Created by 이지수 on 2021/11/29.
@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol CreateFavoriteItemUseCase {
+protocol CreateFavoriteItemUsable {
     func createFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
-extension BBusAPIUseCases: CreateFavoriteItemUseCase {
+extension BBusAPIUseCases: CreateFavoriteItemUsable {
     func createFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
         let fetcher: CreateFavoriteItemFetchable = PersistenceCreateFavoriteItemFetcher(persistenceStorage: self.persistenceStorage)
         return fetcher

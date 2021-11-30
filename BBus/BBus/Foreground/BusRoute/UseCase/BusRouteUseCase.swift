@@ -16,13 +16,13 @@ protocol BaseBusRouteAPIUsable: BaseUseCase {
 
 final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
 
-    private let usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase
+    private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
     @Published var header: BusRouteDTO?
     @Published var bodys: [StationByRouteListDTO] = []
     @Published var buses: [BusPosByRtidDTO] = []
     @Published var networkError: Error?
 
-    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
+    init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
         self.usecases = usecases
         self.networkError = nil
     }

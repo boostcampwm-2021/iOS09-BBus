@@ -1,5 +1,5 @@
 //
-//  GetStationsByRouteListUseCase.swift
+//  GetStationsByRouteListUsable.swift
 //  BBus
 //
 //  Created by 이지수 on 2021/11/29.
@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol GetStationsByRouteListUseCase {
+protocol GetStationsByRouteListUsable {
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
-extension BBusAPIUseCases: GetStationsByRouteListUseCase {
+extension BBusAPIUseCases: GetStationsByRouteListUsable {
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
         let param = ["busRouteId": busRoutedId, "resultType": "json"]
         let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher(networkService: self.networkService,

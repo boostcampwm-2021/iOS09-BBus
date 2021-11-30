@@ -1,5 +1,5 @@
 //
-//  GetBusPosByRtidUseCase.swift
+//  GetBusPosByRtidUsable.swift
 //  BBus
 //
 //  Created by 이지수 on 2021/11/29.
@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol GetBusPosByRtidUseCase {
+protocol GetBusPosByRtidUsable {
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
-extension BBusAPIUseCases: GetBusPosByRtidUseCase {
+extension BBusAPIUseCases: GetBusPosByRtidUsable {
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error> {
         let param = ["busRouteId": busRoutedId, "resultType": "json"]
         let fetcher: GetBusPosByRtidFetchable = ServiceGetBusPosByRtidFetcher(networkService: self.networkService,

@@ -14,7 +14,7 @@ protocol AlarmSettingAPIUsable: BaseUseCase {
 }
 
 final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
-    typealias AlarmSettingUseCases = GetArrInfoByRouteListUseCase & GetStationsByRouteListUseCase
+    typealias AlarmSettingUseCases = GetArrInfoByRouteListUsable & GetStationsByRouteListUsable
     
     private let useCases: AlarmSettingUseCases
     @Published private(set) var networkError: Error?

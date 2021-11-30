@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class StationUsecase {
-    typealias StationUsecases = GetStationByUidItemUseCase & GetStationListUseCase & CreateFavoriteItemUseCase & DeleteFavoriteItemUseCase & GetFavoriteItemListUseCase & GetRouteListUseCase
+    typealias StationUsecases = GetStationByUidItemUsable & GetStationListUsable & CreateFavoriteItemUsable & DeleteFavoriteItemUsable & GetFavoriteItemListUsable & GetRouteListUsable
     
     private let usecases: StationUsecases
     @Published private(set) var busRouteList: [BusRouteDTO]
