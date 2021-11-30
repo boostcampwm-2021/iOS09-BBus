@@ -16,6 +16,8 @@
 		0446842B27567654007E440A /* HomeAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842A27567654007E440A /* HomeAPIUsable.swift */; };
 		0446842D27567660007E440A /* HomeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842C27567660007E440A /* HomeCalculatable.swift */; };
 		0446842F275676B3007E440A /* BusRouteAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842E275676B3007E440A /* BusRouteAPIUsable.swift */; };
+		04468431275676ED007E440A /* StationAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468430275676ED007E440A /* StationAPIUsable.swift */; };
+		04468433275676F8007E440A /* StationCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468432275676F8007E440A /* StationCalculatable.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -270,6 +272,8 @@
 		0446842A27567654007E440A /* HomeAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIUsable.swift; sourceTree = "<group>"; };
 		0446842C27567660007E440A /* HomeCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalculatable.swift; sourceTree = "<group>"; };
 		0446842E275676B3007E440A /* BusRouteAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteAPIUsable.swift; sourceTree = "<group>"; };
+		04468430275676ED007E440A /* StationAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAPIUsable.swift; sourceTree = "<group>"; };
+		04468432275676F8007E440A /* StationCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCalculatable.swift; sourceTree = "<group>"; };
 		0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculateUseCase.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -866,6 +870,8 @@
 		4ACA5210272FCE6E00EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				04468430275676ED007E440A /* StationAPIUsable.swift */,
+				04468432275676F8007E440A /* StationCalculatable.swift */,
 				4ACA5214272FCE8A00EC0531 /* StationAPIUseCase.swift */,
 				04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */,
 			);
@@ -1872,6 +1878,7 @@
 				4A5100372755106A00754B36 /* HomeCalculateUseCase.swift in Sources */,
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
+				04468433275676F8007E440A /* StationCalculatable.swift in Sources */,
 				87038A8A273B96B60078EAE3 /* NetworkService.swift in Sources */,
 				87B35D0A2754E71F00159791 /* MovingStatusCalculateUseCase.swift in Sources */,
 				4A412028274E34430083D691 /* BusRouteModel.swift in Sources */,
@@ -1900,6 +1907,7 @@
 				87285F5527461DB300CA3BA9 /* UINavigationControllerExtension.swift in Sources */,
 				4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */,
 				4ACA522F272FCEDF00EC0531 /* MovingStatusViewModel.swift in Sources */,
+				04468431275676ED007E440A /* StationAPIUsable.swift in Sources */,
 				4AA294B3273C111C008E5497 /* GetFavoriteItemListFetcher.swift in Sources */,
 				4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */,
 			);
