@@ -110,6 +110,7 @@
 		4ADB29D4274E18BB00554A4E /* GetOffAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D3274E18BB00554A4E /* GetOffAlarmController.swift */; };
 		4ADB29D7274E198900554A4E /* GetOffAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D6274E198900554A4E /* GetOffAlarmViewModel.swift */; };
 		4ADB29DA274E1A5F00554A4E /* GetOffAlarmStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D9274E1A5F00554A4E /* GetOffAlarmStatus.swift */; };
+		4AF1E0602755BE2400DE51C8 /* NavigatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */; };
 		87038A85273B90D10078EAE3 /* RequestUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A84273B90D10078EAE3 /* RequestUsecases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
@@ -250,6 +251,7 @@
 		4ADB29D3274E18BB00554A4E /* GetOffAlarmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmController.swift; sourceTree = "<group>"; };
 		4ADB29D6274E198900554A4E /* GetOffAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmViewModel.swift; sourceTree = "<group>"; };
 		4ADB29D9274E1A5F00554A4E /* GetOffAlarmStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmStatus.swift; sourceTree = "<group>"; };
+		4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableView.swift; sourceTree = "<group>"; };
 		87038A81273B90A50078EAE3 /* BBusAPIUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIUsecases.swift; sourceTree = "<group>"; };
 		87038A84273B90D10078EAE3 /* RequestUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestUsecases.swift; sourceTree = "<group>"; };
 		87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArrInfoByRouteListFetcher.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				873578822732545D00CC8ECC /* CustomNavigationBar.swift */,
 				4A510038275517F800754B36 /* RefreshableView.swift */,
 				4A51003A2755180400754B36 /* RefreshButton.swift */,
+				4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				4ACA5239272FCF3200EC0531 /* StationViewController.swift in Sources */,
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
 				4A5100332754CDB100754B36 /* BaseUseCase.swift in Sources */,
+				4AF1E0602755BE2400DE51C8 /* NavigatableView.swift in Sources */,
 				4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift in Sources */,
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */,
