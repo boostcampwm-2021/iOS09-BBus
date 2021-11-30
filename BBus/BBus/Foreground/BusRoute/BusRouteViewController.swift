@@ -9,18 +9,7 @@ import UIKit
 import Combine
 
 final class BusRouteViewController: UIViewController, BaseViewControllerType {
-    func refresh() {
-        self.viewModel?.refreshBusPos()
-    }
     
-    func bindAll() {
-        self.bindLoader()
-        self.bindBusRouteHeaderResult()
-        self.bindBusRouteBodyResult()
-        self.bindBusesPosInfo()
-        self.bindNetworkError()
-    }
-
     weak var coordinator: BusRouteCoordinator?
     private let viewModel: BusRouteViewModel?
     private lazy var busRouteView = BusRouteView()
@@ -72,6 +61,18 @@ final class BusRouteViewController: UIViewController, BaseViewControllerType {
 
     func configureDelegate() {
         self.busRouteView.configureDelegate(self)
+    }
+    
+    func refresh() {
+        self.viewModel?.refreshBusPos()
+    }
+    
+    func bindAll() {
+        self.bindLoader()
+        self.bindBusRouteHeaderResult()
+        self.bindBusRouteBodyResult()
+        self.bindBusesPosInfo()
+        self.bindNetworkError()
     }
 
     private func configureBaseColor() {
