@@ -45,6 +45,13 @@ final class MovingStatusView: UIView {
             }), for: .touchUpInside)
         }
     }
+    private weak var refreshButtonDelegate: RefreshButtonDelegate? {
+        didSet {
+            self.refreshButton.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+                self?.refreshButtonDelegate?.buttonTapped()
+            }
+        }
+    }
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
@@ -131,6 +138,19 @@ final class MovingStatusView: UIView {
         let loader = UIActivityIndicatorView(style: .large)
         return loader
     }()
+    private lazy var refreshButton: ThrottleButton = {
+        let radius: CGFloat = 25
+
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
+        return button
+    }()
+    private var busTag: MovingStatusBusTagView?
+    private var color: UIColor?
+    private var busIcon: UIImage?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -152,7 +172,7 @@ final class MovingStatusView: UIView {
 
     // MARK: - Configure
     private func configureLayout() {
-        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView, self.loader)
+        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView, self.loader, self.refreshButton)
         
         NSLayoutConstraint.activate([
             self.bottomIndicatorButton.topAnchor.constraint(equalTo: self.topAnchor),
@@ -263,14 +283,25 @@ final class MovingStatusView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+        
+        let refreshButtonWidthAnchor: CGFloat = 50
+        let refreshBottomInterval: CGFloat = -MovingStatusView.endAlarmViewHeight
+        let refreshTrailingInterval: CGFloat = -16
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshBottomInterval)
+        ])
     }
     
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate & RefreshButtonDelegate) {
         self.stationsTableView.delegate = delegate
         self.stationsTableView.dataSource = delegate
         self.bottomIndicatorButtondelegate = delegate
         self.foldButtonDelegate = delegate
         self.endAlarmButtonDelegate = delegate
+        self.refreshButtonDelegate = delegate
     }
     
     func createBusTag(location: CGFloat = 0, color: UIColor? = BBusColor.gray, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) -> MovingStatusBusTagView {
@@ -291,6 +322,31 @@ final class MovingStatusView: UIView {
         return busTag
     }
 
+    func configureColorAndBusIcon(type: RouteType) {
+        switch type {
+        case .mainLine:
+            self.color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBooduckBus
+        case .broadArea:
+            self.color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBooduckBus
+        case .customized:
+            self.color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBooduckBus
+        case .circulation:
+            self.color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBooduckBus
+        case .lateNight:
+            self.color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBooduckBus
+        case .localLine:
+            self.color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBooduckBus
+        }
+        
+        self.configureColor(to: self.color)
+    }
+    
     func configureColor(to color: UIColor?) {
         self.bottomIndicatorButton.backgroundColor = color
         self.busNumberLabel.textColor = color
@@ -319,6 +375,22 @@ final class MovingStatusView: UIView {
 
         self.bottomIndicatorLabel.text = headerInfoResult
         self.alarmStatusLabel.text = headerInfoResult
+    }
+    
+    func configureBusTag(bus: BoardedBus? = nil) {
+        self.busTag?.removeFromSuperview()
+
+        if let bus = bus {
+            self.busTag = self.createBusTag(location: bus.location,
+                                                             color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: bus.remainStation)
+        }
+        else {
+            self.busTag = self.createBusTag(color: self.color,
+                                                             busIcon: self.busIcon,
+                                                             remainStation: nil)
+        }
     }
 
     func reload() {
