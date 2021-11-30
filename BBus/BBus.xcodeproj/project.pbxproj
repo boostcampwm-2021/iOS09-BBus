@@ -13,6 +13,8 @@
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
 		04468427275675F1007E440A /* SearchAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468426275675F1007E440A /* SearchAPIUsable.swift */; };
 		044684292756760A007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
+		0446842B27567654007E440A /* HomeAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842A27567654007E440A /* HomeAPIUsable.swift */; };
+		0446842D27567660007E440A /* HomeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842C27567660007E440A /* HomeCalculatable.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -264,6 +266,8 @@
 		04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusFoldUnfoldDelegate.swift; sourceTree = "<group>"; };
 		04468426275675F1007E440A /* SearchAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIUsable.swift; sourceTree = "<group>"; };
 		044684282756760A007E440A /* SearchCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculatable.swift; sourceTree = "<group>"; };
+		0446842A27567654007E440A /* HomeAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIUsable.swift; sourceTree = "<group>"; };
+		0446842C27567660007E440A /* HomeCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalculatable.swift; sourceTree = "<group>"; };
 		0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculateUseCase.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -743,6 +747,8 @@
 		4ACA51E0272FCD7100EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				0446842A27567654007E440A /* HomeAPIUsable.swift */,
+				0446842C27567660007E440A /* HomeCalculatable.swift */,
 				4ACA51E4272FCD9C00EC0531 /* HomeAPIUseCase.swift */,
 				4A5100362755106A00754B36 /* HomeCalculateUseCase.swift */,
 			);
@@ -1755,6 +1761,7 @@
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */,
 				4A5182C127551F6D001EA530 /* DeleteFavoriteItemUsable.swift in Sources */,
+				0446842D27567660007E440A /* HomeCalculatable.swift in Sources */,
 				87038A8C273B96DF0078EAE3 /* PersistenceStorage.swift in Sources */,
 				4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,
@@ -1804,6 +1811,7 @@
 				87A555702728116400A9B5E3 /* HomeViewController.swift in Sources */,
 				04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */,
 				4A992C4727311F1C0006FB8C /* FavoriteCollectionHeaderView.swift in Sources */,
+				0446842B27567654007E440A /* HomeAPIUsable.swift in Sources */,
 				4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */,
 				049375B7273BE08F0061ACDA /* BusPosByRtidDTO.swift in Sources */,
 				4A5182BB27551F28001EA530 /* GetStationListUsable.swift in Sources */,
