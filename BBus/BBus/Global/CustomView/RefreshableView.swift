@@ -15,17 +15,7 @@ class RefreshableView: UIView {
 
     internal lazy var refreshButton = RefreshButton()
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.configureLayout()
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.configureLayout()
-    }
-
-    private func configureLayout() {
+    func configureLayout() {
         self.addSubviews(self.refreshButton)
 
         let refreshTrailingBottomInterval: CGFloat = -16

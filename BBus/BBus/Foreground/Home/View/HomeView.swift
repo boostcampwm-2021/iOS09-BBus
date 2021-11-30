@@ -38,8 +38,9 @@ final class HomeView: RefreshableView {
     }
 
     // MARK: - Configuration
-    func configureLayout() {
-        self.addSubviews(self.favoriteCollectionView, self.emptyFavoriteNotice, self.navigationView, self.refreshButton)
+    override func configureLayout() {
+
+        self.addSubviews(self.favoriteCollectionView, self.emptyFavoriteNotice, self.navigationView)
 
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
         self.favoriteCollectionView.backgroundColor = BBusColor.bbusGray6
@@ -63,6 +64,8 @@ final class HomeView: RefreshableView {
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+
+        super.configureLayout()
     }
 
     func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & HomeSearchButtonDelegate & RefreshButtonDelegate) {
