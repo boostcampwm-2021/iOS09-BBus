@@ -11,17 +11,3 @@ import Combine
 protocol GetFavoriteItemListUsable {
     func getFavoriteItemList() -> AnyPublisher<Data, Error>
 }
-
-extension BBusAPIUseCases: GetFavoriteItemListUsable {
-    func getFavoriteItemList() -> AnyPublisher<Data, Error> {
-        let fetcher: GetFavoriteItemListFetchable = PersistenceGetFavoriteItemListFetcher(persistenceStorage: self.persistenceStorage)
-        return fetcher
-            .fetch()
-            .tryCatch({ error -> AnyPublisher<Data, Error> in
-                return fetcher
-                    .fetch()
-            })
-            .retry(TokenManager.maxTokenCount)
-            .eraseToAnyPublisher()
-    }
-}
