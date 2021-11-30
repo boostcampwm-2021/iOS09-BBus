@@ -1,5 +1,5 @@
 //
-//  Persistent.swift
+//  PersistentStorage.swift
 //  BBus
 //
 //  Created by Kang Minsang on 2021/11/10.
@@ -8,17 +8,22 @@
 import Foundation
 import Combine
 
-final class Persistent {
+protocol PersistentStorageProtocol {
+    func create<T: Codable>(key: String, param: T) -> AnyPublisher<Data, Error>
+    func getFromUserDefaults(key: String) -> AnyPublisher<Data, Error>
+    func get(file: String, type: String) -> AnyPublisher<Data, Error>
+    func delete<T: Codable & Equatable>(key: String, param: T) -> AnyPublisher<Data, Error>
+}
+
+final class PersistenceStorage: PersistentStorageProtocol {
     
     enum PersistentError: Error {
         case noneError, decodingError, encodingError, urlError
     }
     
-    static let shared = Persistent()
-    
-    private init() { }
+    static let shared = PersistenceStorage()
 
-    func create<T: Codable>(key: String, param: T) -> AnyPublisher<Data?, Error> {
+    func create<T: Codable>(key: String, param: T) -> AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)
         DispatchQueue.global().async { [weak publisher] in
             var items: [T] = []
@@ -43,10 +48,10 @@ final class Persistent {
                 publisher?.send(completion: .failure(PersistentError.encodingError))
             }
         }
-        return publisher.eraseToAnyPublisher()
+        return publisher.compactMap({$0}).eraseToAnyPublisher()
     }
 
-    func getFromUserDefaults(key: String) -> AnyPublisher<Data?, Error> {
+    func getFromUserDefaults(key: String) -> AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)
         DispatchQueue.global().async { [weak publisher] in
             if let data = UserDefaults.standard.data(forKey: key) {
@@ -61,10 +66,10 @@ final class Persistent {
                 }
             }
         }
-        return publisher.eraseToAnyPublisher()
+        return publisher.compactMap({$0}).eraseToAnyPublisher()
     }
     
-    func get(file: String, type: String) -> AnyPublisher<Data?, Error> {
+    func get(file: String, type: String) -> AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)
         DispatchQueue.global().async { [weak publisher] in
             guard let url = Bundle.main.url(forResource: file, withExtension: type) else {
@@ -77,10 +82,10 @@ final class Persistent {
                 publisher?.send(completion: .failure(PersistentError.noneError))
             }
         }
-        return publisher.eraseToAnyPublisher()
+        return publisher.compactMap({$0}).eraseToAnyPublisher()
     }
 
-    func delete<T: Codable & Equatable>(key: String, param: T) -> AnyPublisher<Data?, Error> {
+    func delete<T: Codable & Equatable>(key: String, param: T) -> AnyPublisher<Data, Error> {
         let publisher = CurrentValueSubject<Data?, Error>(nil)
         DispatchQueue.global().async { [weak publisher] in
             guard let data = UserDefaults.standard.data(forKey: key) else {
@@ -104,7 +109,7 @@ final class Persistent {
                 publisher?.send(completion: .failure(PersistentError.encodingError))
             }
         }
-        return publisher.eraseToAnyPublisher()
+        return publisher.compactMap({$0}).eraseToAnyPublisher()
     }
 }
 

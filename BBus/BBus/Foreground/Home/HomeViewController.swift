@@ -86,7 +86,7 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     }
     
     func refresh() {
-        self.viewModel?.reloadFavorite()
+        self.viewModel?.loadHomeData()
     }
     
     func bindAll() {
@@ -317,6 +317,6 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
 // MARK: - RefreshButtonDelegate: HomeView
 extension HomeViewController: RefreshButtonDelegate {
     func buttonTapped() {
-        self.viewModel?.reloadFavorite()
+        self.viewModel?.loadHomeData()
     }
 }

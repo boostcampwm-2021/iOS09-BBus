@@ -67,9 +67,17 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
             self.navigationWindow.frame.size = CGSize(width: self.navigationWindow.frame.width, height: self.navigationWindow.frame.height - MovingStatusView.bottomIndicatorHeight)
         }
         
-        let apiUseCase = MovingStatusAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
+                                          persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
+                                          requestFactory: RequestFactory())
+        let apiUseCase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let calculateUseCase = MovingStatusCalculateUseCase()
-        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,
+                                              calculateUseCase: calculateUseCase,
+                                              busRouteId: busRouteId,
+                                              fromArsId: fromArsId,
+                                              toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController
@@ -81,9 +89,17 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
     }
 
     func reset(busRouteId: Int, fromArsId: String, toArsId: String) {
-        let apiUseCase = MovingStatusAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
+                                          persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
+                                          requestFactory: RequestFactory())
+        let apiUseCase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let calculateUseCase = MovingStatusCalculateUseCase()
-        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,
+                                              calculateUseCase: calculateUseCase,
+                                              busRouteId: busRouteId,
+                                              fromArsId: fromArsId,
+                                              toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController

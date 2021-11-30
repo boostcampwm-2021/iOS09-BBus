@@ -16,9 +16,9 @@ protocol BaseBusRouteAPIUsable: BaseUseCase {
 
 final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
 
-    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
+    private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
 
-    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
+    init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
         self.usecases = usecases
     }
 

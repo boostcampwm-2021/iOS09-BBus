@@ -18,7 +18,7 @@ protocol StationAPIUsable: BaseUseCase {
 }
 
 final class StationAPIUseCase: StationAPIUsable {
-    typealias StationUsecases = GetStationByUidItemUsecase & GetStationListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetFavoriteItemListUsecase & GetRouteListUsecase
+    typealias StationUsecases = GetStationByUidItemUsable & GetStationListUsable & CreateFavoriteItemUsable & DeleteFavoriteItemUsable & GetFavoriteItemListUsable & GetRouteListUsable
     
     private let usecases: StationUsecases
     private var cancellables: Set<AnyCancellable>

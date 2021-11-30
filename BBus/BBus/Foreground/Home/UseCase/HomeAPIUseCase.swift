@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol HomeAPIUsable: BaseUseCase {
-    typealias HomeUseCases = GetFavoriteItemListUseCase & CreateFavoriteItemUseCase & GetStationListUseCase & GetRouteListUseCase & GetArrInfoByRouteListUseCase
+    typealias HomeUseCases = GetFavoriteItemListUsable & CreateFavoriteItemUsable & GetStationListUsable & GetRouteListUsable & GetArrInfoByRouteListUsable
 
     func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Error>
     func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Error>

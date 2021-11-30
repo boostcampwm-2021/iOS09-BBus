@@ -16,9 +16,9 @@ protocol MovingStatusAPIUsable: BaseUseCase {
 
 final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
 
-    private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
+    private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
 
-    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
+    init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
         self.usecases = usecases
     }
 

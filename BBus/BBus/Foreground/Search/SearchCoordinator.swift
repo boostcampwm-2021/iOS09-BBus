@@ -16,7 +16,11 @@ final class SearchCoordinator: BusRoutePushable, StationPushable {
     }
 
     func start() {
-        let apiUseCase = SearchAPIUseCase(usecases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
+                                          persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
+                                          requestFactory: RequestFactory())
+        let apiUseCase = SearchAPIUseCase(usecases: apiUseCases)
         let calculateUseCase = SearchCalculateUseCase()
         let viewModel = SearchViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase)
         let viewController = SearchViewController(viewModel: viewModel)

@@ -12,9 +12,13 @@ protocol GetRouteInfoItemFetchable {
     func fetch(param: [String: String]) -> AnyPublisher<Data, Error>
 }
 
-struct ServiceGetRouteInfoItemFetcher: GetRouteInfoItemFetchable {
+struct ServiceGetRouteInfoItemFetcher: ServiceFetchable, GetRouteInfoItemFetchable {
+    private(set) var networkService: NetworkServiceProtocol
+    private(set) var tokenManager: TokenManagable
+    private(set) var requestFactory: Requestable
+    
     func fetch(param: [String : String]) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/busRouteInfo/getRouteInfo"
-        return Service.shared.get(url: url, params: param).mapJsonBBusAPIError()
+        return self.fetch(url: url, param: param)
     }
 }

@@ -24,10 +24,6 @@ protocol MovingStatusCalculatable: AverageSectionTimeCalculatable {
 final class MovingStatusCalculateUseCase: MovingStatusCalculatable {
 
     func filteredBuses(from buses: [BusPosByRtidDTO], startOrd: Int, currentOrd: Int, count: Int) -> [BusPosByRtidDTO] {
-        print(buses)
-        print(startOrd)
-        print(currentOrd)
-        print(count)
         return buses.filter { $0.sectionOrder >= currentOrd && $0.sectionOrder < startOrd + count }
     }
     

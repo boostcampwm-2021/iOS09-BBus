@@ -15,11 +15,11 @@ protocol SearchAPIUsable: BaseUseCase {
 
 final class SearchAPIUseCase: SearchAPIUsable {
     
-    private let usecases: GetRouteListUsecase & GetStationListUsecase
+    private let usecases: GetRouteListUsable & GetStationListUsable
     private var cancellables: Set<AnyCancellable>
     @Published var networkError: Error?
     
-    init(usecases: GetRouteListUsecase & GetStationListUsecase) {
+    init(usecases: GetRouteListUsable & GetStationListUsable) {
         self.usecases = usecases
         self.cancellables = []
     }

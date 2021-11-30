@@ -17,7 +17,11 @@ final class AlarmSettingCoordinator: Coordinator {
     }
 
     func start(stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
-        let apiUseCase = AlarmSettingAPIUseCase(useCases: BBusAPIUsecases())
+        let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
+                                          persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
+                                          requestFactory: RequestFactory())
+        let apiUseCase = AlarmSettingAPIUseCase(useCases: apiUseCases)
         let calculateUseCase = AlarmSettingCalculateUseCase()
         let viewModel = AlarmSettingViewModel(apiUseCase: apiUseCase,
                                               calculateUseCase: calculateUseCase,

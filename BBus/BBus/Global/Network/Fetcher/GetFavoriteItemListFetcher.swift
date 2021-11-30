@@ -12,10 +12,11 @@ protocol GetFavoriteItemListFetchable {
     func fetch() -> AnyPublisher<Data, Error>
 }
 
-struct PersistentGetFavoriteItemListFetcher: GetFavoriteItemListFetchable {
+struct PersistenceGetFavoriteItemListFetcher: PersistenceFetchable, GetFavoriteItemListFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
     func fetch() -> AnyPublisher<Data, Error> {
-        return Persistent.shared.getFromUserDefaults(key: "FavoriteItems")
-            .compactMap({$0})
+        return self.persistenceStorage.getFromUserDefaults(key: "FavoriteItems")
             .eraseToAnyPublisher()
     }
 }
