@@ -18,6 +18,7 @@ final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPusha
     func start() {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
         let useCase = HomeAPIUseCase(usecases: apiUseCases)
         let viewModel = HomeViewModel(useCase: useCase)

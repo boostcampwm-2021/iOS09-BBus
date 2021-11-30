@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 
-// TODO: ServiceFectable 선언 논의 필요
 protocol ServiceFetchable {
     var networkService: NetworkServiceProtocol { get }
     var tokenManager: TokenManagable { get }

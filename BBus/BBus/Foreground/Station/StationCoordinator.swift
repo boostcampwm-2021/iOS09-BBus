@@ -18,6 +18,7 @@ final class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
     func start(arsId: String) {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
         let usecase = StationUsecase(usecases: apiUseCases)
         let viewModel = StationViewModel(usecase: usecase, arsId: arsId)

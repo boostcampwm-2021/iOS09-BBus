@@ -8,17 +8,15 @@
 import Foundation
 import Combine
 
-// TODO: Usable로 변경
 protocol GetArrInfoByRouteListUsable {
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error>
 }
 
-// TODO: TokenManager 주입 방식 논의 필요
 extension BBusAPIUseCases: GetArrInfoByRouteListUsable {
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error> {
         let param = ["stId": stId, "busRouteId": busRouteId, "ord": ord, "resultType": "json"]
         let fetcher: GetArrInfoByRouteListFetchable = ServiceGetArrInfoByRouteListFetcher(networkService: self.networkService,
-                                                                                          tokenManager: TokenManager(),
+                                                                                          tokenManager: self.tokenManageType.init(),
                                                                                           requestFactory: self.requestFactory)
         return fetcher
             .fetch(param: param)

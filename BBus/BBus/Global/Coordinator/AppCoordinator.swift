@@ -69,6 +69,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
         let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
@@ -85,6 +86,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
     func reset(busRouteId: Int, fromArsId: String, toArsId: String) {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
+                                          tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
         let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
         let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)

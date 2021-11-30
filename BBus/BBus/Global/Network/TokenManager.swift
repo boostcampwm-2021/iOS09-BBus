@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol TokenManagable {
+protocol TokenManagable: AnyObject {
+    init()
     func removeAccessKey(at order: Int)
     func randomAccessKey() throws -> (index: Int, key: String)
 }
@@ -30,7 +31,7 @@ class TokenManager: TokenManagable {
     
     private var keys: [Int]
     
-    init() {
+    required init() {
         self.keys = Array(0..<self.accessKeys.count)
     }
     
