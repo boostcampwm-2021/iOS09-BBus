@@ -7,11 +7,6 @@
 
 import Foundation
 
-protocol SearchCalculatable {
-    func searchBus(by keyword: String, at routeList: [BusRouteDTO]) -> [BusSearchResult]
-    func searchStation(by keyword: String, at stationList: [StationDTO]) -> [StationSearchResult]
-}
-
 final class SearchCalculateUseCase: SearchCalculatable {
     func searchBus(by keyword: String, at routeList: [BusRouteDTO]) -> [BusSearchResult] {
         if keyword.isEmpty {

@@ -11,6 +11,8 @@
 		04045B812740F6DC0056A433 /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
 		041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
+		04468427275675F1007E440A /* SearchAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468426275675F1007E440A /* SearchAPIUsable.swift */; };
+		044684292756760A007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -260,6 +262,8 @@
 		04045B802740F6DC0056A433 /* BusSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSearchResult.swift; sourceTree = "<group>"; };
 		041A5A10273D2E1B00490075 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusFoldUnfoldDelegate.swift; sourceTree = "<group>"; };
+		04468426275675F1007E440A /* SearchAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIUsable.swift; sourceTree = "<group>"; };
+		044684282756760A007E440A /* SearchCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculatable.swift; sourceTree = "<group>"; };
 		0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculateUseCase.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -778,6 +782,8 @@
 		4ACA51EC272FCDD000EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				04468426275675F1007E440A /* SearchAPIUsable.swift */,
+				044684282756760A007E440A /* SearchCalculatable.swift */,
 				4ACA51F0272FCDF200EC0531 /* SearchAPIUseCase.swift */,
 				0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */,
 			);
@@ -1753,6 +1759,7 @@
 				4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,
 				875F1AB22755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift in Sources */,
+				04468427275675F1007E440A /* SearchAPIUsable.swift in Sources */,
 				4AA294B7273C1275008E5497 /* DeleteFavoriteItemFetchable.swift in Sources */,
 				4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */,
 				04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */,
@@ -1787,6 +1794,7 @@
 				4ACA5237272FCF2C00EC0531 /* BusRouteViewController.swift in Sources */,
 				873D639827303A6800E79069 /* AppCoordinator.swift in Sources */,
 				4ACA5217272FCE8E00EC0531 /* StationViewModel.swift in Sources */,
+				044684292756760A007E440A /* SearchCalculatable.swift in Sources */,
 				4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */,
 				047C30FC273A04C20075EA14 /* BBusColor.swift in Sources */,
 				87038A94273C12E20078EAE3 /* GetStationByUidItemFetcher.swift in Sources */,
