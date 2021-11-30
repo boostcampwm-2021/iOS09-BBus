@@ -16,16 +16,19 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     private let viewModel: HomeViewModel?
 
     private lazy var homeView = HomeView()
-
+    private let statusBarHeight: CGFloat?
+    
     private var cancellables: Set<AnyCancellable> = []
 
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel, statusBarHegiht: CGFloat?) {
         self.viewModel = viewModel
+        self.statusBarHeight = statusBarHegiht
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         self.viewModel = nil
+        self.statusBarHeight = nil
         super.init(coder: coder)
     }
 
@@ -64,19 +67,18 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     }
 
     private func configureStatusBarLayout() {
-        let app = UIApplication.shared
-        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+        if let statusBarHeight = self.statusBarHeight {
+            let statusbarView = UIView()
+            statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
 
-        let statusbarView = UIView()
-        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-
-        self.view.addSubviews(statusbarView)
-        NSLayoutConstraint.activate([
-            statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
-            statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
-            statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        ])
+            self.view.addSubviews(statusbarView)
+            NSLayoutConstraint.activate([
+                statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
+                statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
+                statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
+                statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            ])
+        }
         
         self.homeView.configureLayout()
     }
