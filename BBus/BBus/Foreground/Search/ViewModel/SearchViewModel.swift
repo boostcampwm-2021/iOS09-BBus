@@ -9,34 +9,70 @@ import Foundation
 import Combine
 
 final class SearchViewModel {
-    
-    typealias DecoratedBusResult = (busRouteName: NSMutableAttributedString, routeType: NSMutableAttributedString, routeId: Int)
 
-    let usecase: SearchAPIUseCase
+    private let apiUseCase: SearchAPIUsable
+    private let calculateUseCase: SearchCalculatable
+    private var busRouteList: [BusRouteDTO]
+    private var stationList: [StationDTO]
     @Published private var keyword: String
     @Published private(set) var searchResults: SearchResults
+    @Published private(set) var networkError: Error?
     private var cancellables: Set<AnyCancellable>
     
-    init(usecase: SearchAPIUseCase) {
-        self.usecase = usecase
+    init(apiUseCase: SearchAPIUseCase, calculateUseCase: SearchCalculatable) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
         self.keyword = ""
+        self.busRouteList = []
+        self.stationList = []
         self.searchResults = SearchResults(busSearchResults: [], stationSearchResults: [])
         self.cancellables = []
-        self.prepare()
+        
+        self.bind()
     }
 
     func configure(keyword: String) {
         self.keyword = keyword
     }
+    
+    private func bind() {
+        self.bindBusRouteList()
+        self.bindStationList()
+        self.bindKeyword()
+    }
+    
+    private func bindBusRouteList() {
+        self.apiUseCase.loadBusRouteList()
+            .catchError { [weak self] error in
+                self?.networkError = error
+            }
+            .sink { [weak self] busRouteList in
+                self?.busRouteList = busRouteList
+            }
+            .store(in: &self.cancellables)
+    }
+    
+    private func bindStationList() {
+        self.apiUseCase.loadStationList()
+            .catchError { [weak self] error in
+                self?.networkError = error
+            }
+            .sink { [weak self] stationList in
+                self?.stationList = stationList
+            }
+            .store(in: &self.cancellables)
+    }
 
-    private func prepare() {
+    private func bindKeyword() {
         self.$keyword
             .debounce(for: .milliseconds(400), scheduler: DispatchQueue.global())
             .sink { [weak self] keyword in
                 guard let self = self else { return }
-                self.searchResults.busSearchResults = self.usecase.searchBus(by: keyword)
-                self.searchResults.stationSearchResults = self.usecase.searchStation(by: keyword)
+                
+                self.searchResults.busSearchResults = self.calculateUseCase.searchBus(by: keyword, at: self.busRouteList)
+                self.searchResults.stationSearchResults = self.calculateUseCase.searchStation(by: keyword, at: self.stationList)
             }
             .store(in: &self.cancellables)
     }
+    
 }
