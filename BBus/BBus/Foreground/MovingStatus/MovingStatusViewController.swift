@@ -22,7 +22,6 @@ final class MovingStatusViewController: UIViewController {
     private var busTag: MovingStatusBusTagView?
     private var color: UIColor?
     private var busIcon: UIImage?
-    private var locationManager: CLLocationManager?
 
     private lazy var refreshButton: ThrottleButton = {
         let radius: CGFloat = 25
@@ -58,35 +57,10 @@ final class MovingStatusViewController: UIViewController {
         self.configureDelegate()
         self.configureBusTag()
         self.configureLocationManager()
-        self.sendRequestAuthorization()
-    }
-
-    private func sendRequestAuthorization() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
-            if let error = error {
-                print(error)
-            }
-        })
     }
 
     private func configureLocationManager() {
-        // locationManager 인스턴스를 생성
-        self.locationManager = CLLocationManager()
-
-        // 앱을 사용할 때만 위치 정보를 허용할 경우 호출
-        self.locationManager?.requestWhenInUseAuthorization()
-
-        // 위치 정보 제공의 정확도를 설정할 수 있다.
-        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        
-        // 백그라운드에서 위치 업데이트
-        self.locationManager?.allowsBackgroundLocationUpdates = true
-
-        // 위치 정보를 지속적으로 받고 싶은 경우 이벤트를 시작
-        self.locationManager?.startUpdatingLocation()
-
-        self.locationManager?.delegate = self
+        GetOffAlarmController.shared.configureAlarmPermission(self)
     }
     
     // MARK: - Configure

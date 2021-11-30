@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import CoreGraphics
-import CoreLocation
 
 typealias BusInfo = (busName: String, type: RouteType)
 typealias BoardedBus = (location: CGFloat, remainStation: Int?)
