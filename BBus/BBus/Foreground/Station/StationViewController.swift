@@ -141,6 +141,7 @@ final class StationViewController: UIViewController {
 
     private func configureColor() {
         self.view.backgroundColor = BBusColor.bbusGray
+        self.stationView.navigationBar.configureBackgroundColor(color: BBusColor.bbusGray)
     }
     
     private func noInfoAlert() {
