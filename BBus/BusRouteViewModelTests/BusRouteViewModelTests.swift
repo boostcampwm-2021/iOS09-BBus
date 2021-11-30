@@ -2,7 +2,7 @@
 //  BusRouteViewModelTests.swift
 //  BusRouteViewModelTests
 //
-//  Created by 김태훈 on 2021/11/30.
+//  Created by Kang Minsang on 2021/12/01.
 //
 
 import XCTest
@@ -92,21 +92,34 @@ class BusRouteViewModelTests: XCTestCase {
     }
 
     func test_bindHeaderInfo_수신_성공() throws {
+        // given
         guard let viewModel = self.busRouteViewModel else {
             XCTFail("viewModel is nil")
             return
         }
-        
         let expectation = XCTestExpectation()
+        let answerDTO = BusRouteDTO(routeID: 100100260,
+                                   busRouteName: "5524",
+                                   routeType: .localLine,
+                                   startStation: "난향차고지",
+                                   endStation: "중앙대학교")
         
+        // when
         viewModel.$header
             .receive(on: DispatchQueue.global())
             .sink { completion in
+                // then
                 guard case .failure(let error) = completion else { return }
                 XCTFail("\(error.localizedDescription)")
                 expectation.fulfill()
             } receiveValue: { header in
-                dump(header)
+                guard let header = header else { return }
+                // then
+                XCTAssertEqual(header.routeID, answerDTO.routeID)
+                XCTAssertEqual(header.busRouteName, answerDTO.busRouteName)
+                XCTAssertEqual(header.routeType, answerDTO.routeType)
+                XCTAssertEqual(header.startStation, answerDTO.startStation)
+                XCTAssertEqual(header.endStation, answerDTO.endStation)
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
@@ -115,21 +128,30 @@ class BusRouteViewModelTests: XCTestCase {
     }
     
     func test_bindBodysInfo_수신_성공() throws {
+        // given
         guard let viewModel = self.busRouteViewModel else {
             XCTFail("viewModel is nil")
             return
         }
-        
         let expectation = XCTestExpectation()
+        let station1 = BusStationInfo(speed: 0, afterSpeed: 44, count: 3, title: "난곡종점", description: "21809  |  04:00-22:30", transYn: "N", arsId: "21809")
+        let station2 = BusStationInfo(speed: 44, afterSpeed: 29, count: 3, title: "신림복지관앞", description: "21211  |  04:00-00:18", transYn: "N", arsId: "21211")
+        let station3 = BusStationInfo(speed: 29, afterSpeed: nil, count: 3, title: "난우중학교입구", description: "21210  |  04:00-22:30", transYn: "N", arsId: "21210")
+        let answerStations = [station1, station2, station3]
         
+        // when
         viewModel.$bodys
             .receive(on: DispatchQueue.global())
             .sink { completion in
+                // then
                 guard case .failure(let error) = completion else { return }
                 XCTFail("\(error.localizedDescription)")
                 expectation.fulfill()
             } receiveValue: { bodys in
-                dump(bodys)
+                // then
+                XCTAssertEqual(bodys[0].arsId, answerStations[0].arsId)
+                XCTAssertEqual(bodys[1].description, answerStations[1].description)
+                XCTAssertEqual(bodys[2].afterSpeed, answerStations[2].afterSpeed)
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)

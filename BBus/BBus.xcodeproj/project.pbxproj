@@ -161,7 +161,7 @@
 		87038A94273C12E20078EAE3 /* GetStationByUidItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A93273C12E20078EAE3 /* GetStationByUidItemFetcher.swift */; };
 		87115EFA27564D0F00601770 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A527550988001EA530 /* RequestFactory.swift */; };
 		87115EFB27565A3300601770 /* BusRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */; };
-		87115EFC27565BAD00601770 /* BusRouteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */; };
+		87115EFC27565BAD00601770 /* BusRouteAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteAPIUseCase.swift */; };
 		87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
 		87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
 		87115EFF27565DC200601770 /* BusPosByRtidDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */; };
@@ -202,6 +202,8 @@
 		873D639827303A6800E79069 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639727303A6800E79069 /* AppCoordinator.swift */; };
 		873D639A27303B0500E79069 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639927303B0500E79069 /* HomeCoordinator.swift */; };
 		873D639C27303B5000E79069 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639B27303B5000E79069 /* SearchCoordinator.swift */; };
+		875483782756810400136F16 /* BusRouteAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842E275676B3007E440A /* BusRouteAPIUsable.swift */; };
+		875483792756810D00136F16 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
 		875F1AB02755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AAF2755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift */; };
 		875F1AB22755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AB12755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift */; };
 		87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556B2728116400A9B5E3 /* AppDelegate.swift */; };
@@ -1770,6 +1772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87115F0F27566A8E00601770 /* GetBusPosByRtidFetcher.swift in Sources */,
+				875483792756810D00136F16 /* JsonDTO.swift in Sources */,
 				87115F1027566A9800601770 /* GetRouteListFetcher.swift in Sources */,
 				87115F0B27566A6900601770 /* RequestFactory.swift in Sources */,
 				87115F042756694600601770 /* PublisherExtension.swift in Sources */,
@@ -1786,10 +1789,11 @@
 				87115F1227566AA700601770 /* PersistencetFetchable.swift in Sources */,
 				87115F032756693700601770 /* BusPosByVehicleIdDTO.swift in Sources */,
 				87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */,
+				875483782756810400136F16 /* BusRouteAPIUsable.swift in Sources */,
 				87115F0927566A5900601770 /* NetworkService.swift in Sources */,
 				87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */,
 				87115F0727566A4400601770 /* GetStationsByRouteListUsable.swift in Sources */,
-				87115EFC27565BAD00601770 /* BusRouteUseCase.swift in Sources */,
+				87115EFC27565BAD00601770 /* BusRouteAPIUseCase.swift in Sources */,
 				87115EFB27565A3300601770 /* BusRouteViewModel.swift in Sources */,
 				87115F0A27566A6200601770 /* PersistenceStorage.swift in Sources */,
 				87115F1127566A9F00601770 /* BBusAPIError.swift in Sources */,
