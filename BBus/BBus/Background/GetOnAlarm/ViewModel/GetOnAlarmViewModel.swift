@@ -10,7 +10,7 @@ import Combine
 
 final class GetOnAlarmViewModel {
 
-    let useCase: GetOnAlarmAPIUseCase
+    private let useCase: GetOnAlarmAPIUseCase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busApproachStatus: BusApproachStatus?
