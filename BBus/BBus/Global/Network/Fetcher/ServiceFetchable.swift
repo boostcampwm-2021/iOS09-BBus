@@ -22,7 +22,7 @@ extension ServiceFetchable {
         guard let request =
                 self.requestFactory.request(url: url, accessKey: key.key, params: param) else { return NetworkError.urlError.publisher }
         
-        return networkService.get(request: request, params: param)
+        return networkService.get(request: request)
             .mapJsonBBusAPIError {
                 self.tokenManager.removeAccessKey(at: key.index)
             }

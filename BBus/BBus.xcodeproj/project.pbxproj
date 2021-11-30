@@ -47,6 +47,8 @@
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
 		4A1A22DD2732801700476861 /* StationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DC2732801700476861 /* StationCoordinator.swift */; };
 		4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */; };
+		4A2634AA2756674900267B47 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
+		4A2634AB2756678100267B47 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
 		4A3B6C502755DF2400BBC498 /* AlarmCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */; };
@@ -1612,6 +1614,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2634AB2756678100267B47 /* BBusAPIError.swift in Sources */,
+				4A2634AA2756674900267B47 /* NetworkService.swift in Sources */,
 				4AF1E0682756262300DE51C8 /* NetworkServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
