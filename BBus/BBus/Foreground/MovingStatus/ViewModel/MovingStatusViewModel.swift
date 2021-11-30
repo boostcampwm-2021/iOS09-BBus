@@ -16,8 +16,8 @@ typealias StationInfo = (speed: Int, afterSpeed: Int?, count: Int, title: String
 
 final class MovingStatusViewModel {
 
-    let apiUseCase: MovingStatusAPIUseCase
-    let calculateUseCase: MovingStatusCalculateUseCase
+    let apiUseCase: MovingStatusAPIUsable
+    let calculateUseCase: MovingStatusCalculatable
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     private let fromArsId: String
@@ -36,7 +36,7 @@ final class MovingStatusViewModel {
     @Published private(set) var stopLoader: Bool = false
     @Published private(set) var networkError: Error?
 
-    init(apiUseCase: MovingStatusAPIUseCase, calculateUseCase: MovingStatusCalculateUseCase, busRouteId: Int, fromArsId: String, toArsId: String) {
+    init(apiUseCase: MovingStatusAPIUsable, calculateUseCase: MovingStatusCalculatable, busRouteId: Int, fromArsId: String, toArsId: String) {
         self.apiUseCase = apiUseCase
         self.calculateUseCase = calculateUseCase
         self.busRouteId = busRouteId
