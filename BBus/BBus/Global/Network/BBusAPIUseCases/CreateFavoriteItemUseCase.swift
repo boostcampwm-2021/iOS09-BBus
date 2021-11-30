@@ -1,5 +1,5 @@
 //
-//  createFavoriteItem.swift
+//  CreateFavoriteItemUseCase.swift
 //  BBus
 //
 //  Created by Kang Minsang on 2021/12/01.
