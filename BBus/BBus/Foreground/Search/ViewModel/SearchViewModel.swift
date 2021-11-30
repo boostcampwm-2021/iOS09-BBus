@@ -19,7 +19,7 @@ final class SearchViewModel {
     @Published private(set) var networkError: Error?
     private var cancellables: Set<AnyCancellable>
     
-    init(apiUseCase: SearchAPIUseCase, calculateUseCase: SearchCalculatable) {
+    init(apiUseCase: SearchAPIUsable, calculateUseCase: SearchCalculatable) {
         self.apiUseCase = apiUseCase
         self.calculateUseCase = calculateUseCase
         self.keyword = ""

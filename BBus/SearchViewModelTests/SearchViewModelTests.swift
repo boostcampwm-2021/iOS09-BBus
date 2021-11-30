@@ -6,27 +6,39 @@
 //
 
 import XCTest
+import Combine
 
 class SearchViewModelTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var searchViewModel: SearchViewModel!
+    
+    class DummySearchAPIUseCase: SearchAPIUsable {
+        func loadBusRouteList() -> AnyPublisher<[BusRouteDTO], Error> {
+            return CurrentValueSubject<[BusRouteDTO], Error>([])
+                .eraseToAnyPublisher()
+        }
+        
+        func loadStationList() -> AnyPublisher<[StationDTO], Error> {
+            return CurrentValueSubject<[StationDTO], Error>([])
+                .eraseToAnyPublisher()
+        }
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    
+    class DummySearchCalculateUseCase: SearchCalculatable {
+        func searchStation(by keyword: String, at stationList: [StationDTO]) -> [StationSearchResult] {
+            return []
+        }
+        
+        func searchBus(by keyword: String, at routeList: [BusRouteDTO]) -> [BusSearchResult] {
+            return []
         }
     }
 
+    override func setUpWithError() throws {
+        super.setUp()
+    }
+
+    override func tearDownWithError() throws {
+        super.tearDown()
+    }
+    
 }
