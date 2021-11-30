@@ -56,31 +56,29 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
     // MARK: - Configuration
     func configureLayout() {
         self.view.addSubviews(self.homeView)
-
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
-
+        
+        self.homeView.configureLayout()
     }
 
     private func configureStatusBarLayout() {
-        if let statusBarHeight = self.statusBarHeight {
-            let statusbarView = UIView()
-            statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-
-            self.view.addSubviews(statusbarView)
-            NSLayoutConstraint.activate([
-                statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
-                statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
-                statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-            ])
-        }
+        guard let statusBarHeight = self.statusBarHeight else { return }
         
-        self.homeView.configureLayout()
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
+
+        self.view.addSubviews(statusbarView)
+        NSLayoutConstraint.activate([
+            statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
+            statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
+            statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
     }
     
     func configureDelegate() {
