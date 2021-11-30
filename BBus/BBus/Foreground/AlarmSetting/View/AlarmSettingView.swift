@@ -7,10 +7,18 @@
 
 import UIKit
 
-final class AlarmSettingView: UIView {
+final class AlarmSettingView: NavigatableView {
     
     static let tableViewSectionCount = 2
     static let tableViewHeaderHeight: CGFloat = 35
+    
+    private weak var refreshButtonDelegate: RefreshButtonDelegate? {
+        didSet {
+            self.refreshButton.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
+                self?.refreshButtonDelegate?.buttonTapped()
+            }
+        }
+    }
 
     private lazy var alarmTableView: UITableView = {
         let tableViewLeftInset: CGFloat = 90
@@ -27,8 +35,20 @@ final class AlarmSettingView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
+    private lazy var refreshButton: ThrottleButton = {
+        let radius: CGFloat = 25
+
+        let button = ThrottleButton()
+        button.setImage(BBusImage.refresh, for: .normal)
+        button.layer.cornerRadius = radius
+        button.tintColor = BBusColor.white
+        button.backgroundColor = BBusColor.darkGray
+        return button
+    }()
+    private lazy var customNavigationBar = CustomNavigationBar()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -38,7 +58,7 @@ final class AlarmSettingView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    override func configureLayout() {
         self.addSubviews(self.alarmTableView, self.loader)
         
         NSLayoutConstraint.activate([
@@ -52,11 +72,26 @@ final class AlarmSettingView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BackButtonDelegate & RefreshButtonDelegate) {
         self.alarmTableView.delegate = delegate
         self.alarmTableView.dataSource = delegate
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
+    }
+    
+    func configureColor(color: UIColor?) {
+        self.customNavigationBar.configureTintColor(color: color)
+        self.customNavigationBar.configureAlpha(alpha: 1)
+    }
+    
+    func configureTitle(busName: String, stationName: String, routeType: RouteType?) {
+        self.customNavigationBar.configureTitle(busName: busName,
+                                                stationName: stationName,
+                                                routeType: routeType)
     }
     
     func reload() {

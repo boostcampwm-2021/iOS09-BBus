@@ -8,13 +8,13 @@
 import Foundation
 import Combine
 
-protocol BaseBusRouteAPIUsable: BaseUseCase {
+protocol BusRouteAPIUsable: BaseUseCase {
     func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error>
     func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Error>
     func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Error>
 }
 
-final class BusRouteAPIUseCase: BaseBusRouteAPIUsable {
+final class BusRouteAPIUseCase: BusRouteAPIUsable {
 
     private let useCases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
 

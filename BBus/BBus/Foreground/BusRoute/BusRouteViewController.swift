@@ -8,30 +8,13 @@
 import UIKit
 import Combine
 
-final class BusRouteViewController: UIViewController {
-
+final class BusRouteViewController: UIViewController, BaseViewControllerType {
+    
     weak var coordinator: BusRouteCoordinator?
-    private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var busRouteView = BusRouteView()
     private let viewModel: BusRouteViewModel?
+    private lazy var busRouteView = BusRouteView()
+    
     private var cancellables: Set<AnyCancellable> = []
-    private var busTags: [BusTagView] = []
-    private var busIcon: UIImage?
-
-    private lazy var refreshButton: UIButton = {
-        let radius: CGFloat = 25
-
-        let button = UIButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-
-        button.addAction(UIAction(handler: { [weak self] _ in
-            self?.viewModel?.refreshBusPos()
-        }), for: .touchUpInside)
-        return button
-    }()
 
     init(viewModel: BusRouteViewModel) {
         self.viewModel = viewModel
@@ -45,31 +28,28 @@ final class BusRouteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
 
         self.busRouteView.startLoader()
-        self.binding()
-        self.configureLayout()
-        self.configureDelegate()
         self.configureBaseColor()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.baseViewWillAppear()
+        
         self.viewModel?.configureObserver()
-        self.viewModel?.refreshBusPos()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configure
-    private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.busRouteView, self.customNavigationBar, self.refreshButton)
+    func configureLayout() {
+        self.view.addSubviews(self.busRouteView)
 
         NSLayoutConstraint.activate([
             self.busRouteView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -78,81 +58,18 @@ final class BusRouteViewController: UIViewController {
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-        NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
         self.busRouteView.configureTableViewHeight(count: 20)
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
-    private func configureDelegate() {
+    func configureDelegate() {
         self.busRouteView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
-    }
-
-    private func configureBaseColor() {
-        self.view.backgroundColor = BBusColor.gray
-        self.customNavigationBar.configureBackgroundColor(color: BBusColor.gray)
-        self.customNavigationBar.configureTintColor(color: BBusColor.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
-        self.busRouteView.configureColor(to: BBusColor.gray)
     }
     
-    private func configureBusColor(type: RouteType) {
-        let color: UIColor?
-
-        switch type {
-        case .mainLine:
-            color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
-        case .broadArea:
-            color = BBusColor.bbusTypeRed
-            self.busIcon = BBusImage.redBusIcon
-        case .customized:
-            color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
-        case .circulation:
-            color = BBusColor.bbusTypeCirculation
-            self.busIcon = BBusImage.circulationBusIcon
-        case .lateNight:
-            color = BBusColor.bbusTypeBlue
-            self.busIcon = BBusImage.blueBusIcon
-        case .localLine:
-            color = BBusColor.bbusTypeGreen
-            self.busIcon = BBusImage.greenBusIcon
-        }
-
-        self.view.backgroundColor = color
-        self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BBusColor.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
-        self.busRouteView.configureColor(to: color)
+    func refresh() {
+        self.viewModel?.refreshBusPos()
     }
-
-    private func configureBusTags(buses: [BusPosInfo]) {
-        self.busTags.forEach { $0.removeFromSuperview() }
-        self.busTags.removeAll()
-
-        buses.forEach { [weak self] bus in
-            guard let self = self else { return }
-            let tag = self.busRouteView.createBusTag(location: bus.location,
-                                                     busIcon: self.busIcon,
-                                                     busNumber: bus.number,
-                                                     busCongestion: bus.congestion.toString(),
-                                                     isLowFloor: bus.islower)
-            self.busTags.append(tag)
-        }
-    }
-
-    private func binding() {
+    
+    func bindAll() {
         self.bindLoader()
         self.bindBusRouteHeaderResult()
         self.bindBusRouteBodyResult()
@@ -160,17 +77,22 @@ final class BusRouteViewController: UIViewController {
         self.bindNetworkError()
     }
 
+    private func configureBaseColor() {
+        self.view.backgroundColor = BBusColor.gray
+        self.busRouteView.configureColor(to: BBusColor.gray)
+    }
+
     private func bindBusRouteHeaderResult() {
         self.viewModel?.$header
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] header in
                 if let header = header {
-                    self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
+                    self?.busRouteView.configureBackButtonTitle(title: header.busRouteName)
                     self?.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
                                                           busNumber: header.busRouteName,
                                                           fromStation: header.startStation,
                                                           toStation: header.endStation)
-                    self?.configureBusColor(type: header.routeType)
+                    self?.view.backgroundColor = self?.busRouteView.configureBusColor(type: header.routeType)
                 }
             })
             .store(in: &self.cancellables)
@@ -192,7 +114,7 @@ final class BusRouteViewController: UIViewController {
             .sink(receiveValue: { [weak self] buses in
                 guard let viewModel = self?.viewModel else { return }
 
-                self?.configureBusTags(buses: buses)
+                self?.busRouteView.configureBusTags(buses: buses)
 
                 if viewModel.stopLoader {
                     self?.busRouteView.stopLoader()
@@ -279,10 +201,10 @@ extension BusRouteViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let baseLineContentOffset = BusRouteHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
-            self.customNavigationBar.configureAlpha(alpha: 1)
+            self.busRouteView.configureNavigationAlpha(alpha: 1)
         }
         else {
-            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+            self.busRouteView.configureNavigationAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
         }
     }
 
@@ -308,5 +230,12 @@ extension BusRouteViewController: UIScrollViewDelegate {
 extension BusRouteViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension BusRouteViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.refresh()
     }
 }

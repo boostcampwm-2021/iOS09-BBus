@@ -9,7 +9,7 @@ import UIKit
 
 class NavigatableView: RefreshableView {
 
-    internal lazy var navigationBar = CustomNavigationBar()
+    lazy var navigationBar = CustomNavigationBar()
 
     override func configureLayout() {
         self.addSubviews(self.navigationBar)

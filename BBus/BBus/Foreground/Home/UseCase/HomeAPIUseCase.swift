@@ -12,7 +12,7 @@ protocol HomeAPIUsable: BaseUseCase {
     typealias HomeUseCases = GetFavoriteItemListUsable & CreateFavoriteItemUsable & GetStationListUsable & GetRouteListUsable & GetArrInfoByRouteListUsable
 
     func fetchFavoriteData() -> AnyPublisher<[FavoriteItemDTO], Error>
-    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Error>
+    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<HomeFavoriteInfo, Error>
     func fetchStation() -> AnyPublisher<[StationDTO], Error>
     func fetchBusRoute() -> AnyPublisher<[BusRouteDTO], Error>
 }
@@ -35,7 +35,7 @@ final class HomeAPIUseCase: HomeAPIUsable {
             .eraseToAnyPublisher()
     }
 
-    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<ArrInfoByRouteDTO, Error> {
+    func fetchBusRemainTime(favoriteItem: FavoriteItemDTO) -> AnyPublisher<HomeFavoriteInfo, Error> {
         return self.useCases.getArrInfoByRouteList(stId: favoriteItem.stId,
                                                    busRouteId: favoriteItem.busRouteId,
                                                    ord: favoriteItem.ord)
@@ -43,7 +43,10 @@ final class HomeAPIUseCase: HomeAPIUsable {
             .tryMap({ item in
                 let result = item.msgBody.itemList
                 guard let item = result.first else { throw BBusAPIError.wrongFormatError }
-                return item
+                let homeFavoriteInfo: HomeFavoriteInfo
+                homeFavoriteInfo.favoriteItem = favoriteItem
+                homeFavoriteInfo.arriveInfo = HomeArriveInfo(arrInfoByRouteDTO: item)
+                return homeFavoriteInfo
             })
             .eraseToAnyPublisher()
     }

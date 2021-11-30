@@ -33,6 +33,20 @@ struct HomeFavoriteList {
         self.changedByTimer = false
     }
 
+    init(favorites: [HomeFavorite]) {
+        var orderedFavorites = [HomeFavorite]()
+        favorites.forEach { favorite in
+            if let index = orderedFavorites.firstIndex(where: { $0.stationId == favorite.stationId }) {
+                orderedFavorites[index].buses.append(contentsOf: favorite.buses)
+            }
+            else {
+                orderedFavorites.append(favorite)
+            }
+        }
+        self.favorites = orderedFavorites
+        self.changedByTimer = false
+    }
+
     func count() -> Int {
         return self.favorites.count
     }
@@ -61,11 +75,11 @@ struct HomeFavoriteList {
     }
 }
 
+typealias HomeFavoriteInfo = (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)
+
 struct HomeFavorite: Equatable {
 
-    typealias HomeBusInfo = (favoriteItem: FavoriteItemDTO, arriveInfo: HomeArriveInfo?)
-
-    subscript(index: Int) -> HomeBusInfo? {
+    subscript(index: Int) -> HomeFavoriteInfo? {
         guard 0..<self.buses.count ~= index else { return nil }
         return self.buses[index]
     }
@@ -76,7 +90,7 @@ struct HomeFavorite: Equatable {
 
     let stationId: String
     let arsId: String
-    var buses: [HomeBusInfo]
+    var buses: [HomeFavoriteInfo]
 
     init(stationId: String, arsId: String, buses: [FavoriteItemDTO]) {
         self.stationId = stationId

@@ -30,11 +30,8 @@ final class HomeView: RefreshableView {
     }()
     private lazy var emptyFavoriteNotice = EmptyFavoriteNoticeView()
 
-    private var refreshButtonDelegate: RefreshButtonDelegate?
-
     convenience init() {
         self.init(frame: CGRect())
-        self.configureRefreshButton()
     }
 
     // MARK: - Configuration
@@ -72,7 +69,7 @@ final class HomeView: RefreshableView {
         self.favoriteCollectionView.delegate = delegate
         self.favoriteCollectionView.dataSource = delegate
         self.navigationView.configureDelegate(delegate)
-        self.refreshButtonDelegate = delegate
+        self.refreshButton.configureDelegate(delegate)
     }
 
     func configureNavigationViewVisable(_ direction: Bool) {
@@ -113,11 +110,5 @@ final class HomeView: RefreshableView {
         layout.minimumInteritemSpacing = bottomLineHeight
         layout.minimumLineSpacing = bottomLineHeight
         return layout
-    }
-
-    private func configureRefreshButton() {
-        self.refreshButton.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
-            self.refreshButtonDelegate?.buttonTapped()
-        }
     }
 }

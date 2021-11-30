@@ -53,6 +53,7 @@ final class CustomNavigationBar: UIView {
         self.init(frame: CGRect())
 
         self.configureLayout()
+        self.configureDefaultColor()
     }
 
     // MARK: - Configure
@@ -89,7 +90,7 @@ final class CustomNavigationBar: UIView {
     }
 
     // MARK: - Configure NavigationBar
-    func configureTintColor(color: UIColor) {
+    func configureTintColor(color: UIColor?) {
         self.backButton.tintColor = color
         self.backButtonTitleLabel.textColor = color
         self.titleLabel.textColor = color
@@ -134,5 +135,11 @@ final class CustomNavigationBar: UIView {
                                       value: highlightColor as Any,
                                       range: range)
         self.titleLabel.attributedText = attributedString
+    }
+
+    private func configureDefaultColor() {
+        self.configureBackgroundColor(color: BBusColor.white)
+        self.configureTintColor(color: BBusColor.white)
+        self.configureAlpha(alpha: 0)
     }
 }

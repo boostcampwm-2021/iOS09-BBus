@@ -55,22 +55,28 @@ final class HomeViewModel {
             .store(in: &self.cancellables)
     }
 
-    func loadRemainTime(with favoriteItems: [FavoriteItemDTO]) {
-        favoriteItems.forEach { [weak self] favoriteItem in
-            guard let self = self else { return }
-            self.apiUseCase.fetchBusRemainTime(favoriteItem: favoriteItem)
+    private func loadRemainTime(with favoriteItems: [FavoriteItemDTO]) {
+        guard let homeFavoriteList = homeFavoriteList else { return }
+
+        var newHomeFavoriteList = homeFavoriteList
+        favoriteItems.publisher
+            .receive(on: DispatchQueue.global())
+            .flatMap({ [weak self]  (favoriteItem) -> AnyPublisher<HomeFavoriteInfo, Error> in
+                guard let self = self else { return NetworkError.unknownError.publisher }
+                return self.apiUseCase.fetchBusRemainTime(favoriteItem: favoriteItem)
+            })
             .catchError({ [weak self] error in
                 self?.networkError = error
             })
-            .map({ arrInfoByRouteDTO in
-                return HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
+            .map({ (homeFavoriteInfo) -> HomeFavoriteList? in
+                guard let indexPath = newHomeFavoriteList.indexPath(of: homeFavoriteInfo.favoriteItem),
+                      let arriveInfo = homeFavoriteInfo.arriveInfo else { return nil }
+                newHomeFavoriteList.configure(homeArrivalinfo: arriveInfo, indexPath: indexPath)
+                return newHomeFavoriteList
             })
-            .sink(receiveValue: { [weak self] homeArrivalInfo in
-                guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
-                self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
-            })
-            .store(in: &self.cancellables)
-        }
+            .compactMap({ $0 })
+            .last()
+            .assign(to: &self.$homeFavoriteList)
     }
 
     private func loadBusRouteList() {
@@ -105,5 +111,14 @@ final class HomeViewModel {
 
     func busType(by busName: String) -> RouteType? {
         return self.calculateUseCase.findBusType(in: self.busRouteList, by: busName)
+    }
+}
+
+fileprivate extension Error {
+    var publisher: AnyPublisher<HomeFavoriteInfo, Error> {
+        let publisher = CurrentValueSubject<HomeFavoriteInfo?, Error>(nil)
+        publisher.send(completion: .failure(self))
+        return publisher.compactMap({$0})
+            .eraseToAnyPublisher()
     }
 }

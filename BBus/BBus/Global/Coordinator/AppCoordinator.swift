@@ -14,6 +14,10 @@ final class AppCoordinator: NSObject, Coordinator {
     var navigationPresenter: UINavigationController
     var movingStatusPresenter: UIViewController?
     var childCoordinators: [Coordinator]
+    
+    var statusBarHeight: CGFloat? {
+        return self.navigationWindow.windowScene?.statusBarManager?.statusBarFrame.height
+    }
 
     init(navigationWindow: UIWindow, movingStatusWindow: UIWindow) {
         self.navigationWindow = navigationWindow
@@ -33,7 +37,7 @@ final class AppCoordinator: NSObject, Coordinator {
         coordinator.delegate = self
         coordinator.navigationPresenter = self.navigationPresenter
         self.childCoordinators.append(coordinator)
-        coordinator.start()
+        coordinator.start(statusBarHeight: self.statusBarHeight)
         
         self.navigationWindow.makeKeyAndVisible()
         self.movingStatusWindow.makeKeyAndVisible()
@@ -191,4 +195,3 @@ extension AppCoordinator: CoordinatorFinishDelegate {
         }
     }
 }
-
