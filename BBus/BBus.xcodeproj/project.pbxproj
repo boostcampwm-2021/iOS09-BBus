@@ -120,7 +120,7 @@
 		4ADB29BB274B6C8300554A4E /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
 		4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */; };
 		4ADB29C7274B7A7F00554A4E /* GetOnAlarmStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */; };
-		4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift */; };
+		4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift */; };
 		4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */; };
 		4ADB29CD274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CC274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift */; };
 		4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CE274B890800554A4E /* BusApproachStatus.swift */; };
@@ -281,7 +281,7 @@
 		4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPosByVehicleIdDTO.swift; sourceTree = "<group>"; };
 		4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBusPosByVehIdFetcher.swift; sourceTree = "<group>"; };
 		4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmStatus.swift; sourceTree = "<group>"; };
-		4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmAPIUsecase.swift; sourceTree = "<group>"; };
+		4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmAPIUseCase.swift; sourceTree = "<group>"; };
 		4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmViewModel.swift; sourceTree = "<group>"; };
 		4ADB29CC274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmCalculateUsecase.swift; sourceTree = "<group>"; };
 		4ADB29CE274B890800554A4E /* BusApproachStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachStatus.swift; sourceTree = "<group>"; };
@@ -802,7 +802,7 @@
 		4ADB29C4274B7A3000554A4E /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift */,
+				4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift */,
 				4ADB29CC274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift */,
 			);
 			path = UseCase;
@@ -1057,7 +1057,7 @@
 				873D6396273039E100E79069 /* Coordinator.swift in Sources */,
 				4A5100332754CDB100754B36 /* BaseUseCase.swift in Sources */,
 				4AF1E0602755BE2400DE51C8 /* NavigatableView.swift in Sources */,
-				4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUsecase.swift in Sources */,
+				4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift in Sources */,
 				0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */,
 				4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */,
 				4A5182C127551F6D001EA530 /* DeleteFavoriteItemUsable.swift in Sources */,

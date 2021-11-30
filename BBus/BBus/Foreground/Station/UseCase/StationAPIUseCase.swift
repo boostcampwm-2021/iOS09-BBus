@@ -18,24 +18,24 @@ protocol StationAPIUsable: BaseUseCase {
 }
 
 final class StationAPIUseCase: StationAPIUsable {
-    typealias StationUsecases = GetStationByUidItemUsable & GetStationListUsable & CreateFavoriteItemUsable & DeleteFavoriteItemUsable & GetFavoriteItemListUsable & GetRouteListUsable
+    typealias StationUseCases = GetStationByUidItemUsable & GetStationListUsable & CreateFavoriteItemUsable & DeleteFavoriteItemUsable & GetFavoriteItemListUsable & GetRouteListUsable
     
-    private let usecases: StationUsecases
+    private let useCases: StationUseCases
     private var cancellables: Set<AnyCancellable>
     
-    init(usecases: StationUsecases) {
-        self.usecases = usecases
+    init(useCases: StationUseCases) {
+        self.useCases = useCases
         self.cancellables = []
     }
     
     func loadStationList() -> AnyPublisher<[StationDTO], Error> {
-        self.usecases.getStationList()
+        self.useCases.getStationList()
             .decode(type: [StationDTO].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
     
     func refreshInfo(about arsId: String) -> AnyPublisher<[StationByUidItemDTO], Error> {
-        return self.usecases.getStationByUidItem(arsId: arsId)
+        return self.useCases.getStationByUidItem(arsId: arsId)
             .decode(type: StationByUidItemResult.self, decoder: JSONDecoder())
             .tryMap({ item in
                 item.msgBody.itemList
@@ -44,23 +44,23 @@ final class StationAPIUseCase: StationAPIUsable {
     }
     
     func add(favoriteItem: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
-        return self.usecases.createFavoriteItem(param: favoriteItem)
+        return self.useCases.createFavoriteItem(param: favoriteItem)
             .eraseToAnyPublisher()
     }
     
     func remove(favoriteItem: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
-        return self.usecases.deleteFavoriteItem(param: favoriteItem)
+        return self.useCases.deleteFavoriteItem(param: favoriteItem)
             .eraseToAnyPublisher()
     }
     
     func getFavoriteItems() -> AnyPublisher<[FavoriteItemDTO], Error> {
-        return self.usecases.getFavoriteItemList()
+        return self.useCases.getFavoriteItemList()
             .decode(type: [FavoriteItemDTO].self, decoder: PropertyListDecoder())
             .eraseToAnyPublisher()
     }
     
     func loadRoute() -> AnyPublisher<[BusRouteDTO], Error> {
-        return self.usecases.getRouteList()
+        return self.useCases.getRouteList()
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }

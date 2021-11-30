@@ -10,15 +10,15 @@ import Combine
 
 final class GetOnAlarmViewModel {
 
-    let usecase: GetOnAlarmAPIUsecase
+    private let useCase: GetOnAlarmAPIUseCase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var busApproachStatus: BusApproachStatus?
     private(set) var message: String?
     @Published private(set) var networkErrorMessage: (title: String, body: String)?
 
-    init(usecase: GetOnAlarmAPIUsecase, currentStatus: GetOnAlarmStatus) {
-        self.usecase = usecase
+    init(useCase: GetOnAlarmAPIUseCase, currentStatus: GetOnAlarmStatus) {
+        self.useCase = useCase
         self.getOnAlarmStatus = currentStatus
         self.message = nil
         self.networkErrorMessage = nil
@@ -40,7 +40,7 @@ final class GetOnAlarmViewModel {
     }
     
     func bindBusPosition() {
-        self.usecase.$busPosition
+        self.useCase.$busPosition
             .receive(on: DispatchQueue.global())
             .sink { [weak self] position in
                 guard let self = self,
@@ -59,7 +59,7 @@ final class GetOnAlarmViewModel {
     }
     
     func bindNetworkErrorMessage() {
-        self.usecase.$networkError
+        self.useCase.$networkError
             .receive(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
@@ -69,7 +69,7 @@ final class GetOnAlarmViewModel {
     }
 
     func fetch() {
-        self.usecase.fetch(withVehId: "\(self.getOnAlarmStatus.vehicleId)")
+        self.useCase.fetch(withVehId: "\(self.getOnAlarmStatus.vehicleId)")
     }
 
     private func makeMessage(with status: BusApproachStatus) {

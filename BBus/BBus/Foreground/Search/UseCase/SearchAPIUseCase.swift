@@ -15,23 +15,23 @@ protocol SearchAPIUsable: BaseUseCase {
 
 final class SearchAPIUseCase: SearchAPIUsable {
     
-    private let usecases: GetRouteListUsable & GetStationListUsable
+    private let useCases: GetRouteListUsable & GetStationListUsable
     private var cancellables: Set<AnyCancellable>
     @Published var networkError: Error?
     
-    init(usecases: GetRouteListUsable & GetStationListUsable) {
-        self.usecases = usecases
+    init(useCases: GetRouteListUsable & GetStationListUsable) {
+        self.useCases = useCases
         self.cancellables = []
     }
     
     func loadBusRouteList() -> AnyPublisher<[BusRouteDTO], Error> {
-        self.usecases.getRouteList()
+        self.useCases.getRouteList()
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
     
     func loadStationList() -> AnyPublisher<[StationDTO], Error> {
-        self.usecases.getStationList()
+        self.useCases.getStationList()
             .decode(type: [StationDTO].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
