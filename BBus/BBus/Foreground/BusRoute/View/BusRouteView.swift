@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BusRouteView: UIView {
+final class BusRouteView: NavigatableView {
 
     private lazy var busRouteScrollView = UIScrollView()
     private lazy var busRouteScrollContentsView = UIView()
@@ -62,7 +62,7 @@ final class BusRouteView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    override func configureLayout() {
         let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
         
         self.addSubviews(self.colorBackgroundView, self.busRouteScrollView, self.loader)
@@ -112,13 +112,16 @@ final class BusRouteView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate & BackButtonDelegate) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate & BackButtonDelegate & RefreshButtonDelegate) {
         self.busRouteTableView.delegate = delegate
         self.busRouteTableView.dataSource = delegate
         self.busRouteScrollView.delegate = delegate
-        self.customNavigationBar.configureDelegate(delegate)
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
     }
 
     func configureColor(to color: UIColor?) {

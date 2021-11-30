@@ -57,6 +57,8 @@ final class BusRouteViewController: UIViewController, BaseViewControllerType {
             self.busRouteView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+
+        self.busRouteView.configureTableViewHeight(count: 20)
     }
 
     func configureDelegate() {
@@ -228,5 +230,12 @@ extension BusRouteViewController: UIScrollViewDelegate {
 extension BusRouteViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension BusRouteViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.refresh()
     }
 }

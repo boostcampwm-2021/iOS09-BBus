@@ -49,8 +49,9 @@ final class AlarmSettingViewController: UIViewController, BaseViewControllerType
     // MARK: - Configure
     func configureLayout() {
         self.view.addSubviews(self.alarmSettingView)
+
         NSLayoutConstraint.activate([
-            self.alarmSettingView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: CustomNavigationBar.height),
+            self.alarmSettingView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.alarmSettingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.alarmSettingView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.alarmSettingView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)

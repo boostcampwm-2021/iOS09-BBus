@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlarmSettingView: UIView {
+final class AlarmSettingView: NavigatableView {
     
     static let tableViewSectionCount = 2
     static let tableViewHeaderHeight: CGFloat = 35
@@ -58,7 +58,7 @@ final class AlarmSettingView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    override func configureLayout() {
         self.addSubviews(self.alarmTableView, self.loader)
         
         NSLayoutConstraint.activate([
@@ -72,13 +72,15 @@ final class AlarmSettingView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
     func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BackButtonDelegate & RefreshButtonDelegate) {
         self.alarmTableView.delegate = delegate
         self.alarmTableView.dataSource = delegate
-        self.customNavigationBar.configureDelegate(delegate)
-        self.refreshButtonDelegate = delegate
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
     }
     
     func configureColor(color: UIColor?) {

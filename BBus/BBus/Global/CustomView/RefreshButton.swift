@@ -7,9 +7,20 @@
 
 import UIKit
 
+protocol RefreshButtonDelegate: AnyObject {
+    func buttonTapped()
+}
+
 final class RefreshButton: ThrottleButton {
 
     static let refreshButtonWidth: CGFloat = 50
+    private weak var delegate: RefreshButtonDelegate? {
+        didSet {
+            self.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) {
+                self.delegate?.buttonTapped()
+            }
+        }
+    }
 
     convenience init() {
         self.init(frame: CGRect())
@@ -23,4 +34,7 @@ final class RefreshButton: ThrottleButton {
         self.backgroundColor = BBusColor.darkGray
     }
 
+    func configureDelegate(_ delegate: RefreshButtonDelegate) {
+        self.delegate = delegate
+    }
 }

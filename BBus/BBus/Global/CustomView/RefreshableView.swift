@@ -13,7 +13,7 @@ protocol RefreshButtonDelegate: AnyObject {
 
 class RefreshableView: UIView {
 
-    internal lazy var refreshButton = RefreshButton()
+    lazy var refreshButton = RefreshButton()
 
     func configureLayout() {
         self.addSubviews(self.refreshButton)

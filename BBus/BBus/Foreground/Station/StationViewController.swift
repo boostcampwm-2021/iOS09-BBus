@@ -20,6 +20,7 @@ final class StationViewController: UIViewController, BaseViewControllerType {
         let twice: CGFloat = 2
         return self.view.frame.height - (StationHeaderView.headerHeight*twice)
     }
+
     @Published private var stationBusInfoHeight: CGFloat?
     
     init(viewModel: StationViewModel) {
@@ -59,7 +60,9 @@ final class StationViewController: UIViewController, BaseViewControllerType {
             self.stationView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.stationView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.stationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
+        ]) 
+
+        self.stationBusInfoHeight = nil
     }
 
     func configureDelegate() {
@@ -329,6 +332,13 @@ extension StationViewController: UIScrollViewDelegate {
 extension StationViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension StationViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.refresh()
     }
 }
 
