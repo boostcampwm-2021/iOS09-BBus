@@ -202,15 +202,15 @@ final class StationViewModel {
     private func bindLoader() {
         self.$busKeys.zip(self.$favoriteItems, self.$stationInfo)
             .first()
-            .sink(receiveValue: { _ in
-                self.stopLoader = true
+            .sink(receiveValue: { [weak self] _ in
+                self?.stopLoader = true
             })
             .store(in: &self.cancellables)
         
         self.$busKeys
             .dropFirst(2)
-            .sink(receiveValue: { result in
-                self.stopLoader = true
+            .sink(receiveValue: { [weak self] result in
+                self?.stopLoader = true
             })
             .store(in: &self.cancellables)
     }
