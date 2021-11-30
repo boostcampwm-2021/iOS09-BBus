@@ -10,14 +10,12 @@ import Combine
 
 final class HomeViewController: UIViewController, BaseViewControllerType {
 
-    private var lastContentOffset: CGFloat = 0
-
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
-
     private lazy var homeView = HomeView()
-
+    
     private var cancellables: Set<AnyCancellable> = []
+    private var lastContentOffset: CGFloat = 0
 
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -39,7 +37,6 @@ final class HomeViewController: UIViewController, BaseViewControllerType {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.loadHomeData()
         self.baseViewWillAppear()
         
         self.viewModel?.configureObserver()
