@@ -8,11 +8,6 @@
 import Foundation
 import Combine
 
-protocol AlarmSettingAPIUsable: BaseUseCase {
-    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Error>
-    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Error>
-}
-
 final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
     typealias AlarmSettingUseCases = GetArrInfoByRouteListUsable & GetStationsByRouteListUsable
     

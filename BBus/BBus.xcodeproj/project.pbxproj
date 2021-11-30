@@ -18,6 +18,8 @@
 		0446842F275676B3007E440A /* BusRouteAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842E275676B3007E440A /* BusRouteAPIUsable.swift */; };
 		04468431275676ED007E440A /* StationAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468430275676ED007E440A /* StationAPIUsable.swift */; };
 		04468433275676F8007E440A /* StationCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468432275676F8007E440A /* StationCalculatable.swift */; };
+		0446843527567769007E440A /* AlarmSettingAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843427567769007E440A /* AlarmSettingAPIUsable.swift */; };
+		0446843727567777007E440A /* AlarmSettingCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843627567777007E440A /* AlarmSettingCalculatable.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -274,6 +276,8 @@
 		0446842E275676B3007E440A /* BusRouteAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteAPIUsable.swift; sourceTree = "<group>"; };
 		04468430275676ED007E440A /* StationAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAPIUsable.swift; sourceTree = "<group>"; };
 		04468432275676F8007E440A /* StationCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCalculatable.swift; sourceTree = "<group>"; };
+		0446843427567769007E440A /* AlarmSettingAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingAPIUsable.swift; sourceTree = "<group>"; };
+		0446843627567777007E440A /* AlarmSettingCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingCalculatable.swift; sourceTree = "<group>"; };
 		0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculateUseCase.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -912,6 +916,8 @@
 		4ACA521C272FCE9E00EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				0446843427567769007E440A /* AlarmSettingAPIUsable.swift */,
+				0446843627567777007E440A /* AlarmSettingCalculatable.swift */,
 				4ACA5220272FCEAF00EC0531 /* AlarmSettingAPIUseCase.swift */,
 				875F1AB12755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift */,
 			);
@@ -1752,6 +1758,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A5182B527551EC2001EA530 /* GetStationByUidItemUsable.swift in Sources */,
+				0446843727567777007E440A /* AlarmSettingCalculatable.swift in Sources */,
 				4ACA5231272FCEE600EC0531 /* MovingStatusView.swift in Sources */,
 				4ADB29D7274E198900554A4E /* GetOffAlarmViewModel.swift in Sources */,
 				4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */,
@@ -1772,6 +1779,7 @@
 				4A5182C127551F6D001EA530 /* DeleteFavoriteItemUsable.swift in Sources */,
 				0446842D27567660007E440A /* HomeCalculatable.swift in Sources */,
 				87038A8C273B96DF0078EAE3 /* PersistenceStorage.swift in Sources */,
+				0446843527567769007E440A /* AlarmSettingAPIUsable.swift in Sources */,
 				4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */,
 				0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */,
 				875F1AB22755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift in Sources */,
