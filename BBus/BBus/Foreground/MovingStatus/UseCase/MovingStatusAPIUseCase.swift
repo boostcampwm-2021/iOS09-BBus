@@ -18,7 +18,7 @@ final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
 
     private let usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase
 
-    init(usecases: GetRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase) {
+    init(usecases: GetRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase) {
         self.usecases = usecases
     }
 

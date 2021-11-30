@@ -10,24 +10,29 @@ import Combine
 
 final class HomeViewModel {
 
-    let useCase: HomeAPIUseCase
+    let apiUseCase: HomeAPIUsable
+    let calculateUseCase: HomeCalculateUsable
     private var cancellables: Set<AnyCancellable>
     @Published private(set) var homeFavoriteList: HomeFavoriteList?
     private(set) var stationList: [StationDTO]?
     private(set) var busRouteList: [BusRouteDTO]?
 
-    init(useCase: HomeAPIUseCase) {
-        self.useCase = useCase
+    @Published private(set) var networkError: Error?
+
+    init(apiUseCase: HomeAPIUsable, calculateUseCase: HomeCalculateUsable) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
         self.cancellables = []
         self.loadBusRouteList()
         self.loadStationList()
+        self.networkError = nil
 
-        self.reloadFavorite()
+        self.loadHomeData()
     }
 
     func configureObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(descendTime), name: .oneSecondPassed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadFavorite), name: .thirtySecondPassed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadHomeData), name: .thirtySecondPassed, object: nil)
     }
 
     func cancelObserver() {
@@ -38,28 +43,41 @@ final class HomeViewModel {
         self.homeFavoriteList?.descendAllTime()
     }
 
-    @objc func reloadFavorite() {
-        self.useCase.fetchFavoriteData()
+    @objc func loadHomeData() {
+        self.apiUseCase.fetchFavoriteData()
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink { [weak self] favoriteItems in
                 self?.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
-                favoriteItems.forEach { [weak self] favoriteItem in
-                    guard let self = self else { return }
-                    self.useCase.fetchBusRemainTime(favoriteItem: favoriteItem)
-                    .map({ arrInfoByRouteDTO in
-                        return HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
-                    })
-                    .sink(receiveValue: { [weak self] homeArrivalInfo in
-                        guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
-                        self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
-                    })
-                    .store(in: &self.cancellables)
-                }
+                self?.loadRemainTime(with: favoriteItems)
             }
             .store(in: &self.cancellables)
     }
 
+    func loadRemainTime(with favoriteItems: [FavoriteItemDTO]) {
+        favoriteItems.forEach { [weak self] favoriteItem in
+            guard let self = self else { return }
+            self.apiUseCase.fetchBusRemainTime(favoriteItem: favoriteItem)
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .map({ arrInfoByRouteDTO in
+                return HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
+            })
+            .sink(receiveValue: { [weak self] homeArrivalInfo in
+                guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
+                self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
+            })
+            .store(in: &self.cancellables)
+        }
+    }
+
     private func loadBusRouteList() {
-        self.useCase.fetchBusRoute()
+        self.apiUseCase.fetchBusRoute()
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink { [weak self] busRouteDTOs in
                 self?.busRouteList = busRouteDTOs
             }
@@ -67,7 +85,10 @@ final class HomeViewModel {
     }
 
     private func loadStationList() {
-        self.useCase.fetchStation()
+        self.apiUseCase.fetchStation()
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink { [weak self] stationDTOs in
                 self?.stationList = stationDTOs
             }
@@ -75,20 +96,14 @@ final class HomeViewModel {
     }
 
     func stationName(by stationId: String) -> String? {
-        guard let stationId = Int(stationId),
-              let stationName = self.stationList?.first(where: { $0.stationID == stationId })?.stationName else { return nil }
-
-        return stationName
+        return self.calculateUseCase.findStationName(in: self.stationList, by: stationId)
     }
 
     func busName(by busRouteId: String) -> String? {
-        guard let busRouteId = Int(busRouteId),
-              let busName = self.busRouteList?.first(where: { $0.routeID == busRouteId })?.busRouteName else { return nil }
-
-        return busName
+        return self.calculateUseCase.findBusName(in: self.busRouteList, by: busRouteId)
     }
 
     func busType(by busName: String) -> RouteType? {
-        return self.busRouteList?.first(where: { $0.busRouteName == busName } )?.routeType
+        return self.calculateUseCase.findBusType(in: self.busRouteList, by: busName)
     }
 }

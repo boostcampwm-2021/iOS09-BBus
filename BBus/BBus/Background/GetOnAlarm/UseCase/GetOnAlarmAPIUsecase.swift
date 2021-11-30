@@ -14,12 +14,12 @@ protocol GetOnAlarmAPIUsable: BaseUseCase {
 
 final class GetOnAlarmAPIUsecase: GetOnAlarmAPIUsable {
 
-    private let usecases: GetBusPosByVehIdUsecase
+    private let usecases: GetBusPosByVehIdUseCase
     private var cancellable: AnyCancellable?
     @Published private(set) var networkError: Error?
     @Published private(set) var busPosition: BusPosByVehicleIdDTO?
 
-    init(usecases: GetBusPosByVehIdUsecase) {
+    init(usecases: GetBusPosByVehIdUseCase) {
         self.usecases = usecases
         self.cancellable = nil
         self.networkError = nil

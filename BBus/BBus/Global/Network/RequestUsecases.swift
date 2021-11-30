@@ -8,45 +8,45 @@
 import Foundation
 import Combine
 
-typealias RequestUsecases = (GetArrInfoByRouteListUsecase & GetStationsByRouteListUsecase & GetBusPosByRtidUsecase & GetStationByUidItemUsecase & GetRouteListUsecase & GetStationListUsecase & GetFavoriteItemListUsecase & CreateFavoriteItemUsecase & DeleteFavoriteItemUsecase & GetBusPosByVehIdUsecase)
+typealias RequestUsecases = (GetArrInfoByRouteListUseCase & GetStationsByRouteListUseCase & GetBusPosByRtidUseCase & GetStationByUidItemUseCase & GetRouteListUseCase & GetStationListUseCase & GetFavoriteItemListUseCase & CreateFavoriteItemUseCase & DeleteFavoriteItemUseCase & GetBusPosByVehIdUseCase)
 
 // MARK: - API Protocol
-protocol GetArrInfoByRouteListUsecase {
+protocol GetArrInfoByRouteListUseCase {
     func getArrInfoByRouteList(stId: String, busRouteId: String, ord: String) -> AnyPublisher<Data, Error>
 }
 
-protocol GetStationsByRouteListUsecase {
+protocol GetStationsByRouteListUseCase {
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
-protocol GetBusPosByRtidUsecase {
+protocol GetBusPosByRtidUseCase {
     func getBusPosByRtid(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
 
-protocol GetStationByUidItemUsecase {
+protocol GetStationByUidItemUseCase {
     func getStationByUidItem(arsId: String) -> AnyPublisher<Data, Error>
 }
 
-protocol GetRouteListUsecase {
+protocol GetRouteListUseCase {
     func getRouteList() -> AnyPublisher<Data, Error>
 }
 
-protocol GetStationListUsecase {
+protocol GetStationListUseCase {
     func getStationList() -> AnyPublisher<Data, Error>
 }
 
-protocol GetFavoriteItemListUsecase {
+protocol GetFavoriteItemListUseCase {
     func getFavoriteItemList() -> AnyPublisher<Data, Error>
 }
 
-protocol CreateFavoriteItemUsecase {
+protocol CreateFavoriteItemUseCase {
     func createFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
-protocol DeleteFavoriteItemUsecase {
+protocol DeleteFavoriteItemUseCase {
     func deleteFavoriteItem(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
-protocol GetBusPosByVehIdUsecase {
+protocol GetBusPosByVehIdUseCase {
     func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error>
 }

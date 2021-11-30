@@ -54,6 +54,7 @@
 		4A5100352754CE1500754B36 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100342754CE1500754B36 /* BaseViewController.swift */; };
 		4A510039275517F800754B36 /* RefreshableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A510038275517F800754B36 /* RefreshableView.swift */; };
 		4A51003B2755180400754B36 /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51003A2755180400754B36 /* RefreshButton.swift */; };
+		4A5100372755106A00754B36 /* HomeCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100362755106A00754B36 /* HomeCalculateUseCase.swift */; };
 		4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEC2737885F0029915F /* StationHeaderView.swift */; };
 		4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */; };
 		4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */; };
@@ -197,6 +198,7 @@
 		4A412027274E34430083D691 /* BusRouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteModel.swift; sourceTree = "<group>"; };
 		4A5100322754CDB100754B36 /* BaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUseCase.swift; sourceTree = "<group>"; };
 		4A5100342754CE1500754B36 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		4A5100362755106A00754B36 /* HomeCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalculateUseCase.swift; sourceTree = "<group>"; };
 		4A510038275517F800754B36 /* RefreshableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableView.swift; sourceTree = "<group>"; };
 		4A51003A2755180400754B36 /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		4A7BBFEC2737885F0029915F /* StationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationHeaderView.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACA51E4272FCD9C00EC0531 /* HomeAPIUseCase.swift */,
+				4A5100362755106A00754B36 /* HomeCalculateUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1083,6 +1086,7 @@
 				4AA294AF273C0E8D008E5497 /* GetRouteListFetcher.swift in Sources */,
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,
 				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
+				4A5100372755106A00754B36 /* HomeCalculateUseCase.swift in Sources */,
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
 				87B35D0A2754E71F00159791 /* MovingStatusCalculateUseCase.swift in Sources */,
