@@ -14,9 +14,9 @@ final class GetOffAlarmController {
     static let shared = GetOffAlarmController(alarmCenter: AlarmCenter())
 
     @Published private(set) var viewModel: GetOffAlarmViewModel?
-    private let alarmCenter: AlarmDetailConfiguable
+    private let alarmCenter: AlarmDetailConfigurable
 
-    private init(alarmCenter: AlarmDetailConfiguable) {
+    private init(alarmCenter: AlarmDetailConfigurable) {
         self.alarmCenter = alarmCenter
     }
 

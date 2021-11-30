@@ -14,11 +14,12 @@ protocol AlarmManagable {
     func pushAlarm(in identifier: String, title: String, message: String)
 }
 
-protocol AlarmDetailConfiguable: AlarmManagable {
+protocol AlarmDetailConfigurable: AlarmManagable {
     func configureLocationDetail(_: CLLocationManagerDelegate)
 }
 
-final class AlarmCenter: AlarmDetailConfiguable {
+final class AlarmCenter: AlarmDetailConfigurable {
+
     private lazy var locationManager: CLLocationManager = CLLocationManager()
     private lazy var userNotificationCenter: UNUserNotificationCenter = UNUserNotificationCenter.current()
     
@@ -38,16 +39,13 @@ final class AlarmCenter: AlarmDetailConfiguable {
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.startUpdatingLocation()
+        self.locationUnauthorizedHandler(self.locationManager.authorizationStatus)
     }
     
     private func configureUserNotificationCenter() {
-        self.userNotificationCenter.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
-            if !didAllow,
-                let settingUrl = URL(string: UIApplication.openSettingsURLString) {
-                DispatchQueue.main.async {
-                    UIApplication.shared.open(settingUrl)
-                }
-            }
+        self.userNotificationCenter.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { [weak self] didAllow, error in
+            guard didAllow == false else { return }
+            self?.openSetting()
         })
     }
     
@@ -60,5 +58,17 @@ final class AlarmCenter: AlarmDetailConfiguable {
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
         
         self.userNotificationCenter.add(request, withCompletionHandler: nil)
+    }
+    
+    private func openSetting() {
+        guard let settingUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        DispatchQueue.main.async {
+            UIApplication.shared.open(settingUrl)
+        }
+    }
+    
+    private func locationUnauthorizedHandler(_ status: CLAuthorizationStatus) {
+        guard status == .denied else { return }
+        self.openSetting()
     }
 }
