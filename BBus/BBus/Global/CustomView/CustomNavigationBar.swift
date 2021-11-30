@@ -89,7 +89,7 @@ final class CustomNavigationBar: UIView {
     }
 
     // MARK: - Configure NavigationBar
-    func configureTintColor(color: UIColor) {
+    func configureTintColor(color: UIColor?) {
         self.backButton.tintColor = color
         self.backButtonTitleLabel.textColor = color
         self.titleLabel.textColor = color

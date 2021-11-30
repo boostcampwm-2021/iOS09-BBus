@@ -15,7 +15,7 @@ final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPusha
         self.navigationPresenter = presenter
     }
 
-    func start() {
+    func start(statusBarHeight: CGFloat?) {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
@@ -23,8 +23,9 @@ final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPusha
         let apiUseCase = HomeAPIUseCase(useCases: apiUseCases)
         let calculateUseCase = HomeCalculateUseCase()
         let viewModel = HomeViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase)
-        let viewController = HomeViewController(viewModel: viewModel)
+        let viewController = HomeViewController(viewModel: viewModel, statusBarHegiht: statusBarHeight)
         viewController.coordinator = self
+
         navigationPresenter.pushViewController(viewController, animated: false) // present
     }
 }

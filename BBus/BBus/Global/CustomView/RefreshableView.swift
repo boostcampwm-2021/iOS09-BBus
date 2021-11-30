@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RefreshButtonDelegate {
+protocol RefreshButtonDelegate: AnyObject {
     func buttonTapped()
 }
 
