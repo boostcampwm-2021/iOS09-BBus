@@ -136,6 +136,7 @@ final class MovingStatusView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
     private lazy var refreshButton: ThrottleButton = {
