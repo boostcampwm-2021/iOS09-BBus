@@ -81,11 +81,13 @@ class BusRouteViewModelTests: XCTestCase {
     }
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        self.busRouteViewModel = BusRouteViewModel(useCase: DummyBusRouteAPIUseCase(), busRouteId: 100100260)
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        self.busRouteViewModel = nil
     }
 
     func testExample() throws {

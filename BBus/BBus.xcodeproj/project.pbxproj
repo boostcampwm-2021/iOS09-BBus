@@ -165,6 +165,26 @@
 		87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
 		87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
 		87115EFF27565DC200601770 /* BusPosByRtidDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */; };
+		87115F00275667A600601770 /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		87115F01275668E100601770 /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
+		87115F02275668F600601770 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
+		87115F032756693700601770 /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
+		87115F042756694600601770 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		87115F052756696F00601770 /* GetRouteListUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B627551ED8001EA530 /* GetRouteListUsable.swift */; };
+		87115F062756698D00601770 /* BBusAPIUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUseCases.swift */; };
+		87115F0727566A4400601770 /* GetStationsByRouteListUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B027551E84001EA530 /* GetStationsByRouteListUsable.swift */; };
+		87115F0827566A5200601770 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A32754E3CA001EA530 /* TokenManager.swift */; };
+		87115F0927566A5900601770 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
+		87115F0A27566A6200601770 /* PersistenceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8B273B96DF0078EAE3 /* PersistenceStorage.swift */; };
+		87115F0B27566A6900601770 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A527550988001EA530 /* RequestFactory.swift */; };
+		87115F0C27566A7000601770 /* GetStationsByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8F273C11630078EAE3 /* GetStationsByRouteListFetcher.swift */; };
+		87115F0D27566A7800601770 /* ServiceFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A7275511D5001EA530 /* ServiceFetchable.swift */; };
+		87115F0E27566A8000601770 /* GetBusPosByRtidUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B227551EA9001EA530 /* GetBusPosByRtidUsable.swift */; };
+		87115F0F27566A8E00601770 /* GetBusPosByRtidFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */; };
+		87115F1027566A9800601770 /* GetRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294AE273C0E8D008E5497 /* GetRouteListFetcher.swift */; };
+		87115F1127566A9F00601770 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		87115F1227566AA700601770 /* PersistencetFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182AB275516A4001EA530 /* PersistencetFetchable.swift */; };
+		87115F1327566AB200601770 /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
 		87115F172756758800601770 /* GetArrInfoByRouteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F162756758800601770 /* GetArrInfoByRouteListUseCase.swift */; };
 		87115F19275675B900601770 /* GetStationsByRouteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F18275675B900601770 /* GetStationsByRouteListUseCase.swift */; };
 		87115F1B275675E200601770 /* GetBusPosByRtidUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F1A275675E200601770 /* GetBusPosByRtidUseCase.swift */; };
@@ -1749,12 +1769,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87115F0F27566A8E00601770 /* GetBusPosByRtidFetcher.swift in Sources */,
+				87115F1027566A9800601770 /* GetRouteListFetcher.swift in Sources */,
+				87115F0B27566A6900601770 /* RequestFactory.swift in Sources */,
+				87115F042756694600601770 /* PublisherExtension.swift in Sources */,
+				87115F02275668F600601770 /* NotificationNameExtension.swift in Sources */,
+				87115F052756696F00601770 /* GetRouteListUsable.swift in Sources */,
+				87115F1327566AB200601770 /* FavoriteItemDTO.swift in Sources */,
+				87115F00275667A600601770 /* BaseUseCase.swift in Sources */,
+				87115F01275668E100601770 /* BusCongestion.swift in Sources */,
+				87115F062756698D00601770 /* BBusAPIUseCases.swift in Sources */,
 				87115EFF27565DC200601770 /* BusPosByRtidDTO.swift in Sources */,
+				87115F0D27566A7800601770 /* ServiceFetchable.swift in Sources */,
+				87115F0C27566A7000601770 /* GetStationsByRouteListFetcher.swift in Sources */,
+				87115F0827566A5200601770 /* TokenManager.swift in Sources */,
+				87115F1227566AA700601770 /* PersistencetFetchable.swift in Sources */,
+				87115F032756693700601770 /* BusPosByVehicleIdDTO.swift in Sources */,
 				87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */,
+				87115F0927566A5900601770 /* NetworkService.swift in Sources */,
 				87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */,
+				87115F0727566A4400601770 /* GetStationsByRouteListUsable.swift in Sources */,
 				87115EFC27565BAD00601770 /* BusRouteUseCase.swift in Sources */,
 				87115EFB27565A3300601770 /* BusRouteViewModel.swift in Sources */,
+				87115F0A27566A6200601770 /* PersistenceStorage.swift in Sources */,
+				87115F1127566A9F00601770 /* BBusAPIError.swift in Sources */,
 				4AF1E0C32756269F00DE51C8 /* BusRouteViewModelTests.swift in Sources */,
+				87115F0E27566A8000601770 /* GetBusPosByRtidUsable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
