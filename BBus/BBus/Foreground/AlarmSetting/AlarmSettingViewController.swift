@@ -140,15 +140,7 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     private func bindErrorMessage() {
-        self.viewModel?.$errorMessage
-            .compactMap({$0})
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] message in
-                self?.alarmSettingAlert(message: message)
-            })
-            .store(in: &self.cancellables)
-        
-        self.viewModel?.useCase.$networkError
+        self.viewModel?.$networkError
             .compactMap({$0})
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in

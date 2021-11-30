@@ -10,7 +10,7 @@ import Combine
 
 final class AlarmSettingViewModel {
     
-    let useCase: AlarmSettingAPIUseCase
+    let useCase: AlarmSettingAPIUsable
     let stationId: Int
     let busRouteId: Int
     let stationOrd: Int
@@ -19,7 +19,7 @@ final class AlarmSettingViewModel {
     let busName: String
     @Published private(set) var busArriveInfos: AlarmSettingBusArriveInfos
     @Published private(set) var busStationInfos: [AlarmSettingBusStationInfo]?
-    @Published private(set) var errorMessage: String?
+    @Published private(set) var networkError: Error?
     @Published private(set) var loaderActiveStatus: Bool
     private var cancellables: Set<AnyCancellable>
     private var observer: NSObjectProtocol?
@@ -35,7 +35,7 @@ final class AlarmSettingViewModel {
         self.cancellables = []
         self.busArriveInfos = AlarmSettingBusArriveInfos(arriveInfos: [], changedByTimer: false)
         self.busStationInfos = nil
-        self.errorMessage = nil
+        self.networkError = nil
         self.loaderActiveStatus = true
         self.bind()
     }
@@ -69,6 +69,10 @@ final class AlarmSettingViewModel {
                                              ord: "\(self.stationOrd)")
             .first()
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+                self?.loaderActiveStatus = false
+            })
             .compactMap({$0})
             .map({ data in
                 var arriveInfos: [AlarmSettingBusArriveInfo] = []
@@ -98,6 +102,10 @@ final class AlarmSettingViewModel {
         self.useCase.busStationsInfoWillLoaded(busRouetId: "\(self.busRouteId)", arsId: self.arsId)
             .first()
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+                self?.loaderActiveStatus = false
+            })
             .compactMap({ [weak self] result -> [StationByRouteListDTO]? in
                 if result == nil { self?.busStationInfos = nil }
                 return result
@@ -121,7 +129,7 @@ final class AlarmSettingViewModel {
     private func bindAlarmSettingViewModelInfo() {
         self.$busArriveInfos.compactMap({$0})
             .combineLatest(self.$busStationInfos.dropFirst())
-            .filter({ [weak self] _ in
+            .filter({ [weak self] aa in
                 guard let self = self else { return false }
                 return self.loaderActiveStatus
             })
