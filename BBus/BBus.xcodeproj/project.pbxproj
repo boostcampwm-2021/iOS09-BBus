@@ -15,6 +15,7 @@
 		044684292756760A007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
 		0446842B27567654007E440A /* HomeAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842A27567654007E440A /* HomeAPIUsable.swift */; };
 		0446842D27567660007E440A /* HomeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842C27567660007E440A /* HomeCalculatable.swift */; };
+		0446842F275676B3007E440A /* BusRouteAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842E275676B3007E440A /* BusRouteAPIUsable.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -97,7 +98,7 @@
 		4ACA51F1272FCDF200EC0531 /* SearchAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F0272FCDF200EC0531 /* SearchAPIUseCase.swift */; };
 		4ACA51F3272FCDF900EC0531 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */; };
 		4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F4272FCE0200EC0531 /* SearchView.swift */; };
-		4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */; };
+		4ACA5209272FCE5A00EC0531 /* BusRouteAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteAPIUseCase.swift */; };
 		4ACA520B272FCE5F00EC0531 /* BusRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */; };
 		4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520C272FCE6500EC0531 /* BusRouteView.swift */; };
 		4ACA5213272FCE8500EC0531 /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
@@ -268,6 +269,7 @@
 		044684282756760A007E440A /* SearchCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculatable.swift; sourceTree = "<group>"; };
 		0446842A27567654007E440A /* HomeAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIUsable.swift; sourceTree = "<group>"; };
 		0446842C27567660007E440A /* HomeCalculatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalculatable.swift; sourceTree = "<group>"; };
+		0446842E275676B3007E440A /* BusRouteAPIUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteAPIUsable.swift; sourceTree = "<group>"; };
 		0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalculateUseCase.swift; sourceTree = "<group>"; };
 		0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteHeaderView.swift; sourceTree = "<group>"; };
 		0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStationTableViewCell.swift; sourceTree = "<group>"; };
@@ -351,7 +353,7 @@
 		4ACA51F0272FCDF200EC0531 /* SearchAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIUseCase.swift; sourceTree = "<group>"; };
 		4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		4ACA51F4272FCE0200EC0531 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteUseCase.swift; sourceTree = "<group>"; };
+		4ACA5208272FCE5A00EC0531 /* BusRouteAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteAPIUseCase.swift; sourceTree = "<group>"; };
 		4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteViewModel.swift; sourceTree = "<group>"; };
 		4ACA520C272FCE6500EC0531 /* BusRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteView.swift; sourceTree = "<group>"; };
 		4ACA5212272FCE8500EC0531 /* BusCongestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusCongestion.swift; sourceTree = "<group>"; };
@@ -829,7 +831,8 @@
 		4ACA5204272FCE3900EC0531 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA5208272FCE5A00EC0531 /* BusRouteUseCase.swift */,
+				0446842E275676B3007E440A /* BusRouteAPIUsable.swift */,
+				4ACA5208272FCE5A00EC0531 /* BusRouteAPIUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1864,7 +1867,8 @@
 				4A04682C2732ECAA008D87CE /* KeyboardAccessoryView.swift in Sources */,
 				87115F1F2756766900601770 /* getBusPosByVehId.swift in Sources */,
 				4A5182A627550988001EA530 /* RequestFactory.swift in Sources */,
-				4ACA5209272FCE5A00EC0531 /* BusRouteUseCase.swift in Sources */,
+				4ACA5209272FCE5A00EC0531 /* BusRouteAPIUseCase.swift in Sources */,
+				0446842F275676B3007E440A /* BusRouteAPIUsable.swift in Sources */,
 				4A5100372755106A00754B36 /* HomeCalculateUseCase.swift in Sources */,
 				4AA294B1273C1094008E5497 /* GetStationListFetcher.swift in Sources */,
 				4ACA5233272FCF0F00EC0531 /* SearchViewController.swift in Sources */,
