@@ -5,7 +5,7 @@
 //  Created by 김태훈 on 2021/11/22.
 //
 
-import UIKit
+import Foundation
 import Combine
 
 final class GetOnAlarmController {

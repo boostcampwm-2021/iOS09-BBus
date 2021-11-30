@@ -38,29 +38,6 @@ final class StationView: NavigatableView {
         loader.color = BBusColor.gray
         return loader
     }()
-    private lazy var customNavigationBar: CustomNavigationBar = {
-        let bar = CustomNavigationBar()
-        bar.configureTintColor(color: BBusColor.white)
-        if let bbusGray = BBusColor.bbusGray {
-            bar.configureBackgroundColor(color: bbusGray)
-        }
-        bar.configureAlpha(alpha: 0)
-        return bar
-    }()
-    
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-//            self?.viewModel?.refresh()
-        }
-        return button
-    }()
 
     convenience init() {
         self.init(frame: CGRect())
@@ -178,6 +155,6 @@ final class StationView: NavigatableView {
     }
     
     func configureNavigationAlpha(alpha: CGFloat) {
-        self.customNavigationBar.configureAlpha(alpha: alpha)
+        self.navigationBar.configureAlpha(alpha: alpha)
     }
 }

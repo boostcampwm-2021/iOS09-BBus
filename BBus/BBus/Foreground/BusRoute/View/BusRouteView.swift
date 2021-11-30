@@ -32,21 +32,6 @@ final class BusRouteView: NavigatableView {
         loader.color = BBusColor.gray
         return loader
     }()
-    private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var refreshButton: UIButton = {
-        let radius: CGFloat = 25
-
-        let button = UIButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-
-        button.addAction(UIAction(handler: { [weak self] _ in
-//            self?.viewModel?.refreshBusPos()
-        }), for: .touchUpInside)
-        return button
-    }()
     private var busTags: [BusTagView] = []
     private var busIcon: UIImage?
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
@@ -127,9 +112,9 @@ final class BusRouteView: NavigatableView {
     func configureColor(to color: UIColor?) {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
-        self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BBusColor.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
+        self.navigationBar.configureBackgroundColor(color: color)
+        self.navigationBar.configureTintColor(color: BBusColor.white)
+        self.navigationBar.configureAlpha(alpha: 0)
     }
 
     func configureTableViewHeight(count: Int) {
@@ -223,10 +208,10 @@ final class BusRouteView: NavigatableView {
     }
     
     func configureBackButtonTitle(title: String) {
-        self.customNavigationBar.configureBackButtonTitle(title)
+        self.navigationBar.configureBackButtonTitle(title)
     }
     
     func configureNavigationAlpha(alpha: CGFloat) {
-        self.customNavigationBar.configureAlpha(alpha: alpha)
+        self.navigationBar.configureAlpha(alpha: alpha)
     }
 }

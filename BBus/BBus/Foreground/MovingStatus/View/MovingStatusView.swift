@@ -45,13 +45,6 @@ final class MovingStatusView: RefreshableView {
             }), for: .touchUpInside)
         }
     }
-    private weak var refreshButtonDelegate: RefreshButtonDelegate? {
-        didSet {
-            self.refreshButton.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-                self?.refreshButtonDelegate?.buttonTapped()
-            }
-        }
-    }
     
     private lazy var bottomIndicatorButton: UIButton = {
         let button = UIButton()
@@ -138,16 +131,6 @@ final class MovingStatusView: RefreshableView {
         let loader = UIActivityIndicatorView(style: .large)
         loader.color = BBusColor.gray
         return loader
-    }()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-        return button
     }()
     private var busTag: MovingStatusBusTagView?
     private var color: UIColor?
@@ -293,7 +276,7 @@ final class MovingStatusView: RefreshableView {
             self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
             self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: refreshBottomInterval)
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: refreshBottomInterval)
         ])
     }
     

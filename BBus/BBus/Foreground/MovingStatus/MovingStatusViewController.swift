@@ -274,10 +274,3 @@ extension MovingStatusViewController: CLLocationManagerDelegate {
         }
     }
 }
-
-// MARK: - Delegate: RefreshButton
-extension MovingStatusViewController: RefreshButtonDelegate {
-    func buttonTapped() {
-        self.viewModel?.updateAPI()
-    }
-}

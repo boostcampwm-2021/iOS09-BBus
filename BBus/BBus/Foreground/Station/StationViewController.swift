@@ -36,6 +36,7 @@ final class StationViewController: UIViewController, BaseViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.baseViewDidLoad()
+        self.configureColor()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +64,11 @@ final class StationViewController: UIViewController, BaseViewControllerType {
         ]) 
 
         self.stationBusInfoHeight = nil
+    }
+
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.bbusGray
+        self.stationView.navigationBar.configureBackgroundColor(color: BBusColor.bbusGray)
     }
 
     func configureDelegate() {
@@ -300,7 +306,6 @@ extension StationViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Delegate : UIScrollView
 extension StationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
         let baseLineContentOffset = StationHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
             self.stationView.configureNavigationAlpha(alpha: 1)
