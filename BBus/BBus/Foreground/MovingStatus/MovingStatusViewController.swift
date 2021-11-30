@@ -187,6 +187,10 @@ final class MovingStatusViewController: UIViewController, BaseViewControllerType
             .store(in: &self.cancellables)
     }
     
+    func refresh() {
+        self.viewModel?.updateAPI()
+    }
+    
     private func networkAlert() {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
@@ -224,10 +228,6 @@ final class MovingStatusViewController: UIViewController, BaseViewControllerType
         content.badge = Int(truncating: content.badge ?? 0) + 1 as NSNumber
         let request = UNNotificationRequest(identifier: Self.alarmIdentifier, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-    }
-
-    func refresh() {
-        self.viewModel?.updateAPI()
     }
 }
 
