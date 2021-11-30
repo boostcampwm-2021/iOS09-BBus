@@ -11,27 +11,11 @@ import Combine
 final class BusRouteViewController: UIViewController {
 
     weak var coordinator: BusRouteCoordinator?
-    private lazy var customNavigationBar = CustomNavigationBar()
     private lazy var busRouteView = BusRouteView()
     private let viewModel: BusRouteViewModel?
     private var cancellables: Set<AnyCancellable> = []
     private var busTags: [BusTagView] = []
     private var busIcon: UIImage?
-
-    private lazy var refreshButton: UIButton = {
-        let radius: CGFloat = 25
-
-        let button = UIButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-
-        button.addAction(UIAction(handler: { [weak self] _ in
-            self?.viewModel?.refreshBusPos()
-        }), for: .touchUpInside)
-        return button
-    }()
 
     init(viewModel: BusRouteViewModel) {
         self.viewModel = viewModel
@@ -66,10 +50,7 @@ final class BusRouteViewController: UIViewController {
 
     // MARK: - Configure
     private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.busRouteView, self.customNavigationBar, self.refreshButton)
+        self.view.addSubviews(self.busRouteView)
 
         NSLayoutConstraint.activate([
             self.busRouteView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -78,31 +59,18 @@ final class BusRouteViewController: UIViewController {
             self.busRouteView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-        NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
         self.busRouteView.configureTableViewHeight(count: 20)
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
     private func configureDelegate() {
         self.busRouteView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
 
     private func configureBaseColor() {
         self.view.backgroundColor = BBusColor.gray
-        self.customNavigationBar.configureBackgroundColor(color: BBusColor.gray)
-        self.customNavigationBar.configureTintColor(color: BBusColor.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
+        self.busRouteView.navigationBar.configureBackgroundColor(color: BBusColor.gray)
+        self.busRouteView.navigationBar.configureTintColor(color: BBusColor.white)
+        self.busRouteView.navigationBar.configureAlpha(alpha: 0)
         self.busRouteView.configureColor(to: BBusColor.gray)
     }
     
@@ -131,9 +99,9 @@ final class BusRouteViewController: UIViewController {
         }
 
         self.view.backgroundColor = color
-        self.customNavigationBar.configureBackgroundColor(color: color)
-        self.customNavigationBar.configureTintColor(color: BBusColor.white)
-        self.customNavigationBar.configureAlpha(alpha: 0)
+        self.busRouteView.navigationBar.configureBackgroundColor(color: color)
+        self.busRouteView.navigationBar.configureTintColor(color: BBusColor.white)
+        self.busRouteView.navigationBar.configureAlpha(alpha: 0)
         self.busRouteView.configureColor(to: color)
     }
 
@@ -165,7 +133,7 @@ final class BusRouteViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] header in
                 if let header = header {
-                    self?.customNavigationBar.configureBackButtonTitle(header.busRouteName)
+                    self?.busRouteView.navigationBar.configureBackButtonTitle(header.busRouteName)
                     self?.busRouteView.configureHeaderView(busType: header.routeType.rawValue+"버스",
                                                           busNumber: header.busRouteName,
                                                           fromStation: header.startStation,
@@ -279,10 +247,10 @@ extension BusRouteViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let baseLineContentOffset = BusRouteHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
-            self.customNavigationBar.configureAlpha(alpha: 1)
+            self.busRouteView.navigationBar.configureAlpha(alpha: 1)
         }
         else {
-            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+            self.busRouteView.navigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
         }
     }
 
@@ -308,5 +276,12 @@ extension BusRouteViewController: UIScrollViewDelegate {
 extension BusRouteViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension BusRouteViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.refreshBusPos()
     }
 }
