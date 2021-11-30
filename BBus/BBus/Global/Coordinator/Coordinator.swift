@@ -32,12 +32,9 @@ typealias CoordinatorDelegate = (CoordinatorFinishDelegate & CoordinatorCreateDe
 protocol Coordinator: AnyObject {
     var navigationPresenter: UINavigationController { get set }
     var delegate: CoordinatorDelegate? { get set }
-    func start()
 }
 
 extension Coordinator {
-    func start() { }
-
     func coordinatorDidFinish() {
         self.delegate?.removeChildCoordinator(self)
     }
