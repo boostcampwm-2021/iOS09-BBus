@@ -18,32 +18,10 @@ final class StationViewController: UIViewController {
     weak var coordinator: StationCoordinator?
     private let viewModel: StationViewModel?
 
-    private lazy var customNavigationBar: CustomNavigationBar = {
-        let bar = CustomNavigationBar()
-        bar.configureTintColor(color: BBusColor.white)
-        if let bbusGray = BBusColor.bbusGray {
-            bar.configureBackgroundColor(color: bbusGray)
-        }
-        bar.configureAlpha(alpha: 0)
-        return bar
-    }()
     private lazy var stationView: StationView = {
         let view = StationView()
         view.backgroundColor = BBusColor.white
         return view
-    }()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.refresh()
-        }
-        return button
     }()
     private var collectionHeightConstraint: NSLayoutConstraint?
     private var cancellables: Set<AnyCancellable> = []
@@ -81,10 +59,7 @@ final class StationViewController: UIViewController {
 
     // MARK: - Configure
     private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.stationView, self.customNavigationBar, self.refreshButton)
+        self.view.addSubviews(self.stationView)
 
         NSLayoutConstraint.activate([
             self.stationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -92,26 +67,12 @@ final class StationViewController: UIViewController {
             self.stationView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.stationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
-
-        NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
         
         self.stationBusInfoHeight = nil
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
     private func configureDelegate() {
         self.stationView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
     
     private func binding() {
@@ -329,10 +290,10 @@ extension StationViewController: UIScrollViewDelegate {
 //        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
         let baseLineContentOffset = StationHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
-            self.customNavigationBar.configureAlpha(alpha: 1)
+            self.stationView.navigationBar.configureAlpha(alpha: 1)
         }
         else {
-            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+            self.stationView.navigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
         }
     }
 
@@ -358,6 +319,13 @@ extension StationViewController: UIScrollViewDelegate {
 extension StationViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension StationViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.refresh()
     }
 }
 
