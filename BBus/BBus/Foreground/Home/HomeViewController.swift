@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, BaseViewControllerType {
 
     private var lastContentOffset: CGFloat = 0
 
@@ -31,18 +31,16 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Home"
-        self.configureColor()
-        self.configureLayout()
-        self.binding()
-        self.homeView.configureLayout()
-        self.homeView.configureDelegate(self)
+        self.baseViewDidLoad()
+      
         self.configureStatusBarLayout()
+        self.configureColor()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.reloadFavorite()
+        self.baseViewWillAppear()
+        
         self.viewModel?.configureObserver()
     }
 
@@ -52,7 +50,7 @@ final class HomeViewController: UIViewController {
     }
 
     // MARK: - Configuration
-    private func configureLayout() {
+    func configureLayout() {
         self.view.addSubviews(self.homeView)
 
         NSLayoutConstraint.activate([
@@ -78,19 +76,28 @@ final class HomeViewController: UIViewController {
             statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
             statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+        
+        self.homeView.configureLayout()
+    }
+    
+    func configureDelegate() {
+        self.homeView.configureDelegate(self)
+    }
+    
+    func refresh() {
+        self.viewModel?.reloadFavorite()
+    }
+    
+    func bindAll() {
+        self.bindFavoriteList()
+        self.bindNetworkError()
     }
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
     }
 
-    private func binding() {
-        self.bindFavoriteList()
-        self.bindNetworkError()
-    }
-
     private func bindFavoriteList() {
-
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { !$0.changedByTimer }

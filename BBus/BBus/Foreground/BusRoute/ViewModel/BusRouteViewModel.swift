@@ -30,7 +30,6 @@ final class BusRouteViewModel {
         self.bodys = []
         self.buses = []
         self.bindLoader()
-        self.bindNetworkError()
         self.bindHeaderInfo()
         self.bindBodysInfo()
         self.bindBusesPosInfo()
@@ -47,12 +46,18 @@ final class BusRouteViewModel {
     private func bindHeaderInfo() {
         self.usecase.searchHeader(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .assign(to: &self.$header)
     }
 
     private func bindBodysInfo() {
         self.usecase.fetchRouteList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] bodys in
                 self?.convertBusStationInfo(with: bodys)
             })
@@ -62,16 +67,13 @@ final class BusRouteViewModel {
     private func bindBusesPosInfo() {
         self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] buses in
                 self?.convertBusPosInfo(with: buses)
             })
             .store(in: &self.cancellables)
-    }
-    
-    private func bindNetworkError() {
-        self.usecase.$networkError
-            .receive(on: DispatchQueue.main)
-            .assign(to: &self.$networkError)
     }
 
     private func convertBusPos(order: Int, sect: String, fullSect: String) -> CGFloat {
