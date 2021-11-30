@@ -49,4 +49,15 @@ struct StationByRouteListDTO: Codable {
         self.lastTm = (try? container.decode(String.self, forKey: .lastTm)) ?? ""
         self.transYn = (try? container.decode(String.self, forKey: .transYn)) ?? ""
     }
+    
+    init(sectionSpeed: Int, sequence: Int, stationName: String, fullSectionDistance: Int, arsId: String, beginTm: String, lastTm: String, transYn: String) {
+        self.sectionSpeed = sectionSpeed
+        self.sequence = sequence
+        self.stationName = stationName
+        self.fullSectionDistance = fullSectionDistance
+        self.arsId = arsId
+        self.beginTm = beginTm
+        self.lastTm = lastTm
+        self.transYn = transYn
+    }
 }
