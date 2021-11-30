@@ -21,8 +21,10 @@ final class AlarmSettingCoordinator: Coordinator {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let useCase = AlarmSettingAPIUseCase(useCases: apiUseCases)
-        let viewModel = AlarmSettingViewModel(useCase: useCase,
+        let apiUseCase = AlarmSettingAPIUseCase(useCases: apiUseCases)
+        let calculateUseCase = AlarmSettingCalculateUseCase()
+        let viewModel = AlarmSettingViewModel(apiUseCase: apiUseCase,
+                                              calculateUseCase: calculateUseCase,
                                               stationId: stationId,
                                               busRouteId: busRouteId,
                                               stationOrd: stationOrd,

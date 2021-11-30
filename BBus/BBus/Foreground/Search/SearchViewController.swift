@@ -68,7 +68,7 @@ final class SearchViewController: UIViewController {
             })
             .store(in: &self.cancellables)
         
-        self.viewModel?.usecase.$networkError
+        self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }

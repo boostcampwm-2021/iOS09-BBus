@@ -20,8 +20,11 @@ final class StationCoordinator: BusRoutePushable, AlarmSettingPushable {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let usecase = StationUsecase(usecases: apiUseCases)
-        let viewModel = StationViewModel(usecase: usecase, arsId: arsId)
+        let apiUseCase = StationAPIUseCase(usecases: apiUseCases)
+        let calculateUseCase = StationCalculateUseCase()
+        let viewModel = StationViewModel(apiUseCase: apiUseCase,
+                                         calculateUseCase: calculateUseCase,
+                                         arsId: arsId)
         let viewController = StationViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)

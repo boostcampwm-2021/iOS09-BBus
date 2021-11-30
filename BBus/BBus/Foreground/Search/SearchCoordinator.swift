@@ -20,8 +20,9 @@ final class SearchCoordinator: BusRoutePushable, StationPushable {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let usecase = SearchAPIUseCase(usecases: apiUseCases)
-        let viewModel = SearchViewModel(usecase: usecase)
+        let apiUseCase = SearchAPIUseCase(usecases: apiUseCases)
+        let calculateUseCase = SearchCalculateUseCase()
+        let viewModel = SearchViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase)
         let viewController = SearchViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.navigationPresenter.pushViewController(viewController, animated: true)

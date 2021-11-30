@@ -20,8 +20,9 @@ final class HomeCoordinator: SearchPushable, BusRoutePushable, AlarmSettingPusha
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let useCase = HomeAPIUseCase(usecases: apiUseCases)
-        let viewModel = HomeViewModel(useCase: useCase)
+        let apiUseCase = HomeAPIUseCase(useCases: apiUseCases)
+        let calculateUseCase = HomeCalculateUseCase()
+        let viewModel = HomeViewModel(apiUseCase: apiUseCase, calculateUseCase: calculateUseCase)
         let viewController = HomeViewController(viewModel: viewModel)
         viewController.coordinator = self
         navigationPresenter.pushViewController(viewController, animated: false) // present

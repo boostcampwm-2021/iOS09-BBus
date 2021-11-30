@@ -9,22 +9,20 @@ import Foundation
 import Combine
 
 protocol MovingStatusAPIUsable: BaseUseCase {
-    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Never>
-    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Never>
-    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Never>
+    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error>
+    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Error>
+    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Error>
 }
 
 final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
 
     private let usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable
-    @Published var networkError: Error?
 
     init(usecases: GetRouteListUsable & GetStationsByRouteListUsable & GetBusPosByRtidUsable) {
         self.usecases = usecases
-        self.networkError = nil
     }
 
-    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Never> {
+    func searchHeader(busRouteId: Int) -> AnyPublisher<BusRouteDTO?, Error> {
         return self.usecases.getRouteList()
             .decode(type: [BusRouteDTO].self, decoder: JSONDecoder())
             .tryMap({ routeList in
@@ -36,32 +34,23 @@ final class MovingStatusAPIUseCase: MovingStatusAPIUsable {
                     throw BBusAPIError.wrongFormatError
                 }
             })
-            .catchError({ [weak self] error in
-                self?.networkError = error
-            })
             .eraseToAnyPublisher()
     }
 
-    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Never> {
+    func fetchRouteList(busRouteId: Int) -> AnyPublisher<[StationByRouteListDTO], Error> {
         return self.usecases.getStationsByRouteList(busRoutedId: "\(busRouteId)")
             .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
             .map({ item in
                 item.msgBody.itemList
             })
-            .catchError({ [weak self] error in
-                self?.networkError = error
-            })
             .eraseToAnyPublisher()
     }
 
-    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Never> {
+    func fetchBusPosList(busRouteId: Int) -> AnyPublisher<[BusPosByRtidDTO], Error> {
         return self.usecases.getBusPosByRtid(busRoutedId: "\(busRouteId)")
             .decode(type: BusPosByRtidResult.self, decoder: JSONDecoder())
             .tryMap ({ item in
                 return item.msgBody.itemList
-            })
-            .catchError({ [weak self] error in
-                self?.networkError = error
             })
             .eraseToAnyPublisher()
     }

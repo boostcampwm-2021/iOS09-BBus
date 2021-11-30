@@ -71,8 +71,13 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
-        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let apiUseCase = MovingStatusAPIUseCase(usecases: apiUseCases)
+        let calculateUseCase = MovingStatusCalculateUseCase()
+        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,
+                                              calculateUseCase: calculateUseCase,
+                                              busRouteId: busRouteId,
+                                              fromArsId: fromArsId,
+                                              toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController
@@ -88,8 +93,13 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
                                           requestFactory: RequestFactory())
-        let usecase = MovingStatusAPIUseCase(usecases: apiUseCases)
-        let viewModel = MovingStatusViewModel(usecase: usecase, busRouteId: busRouteId, fromArsId: fromArsId, toArsId: toArsId)
+        let apiUseCase = MovingStatusAPIUseCase(usecases: apiUseCases)
+        let calculateUseCase = MovingStatusCalculateUseCase()
+        let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,
+                                              calculateUseCase: calculateUseCase,
+                                              busRouteId: busRouteId,
+                                              fromArsId: fromArsId,
+                                              toArsId: toArsId)
         let viewController = MovingStatusViewController(viewModel: viewModel)
         viewController.coordinator = self
         self.movingStatusPresenter = viewController

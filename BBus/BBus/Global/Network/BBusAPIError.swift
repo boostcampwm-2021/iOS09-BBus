@@ -9,7 +9,7 @@ import Foundation
 
 enum BBusAPIError: Error {
     case systemError, noneParamError, wrongParamError, noneResultError, noneAccessKeyError, noneRegisteredKeyError, suspendedKeyError, exceededKeyError, wrongRequestError, wrongRouteIdError, wrongStationError, noneBusArriveInfoError, wrongStartStationIdError, wrongEndStationIdError, preparingAPIError, wrongFormatError, noMoreAccessKeyError,
-         trafficExceed
+         trafficExceed, invalidStationError
     
     init?(errorCode: Int) {
         switch errorCode {
