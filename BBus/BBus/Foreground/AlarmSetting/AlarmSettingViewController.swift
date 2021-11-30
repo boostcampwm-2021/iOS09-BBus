@@ -12,20 +12,6 @@ final class AlarmSettingViewController: UIViewController {
 
     weak var coordinator: AlarmSettingCoordinator?
     private lazy var alarmSettingView = AlarmSettingView()
-    private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.refresh()
-        }
-        return button
-    }()
     private let viewModel: AlarmSettingViewModel?
     private var cancellables: Set<AnyCancellable> = []
     
@@ -64,41 +50,24 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Configure
     private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.customNavigationBar, self.alarmSettingView, self.refreshButton)
+        self.view.addSubviews(self.alarmSettingView)
 
         NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            self.alarmSettingView.topAnchor.constraint(equalTo: self.customNavigationBar.bottomAnchor),
+            self.alarmSettingView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.alarmSettingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.alarmSettingView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.alarmSettingView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
         ])
     }
 
     private func configureDelegate() {
         self.alarmSettingView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
 
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
-        self.customNavigationBar.configureTintColor(color: BBusColor.black)
-        self.customNavigationBar.configureAlpha(alpha: 1)
+        self.alarmSettingView.navigationBar.configureTintColor(color: BBusColor.black)
+        self.alarmSettingView.navigationBar.configureAlpha(alpha: 1)
     }
     
     private func binding() {
@@ -127,7 +96,7 @@ final class AlarmSettingViewController: UIViewController {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
                        let stationName = infos.first?.name {
-                        self?.customNavigationBar.configureTitle(busName: viewModel.busName,
+                        self?.alarmSettingView.navigationBar.configureTitle(busName: viewModel.busName,
                                                                  stationName: stationName,
                                                                  routeType: viewModel.routeType)
                     }
@@ -339,6 +308,13 @@ extension AlarmSettingViewController: UITableViewDelegate {
 extension AlarmSettingViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate : RefreshButton
+extension AlarmSettingViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.refresh()
     }
 }
 
