@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 protocol AlarmSettingAPIUsable: BaseUseCase {
-    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Never>
-    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Never>
+    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Error>
+    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Error>
 }
 
 final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
@@ -24,7 +24,7 @@ final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
         self.networkError = nil
     }
     
-    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Never> {
+    func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Error> {
         return self.useCases.getArrInfoByRouteList(stId: stId,
                                             busRouteId: busRouteId,
                                             ord: ord)
@@ -34,22 +34,16 @@ final class AlarmSettingAPIUseCase: AlarmSettingAPIUsable {
                 guard let item = result.first else { throw BBusAPIError.wrongFormatError }
                 return item
             })
-            .catchError({ [weak self] error in
-                self?.networkError = error
-            })
             .eraseToAnyPublisher()
     }
     
-    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Never> {
+    func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Error> {
         return self.useCases.getStationsByRouteList(busRoutedId: busRouetId)
             .decode(type: StationByRouteResult.self, decoder: JSONDecoder())
             .map({ item -> [StationByRouteListDTO]? in
                 let result = item.msgBody.itemList
                 guard let index = result.firstIndex(where: { $0.arsId == arsId }) else { return nil }
                 return Array(result[index..<result.count])
-            })
-            .catchError({ [weak self] error in
-                self?.networkError = error
             })
             .eraseToAnyPublisher()
     }
