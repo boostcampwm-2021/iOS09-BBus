@@ -24,21 +24,6 @@ final class MovingStatusViewController: UIViewController {
     private var busIcon: UIImage?
     private var locationManager: CLLocationManager?
 
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.updateAPI()
-        }
-        return button
-    }()
-
     init(viewModel: MovingStatusViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -91,24 +76,13 @@ final class MovingStatusViewController: UIViewController {
     
     // MARK: - Configure
     private func configureLayout() {
-        self.view.addSubviews(self.movingStatusView, self.refreshButton)
+        self.view.addSubviews(self.movingStatusView)
         
         NSLayoutConstraint.activate([
             self.movingStatusView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.movingStatusView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.movingStatusView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.movingStatusView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshBottomInterval: CGFloat = -MovingStatusView.endAlarmViewHeight
-        let refreshTrailingInterval: CGFloat = -16
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshBottomInterval)
         ])
     }
     
@@ -363,5 +337,12 @@ extension MovingStatusViewController: CLLocationManagerDelegate {
         if let coordinate = locations.last?.coordinate {
             self.viewModel?.findBoardBus(gpsY: Double(coordinate.latitude), gpsX: Double(coordinate.longitude))
         }
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension MovingStatusViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.updateAPI()
     }
 }

@@ -19,7 +19,7 @@ protocol EndAlarmButtonDelegate: AnyObject {
     func shouldEndAlarm()
 }
 
-final class MovingStatusView: UIView {
+final class MovingStatusView: RefreshableView {
     
     static let bottomIndicatorHeight: CGFloat = 80
     static let endAlarmViewHeight: CGFloat = 80
@@ -151,8 +151,8 @@ final class MovingStatusView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
-        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView, self.loader)
+    override func configureLayout() {
+        self.addSubviews(self.bottomIndicatorButton, self.endAlarmButton, self.stationsTableView, self.headerView, self.loader, self.refreshButton)
         
         NSLayoutConstraint.activate([
             self.bottomIndicatorButton.topAnchor.constraint(equalTo: self.topAnchor),
@@ -263,14 +263,26 @@ final class MovingStatusView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        let refreshButtonWidthAnchor: CGFloat = 50
+        let refreshBottomInterval: CGFloat = -MovingStatusView.endAlarmViewHeight
+        let refreshTrailingInterval: CGFloat = -16
+
+        NSLayoutConstraint.activate([
+            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
+            self.refreshButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: refreshTrailingInterval),
+            self.refreshButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: refreshBottomInterval)
+        ])
     }
     
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BottomIndicatorButtonDelegate & FoldButtonDelegate & EndAlarmButtonDelegate & RefreshButtonDelegate) {
         self.stationsTableView.delegate = delegate
         self.stationsTableView.dataSource = delegate
         self.bottomIndicatorButtondelegate = delegate
         self.foldButtonDelegate = delegate
         self.endAlarmButtonDelegate = delegate
+        self.refreshButton.configureDelegate(delegate)
     }
     
     func createBusTag(location: CGFloat = 0, color: UIColor? = BBusColor.gray, busIcon: UIImage? = BBusImage.blueBusIcon, remainStation: Int?) -> MovingStatusBusTagView {
