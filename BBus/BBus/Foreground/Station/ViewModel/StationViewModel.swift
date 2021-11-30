@@ -22,8 +22,8 @@ final class StationViewModel {
     @Published private(set) var favoriteItems: [FavoriteItemDTO]?
     @Published private(set) var nextStation: String?
     @Published private(set) var stopLoader: Bool
-    private var cancellables: Set<AnyCancellable>
     @Published private(set) var error: Error?
+    private var cancellables: Set<AnyCancellable>
     
     init(apiUseCase: StationAPIUsable, calculateUseCase: StationCalculatable, arsId: String) {
         self.apiUseCase = apiUseCase
