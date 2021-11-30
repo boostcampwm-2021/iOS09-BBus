@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import CoreLocation
 
-protocol MovingStatusCalculateable: BaseUseCase {
+protocol MovingStatusCalculatable: AverageSectionTimeCalculatable {
     func filteredBuses(from buses: [BusPosByRtidDTO], startOrd: Int, currentOrd: Int, count: Int) -> [BusPosByRtidDTO]
     func convertBusInfo(header: BusRouteDTO) -> BusInfo
     func remainStation(bus: BusPosByRtidDTO, startOrd: Int, count: Int) -> Int
@@ -17,12 +17,11 @@ protocol MovingStatusCalculateable: BaseUseCase {
     func remainTime(bus: BusPosByRtidDTO, stations: [StationInfo], startOrd: Int, boardedBus: BoardedBus) -> Int
     func convertBusPos(startOrd: Int, order: Int, sect: String, fullSect: String) -> Double
     func isOnBoard(gpsY: Double, gpsX: Double, busY: Double, busX: Double) -> Bool
-    func averageSectionTime(speed: Int, distance: Int) -> Int
     func stationIndex(with targetId: String, with stations: [StationByRouteListDTO]) -> Int?
     func filteredStations(from stations: [StationByRouteListDTO]) -> (stations: [StationInfo], time: Int)
 }
 
-final class MovingStatusCalculateUseCase: MovingStatusCalculateable {
+final class MovingStatusCalculateUseCase: MovingStatusCalculatable {
 
     func filteredBuses(from buses: [BusPosByRtidDTO], startOrd: Int, currentOrd: Int, count: Int) -> [BusPosByRtidDTO] {
         print(buses)
@@ -88,14 +87,6 @@ final class MovingStatusCalculateUseCase: MovingStatusCalculateable {
         let distanceInMeters = userLocation.distance(from: busLocation)
         
         return distanceInMeters <= 100.0
-    }
-    
-    func averageSectionTime(speed: Int, distance: Int) -> Int {
-        let averageBusSpeed: Double = 21
-        let metterToKilometter: Double = 0.06
-
-        let result = Double(distance)/averageBusSpeed*metterToKilometter
-        return Int(ceil(result))
     }
     
     func stationIndex(with targetId: String, with stations: [StationByRouteListDTO]) -> Int? {
