@@ -85,7 +85,7 @@ class AlarmSettingViewModelTests: XCTestCase {
                                                           arsId: "11111",
                                                           routeType: RouteType.mainLine,
                                                           busName: "11")
-        let expectation = expectation(description: "AlarmSettingViewModel에 busArriveInfos가 저장되는지 확인")
+        let expectation = self.expectation(description: "AlarmSettingViewModel에 busArriveInfos가 저장되는지 확인")
         let expectedFirstArriveInfo = self.firstArriveInfo
         let expectedSecondArriveInfo = self.secondArriveInfo
         let expectedResult = AlarmSettingBusArriveInfos(arriveInfos: [expectedFirstArriveInfo, expectedSecondArriveInfo], changedByTimer: false)
@@ -134,7 +134,7 @@ class AlarmSettingViewModelTests: XCTestCase {
                                                           arsId: "11111",
                                                           routeType: RouteType.mainLine,
                                                           busName: "11")
-        let expectation = expectation(description: "AlarmSettingViewModel에 busArriveInfos가 저장되는지 확인")
+        let expectation = self.expectation(description: "AlarmSettingViewModel에 busArriveInfos가 에러를 리턴하는지 확인")
         
         alarmSettingVieWModel.refresh()
         alarmSettingVieWModel.$networkError
