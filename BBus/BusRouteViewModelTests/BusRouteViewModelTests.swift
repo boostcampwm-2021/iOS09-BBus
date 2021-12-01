@@ -142,6 +142,7 @@ class BusRouteViewModelTests: XCTestCase {
         // when
         viewModel.$bodys
             .receive(on: DispatchQueue.global())
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -174,7 +175,7 @@ class BusRouteViewModelTests: XCTestCase {
         // when
         viewModel.$buses
             .receive(on: DispatchQueue.global())
-            .dropFirst()
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }

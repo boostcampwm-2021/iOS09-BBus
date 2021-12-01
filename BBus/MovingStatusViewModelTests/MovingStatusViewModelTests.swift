@@ -11,7 +11,6 @@ import Combine
 
 class MovingStatusViewModelTests: XCTestCase {
 
-    var movingStatusViewModel: MovingStatusViewModel?
     var cancellables: Set<AnyCancellable> = []
     
     class DummyMovingStatusAPIUseCase: MovingStatusAPIUsable {
@@ -83,20 +82,15 @@ class MovingStatusViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         super.setUp()
-        self.movingStatusViewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
     }
 
     override func tearDownWithError() throws {
         super.tearDown()
-        self.movingStatusViewModel = nil
     }
 
     func test_bindHeaderInfo_수신_성공() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let answerHeader = BusInfo(busName: "5524", type: .localLine)
         
@@ -122,10 +116,7 @@ class MovingStatusViewModelTests: XCTestCase {
     
     func test_bindStationsInfo_수신_성공() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let station1 = StationInfo(speed: 44, afterSpeed: 29, count: 2, title: "신림복지관앞", sectTime: 0)
         let station2 = StationInfo(speed: 29, afterSpeed: nil, count: 2, title: "난우중학교입구", sectTime: Int(ceil(Double(11.4)/Double(21))))
@@ -134,6 +125,7 @@ class MovingStatusViewModelTests: XCTestCase {
         // when
         viewModel.$stationInfos
             .receive(on: DispatchQueue.global())
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -154,10 +146,7 @@ class MovingStatusViewModelTests: XCTestCase {
     
     func test_bindBusesPosInfo_수신_성공() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let targetBus = BusPosByRtidDTO(busType: 1,
                                         congestion: 0,
@@ -172,7 +161,7 @@ class MovingStatusViewModelTests: XCTestCase {
         // when
         viewModel.$buses
             .receive(on: DispatchQueue.global())
-            .dropFirst()
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -193,17 +182,14 @@ class MovingStatusViewModelTests: XCTestCase {
     
     func test_updateRemainingStation() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let answer: Int? = 1
         
         // when
         viewModel.$remainingTime
             .receive(on: DispatchQueue.global())
-            .dropFirst()
+            .filter({ $0 != nil })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -221,16 +207,14 @@ class MovingStatusViewModelTests: XCTestCase {
     
     func test_updateBoardBus() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let targetBus = BoardedBus(location: CGFloat(Double(("0.017" as NSString).floatValue)/Double(("0.378" as NSString).floatValue)), remainStation: 1)
         
         // when
         viewModel.$boardedBus
             .receive(on: DispatchQueue.global())
+            .filter({ $0 != nil })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -252,17 +236,14 @@ class MovingStatusViewModelTests: XCTestCase {
     
     func test_remainintTime() throws {
         // given
-        guard let viewModel = self.movingStatusViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         let expectation = XCTestExpectation()
         let answer: Int? = 1
         
         // when
         viewModel.$remainingTime
             .receive(on: DispatchQueue.global())
-            .dropFirst()
+            .filter({ $0 != nil })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
