@@ -124,7 +124,7 @@ class StationViewModelTests: XCTestCase {
         }
     }
     
-    private let timeout: TimeInterval = 15
+    private let timeout: TimeInterval = 10
     private var cancellables: Set<AnyCancellable> = []
 
     override func setUpWithError() throws {
