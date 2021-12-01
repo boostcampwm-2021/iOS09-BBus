@@ -186,6 +186,12 @@ final class BusRouteView: NavigatableView {
         case .localLine:
             color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBusIcon
+        case .town:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .airport:
+            color = BBusColor.bbusLikeYellow
+            self.busIcon = BBusImage.blueBusIcon
         }
 
         self.configureColor(to: color)

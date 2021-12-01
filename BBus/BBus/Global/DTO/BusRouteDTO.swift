@@ -22,4 +22,6 @@ enum RouteType: String, Codable {
     case circulation = "순환"
     case lateNight = "심야"
     case localLine = "지선"
+    case airport = "공항"
+    case town = "마을"
 }

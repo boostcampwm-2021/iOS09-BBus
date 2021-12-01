@@ -327,6 +327,12 @@ final class MovingStatusView: RefreshableView {
         case .localLine:
             self.color = BBusColor.bbusTypeGreen
             self.busIcon = BBusImage.greenBooduckBus
+        case .town:
+            self.color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .airport:
+            self.color = BBusColor.bbusLikeYellow
+            self.busIcon = BBusImage.blueBusIcon
         }
         
         self.configureColor(to: self.color)
