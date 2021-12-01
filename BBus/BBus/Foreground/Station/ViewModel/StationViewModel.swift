@@ -62,6 +62,7 @@ final class StationViewModel {
             .sink(receiveCompletion: { error in
                 print(error)
             }, receiveValue: { [weak self] arriveInfo in
+                guard arriveInfo.count > 0 else { self?.error = BBusAPIError.noneResultError; return }
                 self?.nextStation = arriveInfo[0].nextStation
                 self?.classifyByRouteType(with: arriveInfo)
             })
