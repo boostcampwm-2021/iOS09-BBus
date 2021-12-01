@@ -33,7 +33,7 @@ class PersistenceStorageTests: XCTestCase {
         let storage = PersistenceStorage()
         let param = DummyCodable(dummy: "dummy")
         let expectation = self.expectation(description: "create가 에러 없이 정상 작동해야함")
-        var result: Data?
+        var resultOpt: Data?
 
         //when
         storage.create(key: self.key, param: param)
@@ -41,17 +41,17 @@ class PersistenceStorageTests: XCTestCase {
                 XCTFail()
             }
             .sink { data in
-                result = data
+                resultOpt = data
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
 
-        let encodedParam = try? PropertyListEncoder().encode(param)
-
         //then
         waitForExpectations(timeout: 2)
-        guard let result = result else { XCTFail(); return }
-        XCTAssertEqual(result, encodedParam, "생성하려는 객체가 정상적으로 리턴되지 않았습니다.")
+        guard let result = resultOpt else { XCTFail(); return }
+        let decodedResultOpt = try? PropertyListDecoder().decode(DummyCodable.self, from: result)
+        guard let decodedResult = decodedResultOpt else { XCTFail(); return }
+        XCTAssertEqual(decodedResult, param, "생성하려는 객체가 정상적으로 리턴되지 않았습니다.")
     }
 
     func test_getFromUserDefault_성공() {
@@ -63,7 +63,7 @@ class PersistenceStorageTests: XCTestCase {
         let param = DummyCodable(dummy: "dummy")
         let createExpect = self.expectation(description: "목 데이터 생성이 선행되어야 함")
         let expectation = self.expectation(description: "getFromUserDefault가 에러 없이 정상 작동해야함")
-        var result: Data?
+        var resultOpt: Data?
 
         storage.create(key: self.key2, param: param)
             .catchError { error in
@@ -81,15 +81,16 @@ class PersistenceStorageTests: XCTestCase {
                 XCTFail()
             }
             .sink { data in
-                result = data
+                resultOpt = data
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
 
         //then
         wait(for: [expectation], timeout: 5)
-        guard let result = result else { XCTFail(); return }
-        let decodedResult = try? PropertyListDecoder().decode([DummyCodable].self, from: result)
+        guard let result = resultOpt else { XCTFail(); return }
+        let decodedResultOpt = try? PropertyListDecoder().decode([DummyCodable].self, from: result)
+        guard let decodedResult = decodedResultOpt else { XCTFail(); return }
         XCTAssertEqual(decodedResult, [param], "저장된 객체를 불러오지 못했습니다.")
     }
 
@@ -99,7 +100,7 @@ class PersistenceStorageTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: self.key3)
         let storage = PersistenceStorage()
         let expectation = self.expectation(description: "데이터가 없기 때문에, getFromUserDefault가 작동하지않음")
-        var result: Data?
+        var resultOpt: Data?
 
         //when
         storage.getFromUserDefaults(key: self.key3)
@@ -107,17 +108,18 @@ class PersistenceStorageTests: XCTestCase {
                 XCTFail()
             }
             .sink { data in
-                result = data
+                resultOpt = data
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
 
-        let emptyArrayData = try? PropertyListEncoder().encode([FavoriteItemDTO]())
+        let emptyArrayDataOpt = try? PropertyListEncoder().encode([FavoriteItemDTO]())
 
         //then
         waitForExpectations(timeout: 5)
-        guard let result = result else { XCTFail(); return }
-        XCTAssertEqual(result, emptyArrayData,"저장된 데이터가 존재하면 안됩니다.")
+        guard let result = resultOpt,
+              let emptyArrayData = emptyArrayDataOpt else { XCTFail(); return }
+        XCTAssertEqual(result, emptyArrayData, "저장된 데이터가 존재하면 안됩니다.")
     }
 
     func test_실제저장소_get_BusRouteList_수신성공() {
@@ -125,23 +127,19 @@ class PersistenceStorageTests: XCTestCase {
         //given
         let storage = PersistenceStorage()
         let expectation = self.expectation(description: "PersistenceStorageRealGet")
-        var result: Data?
 
         //when
         storage.get(file: self.fileName, type: self.fileType)
             .catchError { error in
                 XCTFail()
             }
-            .sink { data in
-                result = data
+            .sink { _ in
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
 
         //then
         waitForExpectations(timeout: 2)
-        guard let result = result else { XCTFail(); return }
-        XCTAssertGreaterThan(result.count, 10000)
     }
 
     func test_실제저장소_get_BusRouteList_수신실패() {
@@ -149,23 +147,19 @@ class PersistenceStorageTests: XCTestCase {
         //given
         let storage = PersistenceStorage()
         let expectation = self.expectation(description: "PersistenceStorageRealGet2")
-        var result: Data?
 
         //when
         storage.get(file: "아무파일이름입니다.", type: self.fileType)
             .catchError { error in
-                result = nil
                 expectation.fulfill()
             }
             .sink { data in
-                result = data
                 XCTFail()
             }
             .store(in: &self.cancellables)
 
         //then
         waitForExpectations(timeout: 2)
-        XCTAssertNil(result)
     }
 
 
@@ -174,7 +168,7 @@ class PersistenceStorageTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: self.key4)
         let storage = PersistenceStorage()
         let expectation = self.expectation(description: "데이터를 delete 성공해야함")
-        var result: Data?
+        var resultOpt: Data?
         var params = [DummyCodable(dummy: "dummy1"), DummyCodable(dummy: "dummy2"), DummyCodable(dummy: "dummy3"), DummyCodable(dummy: "dummy4")]
 
         for param in params {
@@ -194,11 +188,10 @@ class PersistenceStorageTests: XCTestCase {
         //when
         storage.delete(key: self.key4, param: params[2])
             .catchError { error in
-                dump(error)
                 XCTFail()
             }
             .sink { data in
-                result = data
+                resultOpt = data
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
@@ -206,8 +199,9 @@ class PersistenceStorageTests: XCTestCase {
 
         //then
         wait(for: [expectation], timeout: 5)
-        guard let result = result else { XCTFail(); return }
-        let decodedResult = try? PropertyListDecoder().decode([DummyCodable].self, from: result)
+        guard let result = resultOpt else { XCTFail(); return }
+        let decodedResultOpt = try? PropertyListDecoder().decode([DummyCodable].self, from: result)
+        guard let decodedResult = decodedResultOpt else { XCTFail(); return }
         XCTAssertEqual(params, decodedResult, "제거된 데이터와 상이합니다.")
     }
 }
