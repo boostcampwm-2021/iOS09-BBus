@@ -519,12 +519,14 @@ class StationViewModelTests: XCTestCase {
                                                 calculateUseCase: StationCalculateUseCase(),
                                                 arsId: "1")
         let expectation = self.expectation(description: "StationViewModel에 처음_데이터를_모두_불러왔을_때_stopLoader가_true로_변경되는지_확인")
+        var stopLoader: Bool = false
         
         // when
         stationViewModel.$stopLoader
             .filter({$0})
             .first()
-            .sink(receiveValue: { [weak expectation] _ in
+            .sink(receiveValue: { [weak expectation] result in
+                stopLoader = result
                 expectation?.fulfill()
             })
             .store(in: &self.cancellables)
@@ -533,7 +535,7 @@ class StationViewModelTests: XCTestCase {
         waitForExpectations(timeout: self.timeout)
         
         // then
-        XCTAssertEqual(stationViewModel.stopLoader, true)
+        XCTAssertEqual(stopLoader, true)
     }
     
     func test_bindLoader_refresh_두_번_이후_stopLoader_할당_확인() {
@@ -542,12 +544,14 @@ class StationViewModelTests: XCTestCase {
                                                 calculateUseCase: StationCalculateUseCase(),
                                                 arsId: "1")
         let expectation = self.expectation(description: "StationViewModel에 refresh_두번_이후_때_stopLoader가_true로_변경되는지_확인")
+        var stopLoader: Bool = false
             
         // when
         stationViewModel.$stopLoader
             .filter({$0})
             .output(at: 1)
-            .sink(receiveValue: { [weak expectation] _ in
+            .sink(receiveValue: { [weak expectation] result in
+                stopLoader = result
                 expectation?.fulfill()
             })
             .store(in: &self.cancellables)
@@ -557,6 +561,6 @@ class StationViewModelTests: XCTestCase {
         waitForExpectations(timeout: self.timeout)
         
         // then
-        XCTAssertEqual(stationViewModel.stopLoader, true)
+        XCTAssertEqual(stopLoader, true)
     }
 }
