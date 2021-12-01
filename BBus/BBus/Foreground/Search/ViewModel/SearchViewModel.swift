@@ -69,10 +69,10 @@ final class SearchViewModel {
             .sink { [weak self] keyword in
                 guard let self = self else { return }
                 
-                self.searchResults.busSearchResults = self.calculateUseCase.searchBus(by: keyword, at: self.busRouteList)
-                self.searchResults.stationSearchResults = self.calculateUseCase.searchStation(by: keyword, at: self.stationList)
+                let busSearchResults = self.calculateUseCase.searchBus(by: keyword, at: self.busRouteList)
+                let stationSearchResults = self.calculateUseCase.searchStation(by: keyword, at: self.stationList)
+                self.searchResults = SearchResults(busSearchResults: busSearchResults, stationSearchResults: stationSearchResults)
             }
             .store(in: &self.cancellables)
     }
-    
 }
