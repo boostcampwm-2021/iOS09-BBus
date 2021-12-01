@@ -247,6 +247,34 @@ class MovingStatusViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 10)
     }
+    
+    func test_remainintTime() throws {
+        // given
+        guard let viewModel = self.movingStatusViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        let expectation = XCTestExpectation()
+        let answer: Int? = 1
+        
+        // when
+        viewModel.$remainingTime
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
+            .sink { completion in
+                // then
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { remainingTime in
+                // then
+                XCTAssertEqual(remainingTime, answer)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 10)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
