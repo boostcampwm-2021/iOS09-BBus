@@ -191,31 +191,4 @@ class BusRouteViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 10)
     }
-    
-    func test_bindLoader() throws {
-        // given
-        guard let viewModel = self.busRouteViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
-        let expectation = XCTestExpectation()
-        
-        // when
-        viewModel.$stopLoader
-            .receive(on: DispatchQueue.global())
-            .dropFirst()
-            .sink { completion in
-                // then
-                guard case .failure(let error) = completion else { return }
-                XCTFail("\(error.localizedDescription)")
-                expectation.fulfill()
-            } receiveValue: { loader in
-                // then
-                XCTAssertTrue(loader)
-                expectation.fulfill()
-            }
-            .store(in: &self.cancellables)
-        
-        wait(for: [expectation], timeout: 10)
-    }
 }
