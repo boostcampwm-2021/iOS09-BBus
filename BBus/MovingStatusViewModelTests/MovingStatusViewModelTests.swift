@@ -218,6 +218,35 @@ class MovingStatusViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 10)
     }
+    
+    func test_updateBoardBus() throws {
+        // given
+        guard let viewModel = self.movingStatusViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        let expectation = XCTestExpectation()
+        let targetBus = BoardedBus(location: CGFloat(Double(("0.017" as NSString).floatValue)/Double(("0.378" as NSString).floatValue)), remainStation: 1)
+        
+        // when
+        viewModel.$boardedBus
+            .receive(on: DispatchQueue.global())
+            .sink { completion in
+                // then
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { boardedBus in
+                guard let boardedBus = boardedBus else { return }
+                // then
+                XCTAssertEqual(boardedBus.remainStation, targetBus.remainStation)
+                XCTAssertEqual(boardedBus.location, targetBus.location)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 10)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
