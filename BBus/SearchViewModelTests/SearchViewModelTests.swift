@@ -79,7 +79,7 @@ class SearchViewModelTests: XCTestCase {
         let searchViewModel = SearchViewModel(apiUseCase: MOCKSearchAPIUseCase(mode: .success),
                                               calculateUseCase: SearchCalculateUseCase())
         let keyword = "1"
-        let expectation = expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
+        let expectation = self.expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
         let expectedResult = SearchResults(busSearchResults: [self.firstBusRoute], stationSearchResults: [self.firstStation])
         let firstExpectedBus = expectedResult.busSearchResults[0]
         let firstExpectedStation = expectedResult.stationSearchResults[0]
@@ -114,7 +114,7 @@ class SearchViewModelTests: XCTestCase {
         let searchViewModel = SearchViewModel(apiUseCase: MOCKSearchAPIUseCase(mode: .alwaysFailure),
                                               calculateUseCase: SearchCalculateUseCase())
         let keyword = "1"
-        let expectation = expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
+        let expectation = self.expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
         
         // when then
         searchViewModel.$searchResults
@@ -136,7 +136,7 @@ class SearchViewModelTests: XCTestCase {
         let searchViewModel = SearchViewModel(apiUseCase: MOCKSearchAPIUseCase(mode: .loadBusRouteFailure),
                                               calculateUseCase: SearchCalculateUseCase())
         let keyword = "1"
-        let expectation = expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
+        let expectation = self.expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
         let expectedResult = SearchResults(busSearchResults: [], stationSearchResults: [self.firstStation])
         let firstExpectedStation = expectedResult.stationSearchResults[0]
         let expectedError = TestError.loadBusRouteError
@@ -175,7 +175,7 @@ class SearchViewModelTests: XCTestCase {
         let searchViewModel = SearchViewModel(apiUseCase: MOCKSearchAPIUseCase(mode: .loadStationFailure),
                                               calculateUseCase: SearchCalculateUseCase())
         let keyword = "1"
-        let expectation = expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
+        let expectation = self.expectation(description: "SearchViewModel에 searchResults가 저장되는지 확인")
         let expectedResult = SearchResults(busSearchResults:[self.firstBusRoute], stationSearchResults: [])
         let firstExpectedBus = expectedResult.busSearchResults[0]
         let expectedError = TestError.loadStationListError
