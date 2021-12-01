@@ -25,7 +25,7 @@ final class AlarmSettingViewModel {
     private var cancellables: Set<AnyCancellable>
     private var observer: NSObjectProtocol?
     
-    init(apiUseCase: AlarmSettingAPIUseCase, calculateUseCase: AlarmSettingCalculateUseCase, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
+    init(apiUseCase: AlarmSettingAPIUsable, calculateUseCase: AlarmSettingCalculatable, stationId: Int, busRouteId: Int, stationOrd: Int, arsId: String, routeType: RouteType?, busName: String) {
         self.apiUseCase = apiUseCase
         self.calculateUseCase = calculateUseCase
         self.stationId = stationId
