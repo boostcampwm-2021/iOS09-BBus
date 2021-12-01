@@ -45,6 +45,11 @@
 		04C6D6692734B18A00D41678 /* MovingStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6D6682734B18A00D41678 /* MovingStatusTableViewCell.swift */; };
 		04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6D66A2734BCAB00D41678 /* MovingStatusBusTagView.swift */; };
 		04DC47FB27552FE5003380D9 /* StationCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */; };
+		04DEBDEC27572E4700B53D5F /* AlarmSettingAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843427567769007E440A /* AlarmSettingAPIUsable.swift */; };
+		04DEBDED27572E6400B53D5F /* ArrInfoByRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */; };
+		04DEBDEE27572E8400B53D5F /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		04DEBDEF27572E8800B53D5F /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
+		04DEBDF027572E8D00B53D5F /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
 		4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682327327876008D87CE /* BusRouteCoordinator.swift */; };
 		4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */; };
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
@@ -1750,7 +1755,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DEBDEE27572E8400B53D5F /* BaseUseCase.swift in Sources */,
+				04DEBDF027572E8D00B53D5F /* JsonDTO.swift in Sources */,
 				4AF1E0D0275626A700DE51C8 /* AlarmSettingViewModelTests.swift in Sources */,
+				04DEBDEC27572E4700B53D5F /* AlarmSettingAPIUsable.swift in Sources */,
+				04DEBDED27572E6400B53D5F /* ArrInfoByRouteDTO.swift in Sources */,
+				04DEBDEF27572E8800B53D5F /* StationByRouteListDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

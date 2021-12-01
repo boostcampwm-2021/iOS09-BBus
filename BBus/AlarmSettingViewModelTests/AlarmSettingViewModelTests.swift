@@ -14,7 +14,23 @@ class AlarmSettingViewModelTests: XCTestCase {
     }
     
     enum TestError: Error {
+        case fail
+    }
+
+    class MOCKSearchAPIUseCase: AlarmSettingAPIUsable {
+        var mode: MOCKMode
         
+        init(mode: MOCKMode) {
+            self.mode = mode
+        }
+        
+        func busArriveInfoWillLoaded(stId: String, busRouteId: String, ord: String) -> AnyPublisher<ArrInfoByRouteDTO, Error> {
+            return Fail(error: TestError.fail).eraseToAnyPublisher()
+        }
+        
+        func busStationsInfoWillLoaded(busRouetId: String, arsId: String) -> AnyPublisher<[StationByRouteListDTO]?, Error> {
+            return Fail(error: TestError.fail).eraseToAnyPublisher()
+        }
     }
     
     private var cancellables: Set<AnyCancellable>!
