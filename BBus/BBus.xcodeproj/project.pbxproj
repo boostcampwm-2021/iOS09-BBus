@@ -50,6 +50,7 @@
 		04DEBDEE27572E8400B53D5F /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
 		04DEBDEF27572E8800B53D5F /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
 		04DEBDF027572E8D00B53D5F /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		04DEBDF22757311F00B53D5F /* MOCKArrInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */; };
 		4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682327327876008D87CE /* BusRouteCoordinator.swift */; };
 		4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */; };
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
@@ -311,6 +312,7 @@
 		04C6D6682734B18A00D41678 /* MovingStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusTableViewCell.swift; sourceTree = "<group>"; };
 		04C6D66A2734BCAB00D41678 /* MovingStatusBusTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusBusTagView.swift; sourceTree = "<group>"; };
 		04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCalculateUseCase.swift; sourceTree = "<group>"; };
+		04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MOCKArrInfo.json; sourceTree = "<group>"; };
 		4A04682327327876008D87CE /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
 		4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingCoordinator.swift; sourceTree = "<group>"; };
 		4A0468292732B7B3008D87CE /* SearchNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationView.swift; sourceTree = "<group>"; };
@@ -1144,6 +1146,7 @@
 			isa = PBXGroup;
 			children = (
 				4AF1E0CF275626A700DE51C8 /* AlarmSettingViewModelTests.swift */,
+				04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */,
 			);
 			path = AlarmSettingViewModelTests;
 			sourceTree = "<group>";
@@ -1655,6 +1658,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DEBDF22757311F00B53D5F /* MOCKArrInfo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
