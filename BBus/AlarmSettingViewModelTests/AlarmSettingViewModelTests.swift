@@ -90,6 +90,7 @@ class AlarmSettingViewModelTests: XCTestCase {
         let expectedSecondArriveInfo = self.secondArriveInfo
         let expectedResult = AlarmSettingBusArriveInfos(arriveInfos: [expectedFirstArriveInfo, expectedSecondArriveInfo], changedByTimer: false)
         
+        alarmSettingVieWModel.refresh()
         alarmSettingVieWModel.$busArriveInfos
             .receive(on: DispatchQueue.global())
             .filter { $0.count != 0 }
@@ -117,6 +118,36 @@ class AlarmSettingViewModelTests: XCTestCase {
                 XCTAssertFalse(busArriveInfos.changedByTimer)
                 
                 expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        waitForExpectations(timeout: 10)
+    }
+    
+    func test_refresh_arriveInfo가_에러를_리턴하여_실패() {
+        let MOCCKAlarmSettingUseCase = MOCKAlarmSettingAPIUseCase(mode: .failure, arrInfoByRouteDTO: self.arrInfoByRouteDTO)
+        let alarmSettingVieWModel = AlarmSettingViewModel(apiUseCase: MOCCKAlarmSettingUseCase,
+                                                          calculateUseCase: AlarmSettingCalculateUseCase(),
+                                                          stationId: 1,
+                                                          busRouteId: 1,
+                                                          stationOrd: 1,
+                                                          arsId: "11111",
+                                                          routeType: RouteType.mainLine,
+                                                          busName: "11")
+        let expectation = expectation(description: "AlarmSettingViewModel에 busArriveInfos가 저장되는지 확인")
+        
+        alarmSettingVieWModel.refresh()
+        alarmSettingVieWModel.$networkError
+            .receive(on: DispatchQueue.global())
+            .compactMap { $0 }
+            .sink { error in
+                guard let error = error as? TestError else { XCTFail(); return; }
+                switch error {
+                case .fail:
+                    expectation.fulfill()
+                default:
+                    XCTFail()
+                }
             }
             .store(in: &self.cancellables)
         
