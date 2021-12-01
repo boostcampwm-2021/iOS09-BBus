@@ -14,7 +14,7 @@ class AlarmSettingViewModelTests: XCTestCase {
     }
     
     enum TestError: Error {
-        case fail
+        case fail, jsonError
     }
 
     class MOCKSearchAPIUseCase: AlarmSettingAPIUsable {
@@ -34,14 +34,26 @@ class AlarmSettingViewModelTests: XCTestCase {
     }
     
     private var cancellables: Set<AnyCancellable>!
+    private var arrInfoByRouteDTO: ArrInfoByRouteDTO!
 
     override func setUpWithError() throws {
+        guard let url = Bundle.init(identifier: "com.boostcamp.ios-009.AlarmSettingViewModelTests")?
+                .url(forResource: "MOCKArrInfo", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let arrInfoByRouteDTO = try? JSONDecoder().decode(ArrInfoByRouteDTO.self, from: data) else { throw TestError.jsonError }
+        
         self.cancellables = []
+        self.arrInfoByRouteDTO = arrInfoByRouteDTO
         super.setUp()
     }
 
     override func tearDownWithError() throws {
         self.cancellables = nil
+        self.arrInfoByRouteDTO = nil
         super.tearDown()
+    }
+    
+    func test_bindBusArriveInfo_성공() {
+        
     }
 }
