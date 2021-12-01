@@ -244,6 +244,8 @@ class MovingStatusViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
+        sleep(1)
+        viewModel.findBoardBus(gpsY: 37.486795, gpsX: 126.947757)
         
         wait(for: [expectation], timeout: 10)
     }
@@ -272,6 +274,8 @@ class MovingStatusViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
             .store(in: &self.cancellables)
+        sleep(1)
+        viewModel.findBoardBus(gpsY: 37.486795, gpsX: 126.947757)
         
         wait(for: [expectation], timeout: 10)
     }
