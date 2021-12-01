@@ -87,7 +87,6 @@ final class MovingStatusViewModel {
         self.bindLoader()
         self.bindHeaderInfo()
         self.bindStationsInfo()
-        self.bindBusesPosInfo()
     }
 
     private func bindHeaderInfo() {
@@ -113,6 +112,7 @@ final class MovingStatusViewModel {
             })
             .sink(receiveValue: { [weak self] stations in
                 self?.convertBusStations(with: stations)
+                self?.bindBusesPosInfo()
             })
             .store(in: &self.cancellables)
     }

@@ -56,7 +56,7 @@ class MovingStatusViewModelTests: XCTestCase {
             let dummyBus1 = BusPosByRtidDTO(busType: 1,
                                             congestion: 0,
                                             plainNumber: "서울74사5255",
-                                            sectionOrder: 22,
+                                            sectionOrder: 0,
                                             fullSectDist: "0.351",
                                             sectDist: "0",
                                             gpsY: 37.4893,
@@ -64,7 +64,7 @@ class MovingStatusViewModelTests: XCTestCase {
             let dummyBus2 = BusPosByRtidDTO(busType: 1,
                                             congestion: 0,
                                             plainNumber: "서울74사5254",
-                                            sectionOrder: 28,
+                                            sectionOrder: 2,
                                             fullSectDist: "0.378",
                                             sectDist: "0.017",
                                             gpsY: 37.486795,
@@ -72,7 +72,7 @@ class MovingStatusViewModelTests: XCTestCase {
             let dummyBus3 = BusPosByRtidDTO(busType: 1,
                                             congestion: 0,
                                             plainNumber: "서울74사5252",
-                                            sectionOrder: 32,
+                                            sectionOrder: 4,
                                             fullSectDist: "0.41",
                                             sectDist: "0.022",
                                             gpsY: 37.48311,
@@ -117,7 +117,7 @@ class MovingStatusViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindStationsInfo_수신_성공() throws {
@@ -149,7 +149,46 @@ class MovingStatusViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
+    }
+    
+    func test_bindBusesPosInfo_수신_성공() throws {
+        // given
+        guard let viewModel = self.movingStatusViewModel else {
+            XCTFail("viewModel is nil")
+            return
+        }
+        let expectation = XCTestExpectation()
+        let targetBus = BusPosByRtidDTO(busType: 1,
+                                        congestion: 0,
+                                        plainNumber: "서울74사5254",
+                                        sectionOrder: 2,
+                                        fullSectDist: "0.378",
+                                        sectDist: "0.017",
+                                        gpsY: 37.486795,
+                                        gpsX: 126.947757)
+        let answerBuses = [targetBus]
+        
+        // when
+        viewModel.$buses
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
+            .sink { completion in
+                // then
+                guard case .failure(let error) = completion else { return }
+                XCTFail("\(error.localizedDescription)")
+                expectation.fulfill()
+            } receiveValue: { buses in
+                // then
+                XCTAssertEqual(buses[0].congestion, answerBuses[0].congestion)
+                XCTAssertEqual(buses[0].plainNumber, answerBuses[0].plainNumber)
+                XCTAssertEqual(buses[0].sectionOrder, answerBuses[0].sectionOrder)
+                XCTAssertEqual(buses[0].gpsX, answerBuses[0].gpsX)
+                expectation.fulfill()
+            }
+            .store(in: &self.cancellables)
+        
+        wait(for: [expectation], timeout: 10)
     }
 
     func testPerformanceExample() throws {

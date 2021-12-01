@@ -124,7 +124,7 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindBodysInfo_수신_성공() throws {
@@ -156,7 +156,7 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindBusesPosInfo_수신_성공() throws {
@@ -189,7 +189,7 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindLoader() throws {
@@ -216,6 +216,6 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
 }
