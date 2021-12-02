@@ -13,17 +13,18 @@ enum NetworkError: Error {
 }
 
 protocol NetworkServiceProtocol {
-    func get(request: URLRequest, params: [String: String]) -> AnyPublisher<Data, Error>
+    func get(request: URLRequest) -> AnyPublisher<Data, Error>
 }
 
 struct NetworkService: NetworkServiceProtocol {
-    func get(request: URLRequest, params: [String: String]) -> AnyPublisher<Data, Error> {
+    func get(request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
             .mapError({ $0 as Error })
             .tryMap { data, response -> Data in
                 guard let response = response as? HTTPURLResponse else {
                     throw NetworkError.noResponseError
                 }
+                print(response.statusCode)
                 if response.statusCode != 200 {
                     throw NetworkError.responseError
                 }
