@@ -11,20 +11,3 @@ import Combine
 protocol GetStationsByRouteListUsable {
     func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error>
 }
-
-extension BBusAPIUseCases: GetStationsByRouteListUsable {
-    func getStationsByRouteList(busRoutedId: String) -> AnyPublisher<Data, Error> {
-        let param = ["busRouteId": busRoutedId, "resultType": "json"]
-        let fetcher: GetStationsByRouteListFetchable = ServiceGetStationsByRouteListFetcher(networkService: self.networkService,
-                                                                                            tokenManager: TokenManager(),
-                                                                                            requestFactory: self.requestFactory)
-        return fetcher
-            .fetch(param: param)
-            .tryCatch({ error -> AnyPublisher<Data, Error> in
-                return fetcher
-                    .fetch(param: param)
-            })
-            .retry(TokenManager.maxTokenCount)
-            .eraseToAnyPublisher()
-    }
-}

@@ -11,20 +11,3 @@ import Combine
 protocol GetBusPosByVehIdUsable {
     func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error>
 }
-
-extension BBusAPIUseCases: GetBusPosByVehIdUsable {
-    func getBusPosByVehId(_ vehId: String) -> AnyPublisher<Data, Error> {
-        let param = ["vehId": vehId, "resultType": "json"]
-        let fetcher: GetBusPosByVehIdFetchable = ServiceGetBusPosByVehIdFetcher(networkService: self.networkService,
-                                                                                tokenManager: TokenManager(),
-                                                                                requestFactory: self.requestFactory)
-        return fetcher
-            .fetch(param: param)
-            .tryCatch({ error -> AnyPublisher<Data, Error> in
-                return fetcher
-                    .fetch(param: param)
-            })
-            .retry(TokenManager.maxTokenCount)
-            .eraseToAnyPublisher()
-    }
-}
