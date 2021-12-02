@@ -25,6 +25,20 @@
 		04468439275677C0007E440A /* MovingStatusAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468438275677C0007E440A /* MovingStatusAPIUsable.swift */; };
 		0446843B275677CA007E440A /* MovingStatusCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843A275677CA007E440A /* MovingStatusCalculatable.swift */; };
 		0446843D275679B9007E440A /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		0446843E27567F4E007E440A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */; };
+		0446843F27568065007E440A /* SearchAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468426275675F1007E440A /* SearchAPIUsable.swift */; };
+		0446844027568075007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
+		0446844127568084007E440A /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		0446844227568091007E440A /* StationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AE273BAA130061ACDA /* StationDTO.swift */; };
+		0446844327568096007E440A /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B7E2740F6B20056A433 /* SearchResults.swift */; };
+		04468444275680A0007E440A /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
+		04468445275680B1007E440A /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		04468446275680FF007E440A /* StationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */; };
+		0446844727568119007E440A /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		044684482756812D007E440A /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		0446844927568134007E440A /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		0446844A27568A3B007E440A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
+		0446844D275694D7007E440A /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -1806,7 +1820,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446844727568119007E440A /* PublisherExtension.swift in Sources */,
+				044684482756812D007E440A /* JsonDTO.swift in Sources */,
+				0446843E27567F4E007E440A /* SearchViewModel.swift in Sources */,
 				4AF1E0A92756268B00DE51C8 /* SearchViewModelTests.swift in Sources */,
+				0446844D275694D7007E440A /* SearchCalculateUseCase.swift in Sources */,
+				04468445275680B1007E440A /* BaseUseCase.swift in Sources */,
+				0446844127568084007E440A /* BusRouteDTO.swift in Sources */,
+				0446844927568134007E440A /* BBusAPIError.swift in Sources */,
+				0446844027568075007E440A /* SearchCalculatable.swift in Sources */,
+				0446844A27568A3B007E440A /* StringExtension.swift in Sources */,
+				0446844327568096007E440A /* SearchResults.swift in Sources */,
+				0446844227568091007E440A /* StationDTO.swift in Sources */,
+				0446843F27568065007E440A /* SearchAPIUsable.swift in Sources */,
+				04468444275680A0007E440A /* BusSearchResult.swift in Sources */,
+				04468446275680FF007E440A /* StationSearchResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2439,7 +2467,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2463,7 +2491,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
