@@ -87,7 +87,6 @@ final class MovingStatusViewModel {
         self.bindLoader()
         self.bindHeaderInfo()
         self.bindStationsInfo()
-        self.bindBusesPosInfo()
     }
 
     private func bindHeaderInfo() {
@@ -113,6 +112,7 @@ final class MovingStatusViewModel {
             })
             .sink(receiveValue: { [weak self] stations in
                 self?.convertBusStations(with: stations)
+                self?.bindBusesPosInfo()
             })
             .store(in: &self.cancellables)
     }
@@ -134,11 +134,11 @@ final class MovingStatusViewModel {
                                                                  currentOrd: currentOrd,
                                                                  count: count)
                 
-                // Test 로직
+                /* Test 용 사용자 gps 조작 코드
                 guard let y = self.buses.first?.gpsY,
                       let x = self.buses.first?.gpsX else { return }
 
-                self.findBoardBus(gpsY: y, gpsX: x)
+                self.findBoardBus(gpsY: y, gpsX: x) */
             }
             .store(in: &self.cancellables)
     }

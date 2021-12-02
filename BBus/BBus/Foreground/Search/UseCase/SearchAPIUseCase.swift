@@ -8,11 +8,6 @@
 import Foundation
 import Combine
 
-protocol SearchAPIUsable: BaseUseCase {
-    func loadBusRouteList() -> AnyPublisher<[BusRouteDTO], Error>
-    func loadStationList() -> AnyPublisher<[StationDTO], Error>
-}
-
 final class SearchAPIUseCase: SearchAPIUsable {
     
     private let useCases: GetRouteListUsable & GetStationListUsable

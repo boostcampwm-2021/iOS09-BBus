@@ -7,6 +7,4 @@
 
 import Foundation
 
-protocol AlarmSettingCalculatable: AverageSectionTimeCalculatable { }
-
 struct AlarmSettingCalculateUseCase: AlarmSettingCalculatable { }
