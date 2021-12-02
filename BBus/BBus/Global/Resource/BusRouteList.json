@@ -1,2480 +1,4405 @@
 [
- {
-   "routeID": 100100006,
-   "busRouteName": "101",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "서소문"
- },
- {
-   "routeID": 100100007,
-   "busRouteName": "102",
-   "routeType": "간선",
-   "startStation": "상계주공7단지",
-   "endStation": "동대문"
- },
- {
-   "routeID": 100100008,
-   "busRouteName": "103",
-   "routeType": "간선",
-   "startStation": "삼화상운",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100009,
-   "busRouteName": "104",
-   "routeType": "간선",
-   "startStation": "강북청소년수련관",
-   "endStation": "서울역버스환승센터"
- },
- {
-   "routeID": 100100010,
-   "busRouteName": "105",
-   "routeType": "간선",
-   "startStation": "상계주공7단지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100011,
-   "busRouteName": "106",
-   "routeType": "간선",
-   "startStation": "의정부",
-   "endStation": "종로5가"
- },
- {
-   "routeID": 100100012,
-   "busRouteName": "107",
-   "routeType": "간선",
-   "startStation": "민락동차고지",
-   "endStation": "동대문"
- },
- {
-   "routeID": 100100014,
-   "busRouteName": "109",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "광화문"
- },
- {
-   "routeID": 100100017,
-   "busRouteName": "120",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "청량리"
- },
- {
-   "routeID": 100100018,
-   "busRouteName": "130",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "길동"
- },
- {
-   "routeID": 100100019,
-   "busRouteName": "140",
-   "routeType": "간선",
-   "startStation": "도봉산역광역환승센터",
-   "endStation": "AT센터양재꽃시장"
- },
- {
-   "routeID": 100100020,
-   "busRouteName": "141",
-   "routeType": "간선",
-   "startStation": "도봉산",
-   "endStation": "염곡동"
- },
- {
-   "routeID": 100100021,
-   "busRouteName": "142",
-   "routeType": "간선",
-   "startStation": "방배동",
-   "endStation": "도봉산"
- },
- {
-   "routeID": 100100022,
-   "busRouteName": "143",
-   "routeType": "간선",
-   "startStation": "정릉",
-   "endStation": "개포동"
- },
- {
-   "routeID": 100100023,
-   "busRouteName": "144",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "교대"
- },
- {
-   "routeID": 100100024,
-   "busRouteName": "145",
-   "routeType": "간선",
-   "startStation": "번동",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100025,
-   "busRouteName": "146",
-   "routeType": "간선",
-   "startStation": "상계주공7단지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100026,
-   "busRouteName": "147",
-   "routeType": "간선",
-   "startStation": "월계동",
-   "endStation": "도곡동"
- },
- {
-   "routeID": 100100027,
-   "busRouteName": "148",
-   "routeType": "간선",
-   "startStation": "번동",
-   "endStation": "방배동"
- },
- {
-   "routeID": 100100029,
-   "busRouteName": "150",
-   "routeType": "간선",
-   "startStation": "도봉산역",
-   "endStation": "시흥대교"
- },
- {
-   "routeID": 100100030,
-   "busRouteName": "151",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "중앙대"
- },
- {
-   "routeID": 100100031,
-   "busRouteName": "152",
-   "routeType": "간선",
-   "startStation": "화계사",
-   "endStation": "삼막사사거리"
- },
- {
-   "routeID": 100100032,
-   "busRouteName": "153",
-   "routeType": "간선",
-   "startStation": "우이동",
-   "endStation": "당곡사거리"
- },
- {
-   "routeID": 100100033,
-   "busRouteName": "160",
-   "routeType": "간선",
-   "startStation": "도봉산역",
-   "endStation": "온수동종점"
- },
- {
-   "routeID": 100100034,
-   "busRouteName": "162",
-   "routeType": "간선",
-   "startStation": "정릉",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100036,
-   "busRouteName": "171",
-   "routeType": "간선",
-   "startStation": "국민대앞",
-   "endStation": "월드컵파크7단지"
- },
- {
-   "routeID": 100100037,
-   "busRouteName": "172",
-   "routeType": "간선",
-   "startStation": "하계동",
-   "endStation": "상암동"
- },
- {
-   "routeID": 100100038,
-   "busRouteName": "201",
-   "routeType": "간선",
-   "startStation": "수택동차고지",
-   "endStation": "서울역환승센터"
- },
- {
-   "routeID": 100100039,
-   "busRouteName": "202",
-   "routeType": "간선",
-   "startStation": "불암동",
-   "endStation": "후암동"
- },
- {
-   "routeID": 100100042,
-   "busRouteName": "260",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "국회의사당"
- },
- {
-   "routeID": 100100043,
-   "busRouteName": "261",
-   "routeType": "간선",
-   "startStation": "석관동(상진운수종점)",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100044,
-   "busRouteName": "262",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "여의도환승센타"
- },
- {
-   "routeID": 100100046,
-   "busRouteName": "270",
-   "routeType": "간선",
-   "startStation": "상암차고지",
-   "endStation": "망우리(출)"
- },
- {
-   "routeID": 100100047,
-   "busRouteName": "271",
-   "routeType": "간선",
-   "startStation": "용마문화복지센터",
-   "endStation": "월드컵파크7단지"
- },
- {
-   "routeID": 100100048,
-   "busRouteName": "272",
-   "routeType": "간선",
-   "startStation": "면목동",
-   "endStation": "남가좌동"
- },
- {
-   "routeID": 100100049,
-   "busRouteName": "273",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "홍대입구역"
- },
- {
-   "routeID": 100100051,
-   "busRouteName": "301",
-   "routeType": "간선",
-   "startStation": "장지공영차고지",
-   "endStation": "혜화동"
- },
- {
-   "routeID": 100100052,
-   "busRouteName": "302",
-   "routeType": "간선",
-   "startStation": "상대원차고지",
-   "endStation": "상왕십리역"
- },
- {
-   "routeID": 100100053,
-   "busRouteName": "303",
-   "routeType": "간선",
-   "startStation": "상대원차고지",
-   "endStation": "신설동역"
- },
- {
-   "routeID": 100100055,
-   "busRouteName": "340",
-   "routeType": "간선",
-   "startStation": "강동공영차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100056,
-   "busRouteName": "341",
-   "routeType": "간선",
-   "startStation": "하남공영차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100057,
-   "busRouteName": "360",
-   "routeType": "간선",
-   "startStation": "송파차고지",
-   "endStation": "여의도환승센터"
- },
- {
-   "routeID": 100100061,
-   "busRouteName": "370",
-   "routeType": "간선",
-   "startStation": "강동공영차고지",
-   "endStation": "충정로역"
- },
- {
-   "routeID": 100100062,
-   "busRouteName": "401",
-   "routeType": "간선",
-   "startStation": "장지공영차고지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100063,
-   "busRouteName": "402",
-   "routeType": "간선",
-   "startStation": "장지공영차고지",
-   "endStation": "광화문"
- },
- {
-   "routeID": 100100064,
-   "busRouteName": "406",
-   "routeType": "간선",
-   "startStation": "개포동",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100068,
-   "busRouteName": "420",
-   "routeType": "간선",
-   "startStation": "개포동",
-   "endStation": "청량리"
- },
- {
-   "routeID": 100100070,
-   "busRouteName": "441",
-   "routeType": "간선",
-   "startStation": "월암공영차고지",
-   "endStation": "신사역"
- },
- {
-   "routeID": 100100071,
-   "busRouteName": "461",
-   "routeType": "간선",
-   "startStation": "장지공영차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100073,
-   "busRouteName": "470",
-   "routeType": "간선",
-   "startStation": "상암차고지",
-   "endStation": "안골마을"
- },
- {
-   "routeID": 100100075,
-   "busRouteName": "472",
-   "routeType": "간선",
-   "startStation": "개포동차고지",
-   "endStation": "신촌로타리"
- },
- {
-   "routeID": 100100076,
-   "busRouteName": "500",
-   "routeType": "간선",
-   "startStation": "석수역",
-   "endStation": "을지로입구"
- },
- {
-   "routeID": 100100077,
-   "busRouteName": "501",
-   "routeType": "간선",
-   "startStation": "서울대학교",
-   "endStation": "종로2가"
- },
- {
-   "routeID": 100100078,
-   "busRouteName": "503",
-   "routeType": "간선",
-   "startStation": "광명공영차고지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100079,
-   "busRouteName": "504",
-   "routeType": "간선",
-   "startStation": "광명공영주차장",
-   "endStation": "남대문"
- },
- {
-   "routeID": 100100080,
-   "busRouteName": "505",
-   "routeType": "간선",
-   "startStation": "노온사동",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100081,
-   "busRouteName": "506",
-   "routeType": "간선",
-   "startStation": "신림2동차고지",
-   "endStation": "을지로입구역광교"
- },
- {
-   "routeID": 100100082,
-   "busRouteName": "507",
-   "routeType": "간선",
-   "startStation": "석수역",
-   "endStation": "동대문역사문화공원"
- },
- {
-   "routeID": 100100083,
-   "busRouteName": "540",
-   "routeType": "간선",
-   "startStation": "군포공영차고지",
-   "endStation": "서울성모병원"
- },
- {
-   "routeID": 100100084,
-   "busRouteName": "571",
-   "routeType": "간선",
-   "startStation": "가산동",
-   "endStation": "은평뉴타운공영차고지"
- },
- {
-   "routeID": 100100085,
-   "busRouteName": "600",
-   "routeType": "간선",
-   "startStation": "온수동",
-   "endStation": "광화문"
- },
- {
-   "routeID": 100100086,
-   "busRouteName": "601",
-   "routeType": "간선",
-   "startStation": "개화동",
-   "endStation": "혜화역"
- },
- {
-   "routeID": 100100087,
-   "busRouteName": "602",
-   "routeType": "간선",
-   "startStation": "양천공영차고지",
-   "endStation": "시청앞"
- },
- {
-   "routeID": 100100088,
-   "busRouteName": "603",
-   "routeType": "간선",
-   "startStation": "신월동",
-   "endStation": "시청"
- },
- {
-   "routeID": 100100089,
-   "busRouteName": "604",
-   "routeType": "간선",
-   "startStation": "신월동기점",
-   "endStation": "중구청앞"
- },
- {
-   "routeID": 100100090,
-   "busRouteName": "605",
-   "routeType": "간선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "후암동"
- },
- {
-   "routeID": 100100091,
-   "busRouteName": "606",
-   "routeType": "간선",
-   "startStation": "부천상동",
-   "endStation": "조계사"
- },
- {
-   "routeID": 100100093,
-   "busRouteName": "640",
-   "routeType": "간선",
-   "startStation": "신월동기점",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100094,
-   "busRouteName": "641",
-   "routeType": "간선",
-   "startStation": "문래동",
-   "endStation": "양재동"
- },
- {
-   "routeID": 100100096,
-   "busRouteName": "643",
-   "routeType": "간선",
-   "startStation": "양천차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100097,
-   "busRouteName": "650",
-   "routeType": "간선",
-   "startStation": "외발산동",
-   "endStation": "낙성대입구"
- },
- {
-   "routeID": 100100098,
-   "busRouteName": "651",
-   "routeType": "간선",
-   "startStation": "방화동",
-   "endStation": "관악구청"
- },
- {
-   "routeID": 100100099,
-   "busRouteName": "652",
-   "routeType": "간선",
-   "startStation": "신월동기점",
-   "endStation": "금천우체국독산1동주민센터"
- },
- {
-   "routeID": 100100102,
-   "busRouteName": "661",
-   "routeType": "간선",
-   "startStation": "부천상동",
-   "endStation": "신세계백화점"
- },
- {
-   "routeID": 100100103,
-   "busRouteName": "701",
-   "routeType": "간선",
-   "startStation": "진관차고지",
-   "endStation": "종로2가삼일교"
- },
- {
-   "routeID": 100100107,
-   "busRouteName": "704",
-   "routeType": "간선",
-   "startStation": "송추",
-   "endStation": "서울역버스환승센터"
- },
- {
-   "routeID": 100100110,
-   "busRouteName": "710",
-   "routeType": "간선",
-   "startStation": "상암차고지",
-   "endStation": "수유역강북구청"
- },
- {
-   "routeID": 100100111,
-   "busRouteName": "720",
-   "routeType": "간선",
-   "startStation": "진관공영차고지",
-   "endStation": "답십리"
- },
- {
-   "routeID": 100100112,
-   "busRouteName": "721",
-   "routeType": "간선",
-   "startStation": "북가좌동",
-   "endStation": "건대입구역"
- },
- {
-   "routeID": 100100114,
-   "busRouteName": "750A",
-   "routeType": "간선",
-   "startStation": "덕은동종점",
-   "endStation": "서울대학교"
- },
- {
-   "routeID": 100100116,
-   "busRouteName": "742",
-   "routeType": "간선",
-   "startStation": "구산동",
-   "endStation": "상도동"
- },
- {
-   "routeID": 100100117,
-   "busRouteName": "752",
-   "routeType": "간선",
-   "startStation": "구산동",
-   "endStation": "노량진"
- },
- {
-   "routeID": 100100118,
-   "busRouteName": "753",
-   "routeType": "간선",
-   "startStation": "구산동",
-   "endStation": "상도동"
- },
- {
-   "routeID": 100100129,
-   "busRouteName": "1014",
-   "routeType": "지선",
-   "startStation": "성북생태체험관",
-   "endStation": "종로구민회관숭인동"
- },
- {
-   "routeID": 100100130,
-   "busRouteName": "1017",
-   "routeType": "지선",
-   "startStation": "월계동",
-   "endStation": "상왕십리"
- },
- {
-   "routeID": 100100131,
-   "busRouteName": "1020",
-   "routeType": "지선",
-   "startStation": "정릉",
-   "endStation": "교보문고"
- },
- {
-   "routeID": 100100132,
-   "busRouteName": "1111",
-   "routeType": "지선",
-   "startStation": "번동",
-   "endStation": "성북동"
- },
- {
-   "routeID": 100100133,
-   "busRouteName": "1113",
-   "routeType": "지선",
-   "startStation": "정릉",
-   "endStation": "월곡동"
- },
- {
-   "routeID": 100100134,
-   "busRouteName": "1114",
-   "routeType": "지선",
-   "startStation": "성북생태체험관",
-   "endStation": "길음역"
- },
- {
-   "routeID": 100100137,
-   "busRouteName": "1119",
-   "routeType": "지선",
-   "startStation": "강북청소년수련관",
-   "endStation": "녹천역"
- },
- {
-   "routeID": 100100138,
-   "busRouteName": "1120",
-   "routeType": "지선",
-   "startStation": "하계동",
-   "endStation": "삼양동입구"
- },
- {
-   "routeID": 100100139,
-   "busRouteName": "1124",
-   "routeType": "지선",
-   "startStation": "수유역",
-   "endStation": "미아삼거리역"
- },
- {
-   "routeID": 100100142,
-   "busRouteName": "1126",
-   "routeType": "지선",
-   "startStation": "강북청소년수련관",
-   "endStation": "안방학동"
- },
- {
-   "routeID": 100100143,
-   "busRouteName": "1127",
-   "routeType": "지선",
-   "startStation": "수유역",
-   "endStation": "도봉산"
- },
- {
-   "routeID": 100100144,
-   "busRouteName": "1128",
-   "routeType": "지선",
-   "startStation": "도봉산",
-   "endStation": "월곡동"
- },
- {
-   "routeID": 100100145,
-   "busRouteName": "1129",
-   "routeType": "지선",
-   "startStation": "상계8동",
-   "endStation": "창동역"
- },
- {
-   "routeID": 100100146,
-   "busRouteName": "1130",
-   "routeType": "지선",
-   "startStation": "청백아파트1단지",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100147,
-   "busRouteName": "1131",
-   "routeType": "지선",
-   "startStation": "중계본동",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100148,
-   "busRouteName": "1132",
-   "routeType": "지선",
-   "startStation": "월계동",
-   "endStation": "노원역"
- },
- {
-   "routeID": 100100149,
-   "busRouteName": "1133",
-   "routeType": "지선",
-   "startStation": "염광고교",
-   "endStation": "염광고교"
- },
- {
-   "routeID": 100100150,
-   "busRouteName": "1135",
-   "routeType": "지선",
-   "startStation": "월계동",
-   "endStation": "은행사거리"
- },
- {
-   "routeID": 100100151,
-   "busRouteName": "1136",
-   "routeType": "지선",
-   "startStation": "월계동(E마트)",
-   "endStation": "원자력병원"
- },
- {
-   "routeID": 100100152,
-   "busRouteName": "1137",
-   "routeType": "지선",
-   "startStation": "상계동",
-   "endStation": "미아사거리"
- },
- {
-   "routeID": 100100153,
-   "busRouteName": "1138",
-   "routeType": "지선",
-   "startStation": "상계4동",
-   "endStation": "수유역"
- },
- {
-   "routeID": 100100154,
-   "busRouteName": "1139",
-   "routeType": "지선",
-   "startStation": "상계4동",
-   "endStation": "방학2동주민센터"
- },
- {
-   "routeID": 100100155,
-   "busRouteName": "1140",
-   "routeType": "지선",
-   "startStation": "중계동",
-   "endStation": "광운대"
- },
- {
-   "routeID": 100100156,
-   "busRouteName": "1141",
-   "routeType": "지선",
-   "startStation": "중계본동종점",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100157,
-   "busRouteName": "1142",
-   "routeType": "지선",
-   "startStation": "중계본동",
-   "endStation": "창동역"
- },
- {
-   "routeID": 100100158,
-   "busRouteName": "1143",
-   "routeType": "지선",
-   "startStation": "중계본동",
-   "endStation": "수락리버시티"
- },
- {
-   "routeID": 100100159,
-   "busRouteName": "1144",
-   "routeType": "지선",
-   "startStation": "하계동",
-   "endStation": "우이동"
- },
- {
-   "routeID": 100100164,
-   "busRouteName": "1154",
-   "routeType": "지선",
-   "startStation": "하계동",
-   "endStation": "신곡동"
- },
- {
-   "routeID": 100100165,
-   "busRouteName": "1155",
-   "routeType": "지선",
-   "startStation": "청학리",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100166,
-   "busRouteName": "1156",
-   "routeType": "지선",
-   "startStation": "퇴계원",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100170,
-   "busRouteName": "1162",
-   "routeType": "지선",
-   "startStation": "성북구민회관",
-   "endStation": "보문역"
- },
- {
-   "routeID": 100100171,
-   "busRouteName": "1164",
-   "routeType": "지선",
-   "startStation": "서경대본관",
-   "endStation": "길음전철역"
- },
- {
-   "routeID": 100100172,
-   "busRouteName": "1165",
-   "routeType": "지선",
-   "startStation": "화계사",
-   "endStation": "미아사거리역"
- },
- {
-   "routeID": 100100175,
-   "busRouteName": "1213",
-   "routeType": "지선",
-   "startStation": "용마문화복지센터",
-   "endStation": "국민대학교"
- },
- {
-   "routeID": 100100177,
-   "busRouteName": "1218",
-   "routeType": "지선",
-   "startStation": "수유역",
-   "endStation": "답십리"
- },
- {
-   "routeID": 100100178,
-   "busRouteName": "1221",
-   "routeType": "지선",
-   "startStation": "중계동",
-   "endStation": "서울의료원"
- },
- {
-   "routeID": 100100179,
-   "busRouteName": "1222",
-   "routeType": "지선",
-   "startStation": "월계동",
-   "endStation": "고대앞"
- },
- {
-   "routeID": 100100181,
-   "busRouteName": "1224",
-   "routeType": "지선",
-   "startStation": "상계4동",
-   "endStation": "청량리"
- },
- {
-   "routeID": 100100183,
-   "busRouteName": "1226",
-   "routeType": "지선",
-   "startStation": "한국과학기술원",
-   "endStation": "경동시장"
- },
- {
-   "routeID": 100100184,
-   "busRouteName": "1227",
-   "routeType": "지선",
-   "startStation": "하계동",
-   "endStation": "제기동"
- },
- {
-   "routeID": 100100185,
-   "busRouteName": "1711",
-   "routeType": "지선",
-   "startStation": "국민대",
-   "endStation": "공덕동"
- },
- {
-   "routeID": 100100186,
-   "busRouteName": "2012",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "동대문역사문화공원"
- },
- {
-   "routeID": 100100188,
-   "busRouteName": "2013",
-   "routeType": "지선",
-   "startStation": "용마문화복지센터",
-   "endStation": "성동공업고등학교앞"
- },
- {
-   "routeID": 100100189,
-   "busRouteName": "2014",
-   "routeType": "지선",
-   "startStation": "성수동차고지",
-   "endStation": "동대문역사문화공원"
- },
- {
-   "routeID": 100100190,
-   "busRouteName": "2015",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "동대문운동장"
- },
- {
-   "routeID": 100100191,
-   "busRouteName": "2112",
-   "routeType": "지선",
-   "startStation": "면목동",
-   "endStation": "성북동"
- },
- {
-   "routeID": 100100192,
-   "busRouteName": "2113",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "석계역"
- },
- {
-   "routeID": 100100193,
-   "busRouteName": "2114",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "태릉시장"
- },
- {
-   "routeID": 100100194,
-   "busRouteName": "2211",
-   "routeType": "지선",
-   "startStation": "면목동",
-   "endStation": "회기역"
- },
- {
-   "routeID": 100100198,
-   "busRouteName": "2221",
-   "routeType": "지선",
-   "startStation": "자양동",
-   "endStation": "신설동"
- },
- {
-   "routeID": 100100199,
-   "busRouteName": "2222",
-   "routeType": "지선",
-   "startStation": "자양동",
-   "endStation": "고대앞"
- },
- {
-   "routeID": 100100201,
-   "busRouteName": "2224",
-   "routeType": "지선",
-   "startStation": "성수동",
-   "endStation": "강변역"
- },
- {
-   "routeID": 100100202,
-   "busRouteName": "2227",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "중곡역"
- },
- {
-   "routeID": 100100203,
-   "busRouteName": "2230",
-   "routeType": "지선",
-   "startStation": "면목동",
-   "endStation": "경동시장"
- },
- {
-   "routeID": 100100204,
-   "busRouteName": "2233",
-   "routeType": "지선",
-   "startStation": "면목동",
-   "endStation": "옥수동"
- },
- {
-   "routeID": 100100205,
-   "busRouteName": "2234",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "봉화산역"
- },
- {
-   "routeID": 100100206,
-   "busRouteName": "2235",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "신이문역"
- },
- {
-   "routeID": 100100209,
-   "busRouteName": "2412",
-   "routeType": "지선",
-   "startStation": "성수동",
-   "endStation": "세곡동사거리"
- },
- {
-   "routeID": 100100210,
-   "busRouteName": "2413",
-   "routeType": "지선",
-   "startStation": "성수동",
-   "endStation": "개포동"
- },
- {
-   "routeID": 100100211,
-   "busRouteName": "2415",
-   "routeType": "지선",
-   "startStation": "자양동",
-   "endStation": "대치동"
- },
- {
-   "routeID": 100100212,
-   "busRouteName": "3212",
-   "routeType": "지선",
-   "startStation": "강동차고지",
-   "endStation": "강변역"
- },
- {
-   "routeID": 100100213,
-   "busRouteName": "3214",
-   "routeType": "지선",
-   "startStation": "마천동",
-   "endStation": "강변역"
- },
- {
-   "routeID": 100100215,
-   "busRouteName": "3216",
-   "routeType": "지선",
-   "startStation": "오금동",
-   "endStation": "경희대입구"
- },
- {
-   "routeID": 100100216,
-   "busRouteName": "3217",
-   "routeType": "지선",
-   "startStation": "송파차고지",
-   "endStation": "어린이대공원"
- },
- {
-   "routeID": 100100218,
-   "busRouteName": "3220",
-   "routeType": "지선",
-   "startStation": "오금동",
-   "endStation": "청량리"
- },
- {
-   "routeID": 100100219,
-   "busRouteName": "3313",
-   "routeType": "지선",
-   "startStation": "송파공영차고지",
-   "endStation": "잠실새내역"
- },
- {
-   "routeID": 100100220,
-   "busRouteName": "3314",
-   "routeType": "지선",
-   "startStation": "장지동공영차고지",
-   "endStation": "종합운동장"
- },
- {
-   "routeID": 100100221,
-   "busRouteName": "3315",
-   "routeType": "지선",
-   "startStation": "장지동공영차고지",
-   "endStation": "삼전동사회복지관"
- },
- {
-   "routeID": 100100222,
-   "busRouteName": "3316",
-   "routeType": "지선",
-   "startStation": "마천동",
-   "endStation": "천호역"
- },
- {
-   "routeID": 100100223,
-   "busRouteName": "3411",
-   "routeType": "지선",
-   "startStation": "강동차고지",
-   "endStation": "삼성역"
- },
- {
-   "routeID": 100100224,
-   "busRouteName": "3412",
-   "routeType": "지선",
-   "startStation": "강동차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100225,
-   "busRouteName": "3413",
-   "routeType": "지선",
-   "startStation": "강동공영차고지",
-   "endStation": "수서경찰서"
- },
- {
-   "routeID": 100100226,
-   "busRouteName": "3414",
-   "routeType": "지선",
-   "startStation": "오금동",
-   "endStation": "고속터미널"
- },
- {
-   "routeID": 100100228,
-   "busRouteName": "3416",
-   "routeType": "지선",
-   "startStation": "마천동",
-   "endStation": "은곡마을입구.리엔파크2단지"
- },
- {
-   "routeID": 100100229,
-   "busRouteName": "3417",
-   "routeType": "지선",
-   "startStation": "장지공영차고지",
-   "endStation": "삼성역"
- },
- {
-   "routeID": 100100232,
-   "busRouteName": "3422",
-   "routeType": "지선",
-   "startStation": "장지공영차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100234,
-   "busRouteName": "4212",
-   "routeType": "지선",
-   "startStation": "전원마을",
-   "endStation": "중곡역"
- },
- {
-   "routeID": 100100246,
-   "busRouteName": "4432",
-   "routeType": "지선",
-   "startStation": "개포동",
-   "endStation": "신원동"
- },
- {
-   "routeID": 100100247,
-   "busRouteName": "4433",
-   "routeType": "지선",
-   "startStation": "대치역",
-   "endStation": "양재역"
- },
- {
-   "routeID": 100100248,
-   "busRouteName": "5012",
-   "routeType": "지선",
-   "startStation": "가산동",
-   "endStation": "용산역"
- },
- {
-   "routeID": 100100249,
-   "busRouteName": "5413",
-   "routeType": "지선",
-   "startStation": "시흥",
-   "endStation": "고속터미널"
- },
- {
-   "routeID": 100100250,
-   "busRouteName": "5511",
-   "routeType": "지선",
-   "startStation": "서울대학교",
-   "endStation": "중앙대학교"
- },
- {
-   "routeID": 100100251,
-   "busRouteName": "5513",
-   "routeType": "지선",
-   "startStation": "서울대학교",
-   "endStation": "관악드림타운"
- },
- {
-   "routeID": 100100252,
-   "busRouteName": "5515",
-   "routeType": "지선",
-   "startStation": "금호타운아파트",
-   "endStation": "청림동현대아파트"
- },
- {
-   "routeID": 100100253,
-   "busRouteName": "5516",
-   "routeType": "지선",
-   "startStation": "신림2동차고지",
-   "endStation": "노량진역"
- },
- {
-   "routeID": 100100254,
-   "busRouteName": "5517",
-   "routeType": "지선",
-   "startStation": "한남운수대학동차고지",
-   "endStation": "중앙대학교"
- },
- {
-   "routeID": 100100255,
-   "busRouteName": "5519",
-   "routeType": "지선",
-   "startStation": "우방아파트",
-   "endStation": "용천사"
- },
- {
-   "routeID": 100100259,
-   "busRouteName": "5523",
-   "routeType": "지선",
-   "startStation": "서울대입구역",
-   "endStation": "난곡종점"
- },
- {
-   "routeID": 100100260,
-   "busRouteName": "5524",
-   "routeType": "지선",
-   "startStation": "난향차고지",
-   "endStation": "중앙대학교"
- },
- {
-   "routeID": 100100261,
-   "busRouteName": "5525",
-   "routeType": "지선",
-   "startStation": "시흥동",
-   "endStation": "보라매공원"
- },
- {
-   "routeID": 100100263,
-   "busRouteName": "5528",
-   "routeType": "지선",
-   "startStation": "가산동",
-   "endStation": "사당역"
- },
- {
-   "routeID": 100100264,
-   "busRouteName": "5530",
-   "routeType": "지선",
-   "startStation": "군포공영차고지",
-   "endStation": "사당역"
- },
- {
-   "routeID": 100100265,
-   "busRouteName": "5531",
-   "routeType": "지선",
-   "startStation": "군포공영차고지",
-   "endStation": "노들역"
- },
- {
-   "routeID": 100100266,
-   "busRouteName": "5634",
-   "routeType": "지선",
-   "startStation": "광명공영차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100267,
-   "busRouteName": "5535",
-   "routeType": "지선",
-   "startStation": "하안동",
-   "endStation": "노량진"
- },
- {
-   "routeID": 100100268,
-   "busRouteName": "5536",
-   "routeType": "지선",
-   "startStation": "하안동",
-   "endStation": "노량진"
- },
- {
-   "routeID": 100100269,
-   "busRouteName": "5537",
-   "routeType": "지선",
-   "startStation": "시흥동",
-   "endStation": "가산디지털단지역"
- },
- {
-   "routeID": 100100272,
-   "busRouteName": "5615",
-   "routeType": "지선",
-   "startStation": "여의도",
-   "endStation": "난곡"
- },
- {
-   "routeID": 100100273,
-   "busRouteName": "5616",
-   "routeType": "지선",
-   "startStation": "가산동기점",
-   "endStation": "영동중학교"
- },
- {
-   "routeID": 100100274,
-   "busRouteName": "5617",
-   "routeType": "지선",
-   "startStation": "시흥",
-   "endStation": "구로디지털단지역"
- },
- {
-   "routeID": 100100275,
-   "busRouteName": "5618",
-   "routeType": "지선",
-   "startStation": "구로동",
-   "endStation": "구로동"
- },
- {
-   "routeID": 100100276,
-   "busRouteName": "5619",
-   "routeType": "지선",
-   "startStation": "시흥동",
-   "endStation": "신도림역"
- },
- {
-   "routeID": 100100277,
-   "busRouteName": "5620",
-   "routeType": "지선",
-   "startStation": "시흥",
-   "endStation": "선유도역"
- },
- {
-   "routeID": 100100278,
-   "busRouteName": "5621",
-   "routeType": "지선",
-   "startStation": "삼익아파트",
-   "endStation": "구로디지털단지역"
- },
- {
-   "routeID": 100100279,
-   "busRouteName": "5623",
-   "routeType": "지선",
-   "startStation": "군포공영차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100280,
-   "busRouteName": "5624",
-   "routeType": "지선",
-   "startStation": "부곡버스공영차고지",
-   "endStation": "구로디지털단지역"
- },
- {
-   "routeID": 100100281,
-   "busRouteName": "5625",
-   "routeType": "지선",
-   "startStation": "안양비산동",
-   "endStation": "영등포역(영등포시장)"
- },
- {
-   "routeID": 100100282,
-   "busRouteName": "5626",
-   "routeType": "지선",
-   "startStation": "안양비산동",
-   "endStation": "온수동종점"
- },
- {
-   "routeID": 100100283,
-   "busRouteName": "5627",
-   "routeType": "지선",
-   "startStation": "노온사동",
-   "endStation": "구로디지털단지역"
- },
- {
-   "routeID": 100100284,
-   "busRouteName": "5630",
-   "routeType": "지선",
-   "startStation": "광명공영차고지",
-   "endStation": "목동역"
- },
- {
-   "routeID": 100100285,
-   "busRouteName": "5633",
-   "routeType": "지선",
-   "startStation": "노온사동",
-   "endStation": "순복음교회"
- },
- {
-   "routeID": 100100286,
-   "busRouteName": "5712",
-   "routeType": "지선",
-   "startStation": "가산동기점",
-   "endStation": "홍대입구역"
- },
- {
-   "routeID": 100100287,
-   "busRouteName": "5713",
-   "routeType": "지선",
-   "startStation": "안양비산동",
-   "endStation": "신촌기차역"
- },
- {
-   "routeID": 100100288,
-   "busRouteName": "5714",
-   "routeType": "지선",
-   "startStation": "광명공영차고지",
-   "endStation": "이대입구"
- },
- {
-   "routeID": 100100289,
-   "busRouteName": "6211",
-   "routeType": "지선",
-   "startStation": "신월동",
-   "endStation": "상왕십리"
- },
- {
-   "routeID": 100100290,
-   "busRouteName": "6411",
-   "routeType": "지선",
-   "startStation": "구로동",
-   "endStation": "개포동"
- },
- {
-   "routeID": 100100291,
-   "busRouteName": "6511",
-   "routeType": "지선",
-   "startStation": "구로동",
-   "endStation": "서울대"
- },
- {
-   "routeID": 100100292,
-   "busRouteName": "6512",
-   "routeType": "지선",
-   "startStation": "구로동",
-   "endStation": "서울대"
- },
- {
-   "routeID": 100100293,
-   "busRouteName": "6513",
-   "routeType": "지선",
-   "startStation": "철산동",
-   "endStation": "서울대"
- },
- {
-   "routeID": 100100294,
-   "busRouteName": "6514",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "서울대학교"
- },
- {
-   "routeID": 100100295,
-   "busRouteName": "6611",
-   "routeType": "지선",
-   "startStation": "신도림역",
-   "endStation": "우성아파트"
- },
- {
-   "routeID": 100100297,
-   "busRouteName": "6614",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "부천옥길지구"
- },
- {
-   "routeID": 100100298,
-   "busRouteName": "6616",
-   "routeType": "지선",
-   "startStation": "철산동",
-   "endStation": "온수동"
- },
- {
-   "routeID": 100100299,
-   "busRouteName": "6617",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "목동우성아파트"
- },
- {
-   "routeID": 100100300,
-   "busRouteName": "6620",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "당산역"
- },
- {
-   "routeID": 100100301,
-   "busRouteName": "6623",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100302,
-   "busRouteName": "6624",
-   "routeType": "지선",
-   "startStation": "신월동",
-   "endStation": "이대목동병원"
- },
- {
-   "routeID": 100100303,
-   "busRouteName": "6625",
-   "routeType": "지선",
-   "startStation": "문래동",
-   "endStation": "화곡역"
- },
- {
-   "routeID": 100100304,
-   "busRouteName": "6627",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "이대목동병원"
- },
- {
-   "routeID": 100100305,
-   "busRouteName": "6628",
-   "routeType": "지선",
-   "startStation": "외발산동",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100306,
-   "busRouteName": "6629",
-   "routeType": "지선",
-   "startStation": "방화동",
-   "endStation": "영등포역"
- },
- {
-   "routeID": 100100307,
-   "busRouteName": "6630",
-   "routeType": "지선",
-   "startStation": "영인운수차고지",
-   "endStation": "영등포시장"
- },
- {
-   "routeID": 100100308,
-   "busRouteName": "6631",
-   "routeType": "지선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "영등포시장"
- },
- {
-   "routeID": 100100309,
-   "busRouteName": "6632",
-   "routeType": "지선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "당산역"
- },
- {
-   "routeID": 100100311,
-   "busRouteName": "6635",
-   "routeType": "지선",
-   "startStation": "광명 하안동",
-   "endStation": "구로공단역"
- },
- {
-   "routeID": 100100312,
-   "busRouteName": "6637",
-   "routeType": "지선",
-   "startStation": "노온사동",
-   "endStation": "목동"
- },
- {
-   "routeID": 100100313,
-   "busRouteName": "6638",
-   "routeType": "지선",
-   "startStation": "철산동",
-   "endStation": "오목교"
- },
- {
-   "routeID": 100100316,
-   "busRouteName": "6642",
-   "routeType": "지선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "가양3동도시개발9단지아파트"
- },
- {
-   "routeID": 100100318,
-   "busRouteName": "6645",
-   "routeType": "지선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "강서공영차고지.개화역"
- },
- {
-   "routeID": 100100320,
-   "busRouteName": "6647",
-   "routeType": "지선",
-   "startStation": "강서공영차고지.개화역",
-   "endStation": "강서공영차고지.개화역"
- },
- {
-   "routeID": 100100322,
-   "busRouteName": "6654",
-   "routeType": "지선",
-   "startStation": "신풍역",
-   "endStation": "여의도역"
- },
- {
-   "routeID": 100100329,
-   "busRouteName": "6657",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "강서한강자이아파트"
- },
- {
-   "routeID": 100100330,
-   "busRouteName": "6712",
-   "routeType": "지선",
-   "startStation": "방화동",
-   "endStation": "서강대학교"
- },
- {
-   "routeID": 100100331,
-   "busRouteName": "6714",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "이대부고"
- },
- {
-   "routeID": 100100332,
-   "busRouteName": "6715",
-   "routeType": "지선",
-   "startStation": "신월동",
-   "endStation": "상암동"
- },
- {
-   "routeID": 100100337,
-   "busRouteName": "7017",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "롯데백화점"
- },
- {
-   "routeID": 100100338,
-   "busRouteName": "7018",
-   "routeType": "지선",
-   "startStation": "북가좌동",
-   "endStation": "무교동"
- },
- {
-   "routeID": 100100339,
-   "busRouteName": "7019",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "서소문"
- },
- {
-   "routeID": 100100340,
-   "busRouteName": "7021",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "을지로입구"
- },
- {
-   "routeID": 100100341,
-   "busRouteName": "7022",
-   "routeType": "지선",
-   "startStation": "구산동",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100342,
-   "busRouteName": "7024",
-   "routeType": "지선",
-   "startStation": "봉원사",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100344,
-   "busRouteName": "7211",
-   "routeType": "지선",
-   "startStation": "진관공영차고지",
-   "endStation": "신설동"
- },
- {
-   "routeID": 100100345,
-   "busRouteName": "7611",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100346,
-   "busRouteName": "7612",
-   "routeType": "지선",
-   "startStation": "홍연2교",
-   "endStation": "영등포구청역"
- },
- {
-   "routeID": 100100347,
-   "busRouteName": "7613",
-   "routeType": "지선",
-   "startStation": "구산동",
-   "endStation": "여의도"
- },
- {
-   "routeID": 100100348,
-   "busRouteName": "7711",
-   "routeType": "지선",
-   "startStation": "덕은동종점",
-   "endStation": "홍대입구역"
- },
- {
-   "routeID": 100100349,
-   "busRouteName": "7713",
-   "routeType": "지선",
-   "startStation": "홍연2교",
-   "endStation": "홍연2교"
- },
- {
-   "routeID": 100100352,
-   "busRouteName": "7720",
-   "routeType": "지선",
-   "startStation": "구산동",
-   "endStation": "신촌"
- },
- {
-   "routeID": 100100353,
-   "busRouteName": "7722",
-   "routeType": "지선",
-   "startStation": "진관공영차고지",
-   "endStation": "녹번역"
- },
- {
-   "routeID": 100100354,
-   "busRouteName": "7723",
-   "routeType": "지선",
-   "startStation": "진관공영차고지",
-   "endStation": "구파발역"
- },
- {
-   "routeID": 100100357,
-   "busRouteName": "7726",
-   "routeType": "지선",
-   "startStation": "덕은동종점",
-   "endStation": "모래내삼거리"
- },
- {
-   "routeID": 100100358,
-   "busRouteName": "7727",
-   "routeType": "지선",
-   "startStation": "설문동",
-   "endStation": "신촌"
- },
- {
-   "routeID": 100100359,
-   "busRouteName": "7728",
-   "routeType": "지선",
-   "startStation": "대화동",
-   "endStation": "신촌"
- },
- {
-   "routeID": 100100360,
-   "busRouteName": "7730",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "이북오도청"
- },
- {
-   "routeID": 100100363,
-   "busRouteName": "7737",
-   "routeType": "지선",
-   "startStation": "은평공영차고지",
-   "endStation": "파크빌아파트"
- },
- {
-   "routeID": 100100364,
-   "busRouteName": "7738",
-   "routeType": "지선",
-   "startStation": "은평공영차고지",
-   "endStation": "홍제역"
- },
- {
-   "routeID": 100100383,
-   "busRouteName": "8541",
-   "routeType": "맞춤",
-   "startStation": "호압사",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100387,
-   "busRouteName": "8774",
-   "routeType": "맞춤",
-   "startStation": "구산동",
-   "endStation": "서대문구청"
- },
- {
-   "routeID": 100100389,
-   "busRouteName": "9401",
-   "routeType": "광역",
-   "startStation": "구미동차고지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100390,
-   "busRouteName": "9403",
-   "routeType": "광역",
-   "startStation": "구미동차고지",
-   "endStation": "동대문역사문화공원"
- },
- {
-   "routeID": 100100391,
-   "busRouteName": "9404",
-   "routeType": "광역",
-   "startStation": "분당구미",
-   "endStation": "신사역"
- },
- {
-   "routeID": 100100392,
-   "busRouteName": "9408",
-   "routeType": "광역",
-   "startStation": "분당구 구미동",
-   "endStation": "영등포"
- },
- {
-   "routeID": 100100397,
-   "busRouteName": "9701",
-   "routeType": "광역",
-   "startStation": "고양시 가좌동",
-   "endStation": "롯데영프라자"
- },
- {
-   "routeID": 100100398,
-   "busRouteName": "9703",
-   "routeType": "광역",
-   "startStation": "신성교통차고지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100400,
-   "busRouteName": "9707",
-   "routeType": "광역",
-   "startStation": "고양 가좌동",
-   "endStation": "영등포역"
- },
- {
-   "routeID": 100100406,
-   "busRouteName": "9714",
-   "routeType": "광역",
-   "startStation": "교하 운정",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100407,
-   "busRouteName": "240",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "신사역사거리"
- },
- {
-   "routeID": 100100409,
-   "busRouteName": "421",
-   "routeType": "간선",
-   "startStation": "염곡동차고지",
-   "endStation": "옥수동"
- },
- {
-   "routeID": 100100410,
-   "busRouteName": "502",
-   "routeType": "간선",
-   "startStation": "월암공영차고지",
-   "endStation": "한국은행"
- },
- {
-   "routeID": 100100425,
-   "busRouteName": "1122",
-   "routeType": "지선",
-   "startStation": "석관동(상진운수종점)",
-   "endStation": "원자력병원"
- },
- {
-   "routeID": 100100427,
-   "busRouteName": "4319",
-   "routeType": "지선",
-   "startStation": "전원마을",
-   "endStation": "잠실역"
- },
- {
-   "routeID": 100100437,
-   "busRouteName": "771",
-   "routeType": "간선",
-   "startStation": "대화동종점",
-   "endStation": "디지털미디어시티역"
- },
- {
-   "routeID": 100100438,
-   "busRouteName": "3011",
-   "routeType": "지선",
-   "startStation": "장지공영차고지",
-   "endStation": "한남동"
- },
- {
-   "routeID": 100100440,
-   "busRouteName": "700",
-   "routeType": "간선",
-   "startStation": "대화동",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100446,
-   "busRouteName": "7025",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "종로6가"
- },
- {
-   "routeID": 100100447,
-   "busRouteName": "7016",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "상명대"
- },
- {
-   "routeID": 100100448,
-   "busRouteName": "7013B",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "남대문시장"
- },
- {
-   "routeID": 100100449,
-   "busRouteName": "7013A",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "남대문시장"
- },
- {
-   "routeID": 100100450,
-   "busRouteName": "7011",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "중구청"
- },
- {
-   "routeID": 100100451,
-   "busRouteName": "6716",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "이대입구"
- },
- {
-   "routeID": 100100453,
-   "busRouteName": "6613",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "대림역"
- },
- {
-   "routeID": 100100454,
-   "busRouteName": "4419",
-   "routeType": "지선",
-   "startStation": "송파차고지",
-   "endStation": "압구정역3번출구"
- },
- {
-   "routeID": 100100459,
-   "busRouteName": "440",
-   "routeType": "간선",
-   "startStation": "송파공영차고지",
-   "endStation": "압구정동한양파출소앞"
- },
- {
-   "routeID": 100100462,
-   "busRouteName": "7715",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "연신내역"
- },
- {
-   "routeID": 100100478,
-   "busRouteName": "3317",
-   "routeType": "지선",
-   "startStation": "남한산성입구",
-   "endStation": "잠실리센츠아파트앞"
- },
- {
-   "routeID": 100100495,
-   "busRouteName": "672",
-   "routeType": "간선",
-   "startStation": "방화동기점",
-   "endStation": "이대후문"
- },
- {
-   "routeID": 100100496,
-   "busRouteName": "333",
-   "routeType": "간선",
-   "startStation": "송파공영차고지",
-   "endStation": "올림픽공원"
- },
- {
-   "routeID": 100100497,
-   "busRouteName": "653",
-   "routeType": "간선",
-   "startStation": "영인운수차고지",
-   "endStation": "가산디지털단지역"
- },
- {
-   "routeID": 100100498,
-   "busRouteName": "3318",
-   "routeType": "지선",
-   "startStation": "강동공영차고지",
-   "endStation": "마천동"
- },
- {
-   "routeID": 100100499,
-   "busRouteName": "7212",
-   "routeType": "지선",
-   "startStation": "은평차고지",
-   "endStation": "극동그린아파트앞"
- },
- {
-   "routeID": 100100500,
-   "busRouteName": "4312",
-   "routeType": "지선",
-   "startStation": "개포동",
-   "endStation": "가락1동주민센터"
- },
- {
-   "routeID": 100100501,
-   "busRouteName": "3319",
-   "routeType": "지선",
-   "startStation": "장지공영차고지",
-   "endStation": "잠실역7번출구"
- },
- {
-   "routeID": 100100511,
-   "busRouteName": "707",
-   "routeType": "간선",
-   "startStation": "대화동",
-   "endStation": "서울역"
- },
- {
-   "routeID": 100100521,
-   "busRouteName": "6515",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "경인교육대학교"
- },
- {
-   "routeID": 100100522,
-   "busRouteName": "2016",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "효창공원후문"
- },
- {
-   "routeID": 100100525,
-   "busRouteName": "8772",
-   "routeType": "맞춤",
-   "startStation": "진관공영차고지",
-   "endStation": "북한산성입구"
- },
- {
-   "routeID": 100100537,
-   "busRouteName": "740",
-   "routeType": "간선",
-   "startStation": "덕은동종점",
-   "endStation": "무역센터삼성역"
- },
- {
-   "routeID": 100100549,
-   "busRouteName": "100",
-   "routeType": "간선",
-   "startStation": "하계동",
-   "endStation": "용산구청"
- },
- {
-   "routeID": 100100550,
-   "busRouteName": "662",
-   "routeType": "간선",
-   "startStation": "외발산동",
-   "endStation": "여의나루역"
- },
- {
-   "routeID": 100100551,
-   "busRouteName": "673",
-   "routeType": "간선",
-   "startStation": "부천상동",
-   "endStation": "이대부고"
- },
- {
-   "routeID": 100100552,
-   "busRouteName": "7739",
-   "routeType": "지선",
-   "startStation": "은평공영차고지",
-   "endStation": "서교가든"
- },
- {
-   "routeID": 100100553,
-   "busRouteName": "350",
-   "routeType": "간선",
-   "startStation": "송파차고지",
-   "endStation": "노들역앞"
- },
- {
-   "routeID": 100100564,
-   "busRouteName": "320",
-   "routeType": "간선",
-   "startStation": "송파차고지",
-   "endStation": "중랑구청"
- },
- {
-   "routeID": 100100565,
-   "busRouteName": "750B",
-   "routeType": "간선",
-   "startStation": "은평차고지",
-   "endStation": "서울대학교"
- },
- {
-   "routeID": 100100566,
-   "busRouteName": "1115",
-   "routeType": "지선",
-   "startStation": "수유중학교혜화여고",
-   "endStation": "미아삼거리역"
- },
- {
-   "routeID": 100100574,
-   "busRouteName": "541",
-   "routeType": "간선",
-   "startStation": "군포공영차고지",
-   "endStation": "강남역"
- },
- {
-   "routeID": 100100576,
-   "busRouteName": "6516",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "박미삼거리"
- },
- {
-   "routeID": 100100578,
-   "busRouteName": "3321",
-   "routeType": "지선",
-   "startStation": "강동공영차고지",
-   "endStation": "강동구청"
- },
- {
-   "routeID": 100100579,
-   "busRouteName": "3012",
-   "routeType": "지선",
-   "startStation": "송파차고지",
-   "endStation": "이촌2동"
- },
- {
-   "routeID": 100100583,
-   "busRouteName": "121",
-   "routeType": "간선",
-   "startStation": "화계사",
-   "endStation": "서울숲"
- },
- {
-   "routeID": 100100587,
-   "busRouteName": "705",
-   "routeType": "간선",
-   "startStation": "은평뉴타운공영차고지",
-   "endStation": "롯데백화점"
- },
- {
-   "routeID": 100100591,
-   "busRouteName": "N30",
-   "routeType": "심야",
-   "startStation": "강동공영차고지",
-   "endStation": "서울역환승센터"
- },
- {
-   "routeID": 100100595,
-   "busRouteName": "241",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "논현역"
- },
- {
-   "routeID": 100100596,
-   "busRouteName": "400",
-   "routeType": "간선",
-   "startStation": "염곡동",
-   "endStation": "시청앞"
- },
- {
-   "routeID": 100100597,
-   "busRouteName": "405",
-   "routeType": "간선",
-   "startStation": "염곡동",
-   "endStation": "시청광장"
- },
- {
-   "routeID": 100100598,
-   "busRouteName": "2115",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "서경대입구"
- },
- {
-   "routeID": 100100599,
-   "busRouteName": "2311",
-   "routeType": "지선",
-   "startStation": "중랑공영차고지",
-   "endStation": "문정동"
- },
- {
-   "routeID": 100100601,
-   "busRouteName": "6640A",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "양천공영차고지"
- },
- {
-   "routeID": 100100602,
-   "busRouteName": "6640B",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "양천공영차고지"
- },
- {
-   "routeID": 100100603,
-   "busRouteName": "542",
-   "routeType": "간선",
-   "startStation": "군포복합화물터미널",
-   "endStation": "신사역"
- },
- {
-   "routeID": 100100604,
-   "busRouteName": "4211",
-   "routeType": "지선",
-   "startStation": "염곡동차고지",
-   "endStation": "한양대동문앞"
- },
- {
-   "routeID": 100100605,
-   "busRouteName": "463",
-   "routeType": "간선",
-   "startStation": "염곡동차고지",
-   "endStation": "국회의사당"
- },
- {
-   "routeID": 100100607,
-   "busRouteName": "9711",
-   "routeType": "광역",
-   "startStation": "신성교통차고지",
-   "endStation": "양재동"
- },
- {
-   "routeID": 100100609,
-   "busRouteName": "3425",
-   "routeType": "지선",
-   "startStation": "송파공영차고지",
-   "endStation": "삼성역"
- },
- {
-   "routeID": 100100612,
-   "busRouteName": "3426",
-   "routeType": "지선",
-   "startStation": "서울버스종점",
-   "endStation": "청담동"
- },
- {
-   "routeID": 100100613,
-   "busRouteName": "3322",
-   "routeType": "지선",
-   "startStation": "송파차고지",
-   "endStation": "잠실종합운동장"
- },
- {
-   "routeID": 103000001,
-   "busRouteName": "8441",
-   "routeType": "맞춤",
-   "startStation": "은곡마을",
-   "endStation": "LH이편한세상"
- },
- {
-   "routeID": 104000006,
-   "busRouteName": "242",
-   "routeType": "간선",
-   "startStation": "중랑공영차고지",
-   "endStation": "개포동"
- },
- {
-   "routeID": 104000007,
-   "busRouteName": "01A",
-   "routeType": "순환",
-   "startStation": "서울역버스환승센터",
-   "endStation": "서울역버스환승센터"
- },
- {
-   "routeID": 104000008,
-   "busRouteName": "01B",
-   "routeType": "순환",
-   "startStation": "서울역버스환승센터",
-   "endStation": "서울역버스환승센터"
- },
- {
-   "routeID": 106000001,
-   "busRouteName": "8221",
-   "routeType": "맞춤",
-   "startStation": "장안2동주민센터",
-   "endStation": "답십리역"
- },
- {
-   "routeID": 107000001,
-   "busRouteName": "1116",
-   "routeType": "지선",
-   "startStation": "국민대학교",
-   "endStation": "미아사거리"
- },
- {
-   "routeID": 107000002,
-   "busRouteName": "343",
-   "routeType": "간선",
-   "startStation": "송파공영차고지",
-   "endStation": "수서역"
- },
- {
-   "routeID": 107000003,
-   "busRouteName": "8002",
-   "routeType": "지선",
-   "startStation": "상명대앞",
-   "endStation": "경복궁역"
- },
- {
-   "routeID": 107000004,
-   "busRouteName": "8003",
-   "routeType": "지선",
-   "startStation": "평창동주민센터",
-   "endStation": "평창동주민센터"
- },
- {
-   "routeID": 108000001,
-   "busRouteName": "8551",
-   "routeType": "맞춤",
-   "startStation": "봉천역",
-   "endStation": "노량진역"
- },
- {
-   "routeID": 108000002,
-   "busRouteName": "1167",
-   "routeType": "지선",
-   "startStation": "우이동",
-   "endStation": "은행사거리(11414)"
- },
- {
-   "routeID": 110000002,
-   "busRouteName": "173",
-   "routeType": "간선",
-   "startStation": "월계동",
-   "endStation": "신촌기차역"
- },
- {
-   "routeID": 110000003,
-   "busRouteName": "8112",
-   "routeType": "맞춤",
-   "startStation": "장위뉴타운",
-   "endStation": "성신여대입구"
- },
- {
-   "routeID": 111000008,
-   "busRouteName": "674",
-   "routeType": "간선",
-   "startStation": "신길운수",
-   "endStation": "연세대"
- },
- {
-   "routeID": 111000009,
-   "busRouteName": "8771",
-   "routeType": "맞춤",
-   "startStation": "구산중",
-   "endStation": "구산교회"
- },
- {
-   "routeID": 111000010,
-   "busRouteName": "7734",
-   "routeType": "지선",
-   "startStation": "진관공영차고지",
-   "endStation": "홍대입구역"
- },
- {
-   "routeID": 111000011,
-   "busRouteName": "773",
-   "routeType": "간선",
-   "startStation": "교하운정",
-   "endStation": "불광역"
- },
- {
-   "routeID": 111000012,
-   "busRouteName": "774",
-   "routeType": "간선",
-   "startStation": "진관공영차고지",
-   "endStation": "파주읍"
- },
- {
-   "routeID": 111000014,
-   "busRouteName": "761",
-   "routeType": "간선",
-   "startStation": "진관공영차고지",
-   "endStation": "영등포역"
- },
- {
-   "routeID": 112000001,
-   "busRouteName": "8777",
-   "routeType": "맞춤",
-   "startStation": "난지캠핑장",
-   "endStation": "월드컵경기장남측"
- },
- {
-   "routeID": 113000001,
-   "busRouteName": "8761",
-   "routeType": "맞춤",
-   "startStation": "신촌로터리",
-   "endStation": "국회의사당"
- },
- {
-   "routeID": 113000002,
-   "busRouteName": "452",
-   "routeType": "간선",
-   "startStation": "송파공영차고지",
-   "endStation": "중앙대학교"
- },
- {
-   "routeID": 114000001,
-   "busRouteName": "6649",
-   "routeType": "지선",
-   "startStation": "신도림역",
-   "endStation": "오목교역청학스포츠타운"
- },
- {
-   "routeID": 115000005,
-   "busRouteName": "6648",
-   "routeType": "지선",
-   "startStation": "방화동",
-   "endStation": "양천구청"
- },
- {
-   "routeID": 115000007,
-   "busRouteName": "654",
-   "routeType": "간선",
-   "startStation": "방화동",
-   "endStation": "노들역"
- },
- {
-   "routeID": 116000001,
-   "busRouteName": "8552",
-   "routeType": "맞춤",
-   "startStation": "신림복지관앞",
-   "endStation": "신림역신림사거리"
- },
- {
-   "routeID": 116000002,
-   "busRouteName": "6615",
-   "routeType": "지선",
-   "startStation": "양천공영차고지",
-   "endStation": "천왕역"
- },
- {
-   "routeID": 116000004,
-   "busRouteName": "660",
-   "routeType": "간선",
-   "startStation": "온수동종점",
-   "endStation": "가양역"
- },
- {
-   "routeID": 122000001,
-   "busRouteName": "4435",
-   "routeType": "지선",
-   "startStation": "개포동차고지",
-   "endStation": "사당역"
- },
- {
-   "routeID": 123000010,
-   "busRouteName": "741",
-   "routeType": "간선",
-   "startStation": "진관차고지",
-   "endStation": "세곡동사거리"
- },
- {
-   "routeID": 123000011,
-   "busRouteName": "708",
-   "routeType": "간선",
-   "startStation": "진관차고지",
-   "endStation": "서울역"
- },
- {
-   "routeID": 124000008,
-   "busRouteName": "7719",
-   "routeType": "지선",
-   "startStation": "북가좌동",
-   "endStation": "녹번동"
- },
- {
-   "routeID": 124000010,
-   "busRouteName": "8331",
-   "routeType": "맞춤",
-   "startStation": "마천사거리",
-   "endStation": "잠실역"
- },
- {
-   "routeID": 124000036,
-   "busRouteName": "362",
-   "routeType": "간선",
-   "startStation": "송파공영차고지",
-   "endStation": "여의도"
- },
- {
-   "routeID": 124000038,
-   "busRouteName": "342",
-   "routeType": "간선",
-   "startStation": "강동차고지",
-   "endStation": "압구정로데오역"
- }
+    {
+    "routeID": 100100006,
+    "busRouteName": "101",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "서소문"
+    },
+    {
+    "routeID": 100100007,
+    "busRouteName": "102",
+    "routeType": "간선",
+    "startStation": "상계주공7단지",
+    "endStation": "동대문"
+    },
+    {
+    "routeID": 100100008,
+    "busRouteName": "103",
+    "routeType": "간선",
+    "startStation": "삼화상운",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100009,
+    "busRouteName": "104",
+    "routeType": "간선",
+    "startStation": "강북청소년수련관",
+    "endStation": "서울역버스환승센터"
+    },
+    {
+    "routeID": 100100010,
+    "busRouteName": "105",
+    "routeType": "간선",
+    "startStation": "상계주공7단지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100011,
+    "busRouteName": "106",
+    "routeType": "간선",
+    "startStation": "의정부",
+    "endStation": "종로5가"
+    },
+    {
+    "routeID": 100100012,
+    "busRouteName": "107",
+    "routeType": "간선",
+    "startStation": "민락동차고지",
+    "endStation": "동대문"
+    },
+    {
+    "routeID": 100100014,
+    "busRouteName": "109",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "광화문"
+    },
+    {
+    "routeID": 100100017,
+    "busRouteName": "120",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "청량리"
+    },
+    {
+    "routeID": 100100018,
+    "busRouteName": "130",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "길동"
+    },
+    {
+    "routeID": 100100019,
+    "busRouteName": "140",
+    "routeType": "간선",
+    "startStation": "도봉산역광역환승센터",
+    "endStation": "AT센터양재꽃시장"
+    },
+    {
+    "routeID": 100100020,
+    "busRouteName": "141",
+    "routeType": "간선",
+    "startStation": "도봉산",
+    "endStation": "염곡동"
+    },
+    {
+    "routeID": 100100021,
+    "busRouteName": "142",
+    "routeType": "간선",
+    "startStation": "방배동",
+    "endStation": "도봉산"
+    },
+    {
+    "routeID": 100100022,
+    "busRouteName": "143",
+    "routeType": "간선",
+    "startStation": "정릉",
+    "endStation": "개포동"
+    },
+    {
+    "routeID": 100100023,
+    "busRouteName": "144",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "교대"
+    },
+    {
+    "routeID": 100100024,
+    "busRouteName": "145",
+    "routeType": "간선",
+    "startStation": "번동",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100025,
+    "busRouteName": "146",
+    "routeType": "간선",
+    "startStation": "상계주공7단지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100026,
+    "busRouteName": "147",
+    "routeType": "간선",
+    "startStation": "월계동",
+    "endStation": "도곡동"
+    },
+    {
+    "routeID": 100100027,
+    "busRouteName": "148",
+    "routeType": "간선",
+    "startStation": "번동",
+    "endStation": "방배동"
+    },
+    {
+    "routeID": 100100029,
+    "busRouteName": "150",
+    "routeType": "간선",
+    "startStation": "도봉산역",
+    "endStation": "시흥대교"
+    },
+    {
+    "routeID": 100100030,
+    "busRouteName": "151",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "중앙대"
+    },
+    {
+    "routeID": 100100031,
+    "busRouteName": "152",
+    "routeType": "간선",
+    "startStation": "화계사",
+    "endStation": "삼막사사거리"
+    },
+    {
+    "routeID": 100100032,
+    "busRouteName": "153",
+    "routeType": "간선",
+    "startStation": "우이동",
+    "endStation": "당곡사거리"
+    },
+    {
+    "routeID": 100100033,
+    "busRouteName": "160",
+    "routeType": "간선",
+    "startStation": "도봉산역",
+    "endStation": "온수동종점"
+    },
+    {
+    "routeID": 100100034,
+    "busRouteName": "162",
+    "routeType": "간선",
+    "startStation": "정릉",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100036,
+    "busRouteName": "171",
+    "routeType": "간선",
+    "startStation": "국민대앞",
+    "endStation": "월드컵파크7단지"
+    },
+    {
+    "routeID": 100100037,
+    "busRouteName": "172",
+    "routeType": "간선",
+    "startStation": "하계동",
+    "endStation": "상암동"
+    },
+    {
+    "routeID": 100100038,
+    "busRouteName": "201",
+    "routeType": "간선",
+    "startStation": "수택동차고지",
+    "endStation": "서울역환승센터"
+    },
+    {
+    "routeID": 100100039,
+    "busRouteName": "202",
+    "routeType": "간선",
+    "startStation": "불암동",
+    "endStation": "후암동"
+    },
+    {
+    "routeID": 100100042,
+    "busRouteName": "260",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "국회의사당"
+    },
+    {
+    "routeID": 100100043,
+    "busRouteName": "261",
+    "routeType": "간선",
+    "startStation": "석관동(상진운수종점)",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100044,
+    "busRouteName": "262",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "여의도환승센타"
+    },
+    {
+    "routeID": 100100046,
+    "busRouteName": "270",
+    "routeType": "간선",
+    "startStation": "상암차고지",
+    "endStation": "망우리(출)"
+    },
+    {
+    "routeID": 100100047,
+    "busRouteName": "271",
+    "routeType": "간선",
+    "startStation": "용마문화복지센터",
+    "endStation": "월드컵파크7단지"
+    },
+    {
+    "routeID": 100100048,
+    "busRouteName": "272",
+    "routeType": "간선",
+    "startStation": "면목동",
+    "endStation": "남가좌동"
+    },
+    {
+    "routeID": 100100049,
+    "busRouteName": "273",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "홍대입구역"
+    },
+    {
+    "routeID": 100100051,
+    "busRouteName": "301",
+    "routeType": "간선",
+    "startStation": "장지공영차고지",
+    "endStation": "혜화동"
+    },
+    {
+    "routeID": 100100052,
+    "busRouteName": "302",
+    "routeType": "간선",
+    "startStation": "상대원차고지",
+    "endStation": "상왕십리역"
+    },
+    {
+    "routeID": 100100053,
+    "busRouteName": "303",
+    "routeType": "간선",
+    "startStation": "상대원차고지",
+    "endStation": "신설동역"
+    },
+    {
+    "routeID": 100100055,
+    "busRouteName": "340",
+    "routeType": "간선",
+    "startStation": "강동공영차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100056,
+    "busRouteName": "341",
+    "routeType": "간선",
+    "startStation": "하남공영차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100057,
+    "busRouteName": "360",
+    "routeType": "간선",
+    "startStation": "송파차고지",
+    "endStation": "여의도환승센터"
+    },
+    {
+    "routeID": 100100061,
+    "busRouteName": "370",
+    "routeType": "간선",
+    "startStation": "강동공영차고지",
+    "endStation": "충정로역"
+    },
+    {
+    "routeID": 100100062,
+    "busRouteName": "401",
+    "routeType": "간선",
+    "startStation": "장지공영차고지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100063,
+    "busRouteName": "402",
+    "routeType": "간선",
+    "startStation": "장지공영차고지",
+    "endStation": "광화문"
+    },
+    {
+    "routeID": 100100064,
+    "busRouteName": "406",
+    "routeType": "간선",
+    "startStation": "개포동",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100068,
+    "busRouteName": "420",
+    "routeType": "간선",
+    "startStation": "개포동",
+    "endStation": "청량리"
+    },
+    {
+    "routeID": 100100070,
+    "busRouteName": "441",
+    "routeType": "간선",
+    "startStation": "월암공영차고지",
+    "endStation": "신사역"
+    },
+    {
+    "routeID": 100100071,
+    "busRouteName": "461",
+    "routeType": "간선",
+    "startStation": "장지공영차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100073,
+    "busRouteName": "470",
+    "routeType": "간선",
+    "startStation": "상암차고지",
+    "endStation": "안골마을"
+    },
+    {
+    "routeID": 100100075,
+    "busRouteName": "472",
+    "routeType": "간선",
+    "startStation": "개포동차고지",
+    "endStation": "신촌로타리"
+    },
+    {
+    "routeID": 100100076,
+    "busRouteName": "500",
+    "routeType": "간선",
+    "startStation": "석수역",
+    "endStation": "을지로입구"
+    },
+    {
+    "routeID": 100100077,
+    "busRouteName": "501",
+    "routeType": "간선",
+    "startStation": "서울대학교",
+    "endStation": "종로2가"
+    },
+    {
+    "routeID": 100100078,
+    "busRouteName": "503",
+    "routeType": "간선",
+    "startStation": "광명공영차고지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100079,
+    "busRouteName": "504",
+    "routeType": "간선",
+    "startStation": "광명공영주차장",
+    "endStation": "남대문"
+    },
+    {
+    "routeID": 100100080,
+    "busRouteName": "505",
+    "routeType": "간선",
+    "startStation": "노온사동",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100081,
+    "busRouteName": "506",
+    "routeType": "간선",
+    "startStation": "신림2동차고지",
+    "endStation": "을지로입구역광교"
+    },
+    {
+    "routeID": 100100082,
+    "busRouteName": "507",
+    "routeType": "간선",
+    "startStation": "석수역",
+    "endStation": "동대문역사문화공원"
+    },
+    {
+    "routeID": 100100083,
+    "busRouteName": "540",
+    "routeType": "간선",
+    "startStation": "군포공영차고지",
+    "endStation": "서울성모병원"
+    },
+    {
+    "routeID": 100100084,
+    "busRouteName": "571",
+    "routeType": "간선",
+    "startStation": "가산동",
+    "endStation": "은평뉴타운공영차고지"
+    },
+    {
+    "routeID": 100100085,
+    "busRouteName": "600",
+    "routeType": "간선",
+    "startStation": "온수동",
+    "endStation": "광화문"
+    },
+    {
+    "routeID": 100100086,
+    "busRouteName": "601",
+    "routeType": "간선",
+    "startStation": "개화동",
+    "endStation": "혜화역"
+    },
+    {
+    "routeID": 100100087,
+    "busRouteName": "602",
+    "routeType": "간선",
+    "startStation": "양천공영차고지",
+    "endStation": "시청앞"
+    },
+    {
+    "routeID": 100100088,
+    "busRouteName": "603",
+    "routeType": "간선",
+    "startStation": "신월동",
+    "endStation": "시청"
+    },
+    {
+    "routeID": 100100089,
+    "busRouteName": "604",
+    "routeType": "간선",
+    "startStation": "신월동기점",
+    "endStation": "중구청앞"
+    },
+    {
+    "routeID": 100100090,
+    "busRouteName": "605",
+    "routeType": "간선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "후암동"
+    },
+    {
+    "routeID": 100100091,
+    "busRouteName": "606",
+    "routeType": "간선",
+    "startStation": "부천상동",
+    "endStation": "조계사"
+    },
+    {
+    "routeID": 100100093,
+    "busRouteName": "640",
+    "routeType": "간선",
+    "startStation": "신월동기점",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100094,
+    "busRouteName": "641",
+    "routeType": "간선",
+    "startStation": "문래동",
+    "endStation": "양재동"
+    },
+    {
+    "routeID": 100100096,
+    "busRouteName": "643",
+    "routeType": "간선",
+    "startStation": "양천차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100097,
+    "busRouteName": "650",
+    "routeType": "간선",
+    "startStation": "외발산동",
+    "endStation": "낙성대입구"
+    },
+    {
+    "routeID": 100100098,
+    "busRouteName": "651",
+    "routeType": "간선",
+    "startStation": "방화동",
+    "endStation": "관악구청"
+    },
+    {
+    "routeID": 100100099,
+    "busRouteName": "652",
+    "routeType": "간선",
+    "startStation": "신월동기점",
+    "endStation": "금천우체국독산1동주민센터"
+    },
+    {
+    "routeID": 100100102,
+    "busRouteName": "661",
+    "routeType": "간선",
+    "startStation": "부천상동",
+    "endStation": "신세계백화점"
+    },
+    {
+    "routeID": 100100103,
+    "busRouteName": "701",
+    "routeType": "간선",
+    "startStation": "진관차고지",
+    "endStation": "종로2가삼일교"
+    },
+    {
+    "routeID": 100100107,
+    "busRouteName": "704",
+    "routeType": "간선",
+    "startStation": "송추",
+    "endStation": "서울역버스환승센터"
+    },
+    {
+    "routeID": 100100110,
+    "busRouteName": "710",
+    "routeType": "간선",
+    "startStation": "상암차고지",
+    "endStation": "수유역강북구청"
+    },
+    {
+    "routeID": 100100111,
+    "busRouteName": "720",
+    "routeType": "간선",
+    "startStation": "진관공영차고지",
+    "endStation": "답십리"
+    },
+    {
+    "routeID": 100100112,
+    "busRouteName": "721",
+    "routeType": "간선",
+    "startStation": "북가좌동",
+    "endStation": "건대입구역"
+    },
+    {
+    "routeID": 100100114,
+    "busRouteName": "750A",
+    "routeType": "간선",
+    "startStation": "덕은동종점",
+    "endStation": "서울대학교"
+    },
+    {
+    "routeID": 100100116,
+    "busRouteName": "742",
+    "routeType": "간선",
+    "startStation": "구산동",
+    "endStation": "상도동"
+    },
+    {
+    "routeID": 100100117,
+    "busRouteName": "752",
+    "routeType": "간선",
+    "startStation": "구산동",
+    "endStation": "노량진"
+    },
+    {
+    "routeID": 100100118,
+    "busRouteName": "753",
+    "routeType": "간선",
+    "startStation": "구산동",
+    "endStation": "상도동"
+    },
+    {
+    "routeID": 100100129,
+    "busRouteName": "1014",
+    "routeType": "지선",
+    "startStation": "성북생태체험관",
+    "endStation": "종로구민회관숭인동"
+    },
+    {
+    "routeID": 100100130,
+    "busRouteName": "1017",
+    "routeType": "지선",
+    "startStation": "월계동",
+    "endStation": "상왕십리"
+    },
+    {
+    "routeID": 100100131,
+    "busRouteName": "1020",
+    "routeType": "지선",
+    "startStation": "정릉",
+    "endStation": "교보문고"
+    },
+    {
+    "routeID": 100100132,
+    "busRouteName": "1111",
+    "routeType": "지선",
+    "startStation": "번동",
+    "endStation": "성북동"
+    },
+    {
+    "routeID": 100100133,
+    "busRouteName": "1113",
+    "routeType": "지선",
+    "startStation": "정릉",
+    "endStation": "월곡동"
+    },
+    {
+    "routeID": 100100134,
+    "busRouteName": "1114",
+    "routeType": "지선",
+    "startStation": "성북생태체험관",
+    "endStation": "길음역"
+    },
+    {
+    "routeID": 100100137,
+    "busRouteName": "1119",
+    "routeType": "지선",
+    "startStation": "강북청소년수련관",
+    "endStation": "녹천역"
+    },
+    {
+    "routeID": 100100138,
+    "busRouteName": "1120",
+    "routeType": "지선",
+    "startStation": "하계동",
+    "endStation": "삼양동입구"
+    },
+    {
+    "routeID": 100100139,
+    "busRouteName": "1124",
+    "routeType": "지선",
+    "startStation": "수유역",
+    "endStation": "미아삼거리역"
+    },
+    {
+    "routeID": 100100142,
+    "busRouteName": "1126",
+    "routeType": "지선",
+    "startStation": "강북청소년수련관",
+    "endStation": "안방학동"
+    },
+    {
+    "routeID": 100100143,
+    "busRouteName": "1127",
+    "routeType": "지선",
+    "startStation": "수유역",
+    "endStation": "도봉산"
+    },
+    {
+    "routeID": 100100144,
+    "busRouteName": "1128",
+    "routeType": "지선",
+    "startStation": "도봉산",
+    "endStation": "월곡동"
+    },
+    {
+    "routeID": 100100145,
+    "busRouteName": "1129",
+    "routeType": "지선",
+    "startStation": "상계8동",
+    "endStation": "창동역"
+    },
+    {
+    "routeID": 100100146,
+    "busRouteName": "1130",
+    "routeType": "지선",
+    "startStation": "청백아파트1단지",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100147,
+    "busRouteName": "1131",
+    "routeType": "지선",
+    "startStation": "중계본동",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100148,
+    "busRouteName": "1132",
+    "routeType": "지선",
+    "startStation": "월계동",
+    "endStation": "노원역"
+    },
+    {
+    "routeID": 100100149,
+    "busRouteName": "1133",
+    "routeType": "지선",
+    "startStation": "염광고교",
+    "endStation": "염광고교"
+    },
+    {
+    "routeID": 100100150,
+    "busRouteName": "1135",
+    "routeType": "지선",
+    "startStation": "월계동",
+    "endStation": "은행사거리"
+    },
+    {
+    "routeID": 100100151,
+    "busRouteName": "1136",
+    "routeType": "지선",
+    "startStation": "월계동(E마트)",
+    "endStation": "원자력병원"
+    },
+    {
+    "routeID": 100100152,
+    "busRouteName": "1137",
+    "routeType": "지선",
+    "startStation": "상계동",
+    "endStation": "미아사거리"
+    },
+    {
+    "routeID": 100100153,
+    "busRouteName": "1138",
+    "routeType": "지선",
+    "startStation": "상계4동",
+    "endStation": "수유역"
+    },
+    {
+    "routeID": 100100154,
+    "busRouteName": "1139",
+    "routeType": "지선",
+    "startStation": "상계4동",
+    "endStation": "방학2동주민센터"
+    },
+    {
+    "routeID": 100100155,
+    "busRouteName": "1140",
+    "routeType": "지선",
+    "startStation": "중계동",
+    "endStation": "광운대"
+    },
+    {
+    "routeID": 100100156,
+    "busRouteName": "1141",
+    "routeType": "지선",
+    "startStation": "중계본동종점",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100157,
+    "busRouteName": "1142",
+    "routeType": "지선",
+    "startStation": "중계본동",
+    "endStation": "창동역"
+    },
+    {
+    "routeID": 100100158,
+    "busRouteName": "1143",
+    "routeType": "지선",
+    "startStation": "중계본동",
+    "endStation": "수락리버시티"
+    },
+    {
+    "routeID": 100100159,
+    "busRouteName": "1144",
+    "routeType": "지선",
+    "startStation": "하계동",
+    "endStation": "우이동"
+    },
+    {
+    "routeID": 100100164,
+    "busRouteName": "1154",
+    "routeType": "지선",
+    "startStation": "하계동",
+    "endStation": "신곡동"
+    },
+    {
+    "routeID": 100100165,
+    "busRouteName": "1155",
+    "routeType": "지선",
+    "startStation": "청학리",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100166,
+    "busRouteName": "1156",
+    "routeType": "지선",
+    "startStation": "퇴계원",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100170,
+    "busRouteName": "1162",
+    "routeType": "지선",
+    "startStation": "성북구민회관",
+    "endStation": "보문역"
+    },
+    {
+    "routeID": 100100171,
+    "busRouteName": "1164",
+    "routeType": "지선",
+    "startStation": "서경대본관",
+    "endStation": "길음전철역"
+    },
+    {
+    "routeID": 100100172,
+    "busRouteName": "1165",
+    "routeType": "지선",
+    "startStation": "화계사",
+    "endStation": "미아사거리역"
+    },
+    {
+    "routeID": 100100175,
+    "busRouteName": "1213",
+    "routeType": "지선",
+    "startStation": "용마문화복지센터",
+    "endStation": "국민대학교"
+    },
+    {
+    "routeID": 100100177,
+    "busRouteName": "1218",
+    "routeType": "지선",
+    "startStation": "수유역",
+    "endStation": "답십리"
+    },
+    {
+    "routeID": 100100178,
+    "busRouteName": "1221",
+    "routeType": "지선",
+    "startStation": "중계동",
+    "endStation": "서울의료원"
+    },
+    {
+    "routeID": 100100179,
+    "busRouteName": "1222",
+    "routeType": "지선",
+    "startStation": "월계동",
+    "endStation": "고대앞"
+    },
+    {
+    "routeID": 100100181,
+    "busRouteName": "1224",
+    "routeType": "지선",
+    "startStation": "상계4동",
+    "endStation": "청량리"
+    },
+    {
+    "routeID": 100100183,
+    "busRouteName": "1226",
+    "routeType": "지선",
+    "startStation": "한국과학기술원",
+    "endStation": "경동시장"
+    },
+    {
+    "routeID": 100100184,
+    "busRouteName": "1227",
+    "routeType": "지선",
+    "startStation": "하계동",
+    "endStation": "제기동"
+    },
+    {
+    "routeID": 100100185,
+    "busRouteName": "1711",
+    "routeType": "지선",
+    "startStation": "국민대",
+    "endStation": "공덕동"
+    },
+    {
+    "routeID": 100100186,
+    "busRouteName": "2012",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "동대문역사문화공원"
+    },
+    {
+    "routeID": 100100188,
+    "busRouteName": "2013",
+    "routeType": "지선",
+    "startStation": "용마문화복지센터",
+    "endStation": "성동공업고등학교앞"
+    },
+    {
+    "routeID": 100100189,
+    "busRouteName": "2014",
+    "routeType": "지선",
+    "startStation": "성수동차고지",
+    "endStation": "동대문역사문화공원"
+    },
+    {
+    "routeID": 100100190,
+    "busRouteName": "2015",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "동대문운동장"
+    },
+    {
+    "routeID": 100100191,
+    "busRouteName": "2112",
+    "routeType": "지선",
+    "startStation": "면목동",
+    "endStation": "성북동"
+    },
+    {
+    "routeID": 100100192,
+    "busRouteName": "2113",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "석계역"
+    },
+    {
+    "routeID": 100100193,
+    "busRouteName": "2114",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "태릉시장"
+    },
+    {
+    "routeID": 100100194,
+    "busRouteName": "2211",
+    "routeType": "지선",
+    "startStation": "면목동",
+    "endStation": "회기역"
+    },
+    {
+    "routeID": 100100198,
+    "busRouteName": "2221",
+    "routeType": "지선",
+    "startStation": "자양동",
+    "endStation": "신설동"
+    },
+    {
+    "routeID": 100100199,
+    "busRouteName": "2222",
+    "routeType": "지선",
+    "startStation": "자양동",
+    "endStation": "고대앞"
+    },
+    {
+    "routeID": 100100201,
+    "busRouteName": "2224",
+    "routeType": "지선",
+    "startStation": "성수동",
+    "endStation": "강변역"
+    },
+    {
+    "routeID": 100100202,
+    "busRouteName": "2227",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "중곡역"
+    },
+    {
+    "routeID": 100100203,
+    "busRouteName": "2230",
+    "routeType": "지선",
+    "startStation": "면목동",
+    "endStation": "경동시장"
+    },
+    {
+    "routeID": 100100204,
+    "busRouteName": "2233",
+    "routeType": "지선",
+    "startStation": "면목동",
+    "endStation": "옥수동"
+    },
+    {
+    "routeID": 100100205,
+    "busRouteName": "2234",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "봉화산역"
+    },
+    {
+    "routeID": 100100206,
+    "busRouteName": "2235",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "신이문역"
+    },
+    {
+    "routeID": 100100209,
+    "busRouteName": "2412",
+    "routeType": "지선",
+    "startStation": "성수동",
+    "endStation": "세곡동사거리"
+    },
+    {
+    "routeID": 100100210,
+    "busRouteName": "2413",
+    "routeType": "지선",
+    "startStation": "성수동",
+    "endStation": "개포동"
+    },
+    {
+    "routeID": 100100211,
+    "busRouteName": "2415",
+    "routeType": "지선",
+    "startStation": "자양동",
+    "endStation": "대치동"
+    },
+    {
+    "routeID": 100100212,
+    "busRouteName": "3212",
+    "routeType": "지선",
+    "startStation": "강동차고지",
+    "endStation": "강변역"
+    },
+    {
+    "routeID": 100100213,
+    "busRouteName": "3214",
+    "routeType": "지선",
+    "startStation": "마천동",
+    "endStation": "강변역"
+    },
+    {
+    "routeID": 100100215,
+    "busRouteName": "3216",
+    "routeType": "지선",
+    "startStation": "오금동",
+    "endStation": "경희대입구"
+    },
+    {
+    "routeID": 100100216,
+    "busRouteName": "3217",
+    "routeType": "지선",
+    "startStation": "송파차고지",
+    "endStation": "어린이대공원"
+    },
+    {
+    "routeID": 100100218,
+    "busRouteName": "3220",
+    "routeType": "지선",
+    "startStation": "오금동",
+    "endStation": "청량리"
+    },
+    {
+    "routeID": 100100219,
+    "busRouteName": "3313",
+    "routeType": "지선",
+    "startStation": "송파공영차고지",
+    "endStation": "잠실새내역"
+    },
+    {
+    "routeID": 100100220,
+    "busRouteName": "3314",
+    "routeType": "지선",
+    "startStation": "장지동공영차고지",
+    "endStation": "종합운동장"
+    },
+    {
+    "routeID": 100100221,
+    "busRouteName": "3315",
+    "routeType": "지선",
+    "startStation": "장지동공영차고지",
+    "endStation": "삼전동사회복지관"
+    },
+    {
+    "routeID": 100100222,
+    "busRouteName": "3316",
+    "routeType": "지선",
+    "startStation": "마천동",
+    "endStation": "천호역"
+    },
+    {
+    "routeID": 100100223,
+    "busRouteName": "3411",
+    "routeType": "지선",
+    "startStation": "강동차고지",
+    "endStation": "삼성역"
+    },
+    {
+    "routeID": 100100224,
+    "busRouteName": "3412",
+    "routeType": "지선",
+    "startStation": "강동차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100225,
+    "busRouteName": "3413",
+    "routeType": "지선",
+    "startStation": "강동공영차고지",
+    "endStation": "수서경찰서"
+    },
+    {
+    "routeID": 100100226,
+    "busRouteName": "3414",
+    "routeType": "지선",
+    "startStation": "오금동",
+    "endStation": "고속터미널"
+    },
+    {
+    "routeID": 100100228,
+    "busRouteName": "3416",
+    "routeType": "지선",
+    "startStation": "마천동",
+    "endStation": "은곡마을입구.리엔파크2단지"
+    },
+    {
+    "routeID": 100100229,
+    "busRouteName": "3417",
+    "routeType": "지선",
+    "startStation": "장지공영차고지",
+    "endStation": "삼성역"
+    },
+    {
+    "routeID": 100100232,
+    "busRouteName": "3422",
+    "routeType": "지선",
+    "startStation": "장지공영차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100234,
+    "busRouteName": "4212",
+    "routeType": "지선",
+    "startStation": "전원마을",
+    "endStation": "중곡역"
+    },
+    {
+    "routeID": 100100246,
+    "busRouteName": "4432",
+    "routeType": "지선",
+    "startStation": "개포동",
+    "endStation": "신원동"
+    },
+    {
+    "routeID": 100100247,
+    "busRouteName": "4433",
+    "routeType": "지선",
+    "startStation": "대치역",
+    "endStation": "양재역"
+    },
+    {
+    "routeID": 100100248,
+    "busRouteName": "5012",
+    "routeType": "지선",
+    "startStation": "가산동",
+    "endStation": "용산역"
+    },
+    {
+    "routeID": 100100249,
+    "busRouteName": "5413",
+    "routeType": "지선",
+    "startStation": "시흥",
+    "endStation": "고속터미널"
+    },
+    {
+    "routeID": 100100250,
+    "busRouteName": "5511",
+    "routeType": "지선",
+    "startStation": "서울대학교",
+    "endStation": "중앙대학교"
+    },
+    {
+    "routeID": 100100251,
+    "busRouteName": "5513",
+    "routeType": "지선",
+    "startStation": "서울대학교",
+    "endStation": "관악드림타운"
+    },
+    {
+    "routeID": 100100252,
+    "busRouteName": "5515",
+    "routeType": "지선",
+    "startStation": "금호타운아파트",
+    "endStation": "청림동현대아파트"
+    },
+    {
+    "routeID": 100100253,
+    "busRouteName": "5516",
+    "routeType": "지선",
+    "startStation": "신림2동차고지",
+    "endStation": "노량진역"
+    },
+    {
+    "routeID": 100100254,
+    "busRouteName": "5517",
+    "routeType": "지선",
+    "startStation": "한남운수대학동차고지",
+    "endStation": "중앙대학교"
+    },
+    {
+    "routeID": 100100255,
+    "busRouteName": "5519",
+    "routeType": "지선",
+    "startStation": "우방아파트",
+    "endStation": "용천사"
+    },
+    {
+    "routeID": 100100259,
+    "busRouteName": "5523",
+    "routeType": "지선",
+    "startStation": "서울대입구역",
+    "endStation": "난곡종점"
+    },
+    {
+    "routeID": 100100260,
+    "busRouteName": "5524",
+    "routeType": "지선",
+    "startStation": "난향차고지",
+    "endStation": "중앙대학교"
+    },
+    {
+    "routeID": 100100261,
+    "busRouteName": "5525",
+    "routeType": "지선",
+    "startStation": "시흥동",
+    "endStation": "보라매공원"
+    },
+    {
+    "routeID": 100100263,
+    "busRouteName": "5528",
+    "routeType": "지선",
+    "startStation": "가산동",
+    "endStation": "사당역"
+    },
+    {
+    "routeID": 100100264,
+    "busRouteName": "5530",
+    "routeType": "지선",
+    "startStation": "군포공영차고지",
+    "endStation": "사당역"
+    },
+    {
+    "routeID": 100100265,
+    "busRouteName": "5531",
+    "routeType": "지선",
+    "startStation": "군포공영차고지",
+    "endStation": "노들역"
+    },
+    {
+    "routeID": 100100266,
+    "busRouteName": "5634",
+    "routeType": "지선",
+    "startStation": "광명공영차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100267,
+    "busRouteName": "5535",
+    "routeType": "지선",
+    "startStation": "하안동",
+    "endStation": "노량진"
+    },
+    {
+    "routeID": 100100268,
+    "busRouteName": "5536",
+    "routeType": "지선",
+    "startStation": "하안동",
+    "endStation": "노량진"
+    },
+    {
+    "routeID": 100100269,
+    "busRouteName": "5537",
+    "routeType": "지선",
+    "startStation": "시흥동",
+    "endStation": "가산디지털단지역"
+    },
+    {
+    "routeID": 100100272,
+    "busRouteName": "5615",
+    "routeType": "지선",
+    "startStation": "여의도",
+    "endStation": "난곡"
+    },
+    {
+    "routeID": 100100273,
+    "busRouteName": "5616",
+    "routeType": "지선",
+    "startStation": "가산동기점",
+    "endStation": "영동중학교"
+    },
+    {
+    "routeID": 100100274,
+    "busRouteName": "5617",
+    "routeType": "지선",
+    "startStation": "시흥",
+    "endStation": "구로디지털단지역"
+    },
+    {
+    "routeID": 100100275,
+    "busRouteName": "5618",
+    "routeType": "지선",
+    "startStation": "구로동",
+    "endStation": "구로동"
+    },
+    {
+    "routeID": 100100276,
+    "busRouteName": "5619",
+    "routeType": "지선",
+    "startStation": "시흥동",
+    "endStation": "신도림역"
+    },
+    {
+    "routeID": 100100277,
+    "busRouteName": "5620",
+    "routeType": "지선",
+    "startStation": "시흥",
+    "endStation": "선유도역"
+    },
+    {
+    "routeID": 100100278,
+    "busRouteName": "5621",
+    "routeType": "지선",
+    "startStation": "삼익아파트",
+    "endStation": "구로디지털단지역"
+    },
+    {
+    "routeID": 100100279,
+    "busRouteName": "5623",
+    "routeType": "지선",
+    "startStation": "군포공영차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100280,
+    "busRouteName": "5624",
+    "routeType": "지선",
+    "startStation": "부곡버스공영차고지",
+    "endStation": "구로디지털단지역"
+    },
+    {
+    "routeID": 100100281,
+    "busRouteName": "5625",
+    "routeType": "지선",
+    "startStation": "안양비산동",
+    "endStation": "영등포역(영등포시장)"
+    },
+    {
+    "routeID": 100100282,
+    "busRouteName": "5626",
+    "routeType": "지선",
+    "startStation": "안양비산동",
+    "endStation": "온수동종점"
+    },
+    {
+    "routeID": 100100283,
+    "busRouteName": "5627",
+    "routeType": "지선",
+    "startStation": "노온사동",
+    "endStation": "구로디지털단지역"
+    },
+    {
+    "routeID": 100100284,
+    "busRouteName": "5630",
+    "routeType": "지선",
+    "startStation": "광명공영차고지",
+    "endStation": "목동역"
+    },
+    {
+    "routeID": 100100285,
+    "busRouteName": "5633",
+    "routeType": "지선",
+    "startStation": "노온사동",
+    "endStation": "순복음교회"
+    },
+    {
+    "routeID": 100100286,
+    "busRouteName": "5712",
+    "routeType": "지선",
+    "startStation": "가산동기점",
+    "endStation": "홍대입구역"
+    },
+    {
+    "routeID": 100100287,
+    "busRouteName": "5713",
+    "routeType": "지선",
+    "startStation": "안양비산동",
+    "endStation": "신촌기차역"
+    },
+    {
+    "routeID": 100100288,
+    "busRouteName": "5714",
+    "routeType": "지선",
+    "startStation": "광명공영차고지",
+    "endStation": "이대입구"
+    },
+    {
+    "routeID": 100100289,
+    "busRouteName": "6211",
+    "routeType": "지선",
+    "startStation": "신월동",
+    "endStation": "상왕십리"
+    },
+    {
+    "routeID": 100100290,
+    "busRouteName": "6411",
+    "routeType": "지선",
+    "startStation": "구로동",
+    "endStation": "개포동"
+    },
+    {
+    "routeID": 100100291,
+    "busRouteName": "6511",
+    "routeType": "지선",
+    "startStation": "구로동",
+    "endStation": "서울대"
+    },
+    {
+    "routeID": 100100292,
+    "busRouteName": "6512",
+    "routeType": "지선",
+    "startStation": "구로동",
+    "endStation": "서울대"
+    },
+    {
+    "routeID": 100100293,
+    "busRouteName": "6513",
+    "routeType": "지선",
+    "startStation": "철산동",
+    "endStation": "서울대"
+    },
+    {
+    "routeID": 100100294,
+    "busRouteName": "6514",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "서울대학교"
+    },
+    {
+    "routeID": 100100295,
+    "busRouteName": "6611",
+    "routeType": "지선",
+    "startStation": "신도림역",
+    "endStation": "우성아파트"
+    },
+    {
+    "routeID": 100100297,
+    "busRouteName": "6614",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "부천옥길지구"
+    },
+    {
+    "routeID": 100100298,
+    "busRouteName": "6616",
+    "routeType": "지선",
+    "startStation": "철산동",
+    "endStation": "온수동"
+    },
+    {
+    "routeID": 100100299,
+    "busRouteName": "6617",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "목동우성아파트"
+    },
+    {
+    "routeID": 100100300,
+    "busRouteName": "6620",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "당산역"
+    },
+    {
+    "routeID": 100100301,
+    "busRouteName": "6623",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100302,
+    "busRouteName": "6624",
+    "routeType": "지선",
+    "startStation": "신월동",
+    "endStation": "이대목동병원"
+    },
+    {
+    "routeID": 100100303,
+    "busRouteName": "6625",
+    "routeType": "지선",
+    "startStation": "문래동",
+    "endStation": "화곡역"
+    },
+    {
+    "routeID": 100100304,
+    "busRouteName": "6627",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "이대목동병원"
+    },
+    {
+    "routeID": 100100305,
+    "busRouteName": "6628",
+    "routeType": "지선",
+    "startStation": "외발산동",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100306,
+    "busRouteName": "6629",
+    "routeType": "지선",
+    "startStation": "방화동",
+    "endStation": "영등포역"
+    },
+    {
+    "routeID": 100100307,
+    "busRouteName": "6630",
+    "routeType": "지선",
+    "startStation": "영인운수차고지",
+    "endStation": "영등포시장"
+    },
+    {
+    "routeID": 100100308,
+    "busRouteName": "6631",
+    "routeType": "지선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "영등포시장"
+    },
+    {
+    "routeID": 100100309,
+    "busRouteName": "6632",
+    "routeType": "지선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "당산역"
+    },
+    {
+    "routeID": 100100311,
+    "busRouteName": "6635",
+    "routeType": "지선",
+    "startStation": "광명 하안동",
+    "endStation": "구로공단역"
+    },
+    {
+    "routeID": 100100312,
+    "busRouteName": "6637",
+    "routeType": "지선",
+    "startStation": "노온사동",
+    "endStation": "목동"
+    },
+    {
+    "routeID": 100100313,
+    "busRouteName": "6638",
+    "routeType": "지선",
+    "startStation": "철산동",
+    "endStation": "오목교"
+    },
+    {
+    "routeID": 100100316,
+    "busRouteName": "6642",
+    "routeType": "지선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "가양3동도시개발9단지아파트"
+    },
+    {
+    "routeID": 100100318,
+    "busRouteName": "6645",
+    "routeType": "지선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "강서공영차고지.개화역"
+    },
+    {
+    "routeID": 100100320,
+    "busRouteName": "6647",
+    "routeType": "지선",
+    "startStation": "강서공영차고지.개화역",
+    "endStation": "강서공영차고지.개화역"
+    },
+    {
+    "routeID": 100100322,
+    "busRouteName": "6654",
+    "routeType": "지선",
+    "startStation": "신풍역",
+    "endStation": "여의도역"
+    },
+    {
+    "routeID": 100100329,
+    "busRouteName": "6657",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "강서한강자이아파트"
+    },
+    {
+    "routeID": 100100330,
+    "busRouteName": "6712",
+    "routeType": "지선",
+    "startStation": "방화동",
+    "endStation": "서강대학교"
+    },
+    {
+    "routeID": 100100331,
+    "busRouteName": "6714",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "이대부고"
+    },
+    {
+    "routeID": 100100332,
+    "busRouteName": "6715",
+    "routeType": "지선",
+    "startStation": "신월동",
+    "endStation": "상암동"
+    },
+    {
+    "routeID": 100100337,
+    "busRouteName": "7017",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "롯데백화점"
+    },
+    {
+    "routeID": 100100338,
+    "busRouteName": "7018",
+    "routeType": "지선",
+    "startStation": "북가좌동",
+    "endStation": "무교동"
+    },
+    {
+    "routeID": 100100339,
+    "busRouteName": "7019",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "서소문"
+    },
+    {
+    "routeID": 100100340,
+    "busRouteName": "7021",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "을지로입구"
+    },
+    {
+    "routeID": 100100341,
+    "busRouteName": "7022",
+    "routeType": "지선",
+    "startStation": "구산동",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100342,
+    "busRouteName": "7024",
+    "routeType": "지선",
+    "startStation": "봉원사",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100344,
+    "busRouteName": "7211",
+    "routeType": "지선",
+    "startStation": "진관공영차고지",
+    "endStation": "신설동"
+    },
+    {
+    "routeID": 100100345,
+    "busRouteName": "7611",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100346,
+    "busRouteName": "7612",
+    "routeType": "지선",
+    "startStation": "홍연2교",
+    "endStation": "영등포구청역"
+    },
+    {
+    "routeID": 100100347,
+    "busRouteName": "7613",
+    "routeType": "지선",
+    "startStation": "구산동",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 100100348,
+    "busRouteName": "7711",
+    "routeType": "지선",
+    "startStation": "덕은동종점",
+    "endStation": "홍대입구역"
+    },
+    {
+    "routeID": 100100349,
+    "busRouteName": "7713",
+    "routeType": "지선",
+    "startStation": "홍연2교",
+    "endStation": "홍연2교"
+    },
+    {
+    "routeID": 100100352,
+    "busRouteName": "7720",
+    "routeType": "지선",
+    "startStation": "구산동",
+    "endStation": "신촌"
+    },
+    {
+    "routeID": 100100353,
+    "busRouteName": "7722",
+    "routeType": "지선",
+    "startStation": "진관공영차고지",
+    "endStation": "녹번역"
+    },
+    {
+    "routeID": 100100354,
+    "busRouteName": "7723",
+    "routeType": "지선",
+    "startStation": "진관공영차고지",
+    "endStation": "구파발역"
+    },
+    {
+    "routeID": 100100357,
+    "busRouteName": "7726",
+    "routeType": "지선",
+    "startStation": "덕은동종점",
+    "endStation": "모래내삼거리"
+    },
+    {
+    "routeID": 100100358,
+    "busRouteName": "7727",
+    "routeType": "지선",
+    "startStation": "설문동",
+    "endStation": "신촌"
+    },
+    {
+    "routeID": 100100359,
+    "busRouteName": "7728",
+    "routeType": "지선",
+    "startStation": "대화동",
+    "endStation": "신촌"
+    },
+    {
+    "routeID": 100100360,
+    "busRouteName": "7730",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "이북오도청"
+    },
+    {
+    "routeID": 100100363,
+    "busRouteName": "7737",
+    "routeType": "지선",
+    "startStation": "은평공영차고지",
+    "endStation": "파크빌아파트"
+    },
+    {
+    "routeID": 100100364,
+    "busRouteName": "7738",
+    "routeType": "지선",
+    "startStation": "은평공영차고지",
+    "endStation": "홍제역"
+    },
+    {
+    "routeID": 100100383,
+    "busRouteName": "8541",
+    "routeType": "맞춤",
+    "startStation": "호압사",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100387,
+    "busRouteName": "8774",
+    "routeType": "맞춤",
+    "startStation": "구산동",
+    "endStation": "서대문구청"
+    },
+    {
+    "routeID": 100100389,
+    "busRouteName": "9401",
+    "routeType": "광역",
+    "startStation": "구미동차고지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100390,
+    "busRouteName": "9403",
+    "routeType": "광역",
+    "startStation": "구미동차고지",
+    "endStation": "동대문역사문화공원"
+    },
+    {
+    "routeID": 100100391,
+    "busRouteName": "9404",
+    "routeType": "광역",
+    "startStation": "분당구미",
+    "endStation": "신사역"
+    },
+    {
+    "routeID": 100100392,
+    "busRouteName": "9408",
+    "routeType": "광역",
+    "startStation": "분당구 구미동",
+    "endStation": "영등포"
+    },
+    {
+    "routeID": 100100397,
+    "busRouteName": "9701",
+    "routeType": "광역",
+    "startStation": "고양시 가좌동",
+    "endStation": "롯데영프라자"
+    },
+    {
+    "routeID": 100100398,
+    "busRouteName": "9703",
+    "routeType": "광역",
+    "startStation": "신성교통차고지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100400,
+    "busRouteName": "9707",
+    "routeType": "광역",
+    "startStation": "고양 가좌동",
+    "endStation": "영등포역"
+    },
+    {
+    "routeID": 100100406,
+    "busRouteName": "9714",
+    "routeType": "광역",
+    "startStation": "교하 운정",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100407,
+    "busRouteName": "240",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "신사역사거리"
+    },
+    {
+    "routeID": 100100409,
+    "busRouteName": "421",
+    "routeType": "간선",
+    "startStation": "염곡동차고지",
+    "endStation": "옥수동"
+    },
+    {
+    "routeID": 100100410,
+    "busRouteName": "502",
+    "routeType": "간선",
+    "startStation": "월암공영차고지",
+    "endStation": "한국은행"
+    },
+    {
+    "routeID": 100100425,
+    "busRouteName": "1122",
+    "routeType": "지선",
+    "startStation": "석관동(상진운수종점)",
+    "endStation": "원자력병원"
+    },
+    {
+    "routeID": 100100427,
+    "busRouteName": "4319",
+    "routeType": "지선",
+    "startStation": "전원마을",
+    "endStation": "잠실역"
+    },
+    {
+    "routeID": 100100437,
+    "busRouteName": "771",
+    "routeType": "간선",
+    "startStation": "대화동종점",
+    "endStation": "디지털미디어시티역"
+    },
+    {
+    "routeID": 100100438,
+    "busRouteName": "3011",
+    "routeType": "지선",
+    "startStation": "장지공영차고지",
+    "endStation": "한남동"
+    },
+    {
+    "routeID": 100100440,
+    "busRouteName": "700",
+    "routeType": "간선",
+    "startStation": "대화동",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100446,
+    "busRouteName": "7025",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "종로6가"
+    },
+    {
+    "routeID": 100100447,
+    "busRouteName": "7016",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "상명대"
+    },
+    {
+    "routeID": 100100448,
+    "busRouteName": "7013B",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "남대문시장"
+    },
+    {
+    "routeID": 100100449,
+    "busRouteName": "7013A",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "남대문시장"
+    },
+    {
+    "routeID": 100100450,
+    "busRouteName": "7011",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "중구청"
+    },
+    {
+    "routeID": 100100451,
+    "busRouteName": "6716",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "이대입구"
+    },
+    {
+    "routeID": 100100453,
+    "busRouteName": "6613",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "대림역"
+    },
+    {
+    "routeID": 100100454,
+    "busRouteName": "4419",
+    "routeType": "지선",
+    "startStation": "송파차고지",
+    "endStation": "압구정역3번출구"
+    },
+    {
+    "routeID": 100100459,
+    "busRouteName": "440",
+    "routeType": "간선",
+    "startStation": "송파공영차고지",
+    "endStation": "압구정동한양파출소앞"
+    },
+    {
+    "routeID": 100100462,
+    "busRouteName": "7715",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "연신내역"
+    },
+    {
+    "routeID": 100100478,
+    "busRouteName": "3317",
+    "routeType": "지선",
+    "startStation": "남한산성입구",
+    "endStation": "잠실리센츠아파트앞"
+    },
+    {
+    "routeID": 100100495,
+    "busRouteName": "672",
+    "routeType": "간선",
+    "startStation": "방화동기점",
+    "endStation": "이대후문"
+    },
+    {
+    "routeID": 100100496,
+    "busRouteName": "333",
+    "routeType": "간선",
+    "startStation": "송파공영차고지",
+    "endStation": "올림픽공원"
+    },
+    {
+    "routeID": 100100497,
+    "busRouteName": "653",
+    "routeType": "간선",
+    "startStation": "영인운수차고지",
+    "endStation": "가산디지털단지역"
+    },
+    {
+    "routeID": 100100498,
+    "busRouteName": "3318",
+    "routeType": "지선",
+    "startStation": "강동공영차고지",
+    "endStation": "마천동"
+    },
+    {
+    "routeID": 100100499,
+    "busRouteName": "7212",
+    "routeType": "지선",
+    "startStation": "은평차고지",
+    "endStation": "극동그린아파트앞"
+    },
+    {
+    "routeID": 100100500,
+    "busRouteName": "4312",
+    "routeType": "지선",
+    "startStation": "개포동",
+    "endStation": "가락1동주민센터"
+    },
+    {
+    "routeID": 100100501,
+    "busRouteName": "3319",
+    "routeType": "지선",
+    "startStation": "장지공영차고지",
+    "endStation": "잠실역7번출구"
+    },
+    {
+    "routeID": 100100511,
+    "busRouteName": "707",
+    "routeType": "간선",
+    "startStation": "대화동",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 100100521,
+    "busRouteName": "6515",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "경인교육대학교"
+    },
+    {
+    "routeID": 100100522,
+    "busRouteName": "2016",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "효창공원후문"
+    },
+    {
+    "routeID": 100100525,
+    "busRouteName": "8772",
+    "routeType": "맞춤",
+    "startStation": "진관공영차고지",
+    "endStation": "북한산성입구"
+    },
+    {
+    "routeID": 100100537,
+    "busRouteName": "740",
+    "routeType": "간선",
+    "startStation": "덕은동종점",
+    "endStation": "무역센터삼성역"
+    },
+    {
+    "routeID": 100100549,
+    "busRouteName": "100",
+    "routeType": "간선",
+    "startStation": "하계동",
+    "endStation": "용산구청"
+    },
+    {
+    "routeID": 100100550,
+    "busRouteName": "662",
+    "routeType": "간선",
+    "startStation": "외발산동",
+    "endStation": "여의나루역"
+    },
+    {
+    "routeID": 100100551,
+    "busRouteName": "673",
+    "routeType": "간선",
+    "startStation": "부천상동",
+    "endStation": "이대부고"
+    },
+    {
+    "routeID": 100100552,
+    "busRouteName": "7739",
+    "routeType": "지선",
+    "startStation": "은평공영차고지",
+    "endStation": "서교가든"
+    },
+    {
+    "routeID": 100100553,
+    "busRouteName": "350",
+    "routeType": "간선",
+    "startStation": "송파차고지",
+    "endStation": "노들역앞"
+    },
+    {
+    "routeID": 100100564,
+    "busRouteName": "320",
+    "routeType": "간선",
+    "startStation": "송파차고지",
+    "endStation": "중랑구청"
+    },
+    {
+    "routeID": 100100565,
+    "busRouteName": "750B",
+    "routeType": "간선",
+    "startStation": "은평차고지",
+    "endStation": "서울대학교"
+    },
+    {
+    "routeID": 100100566,
+    "busRouteName": "1115",
+    "routeType": "지선",
+    "startStation": "수유중학교혜화여고",
+    "endStation": "미아삼거리역"
+    },
+    {
+    "routeID": 100100574,
+    "busRouteName": "541",
+    "routeType": "간선",
+    "startStation": "군포공영차고지",
+    "endStation": "강남역"
+    },
+    {
+    "routeID": 100100576,
+    "busRouteName": "6516",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "박미삼거리"
+    },
+    {
+    "routeID": 100100578,
+    "busRouteName": "3321",
+    "routeType": "지선",
+    "startStation": "강동공영차고지",
+    "endStation": "강동구청"
+    },
+    {
+    "routeID": 100100579,
+    "busRouteName": "3012",
+    "routeType": "지선",
+    "startStation": "송파차고지",
+    "endStation": "이촌2동"
+    },
+    {
+    "routeID": 100100583,
+    "busRouteName": "121",
+    "routeType": "간선",
+    "startStation": "화계사",
+    "endStation": "서울숲"
+    },
+    {
+    "routeID": 100100587,
+    "busRouteName": "705",
+    "routeType": "간선",
+    "startStation": "은평뉴타운공영차고지",
+    "endStation": "롯데백화점"
+    },
+    {
+    "routeID": 100100591,
+    "busRouteName": "N30",
+    "routeType": "심야",
+    "startStation": "강동공영차고지",
+    "endStation": "서울역환승센터"
+    },
+    {
+    "routeID": 100100595,
+    "busRouteName": "241",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "논현역"
+    },
+    {
+    "routeID": 100100596,
+    "busRouteName": "400",
+    "routeType": "간선",
+    "startStation": "염곡동",
+    "endStation": "시청앞"
+    },
+    {
+    "routeID": 100100597,
+    "busRouteName": "405",
+    "routeType": "간선",
+    "startStation": "염곡동",
+    "endStation": "시청광장"
+    },
+    {
+    "routeID": 100100598,
+    "busRouteName": "2115",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "서경대입구"
+    },
+    {
+    "routeID": 100100599,
+    "busRouteName": "2311",
+    "routeType": "지선",
+    "startStation": "중랑공영차고지",
+    "endStation": "문정동"
+    },
+    {
+    "routeID": 100100601,
+    "busRouteName": "6640A",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "양천공영차고지"
+    },
+    {
+    "routeID": 100100602,
+    "busRouteName": "6640B",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "양천공영차고지"
+    },
+    {
+    "routeID": 100100603,
+    "busRouteName": "542",
+    "routeType": "간선",
+    "startStation": "군포복합화물터미널",
+    "endStation": "신사역"
+    },
+    {
+    "routeID": 100100604,
+    "busRouteName": "4211",
+    "routeType": "지선",
+    "startStation": "염곡동차고지",
+    "endStation": "한양대동문앞"
+    },
+    {
+    "routeID": 100100605,
+    "busRouteName": "463",
+    "routeType": "간선",
+    "startStation": "염곡동차고지",
+    "endStation": "국회의사당"
+    },
+    {
+    "routeID": 100100607,
+    "busRouteName": "9711",
+    "routeType": "광역",
+    "startStation": "신성교통차고지",
+    "endStation": "양재동"
+    },
+    {
+    "routeID": 100100609,
+    "busRouteName": "3425",
+    "routeType": "지선",
+    "startStation": "송파공영차고지",
+    "endStation": "삼성역"
+    },
+    {
+    "routeID": 100100612,
+    "busRouteName": "3426",
+    "routeType": "지선",
+    "startStation": "서울버스종점",
+    "endStation": "청담동"
+    },
+    {
+    "routeID": 100100613,
+    "busRouteName": "3322",
+    "routeType": "지선",
+    "startStation": "송파차고지",
+    "endStation": "잠실종합운동장"
+    },
+    {
+    "routeID": 103000001,
+    "busRouteName": "8441",
+    "routeType": "맞춤",
+    "startStation": "은곡마을",
+    "endStation": "LH이편한세상"
+    },
+    {
+    "routeID": 104000006,
+    "busRouteName": "242",
+    "routeType": "간선",
+    "startStation": "중랑공영차고지",
+    "endStation": "개포동"
+    },
+    {
+    "routeID": 104000007,
+    "busRouteName": "01A",
+    "routeType": "순환",
+    "startStation": "서울역버스환승센터",
+    "endStation": "서울역버스환승센터"
+    },
+    {
+    "routeID": 104000008,
+    "busRouteName": "01B",
+    "routeType": "순환",
+    "startStation": "서울역버스환승센터",
+    "endStation": "서울역버스환승센터"
+    },
+    {
+    "routeID": 106000001,
+    "busRouteName": "8221",
+    "routeType": "맞춤",
+    "startStation": "장안2동주민센터",
+    "endStation": "답십리역"
+    },
+    {
+    "routeID": 107000001,
+    "busRouteName": "1116",
+    "routeType": "지선",
+    "startStation": "국민대학교",
+    "endStation": "미아사거리"
+    },
+    {
+    "routeID": 107000002,
+    "busRouteName": "343",
+    "routeType": "간선",
+    "startStation": "송파공영차고지",
+    "endStation": "수서역"
+    },
+    {
+    "routeID": 107000003,
+    "busRouteName": "8002",
+    "routeType": "지선",
+    "startStation": "상명대앞",
+    "endStation": "경복궁역"
+    },
+    {
+    "routeID": 107000004,
+    "busRouteName": "8003",
+    "routeType": "지선",
+    "startStation": "평창동주민센터",
+    "endStation": "평창동주민센터"
+    },
+    {
+    "routeID": 108000001,
+    "busRouteName": "8551",
+    "routeType": "맞춤",
+    "startStation": "봉천역",
+    "endStation": "노량진역"
+    },
+    {
+    "routeID": 108000002,
+    "busRouteName": "1167",
+    "routeType": "지선",
+    "startStation": "우이동",
+    "endStation": "은행사거리(11414)"
+    },
+    {
+    "routeID": 110000002,
+    "busRouteName": "173",
+    "routeType": "간선",
+    "startStation": "월계동",
+    "endStation": "신촌기차역"
+    },
+    {
+    "routeID": 110000003,
+    "busRouteName": "8112",
+    "routeType": "맞춤",
+    "startStation": "장위뉴타운",
+    "endStation": "성신여대입구"
+    },
+    {
+    "routeID": 111000008,
+    "busRouteName": "674",
+    "routeType": "간선",
+    "startStation": "신길운수",
+    "endStation": "연세대"
+    },
+    {
+    "routeID": 111000009,
+    "busRouteName": "8771",
+    "routeType": "맞춤",
+    "startStation": "구산중",
+    "endStation": "구산교회"
+    },
+    {
+    "routeID": 111000010,
+    "busRouteName": "7734",
+    "routeType": "지선",
+    "startStation": "진관공영차고지",
+    "endStation": "홍대입구역"
+    },
+    {
+    "routeID": 111000011,
+    "busRouteName": "773",
+    "routeType": "간선",
+    "startStation": "교하운정",
+    "endStation": "불광역"
+    },
+    {
+    "routeID": 111000012,
+    "busRouteName": "774",
+    "routeType": "간선",
+    "startStation": "진관공영차고지",
+    "endStation": "파주읍"
+    },
+    {
+    "routeID": 111000014,
+    "busRouteName": "761",
+    "routeType": "간선",
+    "startStation": "진관공영차고지",
+    "endStation": "영등포역"
+    },
+    {
+    "routeID": 112000001,
+    "busRouteName": "8777",
+    "routeType": "맞춤",
+    "startStation": "난지캠핑장",
+    "endStation": "월드컵경기장남측"
+    },
+    {
+    "routeID": 113000001,
+    "busRouteName": "8761",
+    "routeType": "맞춤",
+    "startStation": "신촌로터리",
+    "endStation": "국회의사당"
+    },
+    {
+    "routeID": 113000002,
+    "busRouteName": "452",
+    "routeType": "간선",
+    "startStation": "송파공영차고지",
+    "endStation": "중앙대학교"
+    },
+    {
+    "routeID": 114000001,
+    "busRouteName": "6649",
+    "routeType": "지선",
+    "startStation": "신도림역",
+    "endStation": "오목교역청학스포츠타운"
+    },
+    {
+    "routeID": 115000005,
+    "busRouteName": "6648",
+    "routeType": "지선",
+    "startStation": "방화동",
+    "endStation": "양천구청"
+    },
+    {
+    "routeID": 115000007,
+    "busRouteName": "654",
+    "routeType": "간선",
+    "startStation": "방화동",
+    "endStation": "노들역"
+    },
+    {
+    "routeID": 116000001,
+    "busRouteName": "8552",
+    "routeType": "맞춤",
+    "startStation": "신림복지관앞",
+    "endStation": "신림역신림사거리"
+    },
+    {
+    "routeID": 116000002,
+    "busRouteName": "6615",
+    "routeType": "지선",
+    "startStation": "양천공영차고지",
+    "endStation": "천왕역"
+    },
+    {
+    "routeID": 116000004,
+    "busRouteName": "660",
+    "routeType": "간선",
+    "startStation": "온수동종점",
+    "endStation": "가양역"
+    },
+    {
+    "routeID": 122000001,
+    "busRouteName": "4435",
+    "routeType": "지선",
+    "startStation": "개포동차고지",
+    "endStation": "사당역"
+    },
+    {
+    "routeID": 123000010,
+    "busRouteName": "741",
+    "routeType": "간선",
+    "startStation": "진관차고지",
+    "endStation": "세곡동사거리"
+    },
+    {
+    "routeID": 123000011,
+    "busRouteName": "708",
+    "routeType": "간선",
+    "startStation": "진관차고지",
+    "endStation": "서울역"
+    },
+    {
+    "routeID": 124000008,
+    "busRouteName": "7719",
+    "routeType": "지선",
+    "startStation": "북가좌동",
+    "endStation": "녹번동"
+    },
+    {
+    "routeID": 124000010,
+    "busRouteName": "8331",
+    "routeType": "맞춤",
+    "startStation": "마천사거리",
+    "endStation": "잠실역"
+    },
+    {
+    "routeID": 124000036,
+    "busRouteName": "362",
+    "routeType": "간선",
+    "startStation": "송파공영차고지",
+    "endStation": "여의도"
+    },
+    {
+    "routeID": 124000038,
+    "busRouteName": "342",
+    "routeType": "간선",
+    "startStation": "강동차고지",
+    "endStation": "압구정로데오역"
+    },
+    {
+     "routeID": 100100124,
+     "busRouteName": "0017",
+     "routeType": "지선",
+     "startStation": "청암자이아파트",
+     "endStation": "청암동강변삼성아파트"
+    },
+    {
+     "routeID": 100100001,
+     "busRouteName": "02",
+     "routeType": "순환",
+     "startStation": "남산예장버스환승주차장",
+     "endStation": "남산예장버스환승주차장"
+    },
+    {
+     "routeID": 106000002,
+     "busRouteName": "04",
+     "routeType": "순환",
+     "startStation": "남산예장버스환승주차장",
+     "endStation": "남산예장버스환승주차장"
+    },
+    {
+     "routeID": 100100016,
+     "busRouteName": "110A고려대",
+     "routeType": "간선",
+     "startStation": "정릉북한산국립공원입구",
+     "endStation": "정릉북한산국립공원입구"
+    },
+    {
+     "routeID": 100100015,
+     "busRouteName": "110B국민대",
+     "routeType": "간선",
+     "startStation": "정릉북한산국립공원입구",
+     "endStation": "정릉북한산국립공원입구"
+    },
+    {
+     "routeID": 100100611,
+     "busRouteName": "2312",
+     "routeType": "지선",
+     "startStation": "강동공영차고지",
+     "endStation": "중랑공영차고지·신내역"
+    },
+    {
+     "routeID": 100100237,
+     "busRouteName": "4318",
+     "routeType": "지선",
+     "startStation": "남태령역",
+     "endStation": "풍납1동동아한가람아파트"
+    },
+    {
+     "routeID": 100100257,
+     "busRouteName": "5522A난곡",
+     "routeType": "지선",
+     "startStation": "난향공영차고지",
+     "endStation": "난향공영차고지"
+    },
+    {
+     "routeID": 100100258,
+     "busRouteName": "5522B호암",
+     "routeType": "지선",
+     "startStation": "난향공영차고지",
+     "endStation": "난향공영차고지"
+    },
+    {
+     "routeID": 100100507,
+     "busRouteName": "6009",
+     "routeType": "공항",
+     "startStation": "가락1동주민센터",
+     "endStation": "인천국제공항 제2터미널"
+    },
+    {
+     "routeID": 100100513,
+     "busRouteName": "6100",
+     "routeType": "공항",
+     "startStation": "망우역경의중앙선",
+     "endStation": "인천국제공항 제2터미널"
+    },
+    {
+     "routeID": 100100373,
+     "busRouteName": "6101",
+     "routeType": "공항",
+     "startStation": "창동역",
+     "endStation": "김포공항국내선"
+    },
+    {
+     "routeID": 100100104,
+     "busRouteName": "702A서오릉",
+     "routeType": "간선",
+     "startStation": "용두동종점",
+     "endStation": "을지로입구역.광교"
+    },
+    {
+     "routeID": 100100105,
+     "busRouteName": "702B용두초교",
+     "routeType": "간선",
+     "startStation": "용두사거리",
+     "endStation": "을지로입구역.광교"
+    },
+    {
+     "routeID": 100100593,
+     "busRouteName": "N13",
+     "routeType": "심야",
+     "startStation": "온곡중학교노원정보도서관",
+     "endStation": "복정역환승센터"
+    },
+    {
+     "routeID": 100100610,
+     "busRouteName": "N15",
+     "routeType": "심야",
+     "startStation": "우이동성원아파트",
+     "endStation": "남태령역"
+    },
+    {
+     "routeID": 100100592,
+     "busRouteName": "N16",
+     "routeType": "심야",
+     "startStation": "도봉산역광역환승센터",
+     "endStation": "온수동종점"
+    },
+    {
+     "routeID": 100100586,
+     "busRouteName": "N26",
+     "routeType": "심야",
+     "startStation": "중랑공영차고지·신내역",
+     "endStation": "개화역광역환승센터"
+    },
+    {
+     "routeID": 100100585,
+     "busRouteName": "N37",
+     "routeType": "심야",
+     "startStation": "복정역환승센터",
+     "endStation": "진관공영차고지"
+    },
+    {
+     "routeID": 100100589,
+     "busRouteName": "N61",
+     "routeType": "심야",
+     "startStation": "양천공영차고지",
+     "endStation": "상계주공7단지"
+    },
+    {
+     "routeID": 100100588,
+     "busRouteName": "N62",
+     "routeType": "심야",
+     "startStation": "양천공영차고지",
+     "endStation": "중화중학교"
+    },
+    {
+     "routeID": 115000008,
+     "busRouteName": "N65",
+     "routeType": "심야",
+     "startStation": "개화역광역환승센터",
+     "endStation": "범일운수종점"
+    },
+    {
+     "routeID": 100900016,
+     "busRouteName": "TOUR01",
+     "routeType": "순환",
+     "startStation": "광화문",
+     "endStation": "광화문"
+    },
+    {
+     "routeID": 101000001,
+     "busRouteName": "TOUR02",
+     "routeType": "순환",
+     "startStation": "광화문",
+     "endStation": "광화문"
+    },
+    {
+     "routeID": 101000002,
+     "busRouteName": "TOUR03",
+     "routeType": "순환",
+     "startStation": "강남역",
+     "endStation": "강남역"
+    },
+    {
+     "routeID": 101000003,
+     "busRouteName": "TOUR04",
+     "routeType": "순환",
+     "startStation": "광화문",
+     "endStation": "광화문"
+    },
+    {
+     "routeID": 100000017,
+     "busRouteName": "TOUR11",
+     "routeType": "순환",
+     "startStation": "동대문디자인플라자",
+     "endStation": "동대문디자인플라자"
+    },
+    {
+     "routeID": 100000018,
+     "busRouteName": "TOUR12",
+     "routeType": "순환",
+     "startStation": "동대문디자인플라자",
+     "endStation": "동대문디자인플라자"
+    },
+    {
+     "routeID": 122900003,
+     "busRouteName": "강남01",
+     "routeType": "마을",
+     "startStation": "일원한솔아파트",
+     "endStation": "노블발렌티웨딩홀"
+    },
+    {
+     "routeID": 122900006,
+     "busRouteName": "강남02",
+     "routeType": "마을",
+     "startStation": "강남구민체육관",
+     "endStation": "양재역"
+    },
+    {
+     "routeID": 122900004,
+     "busRouteName": "강남03",
+     "routeType": "마을",
+     "startStation": "강남데시앙포레",
+     "endStation": "세곡리엔파크"
+    },
+    {
+     "routeID": 122900002,
+     "busRouteName": "강남05",
+     "routeType": "마을",
+     "startStation": "구룡마을",
+     "endStation": "석촌한솔아파트"
+    },
+    {
+     "routeID": 122900005,
+     "busRouteName": "강남06",
+     "routeType": "마을",
+     "startStation": "세곡푸르지오",
+     "endStation": "무역센터"
+    },
+    {
+     "routeID": 122900007,
+     "busRouteName": "강남06-1",
+     "routeType": "마을",
+     "startStation": "리엔파크4단지·강남데시앙파크",
+     "endStation": "한아름아파트.사이룩스오피스텔"
+    },
+    {
+     "routeID": 122900010,
+     "busRouteName": "강남06-2",
+     "routeType": "마을",
+     "startStation": "리엔파크4단지·강남데시앙파크",
+     "endStation": "한아름아파트.사이룩스오피스텔"
+    },
+    {
+     "routeID": 122900001,
+     "busRouteName": "강남07",
+     "routeType": "마을",
+     "startStation": "서울의료원후문",
+     "endStation": "양재역.말죽거리"
+    },
+    {
+     "routeID": 122900008,
+     "busRouteName": "강남08",
+     "routeType": "마을",
+     "startStation": "신사사거리",
+     "endStation": "한국무역센터·삼성역"
+    },
+    {
+     "routeID": 122900009,
+     "busRouteName": "강남10",
+     "routeType": "마을",
+     "startStation": "개포주공4·7단지",
+     "endStation": "양재역"
+    },
+    {
+     "routeID": 124900002,
+     "busRouteName": "강동01",
+     "routeType": "마을",
+     "startStation": "신동아아파트",
+     "endStation": "테크노마트앞·강변역"
+    },
+    {
+     "routeID": 124900003,
+     "busRouteName": "강동02",
+     "routeType": "마을",
+     "startStation": "가래여울",
+     "endStation": "서원마을"
+    },
+    {
+     "routeID": 124900001,
+     "busRouteName": "강동05",
+     "routeType": "마을",
+     "startStation": "강동공영차고지",
+     "endStation": "천호역"
+    },
+    {
+     "routeID": 108900006,
+     "busRouteName": "강북01",
+     "routeType": "마을",
+     "startStation": "아카데미하우스·통일교육원",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 108900002,
+     "busRouteName": "강북02",
+     "routeType": "마을",
+     "startStation": "본원정사",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 108900003,
+     "busRouteName": "강북03",
+     "routeType": "마을",
+     "startStation": "빨래골종점",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 108900005,
+     "busRouteName": "강북04",
+     "routeType": "마을",
+     "startStation": "연일슈퍼",
+     "endStation": "수유시장"
+    },
+    {
+     "routeID": 108900008,
+     "busRouteName": "강북05",
+     "routeType": "마을",
+     "startStation": "번동초등학교",
+     "endStation": "삼우하이츠빌라"
+    },
+    {
+     "routeID": 108900007,
+     "busRouteName": "강북06",
+     "routeType": "마을",
+     "startStation": "번2동주민센터",
+     "endStation": "미아사거리역"
+    },
+    {
+     "routeID": 108900013,
+     "busRouteName": "강북08",
+     "routeType": "마을",
+     "startStation": "두산위브트레지움",
+     "endStation": "현대백화점별관주차장"
+    },
+    {
+     "routeID": 108900004,
+     "busRouteName": "강북09",
+     "routeType": "마을",
+     "startStation": "현대백화점·E마트·빅토리아호텔",
+     "endStation": "수유역·강북구청"
+    },
+    {
+     "routeID": 108900009,
+     "busRouteName": "강북10",
+     "routeType": "마을",
+     "startStation": "솔샘터널",
+     "endStation": "미아역"
+    },
+    {
+     "routeID": 108900001,
+     "busRouteName": "강북11",
+     "routeType": "마을",
+     "startStation": "현대백화점·E마트·빅토리아호텔",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 108900012,
+     "busRouteName": "강북12",
+     "routeType": "마을",
+     "startStation": "삼각산119안전센터",
+     "endStation": "현대백화점별관주차장"
+    },
+    {
+     "routeID": 115900006,
+     "busRouteName": "강서01",
+     "routeType": "마을",
+     "startStation": "약수터",
+     "endStation": "등촌역"
+    },
+    {
+     "routeID": 115900003,
+     "busRouteName": "강서02",
+     "routeType": "마을",
+     "startStation": "남부시장",
+     "endStation": "하이웨이주유소"
+    },
+    {
+     "routeID": 115900004,
+     "busRouteName": "강서03",
+     "routeType": "마을",
+     "startStation": "약수터",
+     "endStation": "약수터"
+    },
+    {
+     "routeID": 115900001,
+     "busRouteName": "강서04",
+     "routeType": "마을",
+     "startStation": "염창역·강서평생학습관",
+     "endStation": "강서구청사거리"
+    },
+    {
+     "routeID": 115900005,
+     "busRouteName": "강서05",
+     "routeType": "마을",
+     "startStation": "발산역.NC백화점",
+     "endStation": "강서농수산물도매시장"
+    },
+    {
+     "routeID": 115900008,
+     "busRouteName": "강서05-1",
+     "routeType": "마을",
+     "startStation": "다솔마을",
+     "endStation": "마곡나루역"
+    },
+    {
+     "routeID": 115900002,
+     "busRouteName": "강서06",
+     "routeType": "마을",
+     "startStation": "벽산아파트",
+     "endStation": "수명산입구"
+    },
+    {
+     "routeID": 115900007,
+     "busRouteName": "강서07",
+     "routeType": "마을",
+     "startStation": "생태공원",
+     "endStation": "마곡역"
+    },
+    {
+     "routeID": 120900005,
+     "busRouteName": "관악01",
+     "routeType": "마을",
+     "startStation": "봉천역",
+     "endStation": "숭실대입구역"
+    },
+    {
+     "routeID": 120900008,
+     "busRouteName": "관악02",
+     "routeType": "마을",
+     "startStation": "낙성대역",
+     "endStation": "서울대학교제2공학관"
+    },
+    {
+     "routeID": 120900003,
+     "busRouteName": "관악03",
+     "routeType": "마을",
+     "startStation": "국사봉",
+     "endStation": "신림역"
+    },
+    {
+     "routeID": 120900009,
+     "busRouteName": "관악04",
+     "routeType": "마을",
+     "startStation": "군인아파트",
+     "endStation": "사랑의병원"
+    },
+    {
+     "routeID": 120900010,
+     "busRouteName": "관악05",
+     "routeType": "마을",
+     "startStation": "신림현대아파트",
+     "endStation": "봉림교"
+    },
+    {
+     "routeID": 120900004,
+     "busRouteName": "관악06",
+     "routeType": "마을",
+     "startStation": "보명사·법화사",
+     "endStation": "신대방역"
+    },
+    {
+     "routeID": 120900006,
+     "busRouteName": "관악07",
+     "routeType": "마을",
+     "startStation": "우성아파트",
+     "endStation": "서울대입구역"
+    },
+    {
+     "routeID": 120900007,
+     "busRouteName": "관악08",
+     "routeType": "마을",
+     "startStation": "난향공영차고지",
+     "endStation": "신림역"
+    },
+    {
+     "routeID": 120900002,
+     "busRouteName": "관악10",
+     "routeType": "마을",
+     "startStation": "아카시아마을·민방위교육장",
+     "endStation": "신림역"
+    },
+    {
+     "routeID": 114900004,
+     "busRouteName": "관악11",
+     "routeType": "마을",
+     "startStation": "봉천역",
+     "endStation": "재넘이고개"
+    },
+    {
+     "routeID": 104900005,
+     "busRouteName": "광진01",
+     "routeType": "마을",
+     "startStation": "광진정보도서관",
+     "endStation": "워커힐아파트"
+    },
+    {
+     "routeID": 104900003,
+     "busRouteName": "광진02",
+     "routeType": "마을",
+     "startStation": "긴고랑종점",
+     "endStation": "군자역"
+    },
+    {
+     "routeID": 104900002,
+     "busRouteName": "광진03",
+     "routeType": "마을",
+     "startStation": "용암사입구",
+     "endStation": "테크노마트앞·강변역"
+    },
+    {
+     "routeID": 104900001,
+     "busRouteName": "광진04",
+     "routeType": "마을",
+     "startStation": "중곡아파트",
+     "endStation": "테크노마트앞·강변역"
+    },
+    {
+     "routeID": 104900004,
+     "busRouteName": "광진05",
+     "routeType": "마을",
+     "startStation": "신자초등학교",
+     "endStation": "테크노마트앞.강변역"
+    },
+    {
+     "routeID": 116900013,
+     "busRouteName": "구로01",
+     "routeType": "마을",
+     "startStation": "개봉역",
+     "endStation": "학마을2단지아파트"
+    },
+    {
+     "routeID": 116900014,
+     "busRouteName": "구로02",
+     "routeType": "마을",
+     "startStation": "개봉역",
+     "endStation": "개봉중학교"
+    },
+    {
+     "routeID": 116900010,
+     "busRouteName": "구로03",
+     "routeType": "마을",
+     "startStation": "개봉한진아파트",
+     "endStation": "개봉역·임괄아파트"
+    },
+    {
+     "routeID": 116900011,
+     "busRouteName": "구로04",
+     "routeType": "마을",
+     "startStation": "천왕이펜하우스5단지",
+     "endStation": "현대2차APT"
+    },
+    {
+     "routeID": 116900009,
+     "busRouteName": "구로05",
+     "routeType": "마을",
+     "startStation": "오류중학교",
+     "endStation": "개봉역"
+    },
+    {
+     "routeID": 116900012,
+     "busRouteName": "구로06",
+     "routeType": "마을",
+     "startStation": "개봉역",
+     "endStation": "마젤란아파트·예일학원"
+    },
+    {
+     "routeID": 116900006,
+     "busRouteName": "구로07",
+     "routeType": "마을",
+     "startStation": "오류동역",
+     "endStation": "항동우남퍼스트빌"
+    },
+    {
+     "routeID": 116900015,
+     "busRouteName": "구로08",
+     "routeType": "마을",
+     "startStation": "개봉역",
+     "endStation": "오류동역"
+    },
+    {
+     "routeID": 116900007,
+     "busRouteName": "구로09",
+     "routeType": "마을",
+     "startStation": "신도림동아1차아파트",
+     "endStation": "구로디지털단지역"
+    },
+    {
+     "routeID": 116900003,
+     "busRouteName": "구로10",
+     "routeType": "마을",
+     "startStation": "대림역",
+     "endStation": "하이츠.영화.우방.한국현대아파트"
+    },
+    {
+     "routeID": 116900004,
+     "busRouteName": "구로11",
+     "routeType": "마을",
+     "startStation": "대림역",
+     "endStation": "개봉역·임괄아파트"
+    },
+    {
+     "routeID": 116900002,
+     "busRouteName": "구로12",
+     "routeType": "마을",
+     "startStation": "개봉역·임괄아파트",
+     "endStation": "거성아파트"
+    },
+    {
+     "routeID": 116900001,
+     "busRouteName": "구로13",
+     "routeType": "마을",
+     "startStation": "구로1동주민센터.연예인아파트",
+     "endStation": "구로중학교"
+    },
+    {
+     "routeID": 116900005,
+     "busRouteName": "구로14",
+     "routeType": "마을",
+     "startStation": "천왕이펜하우스5단지",
+     "endStation": "온수역"
+    },
+    {
+     "routeID": 116900016,
+     "busRouteName": "구로15",
+     "routeType": "마을",
+     "startStation": "오류동역",
+     "endStation": "서울남부교정시설"
+    },
+    {
+     "routeID": 117900008,
+     "busRouteName": "금천01",
+     "routeType": "마을",
+     "startStation": "독산역",
+     "endStation": "호압사입구"
+    },
+    {
+     "routeID": 117900006,
+     "busRouteName": "금천02",
+     "routeType": "마을",
+     "startStation": "벽산3단지",
+     "endStation": "하안주공14단지"
+    },
+    {
+     "routeID": 117900003,
+     "busRouteName": "금천03",
+     "routeType": "마을",
+     "startStation": "가산디지털단지역",
+     "endStation": "구로디지털단지역환승센터"
+    },
+    {
+     "routeID": 117900002,
+     "busRouteName": "금천04",
+     "routeType": "마을",
+     "startStation": "성채안로입구삼거리",
+     "endStation": "금천구종합청사·금천구청역"
+    },
+    {
+     "routeID": 117900001,
+     "busRouteName": "금천05",
+     "routeType": "마을",
+     "startStation": "독산한신코아·한신아파트",
+     "endStation": "KCC웰츠밸리"
+    },
+    {
+     "routeID": 117900004,
+     "busRouteName": "금천06",
+     "routeType": "마을",
+     "startStation": "시흥1동공영주차장·금천노인종합복지관",
+     "endStation": "구로디지털단지역환승센터"
+    },
+    {
+     "routeID": 117900007,
+     "busRouteName": "금천07",
+     "routeType": "마을",
+     "startStation": "시흥1동공영주차장·금천노인종합복지관",
+     "endStation": "구로디지털단지역환승센터"
+    },
+    {
+     "routeID": 117900005,
+     "busRouteName": "금천08",
+     "routeType": "마을",
+     "startStation": "난곡중학교",
+     "endStation": "금천구종합청사·금천구청역"
+    },
+    {
+     "routeID": 117900010,
+     "busRouteName": "금천11",
+     "routeType": "마을",
+     "startStation": "산기슭공원",
+     "endStation": "석수역"
+    },
+    {
+     "routeID": 110900004,
+     "busRouteName": "노원01",
+     "routeType": "마을",
+     "startStation": "보람사거리",
+     "endStation": "상계역"
+    },
+    {
+     "routeID": 110900009,
+     "busRouteName": "노원02",
+     "routeType": "마을",
+     "startStation": "수락리버시티",
+     "endStation": "노원구청"
+    },
+    {
+     "routeID": 110900005,
+     "busRouteName": "노원03",
+     "routeType": "마을",
+     "startStation": "석계역",
+     "endStation": "하계역"
+    },
+    {
+     "routeID": 110900001,
+     "busRouteName": "노원04",
+     "routeType": "마을",
+     "startStation": "석계역",
+     "endStation": "현대아파트"
+    },
+    {
+     "routeID": 110900003,
+     "busRouteName": "노원05",
+     "routeType": "마을",
+     "startStation": "온곡초등학교",
+     "endStation": "창동역동측"
+    },
+    {
+     "routeID": 110900007,
+     "busRouteName": "노원08",
+     "routeType": "마을",
+     "startStation": "상계8동주민센터",
+     "endStation": "창동역동측"
+    },
+    {
+     "routeID": 110900006,
+     "busRouteName": "노원09",
+     "routeType": "마을",
+     "startStation": "서울특별시북부기술교육원",
+     "endStation": "동신아파트"
+    },
+    {
+     "routeID": 110900002,
+     "busRouteName": "노원11",
+     "routeType": "마을",
+     "startStation": "수락현대아파트",
+     "endStation": "상계역"
+    },
+    {
+     "routeID": 110900008,
+     "busRouteName": "노원13",
+     "routeType": "마을",
+     "startStation": "석계역",
+     "endStation": "서울과학기술대 붕어방"
+    },
+    {
+     "routeID": 109900011,
+     "busRouteName": "노원14",
+     "routeType": "마을",
+     "startStation": "청백아파트1단지",
+     "endStation": "세그루학원"
+    },
+    {
+     "routeID": 109900010,
+     "busRouteName": "노원15",
+     "routeType": "마을",
+     "startStation": "청백아파트1단지",
+     "endStation": "덕성여대입구"
+    },
+    {
+     "routeID": 109900001,
+     "busRouteName": "도봉01",
+     "routeType": "마을",
+     "startStation": "법종사",
+     "endStation": "창동역동측"
+    },
+    {
+     "routeID": 108900010,
+     "busRouteName": "도봉02",
+     "routeType": "마을",
+     "startStation": "우이동도선사입구.북한산우이역",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 109900007,
+     "busRouteName": "도봉03",
+     "routeType": "마을",
+     "startStation": "꽃동네",
+     "endStation": "수유역. 강북구청"
+    },
+    {
+     "routeID": 109900008,
+     "busRouteName": "도봉04",
+     "routeType": "마을",
+     "startStation": "동익아파트",
+     "endStation": "수유역.강북구청"
+    },
+    {
+     "routeID": 109900004,
+     "busRouteName": "도봉05",
+     "routeType": "마을",
+     "startStation": "한일병원",
+     "endStation": "우이동성원아파트"
+    },
+    {
+     "routeID": 109900003,
+     "busRouteName": "도봉06",
+     "routeType": "마을",
+     "startStation": "한일병원",
+     "endStation": "방학3동주민센터"
+    },
+    {
+     "routeID": 109900002,
+     "busRouteName": "도봉07",
+     "routeType": "마을",
+     "startStation": "도봉여성센터",
+     "endStation": "창2동건영아파트"
+    },
+    {
+     "routeID": 109900006,
+     "busRouteName": "도봉08",
+     "routeType": "마을",
+     "startStation": "창동역동측",
+     "endStation": "무수골"
+    },
+    {
+     "routeID": 109900005,
+     "busRouteName": "도봉09",
+     "routeType": "마을",
+     "startStation": "창동역동측",
+     "endStation": "도봉산역"
+    },
+    {
+     "routeID": 105900003,
+     "busRouteName": "동대문01",
+     "routeType": "마을",
+     "startStation": "회기역",
+     "endStation": "경희의료원"
+    },
+    {
+     "routeID": 105900002,
+     "busRouteName": "동대문02",
+     "routeType": "마을",
+     "startStation": "회기역",
+     "endStation": "외대앞역"
+    },
+    {
+     "routeID": 105900006,
+     "busRouteName": "동대문03",
+     "routeType": "마을",
+     "startStation": "한국산업인력공단·전동중학교·서울가든아파트",
+     "endStation": "회기역"
+    },
+    {
+     "routeID": 105900001,
+     "busRouteName": "동대문05",
+     "routeType": "마을",
+     "startStation": "답십리역",
+     "endStation": "영휘원사거리·(구)홍릉사거리"
+    },
+    {
+     "routeID": 119900007,
+     "busRouteName": "동작01",
+     "routeType": "마을",
+     "startStation": "달마사",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 119900013,
+     "busRouteName": "동작02",
+     "routeType": "마을",
+     "startStation": "사자암",
+     "endStation": "사자암"
+    },
+    {
+     "routeID": 119900020,
+     "busRouteName": "동작03",
+     "routeType": "마을",
+     "startStation": "신대방삼거리역",
+     "endStation": "노들역"
+    },
+    {
+     "routeID": 119900022,
+     "busRouteName": "동작05",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "신대방역"
+    },
+    {
+     "routeID": 119900023,
+     "busRouteName": "동작05-1",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "신대방역"
+    },
+    {
+     "routeID": 119900014,
+     "busRouteName": "동작06",
+     "routeType": "마을",
+     "startStation": "이수역",
+     "endStation": "사랑의병원"
+    },
+    {
+     "routeID": 119900018,
+     "busRouteName": "동작07",
+     "routeType": "마을",
+     "startStation": "동작삼성래미안·롯데캐슬",
+     "endStation": "정금마을"
+    },
+    {
+     "routeID": 119900009,
+     "busRouteName": "동작08",
+     "routeType": "마을",
+     "startStation": "행복유치원",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 119900019,
+     "busRouteName": "동작09",
+     "routeType": "마을",
+     "startStation": "사당3동주민센터·대림현대아파트",
+     "endStation": "사당역"
+    },
+    {
+     "routeID": 119900006,
+     "busRouteName": "동작10",
+     "routeType": "마을",
+     "startStation": "노들역·노량진교회",
+     "endStation": "상도역"
+    },
+    {
+     "routeID": 119900011,
+     "busRouteName": "동작11",
+     "routeType": "마을",
+     "startStation": "사자암",
+     "endStation": "사자암"
+    },
+    {
+     "routeID": 119900021,
+     "busRouteName": "동작12",
+     "routeType": "마을",
+     "startStation": "상도4동성문교회",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 120900001,
+     "busRouteName": "동작13",
+     "routeType": "마을",
+     "startStation": "봉현초등학교",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 119900012,
+     "busRouteName": "동작14",
+     "routeType": "마을",
+     "startStation": "달마사",
+     "endStation": "사랑의병원"
+    },
+    {
+     "routeID": 119900010,
+     "busRouteName": "동작15",
+     "routeType": "마을",
+     "startStation": "자이아파트",
+     "endStation": "이수역"
+    },
+    {
+     "routeID": 119900017,
+     "busRouteName": "동작16",
+     "routeType": "마을",
+     "startStation": "동작삼성래미안·롯데캐슬",
+     "endStation": "사당역"
+    },
+    {
+     "routeID": 119900016,
+     "busRouteName": "동작17",
+     "routeType": "마을",
+     "startStation": "사당극동아파트상가",
+     "endStation": "이수힐스테이트아파트"
+    },
+    {
+     "routeID": 119900015,
+     "busRouteName": "동작18",
+     "routeType": "마을",
+     "startStation": "사당극동아파트상가",
+     "endStation": "사당역"
+    },
+    {
+     "routeID": 119900008,
+     "busRouteName": "동작19",
+     "routeType": "마을",
+     "startStation": "방범초소",
+     "endStation": "신대방삼거리역"
+    },
+    {
+     "routeID": 119900001,
+     "busRouteName": "동작20",
+     "routeType": "마을",
+     "startStation": "자이아파트",
+     "endStation": "낙성대역"
+    },
+    {
+     "routeID": 119900024,
+     "busRouteName": "동작21",
+     "routeType": "마을",
+     "startStation": "달마사",
+     "endStation": "상도역"
+    },
+    {
+     "routeID": 102900001,
+     "busRouteName": "마포01",
+     "routeType": "마을",
+     "startStation": "산천동리버힐삼성아파트",
+     "endStation": "용문시장.새마을금고"
+    },
+    {
+     "routeID": 113900005,
+     "busRouteName": "마포02",
+     "routeType": "마을",
+     "startStation": "청암대",
+     "endStation": "공덕역"
+    },
+    {
+     "routeID": 113900002,
+     "busRouteName": "마포03",
+     "routeType": "마을",
+     "startStation": "아현역",
+     "endStation": "만리동고개"
+    },
+    {
+     "routeID": 113900011,
+     "busRouteName": "마포05",
+     "routeType": "마을",
+     "startStation": "홍대입구역",
+     "endStation": "홍대입구역"
+    },
+    {
+     "routeID": 113900012,
+     "busRouteName": "마포06",
+     "routeType": "마을",
+     "startStation": "홍대입구역",
+     "endStation": "남가좌현대아이파크"
+    },
+    {
+     "routeID": 113900010,
+     "busRouteName": "마포07",
+     "routeType": "마을",
+     "startStation": "절두산순교기념관",
+     "endStation": "현대백화점"
+    },
+    {
+     "routeID": 113900013,
+     "busRouteName": "마포08",
+     "routeType": "마을",
+     "startStation": "월드컵파크7단지",
+     "endStation": "신촌역"
+    },
+    {
+     "routeID": 113900015,
+     "busRouteName": "마포09",
+     "routeType": "마을",
+     "startStation": "망원유수지·마포구민체육센터",
+     "endStation": "금호태영아파트"
+    },
+    {
+     "routeID": 113900008,
+     "busRouteName": "마포10",
+     "routeType": "마을",
+     "startStation": "신촌역·이마트신촌점",
+     "endStation": "아현동주민센터"
+    },
+    {
+     "routeID": 113900004,
+     "busRouteName": "마포11",
+     "routeType": "마을",
+     "startStation": "신촌역·이마트신촌점",
+     "endStation": "염리초등학교"
+    },
+    {
+     "routeID": 113900003,
+     "busRouteName": "마포12",
+     "routeType": "마을",
+     "startStation": "신촌역·이마트신촌점",
+     "endStation": "마포역"
+    },
+    {
+     "routeID": 113900007,
+     "busRouteName": "마포13",
+     "routeType": "마을",
+     "startStation": "창전중앙하이츠아파트",
+     "endStation": "신촌역"
+    },
+    {
+     "routeID": 113900006,
+     "busRouteName": "마포14",
+     "routeType": "마을",
+     "startStation": "창전삼성아파트 110동",
+     "endStation": "경의선책거리·산울림소극장"
+    },
+    {
+     "routeID": 113900014,
+     "busRouteName": "마포15",
+     "routeType": "마을",
+     "startStation": "월드컵파크7단지",
+     "endStation": "홍대입구역"
+    },
+    {
+     "routeID": 113900009,
+     "busRouteName": "마포16",
+     "routeType": "마을",
+     "startStation": "진선주택",
+     "endStation": "서교푸르지오아파트"
+    },
+    {
+     "routeID": 113900001,
+     "busRouteName": "마포17",
+     "routeType": "마을",
+     "startStation": "공덕시장",
+     "endStation": "공덕시장"
+    },
+    {
+     "routeID": 113900016,
+     "busRouteName": "마포18",
+     "routeType": "마을",
+     "startStation": "월드컵파크6,7단지",
+     "endStation": "디지털미디어시티역"
+    },
+    {
+     "routeID": 113900017,
+     "busRouteName": "마포18-1",
+     "routeType": "마을",
+     "startStation": "월드컵파크6,7단지",
+     "endStation": "상암월드컵파크6.7단지"
+    },
+    {
+     "routeID": 112900010,
+     "busRouteName": "서대문01",
+     "routeType": "마을",
+     "startStation": "삼성빌라",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900014,
+     "busRouteName": "서대문02대",
+     "routeType": "마을",
+     "startStation": "뜨란채아파트101동",
+     "endStation": "극동아파트119동"
+    },
+    {
+     "routeID": 112900015,
+     "busRouteName": "서대문02소",
+     "routeType": "마을",
+     "startStation": "뜨란채아파트101동",
+     "endStation": "뜨란채아파트101동"
+    },
+    {
+     "routeID": 112900004,
+     "busRouteName": "서대문03",
+     "routeType": "마을",
+     "startStation": "홍은2동주민센터",
+     "endStation": "신촌오거리·신촌역"
+    },
+    {
+     "routeID": 112900011,
+     "busRouteName": "서대문04",
+     "routeType": "마을",
+     "startStation": "궁동공원",
+     "endStation": "신촌오거리·신촌역"
+    },
+    {
+     "routeID": 112900009,
+     "busRouteName": "서대문05",
+     "routeType": "마을",
+     "startStation": "북아현삼거리",
+     "endStation": "신촌오거리·신촌역"
+    },
+    {
+     "routeID": 112900007,
+     "busRouteName": "서대문06",
+     "routeType": "마을",
+     "startStation": "두산아파트",
+     "endStation": "서울역서부"
+    },
+    {
+     "routeID": 112900003,
+     "busRouteName": "서대문07",
+     "routeType": "마을",
+     "startStation": "개미마을",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 100900012,
+     "busRouteName": "서대문08",
+     "routeType": "마을",
+     "startStation": "상명대정문",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900012,
+     "busRouteName": "서대문09대",
+     "routeType": "마을",
+     "startStation": "가산빌라",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900013,
+     "busRouteName": "서대문09소",
+     "routeType": "마을",
+     "startStation": "동남슈퍼",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900001,
+     "busRouteName": "서대문10",
+     "routeType": "마을",
+     "startStation": "백련사",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900006,
+     "busRouteName": "서대문11",
+     "routeType": "마을",
+     "startStation": "홍은동국민주택",
+     "endStation": "봉원사입구"
+    },
+    {
+     "routeID": 112900002,
+     "busRouteName": "서대문12",
+     "routeType": "마을",
+     "startStation": "동원베네스트아파트",
+     "endStation": "홍제역"
+    },
+    {
+     "routeID": 112900005,
+     "busRouteName": "서대문13",
+     "routeType": "마을",
+     "startStation": "홍은동국민주택",
+     "endStation": "인왕산현대아파트"
+    },
+    {
+     "routeID": 112900008,
+     "busRouteName": "서대문14",
+     "routeType": "마을",
+     "startStation": "구.정원슈퍼",
+     "endStation": "구.정원슈퍼"
+    },
+    {
+     "routeID": 108900014,
+     "busRouteName": "서대문15",
+     "routeType": "마을",
+     "startStation": "증산역.증산2교",
+     "endStation": "명지대후문"
+    },
+    {
+     "routeID": 121900009,
+     "busRouteName": "서초01",
+     "routeType": "마을",
+     "startStation": "매일상가",
+     "endStation": "반포고교"
+    },
+    {
+     "routeID": 121900008,
+     "busRouteName": "서초02",
+     "routeType": "마을",
+     "startStation": "교대역",
+     "endStation": "서초역"
+    },
+    {
+     "routeID": 121900005,
+     "busRouteName": "서초03",
+     "routeType": "마을",
+     "startStation": "교대역",
+     "endStation": "신사사거리·가로수길"
+    },
+    {
+     "routeID": 119900003,
+     "busRouteName": "서초05",
+     "routeType": "마을",
+     "startStation": "정금마을",
+     "endStation": "세탁소"
+    },
+    {
+     "routeID": 119900002,
+     "busRouteName": "서초06",
+     "routeType": "마을",
+     "startStation": "정금마을",
+     "endStation": "동덕여고"
+    },
+    {
+     "routeID": 121900011,
+     "busRouteName": "서초07",
+     "routeType": "마을",
+     "startStation": "황실자이아파트",
+     "endStation": "임광아파트"
+    },
+    {
+     "routeID": 121900002,
+     "busRouteName": "서초08",
+     "routeType": "마을",
+     "startStation": "서울추모공원",
+     "endStation": "양재역"
+    },
+    {
+     "routeID": 121900007,
+     "busRouteName": "서초09",
+     "routeType": "마을",
+     "startStation": "헌인가구단지",
+     "endStation": "강남역"
+    },
+    {
+     "routeID": 121900003,
+     "busRouteName": "서초10",
+     "routeType": "마을",
+     "startStation": "서초구민체육센터",
+     "endStation": "강남역"
+    },
+    {
+     "routeID": 121900006,
+     "busRouteName": "서초11",
+     "routeType": "마을",
+     "startStation": "예술의전당",
+     "endStation": "반포1동성당"
+    },
+    {
+     "routeID": 121900013,
+     "busRouteName": "서초13",
+     "routeType": "마을",
+     "startStation": "이수역",
+     "endStation": "동덕여고"
+    },
+    {
+     "routeID": 121900010,
+     "busRouteName": "서초14",
+     "routeType": "마을",
+     "startStation": "이수역",
+     "endStation": "경원중학교"
+    },
+    {
+     "routeID": 121900012,
+     "busRouteName": "서초15",
+     "routeType": "마을",
+     "startStation": "롯데캐슬헤론아파트",
+     "endStation": "사당역"
+    },
+    {
+     "routeID": 119900005,
+     "busRouteName": "서초16",
+     "routeType": "마을",
+     "startStation": "정금마을",
+     "endStation": "방배역"
+    },
+    {
+     "routeID": 119900004,
+     "busRouteName": "서초17",
+     "routeType": "마을",
+     "startStation": "사당역",
+     "endStation": "서초구청"
+    },
+    {
+     "routeID": 121900016,
+     "busRouteName": "서초18",
+     "routeType": "마을",
+     "startStation": "선바위역",
+     "endStation": "양재근린공원"
+    },
+    {
+     "routeID": 121900015,
+     "busRouteName": "서초18-1",
+     "routeType": "마을",
+     "startStation": "LH5단지",
+     "endStation": "양재역"
+    },
+    {
+     "routeID": 121900004,
+     "busRouteName": "서초20",
+     "routeType": "마을",
+     "startStation": "서초더샵포레",
+     "endStation": "양재역"
+    },
+    {
+     "routeID": 121900001,
+     "busRouteName": "서초21",
+     "routeType": "마을",
+     "startStation": "염곡공영차고지",
+     "endStation": "방배신삼호아파트"
+    },
+    {
+     "routeID": 121900014,
+     "busRouteName": "서초22",
+     "routeType": "마을",
+     "startStation": "서울남부터미널",
+     "endStation": "아리랑TV·국립국악원"
+    },
+    {
+     "routeID": 103900003,
+     "busRouteName": "성동01",
+     "routeType": "마을",
+     "startStation": "옥수역",
+     "endStation": "신당역·하나은행"
+    },
+    {
+     "routeID": 103900004,
+     "busRouteName": "성동02",
+     "routeType": "마을",
+     "startStation": "마장동현대아파트",
+     "endStation": "논골·금호벽산아파트·성동공유센터"
+    },
+    {
+     "routeID": 103900011,
+     "busRouteName": "성동03-1",
+     "routeType": "마을",
+     "startStation": "신금호역",
+     "endStation": "청계천박물관"
+    },
+    {
+     "routeID": 103900012,
+     "busRouteName": "성동03-2",
+     "routeType": "마을",
+     "startStation": "왕십리KCC스위첸아파트",
+     "endStation": "한양대학교생활과학대학"
+    },
+    {
+     "routeID": 101900001,
+     "busRouteName": "성동05",
+     "routeType": "마을",
+     "startStation": "응봉근린공원·금호산",
+     "endStation": "약수역"
+    },
+    {
+     "routeID": 103900007,
+     "busRouteName": "성동06",
+     "routeType": "마을",
+     "startStation": "두산아파트115동",
+     "endStation": "금남시장·화단앞"
+    },
+    {
+     "routeID": 103900005,
+     "busRouteName": "성동07",
+     "routeType": "마을",
+     "startStation": "대우아파트관리실",
+     "endStation": "약수역"
+    },
+    {
+     "routeID": 103900002,
+     "busRouteName": "성동08",
+     "routeType": "마을",
+     "startStation": "금호역",
+     "endStation": "청계벽산아파트.텐즈힐아파트"
+    },
+    {
+     "routeID": 103900001,
+     "busRouteName": "성동09",
+     "routeType": "마을",
+     "startStation": "옥수역",
+     "endStation": "극동아파트5동"
+    },
+    {
+     "routeID": 103900008,
+     "busRouteName": "성동10",
+     "routeType": "마을",
+     "startStation": "경동초등학교입구",
+     "endStation": "송정동서울숲아이파크"
+    },
+    {
+     "routeID": 103900009,
+     "busRouteName": "성동12",
+     "routeType": "마을",
+     "startStation": "약수지구대",
+     "endStation": "옥수역"
+    },
+    {
+     "routeID": 103900010,
+     "busRouteName": "성동13",
+     "routeType": "마을",
+     "startStation": "옥수역",
+     "endStation": "성수역3번출구"
+    },
+    {
+     "routeID": 103900013,
+     "busRouteName": "성동14",
+     "routeType": "마을",
+     "startStation": "응봉역·광희중학교",
+     "endStation": "왕십리역"
+    },
+    {
+     "routeID": 107900008,
+     "busRouteName": "성북01",
+     "routeType": "마을",
+     "startStation": "동구마케팅고후문",
+     "endStation": "삼선동주민센터"
+    },
+    {
+     "routeID": 107900003,
+     "busRouteName": "성북02",
+     "routeType": "마을",
+     "startStation": "한성대정문",
+     "endStation": "우리옛돌박물관·정법사"
+    },
+    {
+     "routeID": 107900002,
+     "busRouteName": "성북03",
+     "routeType": "마을",
+     "startStation": "삼선초교",
+     "endStation": "노인정"
+    },
+    {
+     "routeID": 107900005,
+     "busRouteName": "성북04",
+     "routeType": "마을",
+     "startStation": "성신여대입구역",
+     "endStation": "신설동역"
+    },
+    {
+     "routeID": 107900011,
+     "busRouteName": "성북05",
+     "routeType": "마을",
+     "startStation": "정릉2동주민센터",
+     "endStation": "정수빌라"
+    },
+    {
+     "routeID": 107900012,
+     "busRouteName": "성북06",
+     "routeType": "마을",
+     "startStation": "산림초소",
+     "endStation": "길음역"
+    },
+    {
+     "routeID": 107900013,
+     "busRouteName": "성북07",
+     "routeType": "마을",
+     "startStation": "정릉4동종점",
+     "endStation": "길음역"
+    },
+    {
+     "routeID": 107900007,
+     "busRouteName": "성북08",
+     "routeType": "마을",
+     "startStation": "신안아파트·길음초등학교",
+     "endStation": "길음역"
+    },
+    {
+     "routeID": 107900006,
+     "busRouteName": "성북09",
+     "routeType": "마을",
+     "startStation": "신안아파트·길음초등학교",
+     "endStation": "미아사거리"
+    },
+    {
+     "routeID": 107900014,
+     "busRouteName": "성북10-1",
+     "routeType": "마을",
+     "startStation": "장위중학교",
+     "endStation": "미아사거리역"
+    },
+    {
+     "routeID": 107900017,
+     "busRouteName": "성북10-2",
+     "routeType": "마을",
+     "startStation": "우남아파트",
+     "endStation": "미아사거리역"
+    },
+    {
+     "routeID": 107900004,
+     "busRouteName": "성북12",
+     "routeType": "마을",
+     "startStation": "월곡중학교",
+     "endStation": "석계역"
+    },
+    {
+     "routeID": 107900001,
+     "busRouteName": "성북13",
+     "routeType": "마을",
+     "startStation": "동방주택",
+     "endStation": "석계역"
+    },
+    {
+     "routeID": 107900010,
+     "busRouteName": "성북14-1",
+     "routeType": "마을",
+     "startStation": "북서울꿈의숲",
+     "endStation": "석계역문화공원"
+    },
+    {
+     "routeID": 107900016,
+     "busRouteName": "성북14-2",
+     "routeType": "마을",
+     "startStation": "장곡시장",
+     "endStation": "석계역"
+    },
+    {
+     "routeID": 107900015,
+     "busRouteName": "성북15",
+     "routeType": "마을",
+     "startStation": "고려아파트",
+     "endStation": "한미약국"
+    },
+    {
+     "routeID": 105900004,
+     "busRouteName": "성북20",
+     "routeType": "마을",
+     "startStation": "고려대역 3번출구",
+     "endStation": "성신여대입구역"
+    },
+    {
+     "routeID": 105900005,
+     "busRouteName": "성북21",
+     "routeType": "마을",
+     "startStation": "고려대역 3번출구",
+     "endStation": "길음역"
+    },
+    {
+     "routeID": 107900009,
+     "busRouteName": "성북22",
+     "routeType": "마을",
+     "startStation": "정릉",
+     "endStation": "삼선동주민센터"
+    },
+    {
+     "routeID": 114900001,
+     "busRouteName": "양천01",
+     "routeType": "마을",
+     "startStation": "등촌역.강서보건소",
+     "endStation": "당산역"
+    },
+    {
+     "routeID": 114900002,
+     "busRouteName": "양천02",
+     "routeType": "마을",
+     "startStation": "등촌역·강서보건소",
+     "endStation": "오목교역.대학학원"
+    },
+    {
+     "routeID": 114900003,
+     "busRouteName": "양천03",
+     "routeType": "마을",
+     "startStation": "신정이펜하우스1단지",
+     "endStation": "목동역"
+    },
+    {
+     "routeID": 116900018,
+     "busRouteName": "양천04",
+     "routeType": "마을",
+     "startStation": "신도림동아3차아파트",
+     "endStation": "양천구청역"
+    },
+    {
+     "routeID": 116900008,
+     "busRouteName": "영등포01",
+     "routeType": "마을",
+     "startStation": "신도림역",
+     "endStation": "구로디지털단지역"
+    },
+    {
+     "routeID": 118900004,
+     "busRouteName": "영등포02",
+     "routeType": "마을",
+     "startStation": "한국수자원연구소",
+     "endStation": "신동아아파트·관악고교"
+    },
+    {
+     "routeID": 118900005,
+     "busRouteName": "영등포03",
+     "routeType": "마을",
+     "startStation": "현대2·3차아파트",
+     "endStation": "영등포시장·우리은행"
+    },
+    {
+     "routeID": 118900001,
+     "busRouteName": "영등포04",
+     "routeType": "마을",
+     "startStation": "대림역",
+     "endStation": "경방타임스퀘어·신세계백화점"
+    },
+    {
+     "routeID": 118900006,
+     "busRouteName": "영등포05",
+     "routeType": "마을",
+     "startStation": "당산역",
+     "endStation": "영등포역"
+    },
+    {
+     "routeID": 118900003,
+     "busRouteName": "영등포06",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "영등포역후문"
+    },
+    {
+     "routeID": 118900002,
+     "busRouteName": "영등포07",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "신길5동주민센터"
+    },
+    {
+     "routeID": 118900007,
+     "busRouteName": "영등포08",
+     "routeType": "마을",
+     "startStation": "영등포푸르지오후문",
+     "endStation": "신도림역"
+    },
+    {
+     "routeID": 116900017,
+     "busRouteName": "영등포09",
+     "routeType": "마을",
+     "startStation": "신도림역",
+     "endStation": "영등포역후문"
+    },
+    {
+     "routeID": 118900008,
+     "busRouteName": "영등포10",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 118900009,
+     "busRouteName": "영등포11",
+     "routeType": "마을",
+     "startStation": "대방역",
+     "endStation": "대방역"
+    },
+    {
+     "routeID": 114900006,
+     "busRouteName": "영등포12",
+     "routeType": "마을",
+     "startStation": "신도림역",
+     "endStation": "당산역"
+    },
+    {
+     "routeID": 114900005,
+     "busRouteName": "영등포13",
+     "routeType": "마을",
+     "startStation": "대방천사거리",
+     "endStation": "신도림역"
+    },
+    {
+     "routeID": 102900003,
+     "busRouteName": "용산01",
+     "routeType": "마을",
+     "startStation": "순천향대병원",
+     "endStation": "순천향대병원"
+    },
+    {
+     "routeID": 102900002,
+     "busRouteName": "용산02",
+     "routeType": "마을",
+     "startStation": "녹사평역",
+     "endStation": "남영역"
+    },
+    {
+     "routeID": 102900004,
+     "busRouteName": "용산03",
+     "routeType": "마을",
+     "startStation": "하얏트호텔",
+     "endStation": "용산문화체육센터"
+    },
+    {
+     "routeID": 101900002,
+     "busRouteName": "용산04",
+     "routeType": "마을",
+     "startStation": "서울역서부",
+     "endStation": "남정초등학교"
+    },
+    {
+     "routeID": 111900002,
+     "busRouteName": "은평01",
+     "routeType": "마을",
+     "startStation": "연신내역",
+     "endStation": "석광사"
+    },
+    {
+     "routeID": 111900003,
+     "busRouteName": "은평02",
+     "routeType": "마을",
+     "startStation": "두산·한신아파트",
+     "endStation": "불광역"
+    },
+    {
+     "routeID": 111900001,
+     "busRouteName": "은평03",
+     "routeType": "마을",
+     "startStation": "갈현건영아파트",
+     "endStation": "연신내역"
+    },
+    {
+     "routeID": 111900004,
+     "busRouteName": "은평04",
+     "routeType": "마을",
+     "startStation": "경향파크아파트",
+     "endStation": "불광역"
+    },
+    {
+     "routeID": 111900005,
+     "busRouteName": "은평05",
+     "routeType": "마을",
+     "startStation": "백련산힐스테이트302동",
+     "endStation": "녹번역"
+    },
+    {
+     "routeID": 111900007,
+     "busRouteName": "은평06",
+     "routeType": "마을",
+     "startStation": "불광동팀수양관",
+     "endStation": "대성중·고등학교"
+    },
+    {
+     "routeID": 111900006,
+     "busRouteName": "은평07",
+     "routeType": "마을",
+     "startStation": "불광삼성래미안아파트",
+     "endStation": "불광역"
+    },
+    {
+     "routeID": 111900011,
+     "busRouteName": "은평08-1",
+     "routeType": "마을",
+     "startStation": "백련산힐스테이트302동",
+     "endStation": "새절역.숭실고입구"
+    },
+    {
+     "routeID": 111900012,
+     "busRouteName": "은평08-2",
+     "routeType": "마을",
+     "startStation": "백련산힐스테이트302동",
+     "endStation": "새절역.숭실고입구"
+    },
+    {
+     "routeID": 111900009,
+     "busRouteName": "은평09",
+     "routeType": "마을",
+     "startStation": "갈현e편한세상1단지",
+     "endStation": "청구성심병원"
+    },
+    {
+     "routeID": 111900010,
+     "busRouteName": "은평10",
+     "routeType": "마을",
+     "startStation": "숭실고등학교정문",
+     "endStation": "보람슈퍼·산새마을종점"
+    },
+    {
+     "routeID": 100900006,
+     "busRouteName": "종로01",
+     "routeType": "마을",
+     "startStation": "빨래터·고희동미술관",
+     "endStation": "종로사우나"
+    },
+    {
+     "routeID": 100900008,
+     "busRouteName": "종로02",
+     "routeType": "마을",
+     "startStation": "성균관대학교후문",
+     "endStation": "종각역.YMCA"
+    },
+    {
+     "routeID": 100900010,
+     "busRouteName": "종로03",
+     "routeType": "마을",
+     "startStation": "낙산공원",
+     "endStation": "종로5가역"
+    },
+    {
+     "routeID": 100900011,
+     "busRouteName": "종로05",
+     "routeType": "마을",
+     "startStation": "서대문역3번출구",
+     "endStation": "서대문역3번출구"
+    },
+    {
+     "routeID": 100900004,
+     "busRouteName": "종로07",
+     "routeType": "마을",
+     "startStation": "명륜새마을금고",
+     "endStation": "방송통신대"
+    },
+    {
+     "routeID": 100900005,
+     "busRouteName": "종로08",
+     "routeType": "마을",
+     "startStation": "명륜3가종점",
+     "endStation": "종로5가역"
+    },
+    {
+     "routeID": 100900003,
+     "busRouteName": "종로09",
+     "routeType": "마을",
+     "startStation": "수성동계곡",
+     "endStation": "시청역"
+    },
+    {
+     "routeID": 100900007,
+     "busRouteName": "종로11",
+     "routeType": "마을",
+     "startStation": "삼청공원",
+     "endStation": "서울역"
+    },
+    {
+     "routeID": 100900009,
+     "busRouteName": "종로12",
+     "routeType": "마을",
+     "startStation": "서울대학교병원",
+     "endStation": "서울대학교병원"
+    },
+    {
+     "routeID": 100900002,
+     "busRouteName": "종로13",
+     "routeType": "마을",
+     "startStation": "평창동주민센터",
+     "endStation": "부암동주민센터·무계원"
+    },
+    {
+     "routeID": 106900001,
+     "busRouteName": "중랑01",
+     "routeType": "마을",
+     "startStation": "중화동종점",
+     "endStation": "신이문역"
+    },
+    {
+     "routeID": 106900002,
+     "busRouteName": "중랑02",
+     "routeType": "마을",
+     "startStation": "진로아파트종점",
+     "endStation": "한신아파트"
+    }
 ]

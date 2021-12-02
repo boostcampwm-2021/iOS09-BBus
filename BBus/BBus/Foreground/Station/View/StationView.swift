@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class StationView: UIView {
+final class StationView: NavigatableView {
 
     private lazy var colorBackgroundView: UIView = {
         let view = UIView()
@@ -35,17 +35,23 @@ final class StationView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
 
     convenience init() {
         self.init(frame: CGRect())
         
+        self.configureColor()
         self.configureLayout()
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    private func configureColor() {
+        self.backgroundColor = BBusColor.white
+    }
+    
+    override func configureLayout() {
         let half: CGFloat = 0.5
         
         self.addSubviews(self.colorBackgroundView, self.stationScrollView, self.loader)
@@ -94,12 +100,16 @@ final class StationView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UIScrollViewDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UIScrollViewDelegate & BackButtonDelegate & RefreshButtonDelegate) {
         self.stationBodyCollectionView.delegate = delegate
         self.stationBodyCollectionView.dataSource = delegate
         self.stationScrollView.delegate = delegate
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
     }
 
     func configureTableViewHeight(height: CGFloat?) -> NSLayoutConstraint {
@@ -142,5 +152,9 @@ final class StationView: UIView {
     func stopLoader() {
         self.loader.isHidden = true
         self.loader.stopAnimating()
+    }
+    
+    func configureNavigationAlpha(alpha: CGFloat) {
+        self.navigationBar.configureAlpha(alpha: alpha)
     }
 }

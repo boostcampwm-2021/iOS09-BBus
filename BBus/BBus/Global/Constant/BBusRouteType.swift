@@ -8,7 +8,7 @@
 import Foundation
 
 enum BBusRouteType: Int {
-    case shared = 0, airport, town, gansun, jisun, circular, wideArea, incheon, gyeonggi, closed
+    case shared = 0, airport, town, gansun, jisun, circular, wideArea, incheon, gyeonggi, closed, lateNight
     
     func toString() -> String {
         let common = "버스"
@@ -23,14 +23,15 @@ enum BBusRouteType: Int {
         case .incheon: return "인천" + common
         case .gyeonggi: return "경기" + common
         case .closed: return "폐지" + common
+        case .lateNight: return "심야" + common
         }
     }
 
     func toRouteType() -> RouteType? {
         switch self {
         case .shared: return RouteType.customized
-        case .airport: return RouteType.mainLine
-        case .town: return RouteType.customized
+        case .airport: return RouteType.airport
+        case .town: return RouteType.town
         case .gansun: return RouteType.mainLine
         case .jisun: return RouteType.localLine
         case .circular: return RouteType.circulation
@@ -38,6 +39,7 @@ enum BBusRouteType: Int {
         case .incheon: return nil
         case .gyeonggi: return nil
         case .closed: return nil
+        case .lateNight: return RouteType.lateNight
         }
     }
 }

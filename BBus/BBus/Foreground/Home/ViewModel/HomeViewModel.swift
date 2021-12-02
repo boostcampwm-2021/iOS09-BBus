@@ -10,18 +10,29 @@ import Combine
 
 final class HomeViewModel {
 
-    let useCase: HomeUseCase
-    private var cancellable: AnyCancellable?
+    let apiUseCase: HomeAPIUsable
+    let calculateUseCase: HomeCalculateUsable
+    private var cancellables: Set<AnyCancellable>
     @Published private(set) var homeFavoriteList: HomeFavoriteList?
+    private(set) var stationList: [StationDTO]?
+    private(set) var busRouteList: [BusRouteDTO]?
 
-    init(useCase: HomeUseCase) {
-        self.useCase = useCase
-        self.bindFavoriteData()
+    @Published private(set) var networkError: Error?
+
+    init(apiUseCase: HomeAPIUsable, calculateUseCase: HomeCalculateUsable) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
+        self.cancellables = []
+        self.loadBusRouteList()
+        self.loadStationList()
+        self.networkError = nil
+
+        self.loadHomeData()
     }
 
     func configureObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(descendTime), name: .oneSecondPassed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadFavoriteData), name: .thirtySecondPassed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadHomeData), name: .thirtySecondPassed, object: nil)
     }
 
     func cancelObserver() {
@@ -32,41 +43,82 @@ final class HomeViewModel {
         self.homeFavoriteList?.descendAllTime()
     }
 
-    private func bindFavoriteData() {
-        self.cancellable = self.useCase.$favoriteList
-            .receive(on: HomeUseCase.queue)
-            .sink(receiveValue: { [weak self] favoriteItems in
-                guard let favoriteItems = favoriteItems else { return }
-                self?.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
-                favoriteItems.forEach({ [weak self] favoriteItem in
-                    self?.useCase.loadBusRemainTime(favoriteItem: favoriteItem) { arrInfoByRouteDTO in
-                        guard let indexPath = self?.homeFavoriteList?.indexPath(of: favoriteItem) else { return }
-                        let homeArrivalInfo = HomeArriveInfo(arrInfoByRouteDTO: arrInfoByRouteDTO)
-                        self?.homeFavoriteList?.configure(homeArrivalinfo: homeArrivalInfo, indexPath: indexPath)
-                    }
-                })
+    @objc func loadHomeData() {
+        self.apiUseCase.fetchFavoriteData()
+            .catchError({ [weak self] error in
+                self?.networkError = error
             })
+            .sink { [weak self] favoriteItems in
+                self?.homeFavoriteList = HomeFavoriteList(dtoList: favoriteItems)
+                self?.loadRemainTime(with: favoriteItems)
+            }
+            .store(in: &self.cancellables)
     }
 
-    @objc func reloadFavoriteData() {
-        self.useCase.loadFavoriteData()
+    private func loadRemainTime(with favoriteItems: [FavoriteItemDTO]) {
+        guard let homeFavoriteList = homeFavoriteList else { return }
+
+        var newHomeFavoriteList = homeFavoriteList
+        favoriteItems.publisher
+            .receive(on: DispatchQueue.global())
+            .flatMap({ [weak self]  (favoriteItem) -> AnyPublisher<HomeFavoriteInfo, Error> in
+                guard let self = self else { return NetworkError.unknownError.publisher }
+                return self.apiUseCase.fetchBusRemainTime(favoriteItem: favoriteItem)
+            })
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .map({ (homeFavoriteInfo) -> HomeFavoriteList? in
+                guard let indexPath = newHomeFavoriteList.indexPath(of: homeFavoriteInfo.favoriteItem),
+                      let arriveInfo = homeFavoriteInfo.arriveInfo else { return nil }
+                newHomeFavoriteList.configure(homeArrivalinfo: arriveInfo, indexPath: indexPath)
+                return newHomeFavoriteList
+            })
+            .compactMap({ $0 })
+            .last()
+            .assign(to: &self.$homeFavoriteList)
+    }
+
+    private func loadBusRouteList() {
+        self.apiUseCase.fetchBusRoute()
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .sink { [weak self] busRouteDTOs in
+                self?.busRouteList = busRouteDTOs
+            }
+            .store(in: &self.cancellables)
+    }
+
+    private func loadStationList() {
+        self.apiUseCase.fetchStation()
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
+            .sink { [weak self] stationDTOs in
+                self?.stationList = stationDTOs
+            }
+            .store(in: &self.cancellables)
     }
 
     func stationName(by stationId: String) -> String? {
-        guard let stationId = Int(stationId),
-              let stationName = self.useCase.stationList?.first(where: { $0.stationID == stationId })?.stationName else { return nil }
-
-        return stationName
+        return self.calculateUseCase.findStationName(in: self.stationList, by: stationId)
     }
 
     func busName(by busRouteId: String) -> String? {
-        guard let busRouteId = Int(busRouteId),
-              let busName = self.useCase.busRouteList?.first(where: { $0.routeID == busRouteId })?.busRouteName else { return nil }
-
-        return busName
+        return self.calculateUseCase.findBusName(in: self.busRouteList, by: busRouteId)
     }
 
     func busType(by busName: String) -> RouteType? {
-        return self.useCase.busRouteList?.first(where: { $0.busRouteName == busName } )?.routeType
+        return self.calculateUseCase.findBusType(in: self.busRouteList, by: busName)
+    }
+}
+
+fileprivate extension Error {
+    var publisher: AnyPublisher<HomeFavoriteInfo, Error> {
+        let publisher = CurrentValueSubject<HomeFavoriteInfo?, Error>(nil)
+        publisher.send(completion: .failure(self))
+        return publisher.compactMap({$0})
+            .eraseToAnyPublisher()
     }
 }

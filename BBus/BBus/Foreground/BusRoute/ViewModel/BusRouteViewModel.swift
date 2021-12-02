@@ -14,18 +14,18 @@ typealias BusPosInfo = (location: CGFloat, number: String, congestion: BusConges
 
 final class BusRouteViewModel {
 
-    let usecase: BusRouteUsecase
+    let useCase: BusRouteAPIUsable
     private var cancellables: Set<AnyCancellable>
     private let busRouteId: Int
     @Published var header: BusRouteDTO?
     @Published var bodys: [BusStationInfo]
     @Published var buses: [BusPosInfo]
     @Published private(set) var stopLoader: Bool = false
+    @Published private(set) var networkError: Error?
 
-    init(usecase: BusRouteUsecase, busRouteId: Int) {
-        self.usecase = usecase
+    init(useCase: BusRouteAPIUsable, busRouteId: Int) {
+        self.useCase = useCase
         self.busRouteId = busRouteId
-        self.header = nil
         self.cancellables = []
         self.bodys = []
         self.buses = []
@@ -44,26 +44,33 @@ final class BusRouteViewModel {
     }
 
     private func bindHeaderInfo() {
-        self.usecase.$header
-            .receive(on: BusRouteUsecase.queue)
+        self.useCase.searchHeader(busRouteId: self.busRouteId)
+            .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .assign(to: &self.$header)
     }
 
     private func bindBodysInfo() {
-        self.usecase.$bodys
-            .receive(on: BusRouteUsecase.queue)
+        self.useCase.fetchRouteList(busRouteId: self.busRouteId)
+            .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] bodys in
-                guard let self = self else { return }
-
-                self.convertBusStationInfo(with: bodys)
-                self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+                self?.convertBusStationInfo(with: bodys)
             })
             .store(in: &self.cancellables)
     }
 
     private func bindBusesPosInfo() {
-        self.usecase.$buses
-            .receive(on: BusRouteUsecase.queue)
+        self.useCase.fetchBusPosList(busRouteId: self.busRouteId)
+            .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                guard error as? BBusAPIError != BBusAPIError.noneResultError else { return }
+                self?.networkError = error
+            })
             .sink(receiveValue: { [weak self] buses in
                 self?.convertBusPosInfo(with: buses)
             })
@@ -117,13 +124,8 @@ final class BusRouteViewModel {
         self.buses = busesResult
     }
 
-    func fetch() {
-        self.usecase.searchHeader(busRouteId: self.busRouteId)
-        self.usecase.fetchRouteList(busRouteId: self.busRouteId)
-    }
-
     @objc func refreshBusPos() {
-        self.usecase.fetchBusPosList(busRouteId: self.busRouteId)
+        self.bindBusesPosInfo()
     }
 
     func isStopLoader() -> Bool {
@@ -132,8 +134,8 @@ final class BusRouteViewModel {
 
     private func bindLoader() {
         self.$header.zip(self.$bodys)
-            .receive(on: BusRouteUsecase.queue)
-            .output(at: 2)
+            .receive(on: DispatchQueue.global())
+            .dropFirst()
             .sink(receiveValue: { result in
                 self.stopLoader = true
             })

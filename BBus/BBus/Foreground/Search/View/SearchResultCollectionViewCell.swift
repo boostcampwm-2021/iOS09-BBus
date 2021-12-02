@@ -73,6 +73,10 @@ final class SearchResultCollectionViewCell: UICollectionViewCell {
             self.titleLabel.textColor = BBusColor.bbusTypeBlue
         case .localLine:
             self.titleLabel.textColor = BBusColor.bbusTypeGreen
+        case .town:
+            self.titleLabel.textColor = BBusColor.bbusTypeGreen
+        case .airport:
+            self.titleLabel.textColor = BBusColor.bbusLikeYellow
         }
     }
     

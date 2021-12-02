@@ -9,11 +9,14 @@ import Foundation
 import Combine
 
 protocol GetStationListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch() -> AnyPublisher<Data, Error>
 }
 
-final class PersistentGetStationListFetcher: GetStationListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.get(file: "StationList", type: "json", on: queue)
+struct PersistenceGetStationListFetcher: PersistenceFetchable, GetStationListFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
+    func fetch() -> AnyPublisher<Data, Error> {
+        return self.persistenceStorage.get(file: "StationList", type: "json")
+            .eraseToAnyPublisher()
     }
 }

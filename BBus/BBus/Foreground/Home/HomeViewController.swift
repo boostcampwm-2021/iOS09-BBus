@@ -8,108 +8,95 @@
 import UIKit
 import Combine
 
-final class HomeViewController: UIViewController {
-
-    private var lastContentOffset: CGFloat = 0
-    private let refreshButtonWidth: CGFloat = 50
+final class HomeViewController: UIViewController, BaseViewControllerType {
 
     weak var coordinator: HomeCoordinator?
     private let viewModel: HomeViewModel?
-
     private lazy var homeView = HomeView()
-    lazy var refreshButton: ThrottleButton = {
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = self.refreshButtonWidth / 2
-        button.tintColor = BBusColor.white
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.reloadFavoriteData()
-        }
-        return button
-    }()
 
+    private let statusBarHeight: CGFloat?    
+    private var lastContentOffset: CGFloat = 0
     private var cancellables: Set<AnyCancellable> = []
 
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel, statusBarHegiht: CGFloat?) {
         self.viewModel = viewModel
+        self.statusBarHeight = statusBarHegiht
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         self.viewModel = nil
+        self.statusBarHeight = nil
         super.init(coder: coder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Home"
+        self.baseViewDidLoad()
+      
+        self.configureStatusBarLayout()
         self.configureColor()
-        self.configureLayout()
-        self.binding()
-        self.homeView.configureLayout()
-        self.homeView.configureDelegate(self)
-        
-        let app = UIApplication.shared
-        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
-
-        let statusbarView = UIView()
-        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
-        
-        self.view.addSubviews(statusbarView)
-        statusbarView.heightAnchor
-            .constraint(equalToConstant: statusBarHeight).isActive = true
-        statusbarView.widthAnchor
-            .constraint(equalTo: self.view.widthAnchor, multiplier: 1.0).isActive = true
-        statusbarView.topAnchor
-            .constraint(equalTo: self.view.topAnchor).isActive = true
-        statusbarView.centerXAnchor
-            .constraint(equalTo: self.view.centerXAnchor).isActive = true
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.reloadFavoriteData()
+        self.baseViewWillAppear()
+        
         self.viewModel?.configureObserver()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.viewModel?.cancelObserver()
     }
 
     // MARK: - Configuration
-    private func configureLayout() {
-        self.view.addSubviews(self.homeView, self.refreshButton)
-
+    func configureLayout() {
+        self.view.addSubviews(self.homeView)
         NSLayoutConstraint.activate([
             self.homeView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.homeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.homeView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.homeView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
+        
+        self.homeView.configureLayout()
+    }
 
-        self.refreshButton.backgroundColor = BBusColor.darkGray
-        let refreshTrailingBottomInterval: CGFloat = -16
+    private func configureStatusBarLayout() {
+        guard let statusBarHeight = self.statusBarHeight else { return }
+        
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = BBusColor.white //컬러 설정 부분
+
+        self.view.addSubviews(statusbarView)
         NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: self.refreshButtonWidth),
-            self.refreshButton.heightAnchor.constraint(equalTo: self.refreshButton.widthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
+            statusbarView.heightAnchor.constraint(equalToConstant: statusBarHeight),
+            statusbarView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1.0),
+            statusbarView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            statusbarView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+    }
+    
+    func configureDelegate() {
+        self.homeView.configureDelegate(self)
+    }
+    
+    func refresh() {
+        self.viewModel?.loadHomeData()
+    }
+    
+    func bindAll() {
+        self.bindFavoriteList()
+        self.bindNetworkError()
     }
     
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
     }
 
-    private func binding() {
-        self.bindFavoriteList()
-        self.bindNetworkError()
-    }
-
     private func bindFavoriteList() {
-
         self.viewModel?.$homeFavoriteList
             .compactMap { $0 }
             .filter { !$0.changedByTimer }
@@ -123,7 +110,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func bindNetworkError() {
-        self.viewModel?.useCase.$networkError
+        self.viewModel?.$networkError
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] error in
                 guard let _ = error else { return }
@@ -322,5 +309,12 @@ extension HomeViewController: FavoriteHeaderViewDelegate {
               let arsId = self.viewModel?.homeFavoriteList?[section]?.arsId else { return }
 
         self.coordinator?.pushToStation(arsId: arsId)
+    }
+}
+
+// MARK: - RefreshButtonDelegate: HomeView
+extension HomeViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.loadHomeData()
     }
 }

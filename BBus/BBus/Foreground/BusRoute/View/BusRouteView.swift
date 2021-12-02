@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BusRouteView: UIView {
+final class BusRouteView: NavigatableView {
 
     private lazy var busRouteScrollView = UIScrollView()
     private lazy var busRouteScrollContentsView = UIView()
@@ -29,8 +29,11 @@ final class BusRouteView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
+    private var busTags: [BusTagView] = []
+    private var busIcon: UIImage?
     private var busRouteTableViewHeightConstraint: NSLayoutConstraint?
     private var tableViewMinHeight: CGFloat {
         return max(self.frame.height - BusRouteHeaderView.headerHeight, 0)
@@ -44,7 +47,7 @@ final class BusRouteView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    override func configureLayout() {
         let colorBackgroundViewHeightMultiplier: CGFloat = 0.5
         
         self.addSubviews(self.colorBackgroundView, self.busRouteScrollView, self.loader)
@@ -94,17 +97,24 @@ final class BusRouteView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & UIScrollViewDelegate & BackButtonDelegate & RefreshButtonDelegate) {
         self.busRouteTableView.delegate = delegate
         self.busRouteTableView.dataSource = delegate
         self.busRouteScrollView.delegate = delegate
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
     }
 
     func configureColor(to color: UIColor?) {
         self.colorBackgroundView.backgroundColor = color
         self.busHeaderView.backgroundColor = color
+        self.navigationBar.configureBackgroundColor(color: color)
+        self.navigationBar.configureTintColor(color: BBusColor.white)
+        self.navigationBar.configureAlpha(alpha: 0)
     }
 
     func configureTableViewHeight(count: Int) {
@@ -152,5 +162,62 @@ final class BusRouteView: UIView {
     func stopLoader() {
         self.loader.isHidden = true
         self.loader.stopAnimating()
+    }
+    
+    func configureBusColor(type: RouteType) -> UIColor? {
+        let color: UIColor?
+
+        switch type {
+        case .mainLine:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .broadArea:
+            color = BBusColor.bbusTypeRed
+            self.busIcon = BBusImage.redBusIcon
+        case .customized:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .circulation:
+            color = BBusColor.bbusTypeCirculation
+            self.busIcon = BBusImage.circulationBusIcon
+        case .lateNight:
+            color = BBusColor.bbusTypeBlue
+            self.busIcon = BBusImage.blueBusIcon
+        case .localLine:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .town:
+            color = BBusColor.bbusTypeGreen
+            self.busIcon = BBusImage.greenBusIcon
+        case .airport:
+            color = BBusColor.bbusLikeYellow
+            self.busIcon = BBusImage.blueBusIcon
+        }
+
+        self.configureColor(to: color)
+        return color
+    }
+    
+    func configureBusTags(buses: [BusPosInfo]) {
+        self.busTags.forEach { $0.removeFromSuperview() }
+        self.busTags.removeAll()
+        
+        buses.forEach { [weak self] bus in
+            guard let self = self else { return }
+            let tag = self.createBusTag(location: bus.location,
+                                        busIcon: self.busIcon,
+                                        busNumber: bus.number,
+                                        busCongestion: bus.congestion.toString(),
+                                        isLowFloor: bus.islower)
+            self.busTags.append(tag)
+        }
+    }
+    
+    func configureBackButtonTitle(title: String) {
+        self.navigationBar.configureBackButtonTitle(title)
+    }
+    
+    func configureNavigationAlpha(alpha: CGFloat) {
+        self.navigationBar.configureAlpha(alpha: alpha)
     }
 }

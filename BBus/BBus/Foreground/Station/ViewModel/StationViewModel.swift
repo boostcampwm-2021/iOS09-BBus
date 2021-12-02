@@ -7,27 +7,38 @@
 
 import Foundation
 import Combine
-import UIKit
 
 final class StationViewModel {
     
-    let usecase: StationUsecase
+    let apiUseCase: StationAPIUsable
+    let calculateUseCase: StationCalculatable
     let arsId: String
-    private var cancellables: Set<AnyCancellable>
+    @Published private(set) var stationInfo: StationDTO?
+    @Published private(set) var busRouteList: [BusRouteDTO]
     @Published private(set) var busKeys: BusSectionKeys
-    @Published private(set) var activeBuses = [BBusRouteType: BusArriveInfos]()
-    private(set) var inActiveBuses = [BBusRouteType: BusArriveInfos]()
-    @Published private(set) var favoriteItems = [FavoriteItemDTO]()
-    @Published private(set) var nextStation: String? = nil
-    @Published private(set) var stopLoader: Bool = false
+    @Published private(set) var activeBuses: [BBusRouteType: BusArriveInfos]
+    private(set) var inActiveBuses: [BBusRouteType: BusArriveInfos]
+    @Published private(set) var favoriteItems: [FavoriteItemDTO]?
+    @Published private(set) var nextStation: String?
+    @Published private(set) var stopLoader: Bool
+    @Published private(set) var error: Error?
+    private var cancellables: Set<AnyCancellable>
     
-    init(usecase: StationUsecase, arsId: String) {
-        self.usecase = usecase
+    init(apiUseCase: StationAPIUsable, calculateUseCase: StationCalculatable, arsId: String) {
+        self.apiUseCase = apiUseCase
+        self.calculateUseCase = calculateUseCase
         self.arsId = arsId
-        self.cancellables = []
+        self.busRouteList = []
+        self.stationInfo = nil
         self.busKeys = BusSectionKeys()
-        self.binding()
-        self.refresh()
+        self.favoriteItems = nil
+        self.nextStation = nil
+        self.activeBuses = [:]
+        self.inActiveBuses = [:]
+        self.cancellables = []
+        self.stopLoader = false
+        
+        self.bind()
     }
 
     func configureObserver() {
@@ -40,8 +51,28 @@ final class StationViewModel {
     }
     
     @objc func refresh() {
-        self.usecase.stationInfoWillLoad(with: arsId)
-        self.usecase.refreshInfo(about: arsId)
+        self.apiUseCase.refreshInfo(about: self.arsId)
+            .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .combineLatest(self.$busRouteList.filter { !$0.isEmpty }) { (busRouteList, entireBusRouteList) in
+                return busRouteList.filter { busRoute in
+                    entireBusRouteList.contains{ $0.routeID == busRoute.busRouteId }
+                }
+            }
+            .tryMap({ arriveInfo -> [StationByUidItemDTO] in
+                guard arriveInfo.count > 0 else { throw BBusAPIError.noneResultError }
+                return arriveInfo
+            })
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .sink(receiveValue: { [weak self] arriveInfo in
+                self?.nextStation = arriveInfo.first?.nextStation
+                self?.classifyByRouteType(with: arriveInfo)
+            })
+            .store(in: &self.cancellables)
     }
 
     @objc private func descendTime() {
@@ -50,32 +81,48 @@ final class StationViewModel {
         })
     }
     
-    private func binding() {
+    private func bind() {
         self.bindLoader()
+        self.bindStationInfo(with: self.arsId)
+        self.bindBusRouteList()
         self.bindFavoriteItems()
-        self.bindBusArriveInfo()
     }
     
-    private func bindBusArriveInfo() {
-        self.usecase.$busArriveInfo
-            .receive(on: StationUsecase.queue)
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { [weak self] arriveInfo in
-                guard arriveInfo.count > 0 else { return }
-                self?.nextStation = arriveInfo[0].nextStation
-                self?.classifyByRouteType(with: arriveInfo)
+    private func bindStationInfo(with arsId: String) {
+        self.apiUseCase.loadStationList()
+            .map({ [weak self] stations in
+                return self?.calculateUseCase.findStation(in: stations, with: arsId)
             })
-            .store(in: &self.cancellables)
+            .tryMap({ stationInfo in
+                guard let stationInfo = stationInfo else {
+                    throw BBusAPIError.invalidStationError
+                }
+                return stationInfo
+            })
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .assign(to: &self.$stationInfo)
+    }
+    
+    private func bindBusRouteList() {
+        self.apiUseCase.loadRoute()
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .assign(to: &self.$busRouteList)
     }
     
     private func bindFavoriteItems() {
-        self.usecase.$favoriteItems
-            .receive(on: StationUsecase.queue)
-            .sink(receiveValue: { [weak self] items in
-                self?.favoriteItems = items.filter() { $0.arsId == self?.arsId }
+        self.apiUseCase.getFavoriteItems()
+            .receive(on: DispatchQueue.global())
+            .catchError({ [weak self] error in
+                self?.error = error
             })
-            .store(in: &self.cancellables)
+            .map({ [weak self] items -> [FavoriteItemDTO] in
+                return items.filter({ $0.arsId == self?.arsId })
+            })
+            .assign(to: &self.$favoriteItems)
     }
 
     private func classifyByRouteType(with buses: [StationByUidItemDTO]) {
@@ -124,18 +171,52 @@ final class StationViewModel {
     }
     
     func add(favoriteItem: FavoriteItemDTO) {
-        self.usecase.add(favoriteItem: favoriteItem)
+        self.apiUseCase.add(favoriteItem: favoriteItem)
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.apiUseCase.getFavoriteItems()
+                    .catchError({ [weak self] error in
+                        self?.error = error
+                    })
+                    .compactMap { $0 }
+                    .assign(to: &self.$favoriteItems)
+            }
+            .store(in: &self.cancellables)
     }
     
     func remove(favoriteItem: FavoriteItemDTO) {
-        self.usecase.remove(favoriteItem: favoriteItem)
+        self.apiUseCase.remove(favoriteItem: favoriteItem)
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.apiUseCase.getFavoriteItems()
+                    .catchError({ [weak self] error in
+                        self?.error = error
+                    })
+                    .compactMap { $0 }
+                    .assign(to: &self.$favoriteItems)
+            }
+            .store(in: &self.cancellables)
     }
 
     private func bindLoader() {
-        self.$busKeys.zip(self.$favoriteItems, self.$nextStation)
-            .dropFirst()
-            .sink(receiveValue: { result in
-                self.stopLoader = true
+        self.$busKeys
+            .zip(self.$favoriteItems, self.$stationInfo)
+            .output(at: 1)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stopLoader = true
+            })
+            .store(in: &self.cancellables)
+        
+        self.$busKeys
+            .dropFirst(2)
+            .sink(receiveValue: { [weak self] result in
+                self?.stopLoader = true
             })
             .store(in: &self.cancellables)
     }

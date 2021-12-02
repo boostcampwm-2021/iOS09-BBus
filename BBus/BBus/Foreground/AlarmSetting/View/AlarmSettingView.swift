@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlarmSettingView: UIView {
+final class AlarmSettingView: NavigatableView {
     
     static let tableViewSectionCount = 2
     static let tableViewHeaderHeight: CGFloat = 35
@@ -27,6 +27,7 @@ final class AlarmSettingView: UIView {
     }()
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
 
@@ -38,13 +39,13 @@ final class AlarmSettingView: UIView {
     }
 
     // MARK: - Configure
-    private func configureLayout() {
+    override func configureLayout() {
         self.addSubviews(self.alarmTableView, self.loader)
         
         NSLayoutConstraint.activate([
             self.alarmTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.alarmTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor, constant: CustomNavigationBar.height),
             self.alarmTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
@@ -52,11 +53,26 @@ final class AlarmSettingView: UIView {
             self.loader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.loader.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+    func configureDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource & BackButtonDelegate & RefreshButtonDelegate) {
         self.alarmTableView.delegate = delegate
         self.alarmTableView.dataSource = delegate
+        self.refreshButton.configureDelegate(delegate)
+        self.navigationBar.configureDelegate(delegate)
+    }
+    
+    func configureColor(color: UIColor?) {
+        self.navigationBar.configureTintColor(color: color)
+        self.navigationBar.configureAlpha(alpha: 1)
+    }
+    
+    func configureTitle(busName: String, stationName: String, routeType: RouteType?) {
+        self.navigationBar.configureTitle(busName: busName,
+                                                stationName: stationName,
+                                                routeType: routeType)
     }
     
     func reload() {

@@ -9,11 +9,14 @@ import Foundation
 import Combine
 
 protocol GetRouteListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch() -> AnyPublisher<Data, Error>
 }
 
-final class PersistentGetRouteListFetcher: GetRouteListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.get(file: "BusRouteList", type: "json", on: queue)
+struct PersistenceGetRouteListFetcher: PersistenceFetchable, GetRouteListFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
+    func fetch() -> AnyPublisher<Data, Error> {
+        return self.persistenceStorage.get(file: "BusRouteList", type: "json")
+            .eraseToAnyPublisher()
     }
 }

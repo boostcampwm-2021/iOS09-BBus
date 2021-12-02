@@ -38,6 +38,106 @@
                ReferencedContainer = "container:BBus.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0642756262300DE51C8"
+               BuildableName = "NetworkServiceTests.xctest"
+               BlueprintName = "NetworkServiceTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0712756263400DE51C8"
+               BuildableName = "PersistenceStorageTests.xctest"
+               BlueprintName = "PersistenceStorageTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E07E2756263E00DE51C8"
+               BuildableName = "TokenManagerTests.xctest"
+               BlueprintName = "TokenManagerTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E08B2756264600DE51C8"
+               BuildableName = "RequestFactoryTests.xctest"
+               BlueprintName = "RequestFactoryTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0982756266B00DE51C8"
+               BuildableName = "HomeViewModelTests.xctest"
+               BlueprintName = "HomeViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0A52756268B00DE51C8"
+               BuildableName = "SearchViewModelTests.xctest"
+               BlueprintName = "SearchViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0B22756269600DE51C8"
+               BuildableName = "StationViewModelTests.xctest"
+               BlueprintName = "StationViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0BF2756269F00DE51C8"
+               BuildableName = "BusRouteViewModelTests.xctest"
+               BlueprintName = "BusRouteViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0CC275626A700DE51C8"
+               BuildableName = "AlarmSettingViewModelTests.xctest"
+               BlueprintName = "AlarmSettingViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AF1E0D9275626B300DE51C8"
+               BuildableName = "MovingStatusViewModelTests.xctest"
+               BlueprintName = "MovingStatusViewModelTests"
+               ReferencedContainer = "container:BBus.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -8,45 +8,20 @@
 import UIKit
 import Combine
 
-final class StationViewController: UIViewController {
+final class StationViewController: UIViewController, BaseViewControllerType {
     
-    @Published private var stationBusInfoHeight: CGFloat?
+    weak var coordinator: StationCoordinator?
+    private let viewModel: StationViewModel?
+    private lazy var stationView = StationView()
+    
+    private var cancellables: Set<AnyCancellable> = []
+    private var collectionHeightConstraint: NSLayoutConstraint?
     private var collectionViewMinHeight: CGFloat {
         let twice: CGFloat = 2
         return self.view.frame.height - (StationHeaderView.headerHeight*twice)
     }
-    weak var coordinator: StationCoordinator?
-    private let viewModel: StationViewModel?
 
-    private lazy var customNavigationBar: CustomNavigationBar = {
-        let bar = CustomNavigationBar()
-        bar.configureTintColor(color: BBusColor.white)
-        if let bbusGray = BBusColor.bbusGray {
-            bar.configureBackgroundColor(color: bbusGray)
-        }
-        bar.configureAlpha(alpha: 0)
-        return bar
-    }()
-    private lazy var stationView: StationView = {
-        let view = StationView()
-        view.backgroundColor = BBusColor.white
-        return view
-    }()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.refresh()
-        }
-        return button
-    }()
-    private var collectionHeightConstraint: NSLayoutConstraint?
-    private var cancellables: Set<AnyCancellable> = []
+    @Published private var stationBusInfoHeight: CGFloat?
     
     init(viewModel: StationViewModel) {
         self.viewModel = viewModel
@@ -60,18 +35,16 @@ final class StationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.binding()
+        self.baseViewDidLoad()
         self.configureColor()
-        self.configureLayout()
-        self.configureDelegate()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.baseViewWillAppear()
+        
         self.stationView.startLoader()
         self.viewModel?.configureObserver()
-        self.viewModel?.refresh()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,62 +52,62 @@ final class StationViewController: UIViewController {
         self.viewModel?.cancelObserver()
     }
 
-    // MARK: - Configure
-    private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.stationView, self.customNavigationBar, self.refreshButton)
+    // MARK: - Configuration
+    func configureLayout() {
+        self.view.addSubviews(self.stationView)
 
         NSLayoutConstraint.activate([
             self.stationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.stationView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.stationView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.stationView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
+        ]) 
 
-        NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-        
         self.stationBusInfoHeight = nil
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
-    private func configureDelegate() {
+    private func configureColor() {
+        self.view.backgroundColor = BBusColor.bbusGray
+        self.stationView.navigationBar.configureBackgroundColor(color: BBusColor.bbusGray)
+    }
+
+    func configureDelegate() {
         self.stationView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
     
-    private func binding() {
+    func refresh() {
+        self.viewModel?.refresh()
+    }
+    
+    func bindAll() {
+        self.bindStationBusInfoHeight()
+        self.bindStationInfo()
+        self.bindNextStation()
+        self.bindError()
+        self.bindStopLoader()
+        self.bindBusKeys()
+    }
+    
+    private func bindStationBusInfoHeight() {
         self.$stationBusInfoHeight
             .receive(on: DispatchQueue.main)
             .sink() { [weak self] height in
                 self?.collectionHeightConstraint?.isActive = false
                 self?.collectionHeightConstraint = self?.stationView.configureTableViewHeight(height: height)
             }.store(in: &self.cancellables)
-        
-        self.viewModel?.usecase.$stationInfo
+    }
+    
+    private func bindStationInfo() {
+        self.viewModel?.$stationInfo
             .receive(on: DispatchQueue.main)
-            .dropFirst()
+            .compactMap { $0 }
             .sink(receiveValue: { [weak self] station in
-                if let station = station {
-                    self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
-                }
-                else {
-                    self?.noInfoAlert()
-                }
+                self?.stationView.configureHeaderView(stationId: station.arsID, stationName: station.stationName)
             })
             .store(in: &self.cancellables)
-        
+    }
+    
+    private func bindNextStation() {
         self.viewModel?.$nextStation
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] nextStation in
@@ -142,37 +115,27 @@ final class StationViewController: UIViewController {
                 self?.stationView.configureNextStation(direction: nextStation)
             })
             .store(in: &self.cancellables)
-        
-        self.viewModel?.$busKeys
+    }
+    
+    private func bindError() {
+        self.viewModel?.$error
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-
-                self?.stationView.reload()
-
-                if viewModel.stopLoader {
-                    self?.stationView.stopLoader()
+            .sink(receiveValue: { [weak self] error in
+                guard let error = error as? BBusAPIError else { return }
+                
+                switch error {
+                case .invalidStationError:
+                    self?.noInfoAlert()
+                case .noneResultError:
+                    self?.noneResultAlert()
+                default:
+                    self?.networkAlert()
                 }
             })
             .store(in: &self.cancellables)
-        
-        self.viewModel?.$favoriteItems
-            .receive(on: DispatchQueue.main)
-            .compactMap { $0 }
-            .first()
-            .sink(receiveValue: { [weak self] _ in
-                self?.stationView.reload()
-            })
-            .store(in: &self.cancellables)
-        
-        self.viewModel?.usecase.$networkError
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] error in
-                guard let _ = error else { return }
-                self?.networkAlert()
-            })
-            .store(in: &self.cancellables)
-
+    }
+    
+    private func bindStopLoader() {
         self.viewModel?.$stopLoader
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] isStop in
@@ -183,20 +146,27 @@ final class StationViewController: UIViewController {
             .store(in: &self.cancellables)
     }
     
+    private func bindBusKeys() {
+        guard let viewModel = viewModel else { return }
+        viewModel.$busKeys
+            .combineLatest(viewModel.$stationInfo.compactMap{$0}, viewModel.$favoriteItems.compactMap{$0}.first())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] results in
+                self?.stationView.reload()
+            })
+            .store(in: &self.cancellables)
+    }
+
     private func networkAlert() {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
-
-    private func configureColor() {
-        self.view.backgroundColor = BBusColor.bbusGray
-    }
     
     private func noInfoAlert() {
         let controller = UIAlertController(title: "정거장 에러",
-                                           message: "죄송합니다. 현재 정보가 제공되지 않는 정거장입니다.",
+                                           message: "서울 외 지역은 정거장 정보를 제공하지 않습니다. 죄송합니다",
                                            preferredStyle: .alert)
         let action = UIAlertAction(title: "확인",
                                    style: .default,
@@ -204,6 +174,18 @@ final class StationViewController: UIViewController {
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
+
+    private func noneResultAlert() {
+        let controller = UIAlertController(title: "정거장 에러",
+                                           message: "서울 외 지역의 버스만 정차하는 정거장은 정보를 제공하지 않습니다",
+                                           preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인",
+                                   style: .default,
+                                   handler: { [weak self] _ in self?.coordinator?.terminate() })
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
+    }
+
 }
 
 // MARK: - Delegate : CollectionView
@@ -251,13 +233,14 @@ extension StationViewController: UICollectionViewDataSource {
         }
         
         // configure delegate and button
-        if let item = self.makeFavoriteItem(at: indexPath) {
+        if let item = self.makeFavoriteItem(at: indexPath),
+           let favoriteItems = viewModel.favoriteItems {
             cell.configure(delegate: self)
-            cell.configureButton(status: viewModel.favoriteItems.contains(item))
-            // 즐겨찾기 버튼 터치 시에도 reload 대신 버튼 색상만 다시 configure하도록 바인딩
+            cell.configureButton(status: favoriteItems.contains(item))
             self.viewModel?.$favoriteItems
                 .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak cell] favoriteItems in
+                    guard let favoriteItems = favoriteItems else { return }
                     cell?.configureButton(status: favoriteItems.contains(item))
                 })
                 .store(in: &cell.cancellables)
@@ -337,13 +320,12 @@ extension StationViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Delegate : UIScrollView
 extension StationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/127))
         let baseLineContentOffset = StationHeaderView.headerHeight - CustomNavigationBar.height
         if scrollView.contentOffset.y >= baseLineContentOffset {
-            self.customNavigationBar.configureAlpha(alpha: 1)
+            self.stationView.configureNavigationAlpha(alpha: 1)
         }
         else {
-            self.customNavigationBar.configureAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
+            self.stationView.configureNavigationAlpha(alpha: CGFloat(scrollView.contentOffset.y/baseLineContentOffset))
         }
     }
 
@@ -372,6 +354,13 @@ extension StationViewController: BackButtonDelegate {
     }
 }
 
+// MARK: - Delegate: RefreshButton
+extension StationViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.viewModel?.refresh()
+    }
+}
+
 // MARK: - Delegate: LikeButton
 extension StationViewController: LikeButtonDelegate {
     func likeStationBus(at cell: UICollectionViewCell) {
@@ -392,7 +381,7 @@ extension StationViewController: LikeButtonDelegate {
     
     private func makeFavoriteItem(at indexPath: IndexPath) -> FavoriteItemDTO? {
         guard let viewModel = self.viewModel,
-              let station = viewModel.usecase.stationInfo,
+              let station = viewModel.stationInfo,
               let key = viewModel.busKeys[indexPath.section] else { return nil }
         let item: FavoriteItemDTO
         if viewModel.activeBuses.count - 1 >= indexPath.section {
@@ -412,7 +401,7 @@ extension StationViewController: AlarmButtonDelegate {
     func shouldGoToAlarmSettingScene(at cell: UICollectionViewCell) {
         guard let indexPath = self.indexPath(for: cell),
               let viewModel = viewModel,
-              let stationID = viewModel.usecase.stationInfo?.stationID,
+              let stationID = viewModel.stationInfo?.stationID,
               let key = viewModel.busKeys[indexPath.section] else { return }
         let bus: BusArriveInfo
         if viewModel.activeBuses.count - 1 >= indexPath.section {

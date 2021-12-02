@@ -9,11 +9,14 @@ import Foundation
 import Combine
 
 protocol GetFavoriteItemListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch() -> AnyPublisher<Data, Error>
 }
 
-final class PersistentGetFavoriteItemListFetcher: GetFavoriteItemListFetchable {
-    func fetch(on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.getFromUserDefaults(key: "FavoriteItems", on: queue)
+struct PersistenceGetFavoriteItemListFetcher: PersistenceFetchable, GetFavoriteItemListFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
+    func fetch() -> AnyPublisher<Data, Error> {
+        return self.persistenceStorage.getFromUserDefaults(key: "FavoriteItems")
+            .eraseToAnyPublisher()
     }
 }

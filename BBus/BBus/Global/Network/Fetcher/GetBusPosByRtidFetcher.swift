@@ -9,12 +9,16 @@ import Foundation
 import Combine
 
 protocol GetBusPosByRtidFetchable {
-    func fetch(param: [String: String], on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+    func fetch(param: [String: String]) -> AnyPublisher<Data, Error>
 }
 
-final class ServiceGetBusPosByRtidFetcher: GetBusPosByRtidFetchable {
-    func fetch(param: [String : String], on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
+struct ServiceGetBusPosByRtidFetcher: ServiceFetchable, GetBusPosByRtidFetchable {
+    private(set) var networkService: NetworkServiceProtocol
+    private(set) var tokenManager: TokenManagable
+    private(set) var requestFactory: Requestable
+    
+    func fetch(param: [String : String]) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/buspos/getBusPosByRtid"
-        return Service.shared.get(url: url, params: param, on: queue).mapJsonBBusAPIError()
+        return self.fetch(url: url, param: param)
     }
 }

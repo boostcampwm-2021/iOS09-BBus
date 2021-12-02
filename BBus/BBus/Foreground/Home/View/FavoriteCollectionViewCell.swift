@@ -24,6 +24,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
     private lazy var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView(style: .large)
+        loader.color = BBusColor.gray
         return loader
     }()
     class var height: CGFloat { return 70 }
@@ -127,6 +128,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
         case .localLine:
             self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .town:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .airport:
+            self.busNumberLabel.textColor = BBusColor.bbusLikeYellow
         default:
             self.busNumberLabel.textColor = BBusColor.bbusGray
         }

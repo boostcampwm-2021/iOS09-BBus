@@ -8,12 +8,15 @@
 import Foundation
 import Combine
 
-protocol DeleteFavoriteItemFetchable {
-    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error>
+protocol DeleteFavoriteItemFetchable: PersistenceFetchable {
+    func fetch(param: FavoriteItemDTO) -> AnyPublisher<Data, Error>
 }
 
-final class PersistentDeleteFavoriteItemFetcher: DeleteFavoriteItemFetchable {
-    func fetch(param: FavoriteItemDTO, on queue: DispatchQueue) -> AnyPublisher<Data, Error> {
-        return Persistent.shared.delete(key: "FavoriteItems", param: param, on: queue)
+struct PersistenceDeleteFavoriteItemFetcher: DeleteFavoriteItemFetchable {
+    private(set) var persistenceStorage: PersistenceStorageProtocol
+    
+    func fetch(param: FavoriteItemDTO) -> AnyPublisher<Data, Error> {
+        return self.persistenceStorage.delete(key: "FavoriteItems", param: param)
+            .eraseToAnyPublisher()
     }
 }

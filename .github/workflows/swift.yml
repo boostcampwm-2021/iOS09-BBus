@@ -2,7 +2,7 @@ name: Swift
 
 on:
   push:
-    branches: [ feature/** ]
+    branches: [ feature/**, issue/**, test/** ]
   pull_request:
     branches: [ develop, feature/** ]
 
@@ -11,10 +11,44 @@ jobs:
 
     runs-on: macos-latest
     env:
-      API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }} 
+      API_ACCESS_KEY1: ${{ secrets.API_ACCESS_KEY }}
+      API_ACCESS_KEY2: ${{ secrets.API_ACCESS_KEY2 }}
+      API_ACCESS_KEY3: ${{ secrets.API_ACCESS_KEY3 }}
+      API_ACCESS_KEY4: ${{ secrets.API_ACCESS_KEY4 }}
+      API_ACCESS_KEY5: ${{ secrets.API_ACCESS_KEY5 }}
+      API_ACCESS_KEY6: ${{ secrets.API_ACCESS_KEY6 }}
+      API_ACCESS_KEY7: ${{ secrets.API_ACCESS_KEY7 }}
+      API_ACCESS_KEY8: ${{ secrets.API_ACCESS_KEY8 }}
+      API_ACCESS_KEY9: ${{ secrets.API_ACCESS_KEY9 }}
+      API_ACCESS_KEY10: ${{ secrets.API_ACCESS_KEY10 }}
+      API_ACCESS_KEY11: ${{ secrets.API_ACCESS_KEY11 }}
+      API_ACCESS_KEY12: ${{ secrets.API_ACCESS_KEY12 }}
+      API_ACCESS_KEY13: ${{ secrets.API_ACCESS_KEY13 }}
+      API_ACCESS_KEY14: ${{ secrets.API_ACCESS_KEY14 }}
+      API_ACCESS_KEY15: ${{ secrets.API_ACCESS_KEY15 }}
+      API_ACCESS_KEY16: ${{ secrets.API_ACCESS_KEY16 }}
+      API_ACCESS_KEY17: ${{ secrets.API_ACCESS_KEY17 }}
+      
 
     steps:
     - uses: actions/checkout@v2
     - name: Build
       run: |
-        xcodebuild test -project BBus/BBus.xcodeproj -scheme BBus -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' API_ACCESS_KEY=$API_ACCESS_KEY
+        xcodebuild test -project BBus/BBus.xcodeproj -scheme BBus -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' \
+        API_ACCESS_KEY1=$API_ACCESS_KEY1 \
+        API_ACCESS_KEY2=$API_ACCESS_KEY2 \
+        API_ACCESS_KEY3=$API_ACCESS_KEY3 \
+        API_ACCESS_KEY4=$API_ACCESS_KEY4 \
+        API_ACCESS_KEY5=$API_ACCESS_KEY5 \
+        API_ACCESS_KEY6=$API_ACCESS_KEY6 \
+        API_ACCESS_KEY7=$API_ACCESS_KEY7 \
+        API_ACCESS_KEY8=$API_ACCESS_KEY8 \
+        API_ACCESS_KEY9=$API_ACCESS_KEY9 \
+        API_ACCESS_KEY10=$API_ACCESS_KEY10 \
+        API_ACCESS_KEY11=$API_ACCESS_KEY11 \
+        API_ACCESS_KEY12=$API_ACCESS_KEY12 \
+        API_ACCESS_KEY13=$API_ACCESS_KEY13 \
+        API_ACCESS_KEY14=$API_ACCESS_KEY14 \
+        API_ACCESS_KEY15=$API_ACCESS_KEY15 \
+        API_ACCESS_KEY16=$API_ACCESS_KEY16 \
+        API_ACCESS_KEY17=$API_ACCESS_KEY17

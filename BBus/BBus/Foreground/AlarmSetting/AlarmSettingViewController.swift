@@ -8,25 +8,12 @@
 import UIKit
 import Combine
 
-final class AlarmSettingViewController: UIViewController {
-
+final class AlarmSettingViewController: UIViewController, BaseViewControllerType {
+    
     weak var coordinator: AlarmSettingCoordinator?
-    private lazy var alarmSettingView = AlarmSettingView()
-    private lazy var customNavigationBar = CustomNavigationBar()
-    private lazy var refreshButton: ThrottleButton = {
-        let radius: CGFloat = 25
-
-        let button = ThrottleButton()
-        button.setImage(BBusImage.refresh, for: .normal)
-        button.layer.cornerRadius = radius
-        button.tintColor = BBusColor.white
-        button.backgroundColor = BBusColor.darkGray
-        button.addTouchUpEventWithThrottle(delay: ThrottleButton.refreshInterval) { [weak self] in
-            self?.viewModel?.refresh()
-        }
-        return button
-    }()
     private let viewModel: AlarmSettingViewModel?
+    private lazy var alarmSettingView = AlarmSettingView()
+    
     private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: AlarmSettingViewModel) {
@@ -41,18 +28,16 @@ final class AlarmSettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.baseViewDidLoad()
         
         self.configureColor()
-        self.configureLayout()
-        self.configureDelegate()
-        
-        self.binding()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.alarmSettingView.startLoader()
         self.viewModel?.configureObserver()
+        self.viewModel?.activateLoaderActiveStatus()
         self.viewModel?.refresh()
     }
 
@@ -62,48 +47,31 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - Configure
-    private func configureLayout() {
-        let refreshButtonWidthAnchor: CGFloat = 50
-        let refreshTrailingBottomInterval: CGFloat = -16
-        
-        self.view.addSubviews(self.customNavigationBar, self.alarmSettingView, self.refreshButton)
+    func configureLayout() {
+        self.view.addSubviews(self.alarmSettingView)
 
         NSLayoutConstraint.activate([
-            self.customNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.customNavigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.customNavigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            self.alarmSettingView.topAnchor.constraint(equalTo: self.customNavigationBar.bottomAnchor),
+            self.alarmSettingView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.alarmSettingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.alarmSettingView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.alarmSettingView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
-
-        NSLayoutConstraint.activate([
-            self.refreshButton.widthAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.heightAnchor.constraint(equalToConstant: refreshButtonWidthAnchor),
-            self.refreshButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: refreshTrailingBottomInterval),
-            self.refreshButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: refreshTrailingBottomInterval)
-        ])
     }
 
-    private func configureDelegate() {
+    func configureDelegate() {
         self.alarmSettingView.configureDelegate(self)
-        self.customNavigationBar.configureDelegate(self)
     }
 
     private func configureColor() {
         self.view.backgroundColor = BBusColor.white
-        self.customNavigationBar.configureTintColor(color: BBusColor.black)
-        self.customNavigationBar.configureAlpha(alpha: 1)
+        self.alarmSettingView.configureColor(color: BBusColor.black)
     }
     
-    private func binding() {
+    func bindAll() {
         self.bindBusArriveInfos()
         self.bindBusStationInfos()
         self.bindErrorMessage()
+        self.bindLoaderActiveStatus()
     }
     
     private func bindBusArriveInfos() {
@@ -111,34 +79,23 @@ final class AlarmSettingViewController: UIViewController {
             .filter { !$0.changedByTimer }
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink(receiveValue: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-
                 self?.alarmSettingView.reload()
-
-                if viewModel.isStopLoader() {
-                    self?.alarmSettingView.stopLoader()
-                }
             })
             .store(in: &self.cancellables)
     }
     
     private func bindBusStationInfos() {
         self.viewModel?.$busStationInfos
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] infos in
-                guard let viewModel = self?.viewModel else { return }
-
                 if let infos = infos {
                     self?.alarmSettingView.reload()
                     if let viewModel = self?.viewModel,
                        let stationName = infos.first?.name {
-                        self?.customNavigationBar.configureTitle(busName: viewModel.busName,
+                        self?.alarmSettingView.configureTitle(busName: viewModel.busName,
                                                                  stationName: stationName,
                                                                  routeType: viewModel.routeType)
-                    }
-
-                    if viewModel.isStopLoader() {
-                        self?.alarmSettingView.stopLoader()
                     }
                 }
                 else {
@@ -149,21 +106,28 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     private func bindErrorMessage() {
-        self.viewModel?.$errorMessage
+        self.viewModel?.$networkError
+            .compactMap({$0})
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] message in
-                guard let message = message else { return }
-                self?.alarmSettingAlert(message: message)
-            })
-            .store(in: &self.cancellables)
-        
-        self.viewModel?.useCase.$networkError
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] error in
-                guard let _ = error else { return }
+            .sink(receiveValue: { [weak self] _ in
                 self?.networkAlert()
             })
             .store(in: &self.cancellables)
+    }
+    
+    private func bindLoaderActiveStatus() {
+        self.viewModel?.$loaderActiveStatus
+            .dropFirst()
+            .filter({ !$0 })
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] a in
+                self?.alarmSettingView.stopLoader()
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    func refresh() {
+        self.viewModel?.refresh()
     }
     
     private func alarmSettingAlert(message: String) {
@@ -345,6 +309,13 @@ extension AlarmSettingViewController: UITableViewDelegate {
 extension AlarmSettingViewController: BackButtonDelegate {
     func touchedBackButton() {
         self.coordinator?.terminate()
+    }
+}
+
+// MARK: - Delegate: RefreshButton
+extension AlarmSettingViewController: RefreshButtonDelegate {
+    func buttonTapped() {
+        self.refresh()
     }
 }
 

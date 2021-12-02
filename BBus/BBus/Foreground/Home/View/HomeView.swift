@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeView: UIView {
+final class HomeView: RefreshableView {
 
     private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
@@ -35,7 +35,8 @@ final class HomeView: UIView {
     }
 
     // MARK: - Configuration
-    func configureLayout() {
+    override func configureLayout() {
+
         self.addSubviews(self.favoriteCollectionView, self.emptyFavoriteNotice, self.navigationView)
 
         self.favoriteCollectionView.contentInsetAdjustmentBehavior = .never
@@ -60,12 +61,15 @@ final class HomeView: UIView {
             self.navigationView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.navigationView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+
+        super.configureLayout()
     }
 
-    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & HomeSearchButtonDelegate) {
+    func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout & HomeSearchButtonDelegate & RefreshButtonDelegate) {
         self.favoriteCollectionView.delegate = delegate
         self.favoriteCollectionView.dataSource = delegate
         self.navigationView.configureDelegate(delegate)
+        self.refreshButton.configureDelegate(delegate)
     }
 
     func configureNavigationViewVisable(_ direction: Bool) {
@@ -91,6 +95,10 @@ final class HomeView: UIView {
         
         return section
     }
+
+    func emptyNoticeActivate(by onOff: Bool) {
+        self.emptyFavoriteNotice.isHidden = !onOff
+    }
     
     private func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -102,9 +110,5 @@ final class HomeView: UIView {
         layout.minimumInteritemSpacing = bottomLineHeight
         layout.minimumLineSpacing = bottomLineHeight
         return layout
-    }
-
-    func emptyNoticeActivate(by onOff: Bool) {
-        self.emptyFavoriteNotice.isHidden = !onOff
     }
 }
