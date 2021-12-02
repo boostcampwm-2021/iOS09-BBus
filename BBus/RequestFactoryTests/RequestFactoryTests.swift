@@ -9,24 +9,59 @@ import XCTest
 
 class RequestFactoryTests: XCTestCase {
 
+    private var requestFactory: Requestable?
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        self.requestFactory = RequestFactory()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        self.requestFactory = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    func test_request_파라미터2개_생성_일치() throws {
+        // given
+        let mockUrl = "http://ws.bus.go.kr/testUrl"
+        let mockAccessKey = "uAtMsUVNMLIM%2FM9%3D%3D"
+        let mockParam = ["stId": "10001", "busRouteId": "1001001"]
+        let answer1 = URL(string: "http://ws.bus.go.kr/testUrl?stId=10001&busRouteId=1001001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer2 = URL(string: "http://ws.bus.go.kr/testUrl?busRouteId=1001001&stId=10001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answers = [answer1, answer2]
+        
+        // when
+        guard let requestResult = self.requestFactory?.request(url: mockUrl, accessKey: mockAccessKey, params: mockParam) else {
+            XCTFail("request result is nil")
+            return
         }
+        
+        // then
+        XCTAssertNotNil(requestResult)
+        XCTAssertTrue(answers.contains(requestResult.url))
     }
 
+    func test_request_파라미터3개_생성_일치() throws {
+        //given
+        let mockUrl = "http://www.BBus.test"
+        let mockAccessKey = "uAtMsUVNMLIM%2FM9%3D%3D"
+        let mockParam = ["stId": "10001", "routeId": "1001001", "ord": "1"]
+        let answer1 = URL(string: "http://www.BBus.test?stId=10001&routeId=1001001&ord=1&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer2 = URL(string: "http://www.BBus.test?routeId=1001001&stId=10001&ord=1&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer3 = URL(string: "http://www.BBus.test?ord=1&routeId=1001001&stId=10001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer4 = URL(string: "http://www.BBus.test?stId=10001&ord=1&routeId=1001001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer5 = URL(string: "http://www.BBus.test?routeId=1001001&ord=1&stId=10001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answer6 = URL(string: "http://www.BBus.test?ord=1&stId=10001&routeId=1001001&serviceKey=uAtMsUVNMLIM%2FM9%3D%3D")
+        let answers = [answer1, answer2, answer3, answer4, answer5, answer6]
+        
+        // when
+        guard let requestResult = self.requestFactory?.request(url: mockUrl, accessKey: mockAccessKey, params: mockParam) else {
+            XCTFail("request result is nil")
+            return
+        }
+        
+        // then
+        XCTAssertNotNil(requestResult)
+        XCTAssertTrue(answers.contains(requestResult.url))
+    }
 }

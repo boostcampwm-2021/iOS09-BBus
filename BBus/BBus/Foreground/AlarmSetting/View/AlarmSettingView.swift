@@ -45,7 +45,7 @@ final class AlarmSettingView: NavigatableView {
         NSLayoutConstraint.activate([
             self.alarmTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.alarmTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.alarmTableView.topAnchor.constraint(equalTo: self.topAnchor, constant: CustomNavigationBar.height),
             self.alarmTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 

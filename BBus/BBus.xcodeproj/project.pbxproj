@@ -11,6 +11,8 @@
 		04045B812740F6DC0056A433 /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
 		041A5A11273D2E1B00490075 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
 		04214061273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04214060273A5EBC00A15423 /* MovingStatusFoldUnfoldDelegate.swift */; };
+		0446840C275650B0007E440A /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A32754E3CA001EA530 /* TokenManager.swift */; };
+		0446840D2756597F007E440A /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		04468427275675F1007E440A /* SearchAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468426275675F1007E440A /* SearchAPIUsable.swift */; };
 		044684292756760A007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
 		0446842B27567654007E440A /* HomeAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842A27567654007E440A /* HomeAPIUsable.swift */; };
@@ -23,6 +25,20 @@
 		04468439275677C0007E440A /* MovingStatusAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468438275677C0007E440A /* MovingStatusAPIUsable.swift */; };
 		0446843B275677CA007E440A /* MovingStatusCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843A275677CA007E440A /* MovingStatusCalculatable.swift */; };
 		0446843D275679B9007E440A /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		0446843E27567F4E007E440A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51F2272FCDF900EC0531 /* SearchViewModel.swift */; };
+		0446843F27568065007E440A /* SearchAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468426275675F1007E440A /* SearchAPIUsable.swift */; };
+		0446844027568075007E440A /* SearchCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044684282756760A007E440A /* SearchCalculatable.swift */; };
+		0446844127568084007E440A /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		0446844227568091007E440A /* StationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AE273BAA130061ACDA /* StationDTO.swift */; };
+		0446844327568096007E440A /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B7E2740F6B20056A433 /* SearchResults.swift */; };
+		04468444275680A0007E440A /* BusSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04045B802740F6DC0056A433 /* BusSearchResult.swift */; };
+		04468445275680B1007E440A /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		04468446275680FF007E440A /* StationSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA51EE272FCDE600EC0531 /* StationSearchResult.swift */; };
+		0446844727568119007E440A /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		044684482756812D007E440A /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		0446844927568134007E440A /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		0446844A27568A3B007E440A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A5A10273D2E1B00490075 /* StringExtension.swift */; };
+		0446844D275694D7007E440A /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0451EDB42755BBBD00031A16 /* SearchCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451EDB32755BBBD00031A16 /* SearchCalculateUseCase.swift */; };
 		0476ABBB27310ED200F72DD1 /* BusRouteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBA27310ED200F72DD1 /* BusRouteHeaderView.swift */; };
 		0476ABBD27311C1600F72DD1 /* BusStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476ABBC27311C1600F72DD1 /* BusStationTableViewCell.swift */; };
@@ -45,6 +61,24 @@
 		04C6D6692734B18A00D41678 /* MovingStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6D6682734B18A00D41678 /* MovingStatusTableViewCell.swift */; };
 		04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6D66A2734BCAB00D41678 /* MovingStatusBusTagView.swift */; };
 		04DC47FB27552FE5003380D9 /* StationCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */; };
+		04DEBDEC27572E4700B53D5F /* AlarmSettingAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843427567769007E440A /* AlarmSettingAPIUsable.swift */; };
+		04DEBDED27572E6400B53D5F /* ArrInfoByRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375BC273C2E120061ACDA /* ArrInfoByRouteDTO.swift */; };
+		04DEBDEE27572E8400B53D5F /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		04DEBDEF27572E8800B53D5F /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
+		04DEBDF027572E8D00B53D5F /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		04DEBDF22757311F00B53D5F /* MOCKArrInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */; };
+		04DEBDF32757353800B53D5F /* AlarmSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5222272FCEB500EC0531 /* AlarmSettingViewModel.swift */; };
+		04DEBDF42757355D00B53D5F /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		04DEBDF5275735D900B53D5F /* AlarmSettingCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AB12755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift */; };
+		04DEBDF62757364D00B53D5F /* AlarmSettingCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843627567777007E440A /* AlarmSettingCalculatable.swift */; };
+		04DEBDF72757365C00B53D5F /* AverageSectionTimeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AAF2755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift */; };
+		04DEBDF82757366C00B53D5F /* AlarmSettingBusArriveInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0484107527464D49006F8636 /* AlarmSettingBusArriveInfos.swift */; };
+		04DEBDF9275736AB00B53D5F /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
+		04DEBDFA275736B500B53D5F /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		04DEBDFB275736C200B53D5F /* AlarmSettingBusArriveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA521E272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift */; };
+		04DEBDFC275736D700B53D5F /* BusRemainTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CDE27435C5900428F55 /* BusRemainTime.swift */; };
+		04DEBDFD275736DE00B53D5F /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
+		04DEBDFE275736EE00B53D5F /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A04682427327876008D87CE /* BusRouteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682327327876008D87CE /* BusRouteCoordinator.swift */; };
 		4A04682627327BA0008D87CE /* AlarmSettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */; };
 		4A04682A2732B7B3008D87CE /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0468292732B7B3008D87CE /* SearchNavigationView.swift */; };
@@ -59,6 +93,28 @@
 		4A1A22DB27326FD100476861 /* HomeNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DA27326FD100476861 /* HomeNavigationView.swift */; };
 		4A1A22DD2732801700476861 /* StationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22DC2732801700476861 /* StationCoordinator.swift */; };
 		4A1A22E12732CE7900476861 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */; };
+		4A2634AA2756674900267B47 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
+		4A2634AB2756678100267B47 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		4A2634AC27566F8600267B47 /* StationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5216272FCE8E00EC0531 /* StationViewModel.swift */; };
+		4A2634AF275670A500267B47 /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		4A2634B0275670BE00267B47 /* StationByUidItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B8273BE2640061ACDA /* StationByUidItemDTO.swift */; };
+		4A2634B1275670C500267B47 /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
+		4A2634B2275670CB00267B47 /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		4A2634B3275670D100267B47 /* StationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AE273BAA130061ACDA /* StationDTO.swift */; };
+		4A2634B62756754E00267B47 /* BusSectionKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC26B3274F669800173A32 /* BusSectionKeys.swift */; };
+		4A2634B72756755700267B47 /* BBusRouteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047C30FD273A05A60075EA14 /* BBusRouteType.swift */; };
+		4A2634B82756756200267B47 /* BusArriveInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACC26B7274F6BD300173A32 /* BusArriveInfos.swift */; };
+		4A2634B92756757400267B47 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
+		4A2634BA2756757F00267B47 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		4A2634BB2756758C00267B47 /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
+		4A2634BC2756759700267B47 /* AlarmSettingBusArriveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA521E272FCEAA00EC0531 /* AlarmSettingBusArriveInfo.swift */; };
+		4A2634BE275675C400267B47 /* BusRemainTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A094CDE27435C5900428F55 /* BusRemainTime.swift */; };
+		4A2634BF275675CD00267B47 /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
+		4A2634C12756862F00267B47 /* StationAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468430275676ED007E440A /* StationAPIUsable.swift */; };
+		4A2634C22756863600267B47 /* StationCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468432275676F8007E440A /* StationCalculatable.swift */; };
+		4A2634C32756864A00267B47 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		4A2634C427568CB900267B47 /* StationCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */; };
+		4A2634C5275693BC00267B47 /* DummyJsonStringStationByUidItemDTO.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A2634C027567E5400267B47 /* DummyJsonStringStationByUidItemDTO.json */; };
 		4A38E20727463FF7003A9D10 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A38E20927464015003A9D10 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
 		4A3B6C502755DF2400BBC498 /* AlarmCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */; };
@@ -151,6 +207,11 @@
 		4AF1E0C32756269F00DE51C8 /* BusRouteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0C22756269F00DE51C8 /* BusRouteViewModelTests.swift */; };
 		4AF1E0D0275626A700DE51C8 /* AlarmSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0CF275626A700DE51C8 /* AlarmSettingViewModelTests.swift */; };
 		4AF1E0DD275626B300DE51C8 /* MovingStatusViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0DC275626B300DE51C8 /* MovingStatusViewModelTests.swift */; };
+		4AF1E0E327566C8600DE51C8 /* PersistenceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8B273B96DF0078EAE3 /* PersistenceStorage.swift */; };
+		4AF1E0E42756725900DE51C8 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		4AF1E0E62756734A00DE51C8 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		4AF1E0E72756735B00DE51C8 /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
+		4AF1E0E827567DE100DE51C8 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUseCases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
 		87038A8A273B96B60078EAE3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
@@ -159,6 +220,45 @@
 		87038A90273C11630078EAE3 /* GetStationsByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8F273C11630078EAE3 /* GetStationsByRouteListFetcher.swift */; };
 		87038A92273C12320078EAE3 /* GetBusPosByRtidFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */; };
 		87038A94273C12E20078EAE3 /* GetStationByUidItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A93273C12E20078EAE3 /* GetStationByUidItemFetcher.swift */; };
+		87075FFD27569066005A1E37 /* MovingStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA522E272FCEDF00EC0531 /* MovingStatusViewModel.swift */; };
+		87075FFE275690E0005A1E37 /* MovingStatusAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04468438275677C0007E440A /* MovingStatusAPIUsable.swift */; };
+		87075FFF2756914E005A1E37 /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		8707600027569158005A1E37 /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
+		8707600127569160005A1E37 /* BusPosByRtidDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */; };
+		8707600227569254005A1E37 /* MovingStatusCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843A275677CA007E440A /* MovingStatusCalculatable.swift */; };
+		8707600327569254005A1E37 /* MovingStatusCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B35D092754E71F00159791 /* MovingStatusCalculateUseCase.swift */; };
+		8707600527569303005A1E37 /* AverageSectionTimeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AAF2755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift */; };
+		8707600627569309005A1E37 /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		8707600727569319005A1E37 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
+		8707600827569324005A1E37 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
+		870760092756932E005A1E37 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		8707600A27569337005A1E37 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		87115EFA27564D0F00601770 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A527550988001EA530 /* RequestFactory.swift */; };
+		87115EFB27565A3300601770 /* BusRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA520A272FCE5F00EC0531 /* BusRouteViewModel.swift */; };
+		87115EFC27565BAD00601770 /* BusRouteAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5208272FCE5A00EC0531 /* BusRouteAPIUseCase.swift */; };
+		87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375AA273B9F330061ACDA /* BusRouteDTO.swift */; };
+		87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B4273BB98E0061ACDA /* StationByRouteListDTO.swift */; };
+		87115EFF27565DC200601770 /* BusPosByRtidDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049375B6273BE08F0061ACDA /* BusPosByRtidDTO.swift */; };
+		87115F00275667A600601770 /* BaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5100322754CDB100754B36 /* BaseUseCase.swift */; };
+		87115F01275668E100601770 /* BusCongestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA5212272FCE8500EC0531 /* BusCongestion.swift */; };
+		87115F02275668F600601770 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEE82743DAB20027222D /* NotificationNameExtension.swift */; };
+		87115F032756693700601770 /* BusPosByVehicleIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BA274B6C8300554A4E /* BusPosByVehicleIdDTO.swift */; };
+		87115F042756694600601770 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		87115F052756696F00601770 /* GetRouteListUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B627551ED8001EA530 /* GetRouteListUsable.swift */; };
+		87115F062756698D00601770 /* BBusAPIUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUseCases.swift */; };
+		87115F0727566A4400601770 /* GetStationsByRouteListUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B027551E84001EA530 /* GetStationsByRouteListUsable.swift */; };
+		87115F0827566A5200601770 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A32754E3CA001EA530 /* TokenManager.swift */; };
+		87115F0927566A5900601770 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
+		87115F0A27566A6200601770 /* PersistenceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8B273B96DF0078EAE3 /* PersistenceStorage.swift */; };
+		87115F0B27566A6900601770 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A527550988001EA530 /* RequestFactory.swift */; };
+		87115F0C27566A7000601770 /* GetStationsByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8F273C11630078EAE3 /* GetStationsByRouteListFetcher.swift */; };
+		87115F0D27566A7800601770 /* ServiceFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182A7275511D5001EA530 /* ServiceFetchable.swift */; };
+		87115F0E27566A8000601770 /* GetBusPosByRtidUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182B227551EA9001EA530 /* GetBusPosByRtidUsable.swift */; };
+		87115F0F27566A8E00601770 /* GetBusPosByRtidFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A91273C12320078EAE3 /* GetBusPosByRtidFetcher.swift */; };
+		87115F1027566A9800601770 /* GetRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA294AE273C0E8D008E5497 /* GetRouteListFetcher.swift */; };
+		87115F1127566A9F00601770 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		87115F1227566AA700601770 /* PersistencetFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182AB275516A4001EA530 /* PersistencetFetchable.swift */; };
+		87115F1327566AB200601770 /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
 		87115F172756758800601770 /* GetArrInfoByRouteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F162756758800601770 /* GetArrInfoByRouteListUseCase.swift */; };
 		87115F19275675B900601770 /* GetStationsByRouteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F18275675B900601770 /* GetStationsByRouteListUseCase.swift */; };
 		87115F1B275675E200601770 /* GetBusPosByRtidUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87115F1A275675E200601770 /* GetBusPosByRtidUseCase.swift */; };
@@ -176,6 +276,8 @@
 		873D639827303A6800E79069 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639727303A6800E79069 /* AppCoordinator.swift */; };
 		873D639A27303B0500E79069 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639927303B0500E79069 /* HomeCoordinator.swift */; };
 		873D639C27303B5000E79069 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D639B27303B5000E79069 /* SearchCoordinator.swift */; };
+		875483782756810400136F16 /* BusRouteAPIUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446842E275676B3007E440A /* BusRouteAPIUsable.swift */; };
+		875483792756810D00136F16 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
 		875F1AB02755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AAF2755BD86003F5BB1 /* AverageSectionTimeCalculatable.swift */; };
 		875F1AB22755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F1AB12755BE08003F5BB1 /* AlarmSettingCalculateUseCase.swift */; };
 		87A5556C2728116400A9B5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A5556B2728116400A9B5E3 /* AppDelegate.swift */; };
@@ -306,6 +408,7 @@
 		04C6D6682734B18A00D41678 /* MovingStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusTableViewCell.swift; sourceTree = "<group>"; };
 		04C6D66A2734BCAB00D41678 /* MovingStatusBusTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingStatusBusTagView.swift; sourceTree = "<group>"; };
 		04DC47FA27552FE5003380D9 /* StationCalculateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCalculateUseCase.swift; sourceTree = "<group>"; };
+		04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MOCKArrInfo.json; sourceTree = "<group>"; };
 		4A04682327327876008D87CE /* BusRouteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRouteCoordinator.swift; sourceTree = "<group>"; };
 		4A04682527327BA0008D87CE /* AlarmSettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingCoordinator.swift; sourceTree = "<group>"; };
 		4A0468292732B7B3008D87CE /* SearchNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationView.swift; sourceTree = "<group>"; };
@@ -321,6 +424,7 @@
 		4A1A22DA27326FD100476861 /* HomeNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationView.swift; sourceTree = "<group>"; };
 		4A1A22DC2732801700476861 /* StationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCoordinator.swift; sourceTree = "<group>"; };
 		4A1A22E02732CE7900476861 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A2634C027567E5400267B47 /* DummyJsonStringStationByUidItemDTO.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyJsonStringStationByUidItemDTO.json; sourceTree = "<group>"; };
 		4A38E20627463FF7003A9D10 /* BBusAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBusAPIError.swift; sourceTree = "<group>"; };
 		4A38E20827464015003A9D10 /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
 		4A3B6C4F2755DF2400BBC498 /* AlarmCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCenter.swift; sourceTree = "<group>"; };
@@ -1123,6 +1227,7 @@
 			isa = PBXGroup;
 			children = (
 				4AF1E0B52756269600DE51C8 /* StationViewModelTests.swift */,
+				4A2634C027567E5400267B47 /* DummyJsonStringStationByUidItemDTO.json */,
 			);
 			path = StationViewModelTests;
 			sourceTree = "<group>";
@@ -1139,6 +1244,7 @@
 			isa = PBXGroup;
 			children = (
 				4AF1E0CF275626A700DE51C8 /* AlarmSettingViewModelTests.swift */,
+				04DEBDF12757311F00B53D5F /* MOCKArrInfo.json */,
 			);
 			path = AlarmSettingViewModelTests;
 			sourceTree = "<group>";
@@ -1636,6 +1742,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2634C5275693BC00267B47 /* DummyJsonStringStationByUidItemDTO.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1650,6 +1757,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DEBDF22757311F00B53D5F /* MOCKArrInfo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,6 +1794,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2634AB2756678100267B47 /* BBusAPIError.swift in Sources */,
+				4A2634AA2756674900267B47 /* NetworkService.swift in Sources */,
 				4AF1E0682756262300DE51C8 /* NetworkServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1694,6 +1804,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF1E0E827567DE100DE51C8 /* JsonDTO.swift in Sources */,
+				4AF1E0E72756735B00DE51C8 /* FavoriteItemDTO.swift in Sources */,
+				4AF1E0E62756734A00DE51C8 /* BBusAPIError.swift in Sources */,
+				4AF1E0E42756725900DE51C8 /* PublisherExtension.swift in Sources */,
+				4AF1E0E327566C8600DE51C8 /* PersistenceStorage.swift in Sources */,
 				4AF1E0752756263400DE51C8 /* PersistenceStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1702,7 +1817,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446840D2756597F007E440A /* BBusAPIError.swift in Sources */,
 				4AF1E0822756263E00DE51C8 /* TokenManagerTests.swift in Sources */,
+				0446840C275650B0007E440A /* TokenManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1710,6 +1827,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87115EFA27564D0F00601770 /* RequestFactory.swift in Sources */,
 				4AF1E08F2756264600DE51C8 /* RequestFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1726,7 +1844,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446844727568119007E440A /* PublisherExtension.swift in Sources */,
+				044684482756812D007E440A /* JsonDTO.swift in Sources */,
+				0446843E27567F4E007E440A /* SearchViewModel.swift in Sources */,
 				4AF1E0A92756268B00DE51C8 /* SearchViewModelTests.swift in Sources */,
+				0446844D275694D7007E440A /* SearchCalculateUseCase.swift in Sources */,
+				04468445275680B1007E440A /* BaseUseCase.swift in Sources */,
+				0446844127568084007E440A /* BusRouteDTO.swift in Sources */,
+				0446844927568134007E440A /* BBusAPIError.swift in Sources */,
+				0446844027568075007E440A /* SearchCalculatable.swift in Sources */,
+				0446844A27568A3B007E440A /* StringExtension.swift in Sources */,
+				0446844327568096007E440A /* SearchResults.swift in Sources */,
+				0446844227568091007E440A /* StationDTO.swift in Sources */,
+				0446843F27568065007E440A /* SearchAPIUsable.swift in Sources */,
+				04468444275680A0007E440A /* BusSearchResult.swift in Sources */,
+				04468446275680FF007E440A /* StationSearchResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1734,7 +1866,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2634BB2756758C00267B47 /* BusCongestion.swift in Sources */,
+				4A2634B0275670BE00267B47 /* StationByUidItemDTO.swift in Sources */,
+				4A2634AF275670A500267B47 /* BaseUseCase.swift in Sources */,
+				4A2634C22756863600267B47 /* StationCalculatable.swift in Sources */,
+				4A2634BC2756759700267B47 /* AlarmSettingBusArriveInfo.swift in Sources */,
+				4A2634B1275670C500267B47 /* FavoriteItemDTO.swift in Sources */,
+				4A2634B3275670D100267B47 /* StationDTO.swift in Sources */,
+				4A2634BA2756757F00267B47 /* PublisherExtension.swift in Sources */,
+				4A2634BE275675C400267B47 /* BusRemainTime.swift in Sources */,
+				4A2634BF275675CD00267B47 /* BusPosByVehicleIdDTO.swift in Sources */,
+				4A2634C12756862F00267B47 /* StationAPIUsable.swift in Sources */,
+				4A2634B62756754E00267B47 /* BusSectionKeys.swift in Sources */,
+				4A2634BD275675A800267B47 /* BBusAPIError.swift in Sources */,
+				4A2634C32756864A00267B47 /* JsonDTO.swift in Sources */,
 				4AF1E0B62756269600DE51C8 /* StationViewModelTests.swift in Sources */,
+				4A2634B72756755700267B47 /* BBusRouteType.swift in Sources */,
+				4A2634B92756757400267B47 /* NotificationNameExtension.swift in Sources */,
+				4A2634B82756756200267B47 /* BusArriveInfos.swift in Sources */,
+				4A2634C427568CB900267B47 /* StationCalculateUseCase.swift in Sources */,
+				4A2634B2275670CB00267B47 /* BusRouteDTO.swift in Sources */,
+				4A2634AC27566F8600267B47 /* StationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1742,7 +1894,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87115F0F27566A8E00601770 /* GetBusPosByRtidFetcher.swift in Sources */,
+				875483792756810D00136F16 /* JsonDTO.swift in Sources */,
+				87115F1027566A9800601770 /* GetRouteListFetcher.swift in Sources */,
+				87115F0B27566A6900601770 /* RequestFactory.swift in Sources */,
+				87115F042756694600601770 /* PublisherExtension.swift in Sources */,
+				87115F02275668F600601770 /* NotificationNameExtension.swift in Sources */,
+				87115F052756696F00601770 /* GetRouteListUsable.swift in Sources */,
+				87115F1327566AB200601770 /* FavoriteItemDTO.swift in Sources */,
+				87115F00275667A600601770 /* BaseUseCase.swift in Sources */,
+				87115F01275668E100601770 /* BusCongestion.swift in Sources */,
+				87115F062756698D00601770 /* BBusAPIUseCases.swift in Sources */,
+				87115EFF27565DC200601770 /* BusPosByRtidDTO.swift in Sources */,
+				87115F0D27566A7800601770 /* ServiceFetchable.swift in Sources */,
+				87115F0C27566A7000601770 /* GetStationsByRouteListFetcher.swift in Sources */,
+				87115F0827566A5200601770 /* TokenManager.swift in Sources */,
+				87115F1227566AA700601770 /* PersistencetFetchable.swift in Sources */,
+				87115F032756693700601770 /* BusPosByVehicleIdDTO.swift in Sources */,
+				87115EFE27565DAE00601770 /* StationByRouteListDTO.swift in Sources */,
+				875483782756810400136F16 /* BusRouteAPIUsable.swift in Sources */,
+				87115F0927566A5900601770 /* NetworkService.swift in Sources */,
+				87115EFD27565D9D00601770 /* BusRouteDTO.swift in Sources */,
+				87115F0727566A4400601770 /* GetStationsByRouteListUsable.swift in Sources */,
+				87115EFC27565BAD00601770 /* BusRouteAPIUseCase.swift in Sources */,
+				87115EFB27565A3300601770 /* BusRouteViewModel.swift in Sources */,
+				87115F0A27566A6200601770 /* PersistenceStorage.swift in Sources */,
+				87115F1127566A9F00601770 /* BBusAPIError.swift in Sources */,
 				4AF1E0C32756269F00DE51C8 /* BusRouteViewModelTests.swift in Sources */,
+				87115F0E27566A8000601770 /* GetBusPosByRtidUsable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1750,7 +1929,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DEBDF82757366C00B53D5F /* AlarmSettingBusArriveInfos.swift in Sources */,
+				04DEBDF72757365C00B53D5F /* AverageSectionTimeCalculatable.swift in Sources */,
+				04DEBDEE27572E8400B53D5F /* BaseUseCase.swift in Sources */,
+				04DEBDFC275736D700B53D5F /* BusRemainTime.swift in Sources */,
+				04DEBDF027572E8D00B53D5F /* JsonDTO.swift in Sources */,
+				04DEBDF32757353800B53D5F /* AlarmSettingViewModel.swift in Sources */,
 				4AF1E0D0275626A700DE51C8 /* AlarmSettingViewModelTests.swift in Sources */,
+				04DEBDFA275736B500B53D5F /* PublisherExtension.swift in Sources */,
+				04DEBDF42757355D00B53D5F /* BusRouteDTO.swift in Sources */,
+				04DEBDEC27572E4700B53D5F /* AlarmSettingAPIUsable.swift in Sources */,
+				04DEBDFD275736DE00B53D5F /* BusCongestion.swift in Sources */,
+				04DEBDF5275735D900B53D5F /* AlarmSettingCalculateUseCase.swift in Sources */,
+				04DEBDF9275736AB00B53D5F /* NotificationNameExtension.swift in Sources */,
+				04DEBDF62757364D00B53D5F /* AlarmSettingCalculatable.swift in Sources */,
+				04DEBDED27572E6400B53D5F /* ArrInfoByRouteDTO.swift in Sources */,
+				04DEBDFE275736EE00B53D5F /* BBusAPIError.swift in Sources */,
+				04DEBDFB275736C200B53D5F /* AlarmSettingBusArriveInfo.swift in Sources */,
+				04DEBDEF27572E8800B53D5F /* StationByRouteListDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1758,7 +1954,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8707600227569254005A1E37 /* MovingStatusCalculatable.swift in Sources */,
+				8707600827569324005A1E37 /* JsonDTO.swift in Sources */,
+				870760092756932E005A1E37 /* PublisherExtension.swift in Sources */,
+				8707600327569254005A1E37 /* MovingStatusCalculateUseCase.swift in Sources */,
+				8707600127569160005A1E37 /* BusPosByRtidDTO.swift in Sources */,
+				8707600027569158005A1E37 /* StationByRouteListDTO.swift in Sources */,
+				8707600527569303005A1E37 /* AverageSectionTimeCalculatable.swift in Sources */,
+				87075FFF2756914E005A1E37 /* BusRouteDTO.swift in Sources */,
+				87075FFE275690E0005A1E37 /* MovingStatusAPIUsable.swift in Sources */,
+				8707600727569319005A1E37 /* NotificationNameExtension.swift in Sources */,
+				87075FFD27569066005A1E37 /* MovingStatusViewModel.swift in Sources */,
+				8707600627569309005A1E37 /* BaseUseCase.swift in Sources */,
 				4AF1E0DD275626B300DE51C8 /* MovingStatusViewModelTests.swift in Sources */,
+				8707600A27569337005A1E37 /* BBusAPIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2059,7 +2268,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2083,7 +2292,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2107,7 +2316,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2131,7 +2340,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2155,7 +2364,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2179,7 +2388,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2203,7 +2412,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2227,7 +2436,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2299,7 +2508,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2323,7 +2532,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2347,7 +2556,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2371,7 +2580,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2395,7 +2604,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2419,7 +2628,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2443,7 +2652,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2467,7 +2676,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2491,7 +2700,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2515,7 +2724,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
