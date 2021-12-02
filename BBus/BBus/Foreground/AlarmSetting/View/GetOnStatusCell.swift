@@ -281,6 +281,10 @@ final class GetOnStatusCell: UITableViewCell {
             self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeBlue
         case .localLine:
             self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeGreen
+        case .town:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusTypeGreen
+        case .airport:
+            self.busOrderNumberLabel.backgroundColor = BBusColor.bbusLikeYellow
         default:
             self.busOrderNumberLabel.backgroundColor = BBusColor.bbusGray
         }

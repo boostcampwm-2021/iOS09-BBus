@@ -128,6 +128,10 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             self.busNumberLabel.textColor = BBusColor.bbusTypeBlue
         case .localLine:
             self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .town:
+            self.busNumberLabel.textColor = BBusColor.bbusTypeGreen
+        case .airport:
+            self.busNumberLabel.textColor = BBusColor.bbusLikeYellow
         default:
             self.busNumberLabel.textColor = BBusColor.bbusGray
         }
