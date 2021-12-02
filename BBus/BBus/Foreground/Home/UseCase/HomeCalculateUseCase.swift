@@ -7,12 +7,6 @@
 
 import Foundation
 
-protocol HomeCalculateUsable: BaseUseCase {
-    func findStationName(in list: [StationDTO]?, by stationId: String) -> String?
-    func findBusName(in list: [BusRouteDTO]?, by busRouteId: String) -> String?
-    func findBusType(in list: [BusRouteDTO]?, by busName: String) -> RouteType?
-}
-
 struct HomeCalculateUseCase: HomeCalculateUsable {
     func findStationName(in list: [StationDTO]?, by stationId: String) -> String? {
         guard let stationId = Int(stationId),

@@ -8,15 +8,6 @@
 import Foundation
 import Combine
 
-protocol StationAPIUsable: BaseUseCase {
-    func loadStationList() -> AnyPublisher<[StationDTO], Error>
-    func refreshInfo(about arsId: String) -> AnyPublisher<[StationByUidItemDTO], Error>
-    func add(favoriteItem: FavoriteItemDTO) -> AnyPublisher<Data, Error>
-    func remove(favoriteItem: FavoriteItemDTO) -> AnyPublisher<Data, Error>
-    func getFavoriteItems() -> AnyPublisher<[FavoriteItemDTO], Error>
-    func loadRoute() -> AnyPublisher<[BusRouteDTO], Error>
-}
-
 final class StationAPIUseCase: StationAPIUsable {
     typealias StationUseCases = GetStationByUidItemUsable & GetStationListUsable & CreateFavoriteItemUsable & DeleteFavoriteItemUsable & GetFavoriteItemListUsable & GetRouteListUsable
     

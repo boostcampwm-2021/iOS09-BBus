@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol StationCalculatable: BaseUseCase {
-    func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO?
-}
-
 final class StationCalculateUseCase: StationCalculatable {
     func findStation(in stations: [StationDTO], with arsId: String) -> StationDTO? {
         let station = stations.filter() { $0.arsID == arsId }
