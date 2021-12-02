@@ -151,6 +151,11 @@
 		4AF1E0C32756269F00DE51C8 /* BusRouteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0C22756269F00DE51C8 /* BusRouteViewModelTests.swift */; };
 		4AF1E0D0275626A700DE51C8 /* AlarmSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0CF275626A700DE51C8 /* AlarmSettingViewModelTests.swift */; };
 		4AF1E0DD275626B300DE51C8 /* MovingStatusViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0DC275626B300DE51C8 /* MovingStatusViewModelTests.swift */; };
+		4AF1E0E327566C8600DE51C8 /* PersistenceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A8B273B96DF0078EAE3 /* PersistenceStorage.swift */; };
+		4AF1E0E42756725900DE51C8 /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20827464015003A9D10 /* PublisherExtension.swift */; };
+		4AF1E0E62756734A00DE51C8 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
+		4AF1E0E72756735B00DE51C8 /* FavoriteItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06AEC7274159D10027222D /* FavoriteItemDTO.swift */; };
+		4AF1E0E827567DE100DE51C8 /* JsonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446843C275679B9007E440A /* JsonDTO.swift */; };
 		87038A82273B90A50078EAE3 /* BBusAPIUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A81273B90A50078EAE3 /* BBusAPIUseCases.swift */; };
 		87038A88273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A87273B950B0078EAE3 /* GetArrInfoByRouteListFetcher.swift */; };
 		87038A8A273B96B60078EAE3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87038A89273B96B60078EAE3 /* NetworkService.swift */; };
@@ -1735,6 +1740,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF1E0E827567DE100DE51C8 /* JsonDTO.swift in Sources */,
+				4AF1E0E72756735B00DE51C8 /* FavoriteItemDTO.swift in Sources */,
+				4AF1E0E62756734A00DE51C8 /* BBusAPIError.swift in Sources */,
+				4AF1E0E42756725900DE51C8 /* PublisherExtension.swift in Sources */,
+				4AF1E0E327566C8600DE51C8 /* PersistenceStorage.swift in Sources */,
 				4AF1E0752756263400DE51C8 /* PersistenceStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2189,7 +2199,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2213,7 +2223,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
