@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import UIKit
 
 final class StationViewModel {
     
@@ -30,7 +29,10 @@ final class StationViewModel {
         self.calculateUseCase = calculateUseCase
         self.arsId = arsId
         self.busRouteList = []
+        self.stationInfo = nil
         self.busKeys = BusSectionKeys()
+        self.favoriteItems = nil
+        self.nextStation = nil
         self.activeBuses = [:]
         self.inActiveBuses = [:]
         self.cancellables = []
@@ -55,14 +57,12 @@ final class StationViewModel {
                 self?.error = error
             })
             .combineLatest(self.$busRouteList.filter { !$0.isEmpty }) { (busRouteList, entireBusRouteList) in
-                busRouteList.filter { busRoute in
+                return busRouteList.filter { busRoute in
                     entireBusRouteList.contains{ $0.routeID == busRoute.busRouteId }
                 }
             }
-            .sink(receiveCompletion: { error in
-                print(error)
-            }, receiveValue: { [weak self] arriveInfo in
-                self?.nextStation = arriveInfo[0].nextStation
+            .sink(receiveValue: { [weak self] arriveInfo in
+                self?.nextStation = arriveInfo.first?.nextStation
                 self?.classifyByRouteType(with: arriveInfo)
             })
             .store(in: &self.cancellables)
@@ -75,29 +75,27 @@ final class StationViewModel {
     }
     
     private func bind() {
+        self.bindLoader()
         self.bindStationInfo(with: self.arsId)
         self.bindBusRouteList()
-        self.bindLoader()
         self.bindFavoriteItems()
     }
     
     private func bindStationInfo(with arsId: String) {
         self.apiUseCase.loadStationList()
-            .tryMap({ [weak self] stations in
+            .map({ [weak self] stations in
                 return self?.calculateUseCase.findStation(in: stations, with: arsId)
+            })
+            .tryMap({ stationInfo in
+                guard let stationInfo = stationInfo else {
+                    throw BBusAPIError.invalidStationError
+                }
+                return stationInfo
             })
             .catchError({ [weak self] error in
                 self?.error = error
             })
-            .sink { [weak self] stationInfo in
-                if let stationInfo = stationInfo {
-                    self?.stationInfo = stationInfo
-                }
-                else {
-                    self?.error = BBusAPIError.invalidStationError
-                }
-            }
-            .store(in: &self.cancellables)
+            .assign(to: &self.$stationInfo)
     }
     
     private func bindBusRouteList() {
@@ -114,10 +112,10 @@ final class StationViewModel {
             .catchError({ [weak self] error in
                 self?.error = error
             })
-            .sink(receiveValue: { [weak self] items in
-                self?.favoriteItems = items.filter() { $0.arsId == self?.arsId }
+            .map({ [weak self] items -> [FavoriteItemDTO] in
+                return items.filter({ $0.arsId == self?.arsId })
             })
-            .store(in: &self.cancellables)
+            .assign(to: &self.$favoriteItems)
     }
 
     private func classifyByRouteType(with buses: [StationByUidItemDTO]) {
@@ -200,7 +198,8 @@ final class StationViewModel {
     }
 
     private func bindLoader() {
-        self.$busKeys.zip(self.$favoriteItems, self.$stationInfo)
+        self.$busKeys
+            .zip(self.$favoriteItems, self.$stationInfo)
             .output(at: 1)
             .sink(receiveValue: { [weak self] _ in
                 self?.stopLoader = true
