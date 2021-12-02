@@ -61,6 +61,13 @@ final class StationViewModel {
                     entireBusRouteList.contains{ $0.routeID == busRoute.busRouteId }
                 }
             }
+            .tryMap({ arriveInfo -> [StationByUidItemDTO] in
+                guard arriveInfo.count > 0 else { throw BBusAPIError.noneResultError }
+                return arriveInfo
+            })
+            .catchError({ [weak self] error in
+                self?.error = error
+            })
             .sink(receiveValue: { [weak self] arriveInfo in
                 self?.nextStation = arriveInfo.first?.nextStation
                 self?.classifyByRouteType(with: arriveInfo)

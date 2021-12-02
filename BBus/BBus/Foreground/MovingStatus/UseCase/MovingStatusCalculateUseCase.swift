@@ -61,7 +61,6 @@ final class MovingStatusCalculateUseCase: MovingStatusCalculatable {
         let order = Double(order - startOrd)
         let sect = Double((sect as NSString).floatValue)
         let fullSect = Double((fullSect as NSString).floatValue)
-        print(order, sect, fullSect)
         return order + (sect/fullSect)
     }
     

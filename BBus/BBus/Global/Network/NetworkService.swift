@@ -24,7 +24,6 @@ struct NetworkService: NetworkServiceProtocol {
                 guard let response = response as? HTTPURLResponse else {
                     throw NetworkError.noResponseError
                 }
-                print(response.statusCode)
                 if response.statusCode != 200 {
                     throw NetworkError.responseError
                 }

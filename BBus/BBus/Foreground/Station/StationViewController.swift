@@ -126,6 +126,8 @@ final class StationViewController: UIViewController, BaseViewControllerType {
                 switch error {
                 case .invalidStationError:
                     self?.noInfoAlert()
+                case .noneResultError:
+                    self?.noneResultAlert()
                 default:
                     self?.networkAlert()
                 }
@@ -154,7 +156,7 @@ final class StationViewController: UIViewController, BaseViewControllerType {
             })
             .store(in: &self.cancellables)
     }
-    
+
     private func networkAlert() {
         let controller = UIAlertController(title: "네트워크 장애", message: "네트워크 장애가 발생하여 앱이 정상적으로 동작되지 않습니다.", preferredStyle: .alert)
         let action = UIAlertAction(title: "확인", style: .default, handler: nil)
@@ -172,6 +174,18 @@ final class StationViewController: UIViewController, BaseViewControllerType {
         controller.addAction(action)
         self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
     }
+
+    private func noneResultAlert() {
+        let controller = UIAlertController(title: "정거장 에러",
+                                           message: "서울 외 지역의 버스만 정차하는 정거장은 정보를 제공하지 않습니다",
+                                           preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인",
+                                   style: .default,
+                                   handler: { [weak self] _ in self?.coordinator?.terminate() })
+        controller.addAction(action)
+        self.coordinator?.delegate?.presentAlertToNavigation(controller: controller, completion: nil)
+    }
+
 }
 
 // MARK: - Delegate : CollectionView

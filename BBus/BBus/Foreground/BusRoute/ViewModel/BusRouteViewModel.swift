@@ -68,6 +68,7 @@ final class BusRouteViewModel {
         self.useCase.fetchBusPosList(busRouteId: self.busRouteId)
             .receive(on: DispatchQueue.global())
             .catchError({ [weak self] error in
+                guard error as? BBusAPIError != BBusAPIError.noneResultError else { return }
                 self?.networkError = error
             })
             .sink(receiveValue: { [weak self] buses in
