@@ -124,7 +124,7 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindBodysInfo_수신_성공() throws {
@@ -142,6 +142,7 @@ class BusRouteViewModelTests: XCTestCase {
         // when
         viewModel.$bodys
             .receive(on: DispatchQueue.global())
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -156,7 +157,7 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
     
     func test_bindBusesPosInfo_수신_성공() throws {
@@ -174,7 +175,7 @@ class BusRouteViewModelTests: XCTestCase {
         // when
         viewModel.$buses
             .receive(on: DispatchQueue.global())
-            .dropFirst()
+            .filter({ !$0.isEmpty })
             .sink { completion in
                 // then
                 guard case .failure(let error) = completion else { return }
@@ -189,33 +190,6 @@ class BusRouteViewModelTests: XCTestCase {
             }
             .store(in: &self.cancellables)
         
-        wait(for: [expectation], timeout: 2)
-    }
-    
-    func test_bindLoader() throws {
-        // given
-        guard let viewModel = self.busRouteViewModel else {
-            XCTFail("viewModel is nil")
-            return
-        }
-        let expectation = XCTestExpectation()
-        
-        // when
-        viewModel.$stopLoader
-            .receive(on: DispatchQueue.global())
-            .dropFirst()
-            .sink { completion in
-                // then
-                guard case .failure(let error) = completion else { return }
-                XCTFail("\(error.localizedDescription)")
-                expectation.fulfill()
-            } receiveValue: { loader in
-                // then
-                XCTAssertTrue(loader)
-                expectation.fulfill()
-            }
-            .store(in: &self.cancellables)
-        
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 10)
     }
 }
