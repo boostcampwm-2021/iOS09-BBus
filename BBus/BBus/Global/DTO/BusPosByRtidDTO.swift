@@ -49,4 +49,15 @@ struct BusPosByRtidDTO: Codable {
         self.gpsY = Double((try? container.decode(String.self, forKey: .gpsY)) ?? "") ?? 0
         self.gpsX = Double((try? container.decode(String.self, forKey: .gpsX)) ?? "") ?? 0
     }
+    
+    init(busType: Int, congestion: Int, plainNumber: String, sectionOrder: Int, fullSectDist: String, sectDist: String, gpsY: Double, gpsX: Double) {
+        self.busType = busType
+        self.congestion = congestion
+        self.plainNumber = plainNumber
+        self.sectionOrder = sectionOrder
+        self.fullSectDist = fullSectDist
+        self.sectDist = sectDist
+        self.gpsY = gpsY
+        self.gpsX = gpsX
+    }
 }
