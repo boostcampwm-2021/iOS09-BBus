@@ -17,7 +17,7 @@ final class GetOnAlarmController {
     private let alarmCenter: AlarmManagable
     private var cancellables: Set<AnyCancellable>
 
-    @Published private(set) var viewModel: GetOnAlarmViewModel?
+    @Published private(set) var viewModel: GetOnAlarmInteractor?
     
     private init(alarmCenter: AlarmManagable) {
         self.alarmCenter = alarmCenter
@@ -45,7 +45,7 @@ final class GetOnAlarmController {
                                                     busName: busName,
                                                     busRouteId: busRouteId,
                                                     stationId: stationId)
-            self.viewModel = GetOnAlarmViewModel(useCase: useCase, currentStatus: getOnAlarmStatus)
+            self.viewModel = GetOnAlarmInteractor(useCase: useCase, currentStatus: getOnAlarmStatus)
             self.viewModel?.fetch()
             self.binding()
             self.alarmCenter.configurePermission()

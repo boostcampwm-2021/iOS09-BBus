@@ -13,7 +13,7 @@ final class GetOffAlarmController {
 
     static let shared = GetOffAlarmController(alarmCenter: AlarmCenter())
 
-    @Published private(set) var viewModel: GetOffAlarmViewModel?
+    @Published private(set) var viewModel: GetOffAlarmInteractor?
     private let alarmCenter: AlarmDetailConfigurable
 
     private init(alarmCenter: AlarmDetailConfigurable) {
@@ -28,7 +28,7 @@ final class GetOffAlarmController {
             let getOffAlarmStatus = GetOffAlarmStatus(targetOrd: targetOrd,
                                                       busRouteId: busRouteId,
                                                       arsId: arsId)
-            self.viewModel = GetOffAlarmViewModel(currentStatus: getOffAlarmStatus)
+            self.viewModel = GetOffAlarmInteractor(currentStatus: getOffAlarmStatus)
             return .success
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class GetOffAlarmViewModel {
+class GetOffAlarmInteractor {
 
     private(set) var getOffAlarmStatus: GetOffAlarmStatus
 

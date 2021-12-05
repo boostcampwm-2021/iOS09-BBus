@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class GetOnAlarmViewModel {
+final class GetOnAlarmInteractor {
 
     private let useCase: GetOnAlarmAPIUseCase
     private(set) var getOnAlarmStatus: GetOnAlarmStatus

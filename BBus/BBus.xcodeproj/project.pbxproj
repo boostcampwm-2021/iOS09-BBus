@@ -189,12 +189,12 @@
 		4ADB29BD274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */; };
 		4ADB29C7274B7A7F00554A4E /* GetOnAlarmStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */; };
 		4ADB29C9274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift */; };
-		4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */; };
+		4ADB29CB274B7AB900554A4E /* GetOnAlarmInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CA274B7AB900554A4E /* GetOnAlarmInteractor.swift */; };
 		4ADB29CD274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CC274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift */; };
 		4ADB29CF274B890800554A4E /* BusApproachStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29CE274B890800554A4E /* BusApproachStatus.swift */; };
 		4ADB29D1274CAF0100554A4E /* AlarmStartResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D0274CAF0100554A4E /* AlarmStartResult.swift */; };
 		4ADB29D4274E18BB00554A4E /* GetOffAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D3274E18BB00554A4E /* GetOffAlarmController.swift */; };
-		4ADB29D7274E198900554A4E /* GetOffAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D6274E198900554A4E /* GetOffAlarmViewModel.swift */; };
+		4ADB29D7274E198900554A4E /* GetOffAlarmInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D6274E198900554A4E /* GetOffAlarmInteractor.swift */; };
 		4ADB29DA274E1A5F00554A4E /* GetOffAlarmStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB29D9274E1A5F00554A4E /* GetOffAlarmStatus.swift */; };
 		4AF1E0602755BE2400DE51C8 /* NavigatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */; };
 		4AF1E0682756262300DE51C8 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1E0672756262300DE51C8 /* NetworkServiceTests.swift */; };
@@ -500,12 +500,12 @@
 		4ADB29BC274B6E0B00554A4E /* GetBusPosByVehIdFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBusPosByVehIdFetcher.swift; sourceTree = "<group>"; };
 		4ADB29C6274B7A7F00554A4E /* GetOnAlarmStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmStatus.swift; sourceTree = "<group>"; };
 		4ADB29C8274B7AA200554A4E /* GetOnAlarmAPIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmAPIUseCase.swift; sourceTree = "<group>"; };
-		4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmViewModel.swift; sourceTree = "<group>"; };
+		4ADB29CA274B7AB900554A4E /* GetOnAlarmInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmInteractor.swift; sourceTree = "<group>"; };
 		4ADB29CC274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnAlarmCalculateUsecase.swift; sourceTree = "<group>"; };
 		4ADB29CE274B890800554A4E /* BusApproachStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusApproachStatus.swift; sourceTree = "<group>"; };
 		4ADB29D0274CAF0100554A4E /* AlarmStartResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmStartResult.swift; sourceTree = "<group>"; };
 		4ADB29D3274E18BB00554A4E /* GetOffAlarmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmController.swift; sourceTree = "<group>"; };
-		4ADB29D6274E198900554A4E /* GetOffAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmViewModel.swift; sourceTree = "<group>"; };
+		4ADB29D6274E198900554A4E /* GetOffAlarmInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmInteractor.swift; sourceTree = "<group>"; };
 		4ADB29D9274E1A5F00554A4E /* GetOffAlarmStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOffAlarmStatus.swift; sourceTree = "<group>"; };
 		4AF1E05F2755BE2400DE51C8 /* NavigatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableView.swift; sourceTree = "<group>"; };
 		4AF1E0652756262300DE51C8 /* NetworkServiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkServiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1111,12 +1111,12 @@
 			path = Background;
 			sourceTree = "<group>";
 		};
-		4ADB29C2274B79E500554A4E /* ViewModel */ = {
+		4ADB29C2274B79E500554A4E /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				4ADB29CA274B7AB900554A4E /* GetOnAlarmViewModel.swift */,
+				4ADB29CA274B7AB900554A4E /* GetOnAlarmInteractor.swift */,
 			);
-			path = ViewModel;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		4ADB29C3274B7A1D00554A4E /* Model */ = {
@@ -1144,7 +1144,7 @@
 				4ADB29B8274B68CE00554A4E /* GetOnAlarmController.swift */,
 				4ADB29C3274B7A1D00554A4E /* Model */,
 				4ADB29C4274B7A3000554A4E /* UseCase */,
-				4ADB29C2274B79E500554A4E /* ViewModel */,
+				4ADB29C2274B79E500554A4E /* Interactor */,
 			);
 			path = GetOnAlarm;
 			sourceTree = "<group>";
@@ -1154,17 +1154,17 @@
 			children = (
 				4ADB29D3274E18BB00554A4E /* GetOffAlarmController.swift */,
 				4ADB29D8274E1A5500554A4E /* Model */,
-				4ADB29D5274E197E00554A4E /* ViewModel */,
+				4ADB29D5274E197E00554A4E /* Interactor */,
 			);
 			path = GetOffAlarm;
 			sourceTree = "<group>";
 		};
-		4ADB29D5274E197E00554A4E /* ViewModel */ = {
+		4ADB29D5274E197E00554A4E /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				4ADB29D6274E198900554A4E /* GetOffAlarmViewModel.swift */,
+				4ADB29D6274E198900554A4E /* GetOffAlarmInteractor.swift */,
 			);
-			path = ViewModel;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		4ADB29D8274E1A5500554A4E /* Model */ = {
@@ -1878,7 +1878,6 @@
 				4A2634BF275675CD00267B47 /* BusPosByVehicleIdDTO.swift in Sources */,
 				4A2634C12756862F00267B47 /* StationAPIUsable.swift in Sources */,
 				4A2634B62756754E00267B47 /* BusSectionKeys.swift in Sources */,
-				4A2634BD275675A800267B47 /* BBusAPIError.swift in Sources */,
 				4A2634C32756864A00267B47 /* JsonDTO.swift in Sources */,
 				4AF1E0B62756269600DE51C8 /* StationViewModelTests.swift in Sources */,
 				4A2634B72756755700267B47 /* BBusRouteType.swift in Sources */,
@@ -1978,7 +1977,7 @@
 				4A5182B527551EC2001EA530 /* GetStationByUidItemUsable.swift in Sources */,
 				0446843727567777007E440A /* AlarmSettingCalculatable.swift in Sources */,
 				4ACA5231272FCEE600EC0531 /* MovingStatusView.swift in Sources */,
-				4ADB29D7274E198900554A4E /* GetOffAlarmViewModel.swift in Sources */,
+				4ADB29D7274E198900554A4E /* GetOffAlarmInteractor.swift in Sources */,
 				4ACA51EF272FCDE600EC0531 /* StationSearchResult.swift in Sources */,
 				4A17CED92733B5C6007B1646 /* SearchResultScrollView.swift in Sources */,
 				4A5182B727551ED8001EA530 /* GetRouteListUsable.swift in Sources */,
@@ -2008,7 +2007,7 @@
 				4ACA51F5272FCE0200EC0531 /* SearchView.swift in Sources */,
 				04C6D66B2734BCAB00D41678 /* MovingStatusBusTagView.swift in Sources */,
 				049375B9273BE2640061ACDA /* StationByUidItemDTO.swift in Sources */,
-				4ADB29CB274B7AB900554A4E /* GetOnAlarmViewModel.swift in Sources */,
+				4ADB29CB274B7AB900554A4E /* GetOnAlarmInteractor.swift in Sources */,
 				4ADB29CD274B880C00554A4E /* GetOnAlarmCalculateUsecase.swift in Sources */,
 				4ACA520D272FCE6500EC0531 /* BusRouteView.swift in Sources */,
 				4ADB29B9274B68CE00554A4E /* GetOnAlarmController.swift in Sources */,
