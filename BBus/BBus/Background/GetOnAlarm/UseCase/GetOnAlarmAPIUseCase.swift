@@ -15,28 +15,24 @@ protocol GetOnAlarmAPIUsable: BaseUseCase {
 final class GetOnAlarmAPIUseCase: GetOnAlarmAPIUsable {
 
     private let useCases: GetBusPosByVehIdUsable
-    private var cancellable: AnyCancellable?
     @Published private(set) var networkError: Error?
     @Published private(set) var busPosition: BusPosByVehicleIdDTO?
 
     init(useCases: GetBusPosByVehIdUsable) {
         self.useCases = useCases
-        self.cancellable = nil
         self.networkError = nil
         self.busPosition = nil
     }
 
     func fetch(withVehId vehId: String) {
-        self.cancellable = self.useCases.getBusPosByVehId(vehId)
+        self.useCases.getBusPosByVehId(vehId)
             .decode(type: JsonMessage.self, decoder: JSONDecoder())
-            .retry({ [weak self] in
-                self?.fetch(withVehId: vehId)
-            }, handler: { [weak self] error in
-                self?.networkError = error
+            .catchError({ error in
+                self.networkError = error
             })
             .map({ item in
                 item.msgBody.itemList.first
             })
-            .assign(to: \.busPosition, on: self)
+            .assign(to: &self.$busPosition)
     }
 }

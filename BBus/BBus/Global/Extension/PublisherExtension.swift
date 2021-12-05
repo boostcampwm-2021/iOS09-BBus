@@ -26,24 +26,6 @@ extension Publisher where Output == Data, Failure == Error {
 }
 
 extension Publisher where Failure == Error {
-    func retry(_ currentTokenExhaustedHandler: @escaping () -> Void, handler wholeTokenExhaustedHandler: @escaping (_ error: Error) -> Void) -> AnyPublisher<Self.Output, Never> {
-        self.catch({ error -> AnyPublisher<Self.Output, Never> in
-            switch error {
-            case BBusAPIError.noMoreAccessKeyError, BBusAPIError.trafficExceed:
-                wholeTokenExhaustedHandler(error)
-            case BBusAPIError.systemError:
-                currentTokenExhaustedHandler()
-            default:
-                break
-            }
-            let publisher = PassthroughSubject<Self.Output, Never>()
-            DispatchQueue.global().async {
-                publisher.send(completion: .finished)
-            }
-            return publisher.eraseToAnyPublisher()
-        }).eraseToAnyPublisher()
-    }
-    
     func catchError(_ handler: @escaping (Error) -> Void) -> AnyPublisher<Self.Output, Never> {
         self.catch({ error -> AnyPublisher<Self.Output, Never> in
             handler(error)
