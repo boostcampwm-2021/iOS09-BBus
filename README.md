@@ -100,3 +100,7 @@ BBus
 > [외부 라이브러리 NO](https://github.com/boostcampwm-2021/iOS09-BBus/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EB%8F%84%EC%A0%84#%EC%99%B8%EB%B6%80-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-no)<br>
 > [Github Action을 활용한 CI 배포](https://github.com/boostcampwm-2021/iOS09-BBus/wiki/기술적-도전#github-action을-활용한-ci-배포)
 
+<br>
+
+## 저희가 협업했던 과정을 보시려면? 
+[Github Wiki](https://github.com/boostcampwm-2021/iOS09-BBus/wiki)
