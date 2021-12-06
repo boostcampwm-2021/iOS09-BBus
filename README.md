@@ -18,7 +18,8 @@
 
 ## 🫂 팀 소개
 
-> **Team.mOS**<br>**m**aking **O**pen **S**ource라는 의미로 외부 라이브러리를 사용하지 않겠다는 굳은 의지를 표현하였습니다. 
+> **Team.mOS**<br>**m**aking **O**pen **S**ource라는 의미로 외부 라이브러리를 사용하지 않겠다는 굳은 의지를 표현하였습니다.<br>
+> 저희는 페어 프로그래밍을 적극 활용하여, 구조 설계의 대부분을 **모두 함께** 진행하였습니다.
 
 |[S002_강민상](https://github.com/FreeDeveloper97)|[S013_김태훈](https://github.com/Modyhoon)|[S045_이지수](https://github.com/tmfrlrkvlek)|[S057_최수정](https://github.com/sujeong000)|
 |:--------:|:--------:|:--------:|:--------:|
