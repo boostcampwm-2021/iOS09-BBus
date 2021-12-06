@@ -23,7 +23,6 @@
 |[S002_강민상](https://github.com/FreeDeveloper97)|[S013_김태훈](https://github.com/Modyhoon)|[S045_이지수](https://github.com/tmfrlrkvlek)|[S057_최수정](https://github.com/sujeong000)|
 |:--------:|:--------:|:--------:|:--------:|
 |<img src="https://i.imgur.com/KPKqL47.jpg" width=500>|<img src="https://i.imgur.com/BHsdsnG.jpg" width=500>|<img src="https://i.imgur.com/uYtkoKm.jpg" width=500>|<img src="https://i.imgur.com/cd3093l.jpg" width=500>|
-|MVVM-C, CoreLocation, <br>공공 API 분석|MVVM-C, Git & Github Action, 공공 API 분석|MVVM-C, Combine,<br> Network - API|MVVM-C, Timer,<br> 공공 API 분석|
 
 <br>
 
