@@ -24,7 +24,7 @@
 |[S002_강민상](https://github.com/FreeDeveloper97)|[S013_김태훈](https://github.com/Modyhoon)|[S045_이지수](https://github.com/tmfrlrkvlek)|[S057_최수정](https://github.com/sujeong000)|
 |:--------:|:--------:|:--------:|:--------:|
 |<img src="https://i.imgur.com/KPKqL47.jpg" width=500>|<img src="https://i.imgur.com/BHsdsnG.jpg" width=500>|<img src="https://i.imgur.com/uYtkoKm.jpg" width=500>|<img src="https://i.imgur.com/cd3093l.jpg" width=500>|
-|버스 노선 화면 로직<br>GPS 기반 버스 하차 기능|프로젝트 리더<br>git workflow 관리|Combine<br>Network|Coordinator 구조<br>Timer|
+|버스 노선 화면 로직<br>GPS 기반 버스 하차 기능|프로젝트 리더<br>git workflow 관리|Combine 활용<br>Network |Coordinator 구조<br>Timer|
 
 <br>
 
