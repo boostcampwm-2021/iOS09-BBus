@@ -138,6 +138,7 @@
 		4A5182BD27551F40001EA530 /* GetFavoriteItemListUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182BC27551F40001EA530 /* GetFavoriteItemListUsable.swift */; };
 		4A5182BF27551F57001EA530 /* CreateFavoriteItemUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182BE27551F57001EA530 /* CreateFavoriteItemUsable.swift */; };
 		4A5182C127551F6D001EA530 /* DeleteFavoriteItemUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5182C027551F6D001EA530 /* DeleteFavoriteItemUsable.swift */; };
+		4A67AB82283776B0006310D4 /* BBusAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A38E20627463FF7003A9D10 /* BBusAPIError.swift */; };
 		4A7BBFED2737885F0029915F /* StationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEC2737885F0029915F /* StationHeaderView.swift */; };
 		4A7BBFEF27378AA50029915F /* StationBodyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFEE27378AA50029915F /* StationBodyCollectionViewCell.swift */; };
 		4A7BBFF12737D6C20029915F /* RemainCongestionBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BBFF02737D6C20029915F /* RemainCongestionBadgeLabel.swift */; };
@@ -1872,6 +1873,7 @@
 				4A2634C22756863600267B47 /* StationCalculatable.swift in Sources */,
 				4A2634BC2756759700267B47 /* AlarmSettingBusArriveInfo.swift in Sources */,
 				4A2634B1275670C500267B47 /* FavoriteItemDTO.swift in Sources */,
+				4A67AB82283776B0006310D4 /* BBusAPIError.swift in Sources */,
 				4A2634B3275670D100267B47 /* StationDTO.swift in Sources */,
 				4A2634BA2756757F00267B47 /* PublisherExtension.swift in Sources */,
 				4A2634BE275675C400267B47 /* BusRemainTime.swift in Sources */,

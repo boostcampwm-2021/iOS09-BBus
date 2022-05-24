@@ -8,5 +8,14 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-API_ACCESS_KEY2 = aaa
-API_ACCESS_KEY = aaa
+API_ACCESS_KEY1 = aaa
+API_ACCESS_KEY2 = bbb
+API_ACCESS_KEY3 = ccc
+API_ACCESS_KEY4 = ddd
+API_ACCESS_KEY5 = eee
+API_ACCESS_KEY6 = fff
+API_ACCESS_KEY7 = g
+API_ACCESS_KEY8 = h
+API_ACCESS_KEY9 = i
+API_ACCESS_KEY10 = j
+API_ACCESS_KEY11 = k

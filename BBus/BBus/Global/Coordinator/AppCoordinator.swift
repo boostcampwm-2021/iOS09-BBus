@@ -74,7 +74,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
-                                          requestFactory: RequestFactory())
+                                          requestFactory: RequestFactory.self)
         let apiUseCase = MovingStatusAPIUseCase(useCases: apiUseCases)
         let calculateUseCase = MovingStatusCalculateUseCase()
         let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,
@@ -96,7 +96,7 @@ extension AppCoordinator: MovingStatusOpenCloseDelegate {
         let apiUseCases = BBusAPIUseCases(networkService: NetworkService(),
                                           persistenceStorage: PersistenceStorage(),
                                           tokenManageType: TokenManager.self,
-                                          requestFactory: RequestFactory())
+                                          requestFactory: RequestFactory.self)
         let apiUseCase = MovingStatusAPIUseCase(useCases: apiUseCases)
         let calculateUseCase = MovingStatusCalculateUseCase()
         let viewModel = MovingStatusViewModel(apiUseCase: apiUseCase,

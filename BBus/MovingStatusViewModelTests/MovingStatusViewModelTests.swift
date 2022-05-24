@@ -263,8 +263,12 @@ class MovingStatusViewModelTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
+        let viewModel = MovingStatusViewModel(apiUseCase: DummyMovingStatusAPIUseCase(), calculateUseCase: MovingStatusCalculateUseCase(), busRouteId: 100100260, fromArsId: "21211", toArsId: "21210")
         measure {
             // Put the code you want to measure the time of here.
+            (0..<10).forEach() { _ in
+                viewModel.updateAPI()
+            }
         }
     }
 

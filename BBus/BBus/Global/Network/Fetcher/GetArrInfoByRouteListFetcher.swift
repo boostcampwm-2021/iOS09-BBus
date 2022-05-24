@@ -15,7 +15,7 @@ protocol GetArrInfoByRouteListFetchable {
 struct ServiceGetArrInfoByRouteListFetcher: ServiceFetchable, GetArrInfoByRouteListFetchable {
     private(set) var networkService: NetworkServiceProtocol
     private(set) var tokenManager: TokenManagable
-    private(set) var requestFactory: Requestable
+    private(set) var requestFactory: Requestable.Type
     
     func fetch(param: [String: String]) -> AnyPublisher<Data, Error> {
         let url = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute"

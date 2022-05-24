@@ -11,7 +11,7 @@ import Combine
 protocol ServiceFetchable {
     var networkService: NetworkServiceProtocol { get }
     var tokenManager: TokenManagable { get }
-    var requestFactory: Requestable { get }
+    var requestFactory: Requestable.Type { get }
 
     func fetch(url: String, param: [String: String]) -> AnyPublisher<Data, Error>
 }

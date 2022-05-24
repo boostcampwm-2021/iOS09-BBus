@@ -13,9 +13,9 @@ struct BBusAPIUseCases {
     
     let networkService: NetworkServiceProtocol
     let persistenceStorage: PersistenceStorageProtocol
-    let requestFactory: Requestable
+    let requestFactory: Requestable.Type
     
-    init(networkService: NetworkServiceProtocol, persistenceStorage: PersistenceStorageProtocol, tokenManageType: TokenManagable.Type, requestFactory: Requestable) {
+    init(networkService: NetworkServiceProtocol, persistenceStorage: PersistenceStorageProtocol, tokenManageType: TokenManagable.Type, requestFactory: Requestable.Type) {
         self.networkService = networkService
         self.persistenceStorage = persistenceStorage
         self.tokenManageType = tokenManageType
